@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Grid" load_steps=2 format=3 uid="uid://chxjrog3oya0s"]
+
+[ext_resource type="Script" uid="uid://hmnf4yyjvrxv" path="res://Scripts/Map/Grid.cs" id="1_w8ix7"]
+
+[resource]
+script = ExtResource("1_w8ix7")
+_gridSize = Vector2(20, 20)
+_cellSize = Vector2(80, 80)
+metadata/_custom_type_script = "uid://hmnf4yyjvrxv"
