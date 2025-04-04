@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_w8ix7")
 _gridSize = Vector2(20, 20)
-_cellSize = Vector2(80, 80)
+_cellSize = Vector2(64, 64)
 metadata/_custom_type_script = "uid://hmnf4yyjvrxv"
