@@ -1,8 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=15 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Texture2D" uid="uid://cvsff4vsbypvk" path="res://Sprites/Test/TestPlanes.png" id="1_8k7wh"]
 [ext_resource type="Texture2D" uid="uid://qti0w81f7cdv" path="res://Sprites/Test/TestSand.png" id="2_iufkg"]
 [ext_resource type="Texture2D" uid="uid://d02iaws84wns3" path="res://Sprites/Test/TestWall.png" id="3_0f5h7"]
+[ext_resource type="Texture2D" uid="uid://1so2e8lmu73j" path="res://Sprites/Test/TestFriendly.png" id="4_iufkg"]
+[ext_resource type="Script" uid="uid://doq6m3w0gkqei" path="res://Scripts/Unit/Unit.cs" id="4_qsjrb"]
+[ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="5_qsjrb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qsjrb"]
 texture = ExtResource("1_8k7wh")
@@ -25,8 +28,89 @@ sources/0 = SubResource("TileSetAtlasSource_qsjrb")
 sources/1 = SubResource("TileSetAtlasSource_c264a")
 sources/2 = SubResource("TileSetAtlasSource_6xh1p")
 
+[sub_resource type="Animation" id="Animation_qsjrb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UnitSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_0f5h7"]
+resource_name = "UnitTestIdle"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UnitSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_c264a"]
+resource_name = "UnitTestSelected"
+length = 1.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UnitSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1.5, 1.5, 1.5, 1), Color(1.5, 1.5, 1.5, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6xh1p"]
+_data = {
+&"RESET": SubResource("Animation_qsjrb"),
+&"UnitTestIdle": SubResource("Animation_0f5h7"),
+&"UnitTestSelected": SubResource("Animation_c264a")
+}
+
 [node name="TestScene" type="Node2D"]
 
 [node name="TestMap" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAADAAMAAAAAAAAAAAACAAMAAAAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_5rbs6")
+
+[node name="Unit" type="Node2D" parent="." node_paths=PackedStringArray("_animPlayer", "_path", "_pathFollow", "_sprite")]
+position = Vector2(32, 32)
+script = ExtResource("4_qsjrb")
+_animPlayer = NodePath("AnimationPlayer")
+_grid = ExtResource("5_qsjrb")
+_path = NodePath("UnitPath")
+_pathFollow = NodePath("UnitPath/PathFollow2D")
+_sprite = NodePath("UnitSprite")
+_skin = ExtResource("4_iufkg")
+
+[node name="UnitPath" type="Path2D" parent="Unit"]
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Unit/UnitPath"]
+rotates = false
+loop = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Unit/UnitPath/PathFollow2D"]
+remote_path = NodePath("../../../UnitSprite")
+
+[node name="UnitSprite" type="Sprite2D" parent="Unit"]
+texture = ExtResource("4_iufkg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Unit"]
+libraries = {
+&"": SubResource("AnimationLibrary_6xh1p")
+}

@@ -7,7 +7,7 @@ using System;
  * [holds information about a map]
  */
 
-[GlobalClass]
+[GlobalClass,Tool]
 public partial class GridResource : Resource
 {
     [Export] private Vector2 _gridSize = new Vector2(20, 20);
