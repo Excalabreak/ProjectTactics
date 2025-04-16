@@ -38,7 +38,58 @@ public partial class Unit : Node2D
     //settings
     [Export] private float _moveSpeed = 600f;
 
-    
+    public override void _Ready()
+    {
+        SetProcess(false);
+
+        this.cell = _grid.CalculateGridCoordinates(Position);
+        Position = _grid.CalculateMapPosition(cell);
+
+        _path.Curve = new Curve2D();
+
+        //test
+        Vector2[] test = new Vector2[4];
+        test[0] = new Vector2(1, 1);
+        test[1] = new Vector2(1, 2);
+        test[2] = new Vector2(2, 3);
+        test[3] = new Vector2(2, 1);
+
+        GD.Print("buh");
+        WalkAlong(test);
+    }
+
+    public override void _Process(double delta)
+    {
+        float fDelta = (float)delta;
+
+        _pathFollow.Progress += _moveSpeed * fDelta;
+
+        if (_pathFollow.ProgressRatio >= 1f)
+        {
+            this._isWalking = false;
+            _pathFollow.Progress = 0f;
+            Position = _grid.CalculateMapPosition(cell);
+            _path.Curve.ClearPoints();
+            EmitSignal("WalkFinished");
+        }
+    }
+
+    public void WalkAlong(Vector2[] path)
+    {
+        GD.Print("buh");
+        if (path.Length <= 0)
+        {
+            return;
+        }
+
+        _path.Curve.AddPoint(Vector2.Zero);
+        foreach (Vector2 point in path)
+        {
+            _path.Curve.AddPoint(_grid.CalculateMapPosition(point) - Position);
+        }
+        cell = path[path.Length - 1];
+        this.isWalking = true;
+    }
 
     //--- PROPERTIES ---
     public Vector2 cell
