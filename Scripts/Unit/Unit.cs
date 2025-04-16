@@ -10,7 +10,6 @@ using System;
  * scripts. comments of node type will likely be where they split]
  */
 
-[Tool]
 public partial class Unit : Node2D
 {
     //maybe somewhere else, but will likely leave in this script
