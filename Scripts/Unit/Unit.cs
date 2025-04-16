@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [04/14/2025]
+ * Last Updated: [04/16/2025]
  * [Unit Main Script
  * NOTE: all of this is one script for now,
  * but will likely need to be split up into different
@@ -22,10 +22,9 @@ public partial class Unit : Node2D
     [Export] private GridResource _grid;
 
     //path2d
-    [Signal] public delegate void WalkFinishedEventHandler();
-    [Export] private Path2D _path;
-    [Export] private PathFollow2D _pathFollow;
-    private bool _isWalking = false;
+    [Export] private UnitPath _unitPath;
+    private bool _unitCanWalk = false;
+    
 
     //sprite2d
     [Export] private Sprite2D _sprite;
@@ -40,55 +39,27 @@ public partial class Unit : Node2D
 
     public override void _Ready()
     {
-        SetProcess(false);
-
         this.cell = _grid.CalculateGridCoordinates(Position);
         Position = _grid.CalculateMapPosition(cell);
-
-        _path.Curve = new Curve2D();
 
         //test
         Vector2[] test = new Vector2[4];
         test[0] = new Vector2(1, 1);
         test[1] = new Vector2(1, 2);
         test[2] = new Vector2(2, 3);
-        test[3] = new Vector2(2, 1);
+        test[3] = new Vector2(3, 0);
 
-        GD.Print("buh");
-        WalkAlong(test);
+        _unitPath.SetWalkPath(test, _grid);
     }
 
     public override void _Process(double delta)
     {
         float fDelta = (float)delta;
 
-        _pathFollow.Progress += _moveSpeed * fDelta;
-
-        if (_pathFollow.ProgressRatio >= 1f)
+        if (_unitPath != null && _unitCanWalk)
         {
-            this._isWalking = false;
-            _pathFollow.Progress = 0f;
-            Position = _grid.CalculateMapPosition(cell);
-            _path.Curve.ClearPoints();
-            EmitSignal("WalkFinished");
+            _unitPath.WalkUnit(fDelta, _grid, cell);
         }
-    }
-
-    public void WalkAlong(Vector2[] path)
-    {
-        GD.Print("buh");
-        if (path.Length <= 0)
-        {
-            return;
-        }
-
-        _path.Curve.AddPoint(Vector2.Zero);
-        foreach (Vector2 point in path)
-        {
-            _path.Curve.AddPoint(_grid.CalculateMapPosition(point) - Position);
-        }
-        cell = path[path.Length - 1];
-        this.isWalking = true;
     }
 
     //--- PROPERTIES ---
@@ -128,14 +99,12 @@ public partial class Unit : Node2D
         get { return _isSelected; }
     }
 
-    public bool isWalking 
+    public bool unitCanWalk
     {
         set
         {
-            _isWalking = value;
-            SetProcess(_isWalking);
+            _unitCanWalk = value;
         }
-        get { return _isWalking; }
     }
 
     public Texture2D skin

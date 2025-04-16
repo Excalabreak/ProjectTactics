@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=16 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Texture2D" uid="uid://cvsff4vsbypvk" path="res://Sprites/Test/TestPlanes.png" id="1_8k7wh"]
 [ext_resource type="Texture2D" uid="uid://qti0w81f7cdv" path="res://Sprites/Test/TestSand.png" id="2_iufkg"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://1so2e8lmu73j" path="res://Sprites/Test/TestFriendly.png" id="4_iufkg"]
 [ext_resource type="Script" uid="uid://doq6m3w0gkqei" path="res://Scripts/Unit/Unit.cs" id="4_qsjrb"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="5_qsjrb"]
+[ext_resource type="Script" uid="uid://cwr38nuqx0l2f" path="res://Scripts/Unit/UnitPath.cs" id="7_c264a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qsjrb"]
 texture = ExtResource("1_8k7wh")
@@ -88,17 +89,20 @@ _data = {
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAADAAMAAAAAAAAAAAACAAMAAAAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_5rbs6")
 
-[node name="Unit" type="Node2D" parent="." node_paths=PackedStringArray("_animPlayer", "_path", "_pathFollow", "_sprite")]
+[node name="Unit" type="Node2D" parent="." node_paths=PackedStringArray("_animPlayer", "_unitPath", "_sprite")]
 position = Vector2(32, 32)
 script = ExtResource("4_qsjrb")
 _animPlayer = NodePath("AnimationPlayer")
 _grid = ExtResource("5_qsjrb")
-_path = NodePath("UnitPath")
-_pathFollow = NodePath("UnitPath/PathFollow2D")
+_unitPath = NodePath("UnitPath")
 _sprite = NodePath("UnitSprite")
 _skin = ExtResource("4_iufkg")
 
-[node name="UnitPath" type="Path2D" parent="Unit"]
+[node name="UnitPath" type="Path2D" parent="Unit" node_paths=PackedStringArray("_unit", "_pathFollow")]
+script = ExtResource("7_c264a")
+_unit = NodePath("..")
+_pathFollow = NodePath("PathFollow2D")
+_moveSpeed = 200.0
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Unit/UnitPath"]
 rotates = false
