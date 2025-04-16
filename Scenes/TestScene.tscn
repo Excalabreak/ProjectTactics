@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=19 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Texture2D" uid="uid://cvsff4vsbypvk" path="res://Sprites/Test/TestPlanes.png" id="1_8k7wh"]
 [ext_resource type="Texture2D" uid="uid://qti0w81f7cdv" path="res://Sprites/Test/TestSand.png" id="2_iufkg"]
 [ext_resource type="Texture2D" uid="uid://d02iaws84wns3" path="res://Sprites/Test/TestWall.png" id="3_0f5h7"]
+[ext_resource type="Texture2D" uid="uid://cehbm80elwn7v" path="res://Sprites/Test/GridTile.png" id="4_6xh1p"]
 [ext_resource type="Texture2D" uid="uid://1so2e8lmu73j" path="res://Sprites/Test/TestFriendly.png" id="4_iufkg"]
 [ext_resource type="Script" uid="uid://doq6m3w0gkqei" path="res://Scripts/Unit/Unit.cs" id="4_qsjrb"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="5_qsjrb"]
@@ -28,6 +29,15 @@ tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_qsjrb")
 sources/1 = SubResource("TileSetAtlasSource_c264a")
 sources/2 = SubResource("TileSetAtlasSource_6xh1p")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5rbs6"]
+texture = ExtResource("4_6xh1p")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_201fe"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_5rbs6")
 
 [sub_resource type="Animation" id="Animation_qsjrb"]
 length = 0.001
@@ -88,6 +98,10 @@ _data = {
 [node name="TestMap" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAADAAMAAAAAAAAAAAACAAMAAAAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_5rbs6")
+
+[node name="Grid" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAAAAMAAAAAAAAAAAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAADAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_201fe")
 
 [node name="Unit" type="Node2D" parent="." node_paths=PackedStringArray("_animPlayer", "_unitPath", "_sprite")]
 position = Vector2(32, 32)
