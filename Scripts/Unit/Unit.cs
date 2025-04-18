@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [04/16/2025]
+ * Last Updated: [04/18/2025]
  * [Unit Main Script
  * NOTE: all of this is one script for now,
  * but will likely need to be split up into different
@@ -29,9 +29,6 @@ public partial class Unit : Node2D
 
     //map
     [Export] private GridResource _grid;
-
-    //settings
-    [Export] private float _moveSpeed = 600f;
 
     public override void _Ready()
     {
