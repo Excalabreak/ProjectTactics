@@ -16,23 +16,18 @@ public partial class Unit : Node2D
     private Vector2 _cell = Vector2.Zero;
     private bool _isSelected = false;
 
+    [Export] private UnitPath _unitPath;
+    private bool _unitCanWalk = false;
+
+    [Export] private UnitSprite _unitSprite;
+
+    [Export] private UnitStats _unitStats;
+
+    //animation player, but i might need to make a state machine for
     [Export] private AnimationPlayer _animPlayer; 
 
     //map
     [Export] private GridResource _grid;
-
-    //path2d
-    [Export] private UnitPath _unitPath;
-    private bool _unitCanWalk = false;
-    
-
-    //sprite2d
-    [Export] private Sprite2D _sprite;
-    [Export] private Texture2D _skin;
-    [Export] private Vector2 _skinOffset = Vector2.Zero;
-
-    //unit stats
-    [Export] private int _moveRange = 6;
 
     //settings
     [Export] private float _moveSpeed = 600f;
@@ -105,39 +100,5 @@ public partial class Unit : Node2D
         {
             _unitCanWalk = value;
         }
-    }
-
-    public Texture2D skin
-    {
-        set 
-        { 
-            _skin = value;
-            if (_sprite != null)
-            {
-                _sprite.Texture = value;
-            }
-            else
-            {
-                GD.Print("no Sprite2D Node for texture to be set on");
-            }
-        }
-        get { return _skin; }
-    }
-
-    public Vector2 skinOffset
-    {
-        set
-        {
-            _skinOffset = value;
-            if (_sprite != null)
-            {
-                _sprite.Position = value;
-            }
-            else
-            {
-                GD.Print("not Sprite2D Node for offset to be set on");
-            }
-        }
-        get { return _skinOffset; }
     }
 }
