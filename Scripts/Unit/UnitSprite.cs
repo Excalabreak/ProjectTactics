@@ -12,6 +12,7 @@ public partial class UnitSprite : Sprite2D
     [Export] private Texture2D _skin;
     [Export] private Vector2 _skinOffset = Vector2.Zero;
 
+    //properties
     public Texture2D skin
     {
         set

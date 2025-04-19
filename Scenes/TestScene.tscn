@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=23 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Texture2D" uid="uid://cvsff4vsbypvk" path="res://Sprites/Test/TestPlanes.png" id="1_8k7wh"]
 [ext_resource type="Texture2D" uid="uid://qti0w81f7cdv" path="res://Sprites/Test/TestSand.png" id="2_iufkg"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://70nimqy81e3d" path="res://Scripts/Unit/UnitSprite.cs" id="9_5rbs6"]
 [ext_resource type="Script" uid="uid://bw18o174u4r2c" path="res://Scripts/Unit/UnitStats.cs" id="10_201fe"]
 [ext_resource type="Texture2D" uid="uid://suvveuruoly4" path="res://Sprites/Test/GridCursor.png" id="11_xjl2p"]
+[ext_resource type="Script" uid="uid://b8k2oamcad7ba" path="res://Scripts/Misc/GridCursor.cs" id="11_ytmxh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qsjrb"]
 texture = ExtResource("1_8k7wh")
@@ -140,8 +141,11 @@ libraries = {
 [node name="UnitStats" type="Node" parent="Unit"]
 script = ExtResource("10_201fe")
 
-[node name="Cursor" type="Node2D" parent="."]
+[node name="Cursor" type="Node2D" parent="." node_paths=PackedStringArray("_timer")]
 position = Vector2(32, 32)
+script = ExtResource("11_ytmxh")
+_grid = ExtResource("5_qsjrb")
+_timer = NodePath("Timer")
 
 [node name="Sprite2D" type="Sprite2D" parent="Cursor"]
 texture = ExtResource("11_xjl2p")

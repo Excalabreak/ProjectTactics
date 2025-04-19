@@ -30,6 +30,9 @@ public partial class Unit : Node2D
     //map
     [Export] private GridResource _grid;
 
+    /// <summary>
+    /// sets unit's positon
+    /// </summary>
     public override void _Ready()
     {
         this.cell = _grid.CalculateGridCoordinates(Position);
@@ -45,6 +48,10 @@ public partial class Unit : Node2D
         _unitPath.SetWalkPath(test, _grid);
     }
 
+    /// <summary>
+    /// calls functions that need to happen every frame
+    /// </summary>
+    /// <param name="delta"></param>
     public override void _Process(double delta)
     {
         float fDelta = (float)delta;
@@ -68,6 +75,9 @@ public partial class Unit : Node2D
         get { return _cell; }
     }
 
+    /// <summary>
+    /// this also handles animation player of selected
+    /// </summary>
     public bool isSelected
     {
         set

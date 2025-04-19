@@ -25,7 +25,14 @@ public partial class UnitPath : Path2D
         Curve = new Curve2D();
     }
 
-    //note, grid might need to be taken out and put in a map manager
+    /// <summary>
+    /// moves the sprite of the unit every frame when on route
+    /// 
+    /// note, grid might need to be taken out and put in a map manager
+    /// </summary>
+    /// <param name="delta">time between frames</param>
+    /// <param name="grid">grid info</param>
+    /// <param name="cell">final pos of unit</param>
     public void WalkUnit(float delta, GridResource grid, Vector2 cell)
     {
         _pathFollow.Progress += _moveSpeed * delta;
@@ -40,7 +47,13 @@ public partial class UnitPath : Path2D
         }
     }
 
-    //note, grid might need to be taken out and put in a map manager
+    /// <summary>
+    /// sets the walk path based on the coordinates
+    /// 
+    /// note, grid might need to be taken out and put in a map manager
+    /// </summary>
+    /// <param name="path">array of grid coordinates</param>
+    /// <param name="grid">grid infp</param>
     public void SetWalkPath(Vector2[] path, GridResource grid)
     {
         if (path.Length <= 0)
@@ -61,6 +74,7 @@ public partial class UnitPath : Path2D
         isWalking = true;
     }
 
+    //properties
     public bool isWalking
     {
         set
