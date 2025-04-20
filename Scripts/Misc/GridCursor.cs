@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [04/18/2025]
+ * Last Updated: [04/20/2025]
  * [script for the cursor]
  */
 
@@ -31,6 +31,32 @@ public partial class GridCursor : Node2D
     }
 
     /// <summary>
+    /// inputs for cursor
+    /// 
+    /// TODO: use input maps
+    /// TODO: look into input device detection
+    /// for mouse and keyboard or controller
+    /// </summary>
+    /// <param name="event"></param>
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event is InputEventMouseMotion input)
+        {
+            this.cell = _grid.CalculateGridCoordinates(input.Position);
+        }
+        //doesn't work, will be fix when looking into input map
+        /*
+        else if (@event.IsActionPressed("click"))
+        {
+            GD.Print("temp works");
+            EmitSignal("AcceptPress", cell);
+            GetViewport().SetInputAsHandled();
+        }
+        */
+
+    }
+
+    /// <summary>
     /// property for cell
     /// when setting:
     /// check if cell is viable to change
@@ -52,5 +78,6 @@ public partial class GridCursor : Node2D
             EmitSignal("Moved");
             _timer.Start();
         }
+        get { return _cell; }
     }
 }
