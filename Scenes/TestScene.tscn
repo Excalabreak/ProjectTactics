@@ -107,11 +107,12 @@ tile_set = SubResource("TileSet_5rbs6")
 tile_map_data = PackedByteArray("AAAAAAMAAAAAAAAAAAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAADAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_201fe")
 
-[node name="Unit" type="Node2D" parent="." node_paths=PackedStringArray("_unitPath", "_unitSprite", "_animPlayer")]
+[node name="Unit" type="Node2D" parent="." node_paths=PackedStringArray("_unitPath", "_unitSprite", "_unitStats", "_animPlayer")]
 position = Vector2(32, 32)
 script = ExtResource("4_qsjrb")
 _unitPath = NodePath("UnitPath")
 _unitSprite = NodePath("UnitSprite")
+_unitStats = NodePath("UnitStats")
 _animPlayer = NodePath("AnimationPlayer")
 _grid = ExtResource("5_qsjrb")
 

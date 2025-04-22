@@ -38,6 +38,7 @@ public partial class Unit : Node2D
         this.cell = _grid.CalculateGridCoordinates(Position);
         Position = _grid.CalculateMapPosition(cell);
 
+        /*
         //test
         Vector2[] test = new Vector2[4];
         test[0] = new Vector2(1, 1);
@@ -46,6 +47,7 @@ public partial class Unit : Node2D
         test[3] = new Vector2(3, 0);
 
         _unitPath.SetWalkPath(test, _grid);
+        */
     }
 
     /// <summary>
