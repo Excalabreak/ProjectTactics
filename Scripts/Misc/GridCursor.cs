@@ -44,16 +44,40 @@ public partial class GridCursor : Node2D
         {
             this.cell = _grid.CalculateGridCoordinates(input.Position);
         }
-        //doesn't work, will be fix when looking into input map
-        /*
-        else if (@event.IsActionPressed("click"))
+        else if (@event.IsActionPressed("Accept"))
         {
-            GD.Print("temp works");
             EmitSignal("AcceptPress", cell);
             GetViewport().SetInputAsHandled();
         }
-        */
 
+        bool shouldMove = @event.IsPressed();
+
+        if (@event.IsEcho())
+        {
+            shouldMove = shouldMove && _timer.IsStopped();
+        }
+
+        if (!shouldMove)
+        {
+            return;
+        }
+
+        if (@event.IsAction("Up"))
+        {
+            this.cell += Vector2.Up;
+        }
+        else if (@event.IsAction("Down"))
+        {
+            this.cell += Vector2.Down;
+        }
+        else if (@event.IsAction("Left"))
+        {
+            this.cell += Vector2.Left;
+        }
+        else if (@event.IsAction("Right"))
+        {
+            this.cell += Vector2.Right;
+        }
     }
 
     /// <summary>
