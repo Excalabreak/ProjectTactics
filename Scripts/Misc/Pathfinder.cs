@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
+ * Original Tutorial Author: [Lovato, Nathan]
  * Last Updated: [04/23/2025]
  * [Finds the path between two points among 
  * walkable cells using the AStar pathfinding algorithm]

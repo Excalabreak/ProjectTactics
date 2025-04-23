@@ -3,6 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
+ * Original Tutorial Author: [Lovato, Nathan]
  * Last Updated: [04/11/2025]
  * [holds information about a map]
  */

@@ -3,6 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
+ * Original Tutorial Author: [Lovato, Nathan]
  * Last Updated: [04/23/2025]
  * [script for the cursor]
  */

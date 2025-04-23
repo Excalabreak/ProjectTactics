@@ -3,6 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
+ * Original Tutorial Author: [Lovato, Nathan]
  * Last Updated: [04/18/2025]
  * [Unit Main Script
  * NOTE: all of this is one script for now,
