@@ -17,6 +17,24 @@ public partial class UnitPath : TileMapLayer
 
     private Vector2[] _currentPath;
 
+    public override void _Ready()
+    {
+        Vector2 start = new Vector2(0, 0);
+        Vector2 end = new Vector2(6, 3);
+
+        List<Vector2> points = new List<Vector2>();
+        for (int i = 0; i <= end.X - start.X; i++)
+        {
+            for (int j = 0; j <= end.Y - start.Y; j++)
+            {
+                points.Add(start + new Vector2(i, j));
+            }
+        }
+
+        Initialize(points.ToArray());
+        DrawPath(start, new Vector2(3, 1));
+    }
+
     /// <summary>
     /// initializes path
     /// </summary>

@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 run/max_fps=60
 config/icon="res://Sprites/Old/icon.svg"
 
+[autoload]
+
+VectorDirections="*res://Scripts/Misc/VectorDirections.cs"
+
 [display]
 
 window/size/viewport_width=480

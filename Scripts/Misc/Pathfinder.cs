@@ -81,7 +81,7 @@ public partial class Pathfinder : RefCounted
 
         foreach (int dir in Enum.GetValues(typeof(Direction)))
         {
-            Vector2 neighbor = cell + GetDirection((Direction)dir);
+            Vector2 neighbor = cell + VectorDirections.Instance.GetDirection((Direction)dir);
 
             if (!cellMapping.ContainsKey(neighbor))
             {
@@ -96,40 +96,4 @@ public partial class Pathfinder : RefCounted
         int[] output = neighborList.ToArray();
         return output;
     }
-
-    /// <summary>
-    /// returns corresponding vector2
-    /// becuase vector2 cant be a const
-    /// </summary>
-    /// <param name="direction">enum of direction</param>
-    /// <returns>vector2 of direction</returns>
-    private Vector2 GetDirection(Direction direction)
-    {
-        Vector2 dir = new Vector2();
-        switch (direction)
-        {
-            case Direction.UP:
-                dir = Vector2.Up;
-                break;
-            case Direction.DOWN:
-                dir = Vector2.Down;
-                break;
-            case Direction.LEFT:
-                dir = Vector2.Left;
-                break;
-            case Direction.RIGHT:
-                dir = Vector2.Right;
-                break;
-        }
-        return dir;
-    }
-}
-
-//enum for directions
-public enum Direction
-{
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
 }
