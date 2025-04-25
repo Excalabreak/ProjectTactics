@@ -1,14 +1,13 @@
 using Godot;
 using System;
-using System.IO;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [04/16/2025]
- * [unit's path it fallows when moving]
+ * Last Updated: [04/24/2025]
+ * [moves sprite through path]
  */
 
-public partial class UnitPath : Path2D
+public partial class UnitPathMovement : Path2D
 {
     [Export] private Unit _unit;
 

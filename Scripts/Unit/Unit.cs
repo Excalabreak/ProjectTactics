@@ -17,7 +17,7 @@ public partial class Unit : Node2D
     private Vector2 _cell = Vector2.Zero;
     private bool _isSelected = false;
 
-    [Export] private UnitPath _unitPath;
+    [Export] private UnitPathMovement _unitPathMovement;
     private bool _unitCanWalk = false;
 
     [Export] private UnitSprite _unitSprite;
@@ -59,9 +59,9 @@ public partial class Unit : Node2D
     {
         float fDelta = (float)delta;
 
-        if (_unitPath != null && _unitCanWalk)
+        if (_unitPathMovement != null && _unitCanWalk)
         {
-            _unitPath.WalkUnit(fDelta, _grid, cell);
+            _unitPathMovement.WalkUnit(fDelta, _grid, cell);
         }
     }
 

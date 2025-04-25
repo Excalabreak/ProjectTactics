@@ -5,9 +5,10 @@ using System.Collections.Generic;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [04/23/2025]
+ * Last Updated: [04/24/2025]
  * [Finds the path between two points among 
  * walkable cells using the AStar pathfinding algorithm]
+ * ...f is suppose to be capitalized in PathFinder isn't it...
  */
 
 public partial class Pathfinder : RefCounted
@@ -17,12 +18,7 @@ public partial class Pathfinder : RefCounted
 
     private AStar2D _astar = new AStar2D();
 
-    /// <summary>
-    /// initiallizes a dictionary for nodes
-    /// </summary>
-    /// <param name="grid">grid infp</param>
-    /// <param name="walkableCells">cells in the map</param>
-    public void Init(GridResource grid, Vector2[] walkableCells)
+    public Pathfinder(GridResource grid, Vector2[] walkableCells)
     {
         _grid = grid;
 
