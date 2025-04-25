@@ -112,4 +112,9 @@ public partial class Unit : Node2D
             _unitCanWalk = value;
         }
     }
+
+    public UnitStats unitStats
+    {
+        get { return _unitStats; }
+    }
 }
