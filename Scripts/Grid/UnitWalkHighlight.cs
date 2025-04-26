@@ -1,6 +1,13 @@
 using Godot;
 using System;
 
+/*
+ * Author: [Lam, Justin]
+ * Original Tutorial Author: [Lovato, Nathan]
+ * Last Updated: [04/26/2025]
+ * [script to handle highlighting walkable tiles]
+ */
+
 public partial class UnitWalkHighlight : TileMapLayer
 {
     public void DrawHighlights(Vector2[] cells)

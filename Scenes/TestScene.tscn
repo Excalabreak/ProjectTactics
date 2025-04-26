@@ -200,23 +200,23 @@ _walkHighlight = NodePath("../UnitWalkHighlights")
 [node name="Unit" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_animPlayer")]
 position = Vector2(32, 32)
 script = ExtResource("4_qsjrb")
-_unitPathMovement = NodePath("UnitPath")
+_unitPathMovement = NodePath("UnitPathMovement")
 _unitSprite = NodePath("UnitSprite")
 _unitStats = NodePath("UnitStats")
 _animPlayer = NodePath("AnimationPlayer")
 _grid = ExtResource("5_qsjrb")
 
-[node name="UnitPath" type="Path2D" parent="GameBoard/Unit" node_paths=PackedStringArray("_unit", "_pathFollow")]
+[node name="UnitPathMovement" type="Path2D" parent="GameBoard/Unit" node_paths=PackedStringArray("_unit", "_pathFollow")]
 script = ExtResource("8_hctok")
 _unit = NodePath("..")
 _pathFollow = NodePath("PathFollow2D")
 _moveSpeed = 200.0
 
-[node name="PathFollow2D" type="PathFollow2D" parent="GameBoard/Unit/UnitPath"]
+[node name="PathFollow2D" type="PathFollow2D" parent="GameBoard/Unit/UnitPathMovement"]
 rotates = false
 loop = false
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameBoard/Unit/UnitPath/PathFollow2D"]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameBoard/Unit/UnitPathMovement/PathFollow2D"]
 remote_path = NodePath("../../../UnitSprite")
 
 [node name="UnitSprite" type="Sprite2D" parent="GameBoard/Unit"]
