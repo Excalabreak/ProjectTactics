@@ -15,7 +15,10 @@ public partial class GameBoard : Node2D
     [Export] private GridResource _grid;
 
     //all units, might want to split this up
-    private Godot.Collections.Dictionary<Vector2, Node2D> _units = new Godot.Collections.Dictionary<Vector2, Node2D>();
+    private Godot.Collections.Dictionary<Vector2, Unit> _units = new Godot.Collections.Dictionary<Vector2, Unit>();
+
+    //test to see if it works
+    [Export] private UnitWalkHighlight _walkHighlight;
 
     /// <summary>
     /// reinitializes the units
@@ -23,6 +26,8 @@ public partial class GameBoard : Node2D
     public override void _Ready()
     {
         Reinitialize();
+
+        _walkHighlight.DrawHighlights(GetWalkableCells(_units[Vector2.Zero]));
     }
 
     /// <summary>

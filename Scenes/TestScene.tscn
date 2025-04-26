@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=32 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Texture2D" uid="uid://cvsff4vsbypvk" path="res://Sprites/Test/TestPlanes.png" id="1_8k7wh"]
 [ext_resource type="Texture2D" uid="uid://qti0w81f7cdv" path="res://Sprites/Test/TestSand.png" id="2_iufkg"]
@@ -6,8 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://cehbm80elwn7v" path="res://Sprites/Test/GridTile.png" id="4_6xh1p"]
 [ext_resource type="Texture2D" uid="uid://1so2e8lmu73j" path="res://Sprites/Test/TestFriendly.png" id="4_iufkg"]
 [ext_resource type="Script" uid="uid://doq6m3w0gkqei" path="res://Scripts/Unit/Unit.cs" id="4_qsjrb"]
+[ext_resource type="Texture2D" uid="uid://c77lwl1g215vn" path="res://Sprites/Test/TileHighlight.png" id="5_8c81w"]
 [ext_resource type="Texture2D" uid="uid://b7bouj3wqmjsd" path="res://Sprites/Test/arrows.svg" id="5_hctok"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="5_qsjrb"]
+[ext_resource type="Script" uid="uid://ccvhstia04m7b" path="res://Scripts/Grid/UnitWalkHighlight.cs" id="6_fi7j4"]
 [ext_resource type="Script" uid="uid://c8guc1dvccpxf" path="res://Scripts/Misc/UnitPath.cs" id="6_t2vuu"]
 [ext_resource type="Script" uid="uid://dtp17f15wr4c4" path="res://Scripts/Unit/UnitPathMovement.cs" id="8_hctok"]
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="8_lp1f3"]
@@ -45,6 +47,15 @@ texture_region_size = Vector2i(64, 64)
 [sub_resource type="TileSet" id="TileSet_201fe"]
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_5rbs6")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4v62a"]
+texture = ExtResource("5_8c81w")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_c2lnq"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_4v62a")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t2vuu"]
 texture = ExtResource("5_hctok")
@@ -171,14 +182,20 @@ tile_set = SubResource("TileSet_5rbs6")
 tile_map_data = PackedByteArray("AAAAAAMAAAAAAAAAAAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAADAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_201fe")
 
+[node name="UnitWalkHighlights" type="TileMapLayer" parent="."]
+modulate = Color(1, 1, 1, 0.356863)
+tile_set = SubResource("TileSet_c2lnq")
+script = ExtResource("6_fi7j4")
+
 [node name="UnitPath" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_lp1f3")
 script = ExtResource("6_t2vuu")
 _grid = ExtResource("5_qsjrb")
 
-[node name="GameBoard" type="Node2D" parent="."]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_walkHighlight")]
 script = ExtResource("8_lp1f3")
 _grid = ExtResource("5_qsjrb")
+_walkHighlight = NodePath("../UnitWalkHighlights")
 
 [node name="Unit" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_animPlayer")]
 position = Vector2(32, 32)
