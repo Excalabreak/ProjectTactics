@@ -100,7 +100,7 @@ public partial class GridCursor : Node2D
             _cell = newCell;
 
             Position = _grid.CalculateMapPosition(_cell);
-            EmitSignal("Moved");
+            EmitSignal("Moved", _cell);
             _timer.Start();
         }
         get { return _cell; }

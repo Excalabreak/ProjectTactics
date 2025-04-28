@@ -73,4 +73,11 @@ public partial class UnitPath : TileMapLayer
         _pathfinder = null;
         Clear();
     }
+
+    //properties
+
+    public Vector2[] currentPath
+    {
+        get { return _currentPath; }
+    }
 }

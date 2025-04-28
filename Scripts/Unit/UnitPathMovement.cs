@@ -67,7 +67,10 @@ public partial class UnitPathMovement : Path2D
         Curve.AddPoint(Vector2.Zero);
         foreach (Vector2 point in path)
         {
-            Curve.AddPoint(grid.CalculateMapPosition(point) - _unit.Position);
+            if (grid.CalculateMapPosition(point) - _unit.Position != Curve.GetPointPosition(Curve.PointCount - 1))
+            {
+                Curve.AddPoint(grid.CalculateMapPosition(point) - _unit.Position);
+            }
         }
         _unit.cell = path[path.Length - 1];
         isWalking = true;

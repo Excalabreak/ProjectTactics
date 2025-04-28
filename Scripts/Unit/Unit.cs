@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [04/18/2025]
+ * Last Updated: [04/28/2025]
  * [Unit Main Script
  * NOTE: all of this is one script for now,
  * but will likely need to be split up into different
@@ -116,5 +116,10 @@ public partial class Unit : Node2D
     public UnitStats unitStats
     {
         get { return _unitStats; }
+    }
+
+    public UnitPathMovement unitPathMovement
+    {
+        get { return _unitPathMovement; }
     }
 }

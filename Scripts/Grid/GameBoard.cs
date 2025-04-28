@@ -2,17 +2,23 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [04/26/2025]
+ * Last Updated: [04/28/2025]
  * [game board manages everything on the map]
  */
 
 public partial class GameBoard : Node2D
 {
     [Export] private GridResource _grid;
+    [Export] private UnitWalkHighlight _unitWalkHighlights;
+    [Export] private UnitPath _unitPath;
+
+    private Unit _selectedUnit;
+    private Vector2[] _walkableCells;
 
     //all units, might want to split this up
     private Godot.Collections.Dictionary<Vector2, Unit> _units = new Godot.Collections.Dictionary<Vector2, Unit>();
@@ -24,6 +30,102 @@ public partial class GameBoard : Node2D
     {
         Reinitialize();
 
+    }
+
+    /// <summary>
+    /// if the player inputs decline, deselect unit
+    /// </summary>
+    /// <param name="event"></param>
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (_selectedUnit != null && @event.IsActionPressed("Decline"))
+        {
+            DeselectSelectedUnit();
+            ClearSelectedUnit();
+        }
+    }
+
+    /// <summary>
+    /// selects unit
+    /// </summary>
+    /// <param name="cell">cell to select unit</param>
+    private void SelectUnit(Vector2 cell)
+    {
+        if (!_units.ContainsKey(cell))
+        {
+            //could add options here
+            return;
+        }
+
+        _selectedUnit = _units[cell];
+        _selectedUnit.isSelected = true;
+        _walkableCells = GetWalkableCells(_selectedUnit);
+        _unitWalkHighlights.DrawHighlights(_walkableCells);
+        _unitPath.Initialize(_walkableCells);
+    }
+
+    /// <summary>
+    /// deselects units and clears overlays
+    /// </summary>
+    private void DeselectSelectedUnit()
+    {
+        _selectedUnit.isSelected = false;
+        _unitWalkHighlights.Clear();
+        _unitPath.Stop();
+    }
+
+    private void ClearSelectedUnit()
+    {
+        _selectedUnit = null;
+        _walkableCells = new Vector2[0];
+    }
+
+    /// <summary>
+    /// moves the selected unit to a new cell
+    /// </summary>
+    /// <param name="newCell"></param>
+    private async void MoveSelectedUnit(Vector2 newCell)
+    {
+        if (IsOccupied(newCell) || !_walkableCells.Contains(newCell))
+        {
+            return;
+        }
+
+        _units.Remove(_selectedUnit.cell);
+        _units[newCell] = _selectedUnit;
+        DeselectSelectedUnit();
+        _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath, _grid);
+
+        await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
+        ClearSelectedUnit();
+    }
+
+    /// <summary>
+    /// updates the unit path when the cursor moves
+    /// </summary>
+    /// <param name="newCell">cell cursor is moving to</param>
+    private void OnCursorMoved(Vector2 newCell)
+    {
+        if (_selectedUnit != null && _selectedUnit.isSelected)
+        {
+            _unitPath.DrawPath(_selectedUnit.cell, newCell);
+        }
+    }
+
+    /// <summary>
+    /// calls to select or move unit
+    /// </summary>
+    /// <param name="cell">cell cursor is on</param>
+    private void OnCursorAcceptPress(Vector2 cell)
+    {
+        if (_selectedUnit == null)
+        {
+            SelectUnit(cell);
+        }
+        else if (_selectedUnit.isSelected)
+        {
+            MoveSelectedUnit(cell);
+        }
     }
 
     /// <summary>
