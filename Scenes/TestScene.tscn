@@ -176,17 +176,18 @@ _data = {
 
 [node name="TestScene" type="Node2D"]
 
-[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager")]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor")]
 script = ExtResource("8_lp1f3")
 _grid = ExtResource("5_qsjrb")
 _unitWalkHighlights = NodePath("Map/UnitWalkHighlights")
 _unitPath = NodePath("Map/UnitPath")
 _unitManager = NodePath("Units")
+_gridCursor = NodePath("Cursor")
 
 [node name="Map" type="Node2D" parent="GameBoard"]
 
 [node name="Terrain" type="TileMapLayer" parent="GameBoard/Map"]
-tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAADAAMAAAAAAAAAAAACAAMAAAAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAACAAAAAQAAAAAAAAADAAAAAQAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAADAAMAAAAAAAAAAAACAAMAAAAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAgAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_5rbs6")
 
 [node name="Grid" type="TileMapLayer" parent="GameBoard/Map"]
@@ -198,10 +199,10 @@ modulate = Color(1, 1, 1, 0.356863)
 tile_set = SubResource("TileSet_c2lnq")
 script = ExtResource("6_fi7j4")
 
-[node name="UnitPath" type="TileMapLayer" parent="GameBoard/Map"]
+[node name="UnitPath" type="TileMapLayer" parent="GameBoard/Map" node_paths=PackedStringArray("_gameBoard")]
 tile_set = SubResource("TileSet_lp1f3")
 script = ExtResource("6_t2vuu")
-_grid = ExtResource("5_qsjrb")
+_gameBoard = NodePath("../..")
 
 [node name="Units" type="Node2D" parent="GameBoard"]
 script = ExtResource("11_4v62a")
@@ -209,14 +210,14 @@ script = ExtResource("11_4v62a")
 [node name="PlayerUnits" type="Node2D" parent="GameBoard/Units"]
 script = ExtResource("12_c2lnq")
 
-[node name="Unit" type="Node2D" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_animPlayer")]
+[node name="Unit" type="Node2D" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_animPlayer", "_gameBoard")]
 position = Vector2(32, 32)
 script = ExtResource("4_qsjrb")
 _unitPathMovement = NodePath("UnitPathMovement")
 _unitSprite = NodePath("UnitSprite")
 _unitStats = NodePath("UnitStats")
 _animPlayer = NodePath("AnimationPlayer")
-_grid = ExtResource("5_qsjrb")
+_gameBoard = NodePath("../../..")
 
 [node name="UnitPathMovement" type="Path2D" parent="GameBoard/Units/PlayerUnits/Unit" node_paths=PackedStringArray("_unit", "_pathFollow")]
 script = ExtResource("8_hctok")
@@ -244,14 +245,14 @@ libraries = {
 [node name="UnitStats" type="Node" parent="GameBoard/Units/PlayerUnits/Unit"]
 script = ExtResource("10_201fe")
 
-[node name="Unit2" type="Node2D" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_animPlayer")]
-position = Vector2(96, 32)
+[node name="Unit2" type="Node2D" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_animPlayer", "_gameBoard")]
+position = Vector2(32, 96)
 script = ExtResource("4_qsjrb")
 _unitPathMovement = NodePath("UnitPathMovement")
 _unitSprite = NodePath("UnitSprite")
 _unitStats = NodePath("UnitStats")
 _animPlayer = NodePath("AnimationPlayer")
-_grid = ExtResource("5_qsjrb")
+_gameBoard = NodePath("../../..")
 
 [node name="UnitPathMovement" type="Path2D" parent="GameBoard/Units/PlayerUnits/Unit2" node_paths=PackedStringArray("_unit", "_pathFollow")]
 script = ExtResource("8_hctok")
@@ -279,13 +280,48 @@ libraries = {
 [node name="UnitStats" type="Node" parent="GameBoard/Units/PlayerUnits/Unit2"]
 script = ExtResource("10_201fe")
 
+[node name="Unit3" type="Node2D" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_animPlayer", "_gameBoard")]
+position = Vector2(32, 160)
+script = ExtResource("4_qsjrb")
+_unitPathMovement = NodePath("UnitPathMovement")
+_unitSprite = NodePath("UnitSprite")
+_unitStats = NodePath("UnitStats")
+_animPlayer = NodePath("AnimationPlayer")
+_gameBoard = NodePath("../../..")
+
+[node name="UnitPathMovement" type="Path2D" parent="GameBoard/Units/PlayerUnits/Unit3" node_paths=PackedStringArray("_unit", "_pathFollow")]
+script = ExtResource("8_hctok")
+_unit = NodePath("..")
+_pathFollow = NodePath("PathFollow2D")
+_moveSpeed = 200.0
+
+[node name="PathFollow2D" type="PathFollow2D" parent="GameBoard/Units/PlayerUnits/Unit3/UnitPathMovement"]
+rotates = false
+loop = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameBoard/Units/PlayerUnits/Unit3/UnitPathMovement/PathFollow2D"]
+remote_path = NodePath("../../../UnitSprite")
+
+[node name="UnitSprite" type="Sprite2D" parent="GameBoard/Units/PlayerUnits/Unit3"]
+texture = ExtResource("4_iufkg")
+script = ExtResource("9_5rbs6")
+_skin = ExtResource("4_iufkg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameBoard/Units/PlayerUnits/Unit3"]
+libraries = {
+&"": SubResource("AnimationLibrary_6xh1p")
+}
+
+[node name="UnitStats" type="Node" parent="GameBoard/Units/PlayerUnits/Unit3"]
+script = ExtResource("10_201fe")
+
 [node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
 script = ExtResource("12_c2lnq")
 
-[node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_timer")]
+[node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer")]
 position = Vector2(32, 32)
 script = ExtResource("11_ytmxh")
-_grid = ExtResource("5_qsjrb")
+_gameBoard = NodePath("..")
 _timer = NodePath("Timer")
 
 [node name="Sprite2D" type="Sprite2D" parent="GameBoard/Cursor"]
@@ -294,6 +330,3 @@ texture = ExtResource("11_xjl2p")
 [node name="Timer" type="Timer" parent="GameBoard/Cursor"]
 wait_time = 0.1
 one_shot = true
-
-[connection signal="AcceptPress" from="GameBoard/Cursor" to="GameBoard" method="OnCursorAcceptPress"]
-[connection signal="Moved" from="GameBoard/Cursor" to="GameBoard" method="OnCursorMoved"]

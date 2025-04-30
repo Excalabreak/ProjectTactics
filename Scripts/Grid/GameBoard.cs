@@ -17,6 +17,7 @@ public partial class GameBoard : Node2D
     [Export] private UnitWalkHighlight _unitWalkHighlights;
     [Export] private UnitPath _unitPath;
     [Export] private UnitManager _unitManager;
+    [Export] private GridCursor _gridCursor;
 
     private Unit _selectedUnit;
     private Vector2[] _walkableCells;
@@ -29,6 +30,9 @@ public partial class GameBoard : Node2D
     /// </summary>
     public override void _Ready()
     {
+        _gridCursor.AcceptPress += OnCursorAcceptPress;
+        _gridCursor.Moved += OnCursorMoved;
+
         Reinitialize();
     }
 
@@ -184,6 +188,15 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
+    /// makes sure signals are unsubscribed
+    /// </summary>
+    public override void _ExitTree()
+    {
+        _gridCursor.AcceptPress -= OnCursorAcceptPress;
+        _gridCursor.Moved -= OnCursorMoved;
+    }
+
+    /// <summary>
     /// Returns `true` if the cell is occupied by a unit.
     /// </summary>
     /// <param name="cell">coordinates of grid that are occupied</param>
@@ -204,5 +217,12 @@ public partial class GameBoard : Node2D
         {
             _units[unit.cell] = unit;
         }
+    }
+
+    //properties
+    //note, make export if need to test outside of game board
+    public GridResource grid
+    {
+        get { return _grid; }
     }
 }

@@ -15,9 +15,9 @@ public partial class GridCursor : Node2D
     //when moved
     [Signal] public delegate void MovedEventHandler(Vector2 nextCell);
 
-    [Export] private GridResource _grid;
-    [Export] private Timer _timer;
+    [Export] private GameBoard _gameBoard;
 
+    [Export] private Timer _timer;
     [Export] private float _uiCooldown = .1f;
 
     private Vector2 _cell = Vector2.Zero; //setget
@@ -28,7 +28,7 @@ public partial class GridCursor : Node2D
     public override void _Ready()
     {
         _timer.WaitTime = _uiCooldown;
-        Position = _grid.CalculateMapPosition(_cell);
+        Position = _gameBoard.grid.CalculateMapPosition(_cell);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public partial class GridCursor : Node2D
     {
         if (@event is InputEventMouseMotion input)
         {
-            this.cell = _grid.CalculateGridCoordinates(input.Position);
+            this.cell = _gameBoard.grid.CalculateGridCoordinates(input.Position);
         }
         else if (@event.IsActionPressed("Accept"))
         {
@@ -91,7 +91,7 @@ public partial class GridCursor : Node2D
     {
         set
         {
-            Vector2 newCell = _grid.Clamp(value);
+            Vector2 newCell = _gameBoard.grid.Clamp(value);
             if (newCell.IsEqualApprox(_cell))
             {
                 return;
@@ -99,7 +99,7 @@ public partial class GridCursor : Node2D
 
             _cell = newCell;
 
-            Position = _grid.CalculateMapPosition(_cell);
+            Position = _gameBoard.grid.CalculateMapPosition(_cell);
             EmitSignal("Moved", _cell);
             _timer.Start();
         }

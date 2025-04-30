@@ -9,6 +9,7 @@ using System;
 
 public partial class UnitPathMovement : Path2D
 {
+    [Export] private GameBoard _gameBoard;
     [Export] private Unit _unit;
 
     //path2d

@@ -26,29 +26,17 @@ public partial class Unit : Node2D
 
     //animation player, but i might need to make a state machine
     //will keep in here for now to see how is selected works
-    [Export] private AnimationPlayer _animPlayer; 
+    [Export] private AnimationPlayer _animPlayer;
 
-    //map
-    [Export] private GridResource _grid;
+    [Export] private GameBoard _gameBoard;
 
     /// <summary>
     /// sets unit's positon
     /// </summary>
     public override void _Ready()
     {
-        this.cell = _grid.CalculateGridCoordinates(Position);
-        Position = _grid.CalculateMapPosition(cell);
-
-        /*
-        //test
-        Vector2[] test = new Vector2[4];
-        test[0] = new Vector2(1, 1);
-        test[1] = new Vector2(1, 2);
-        test[2] = new Vector2(2, 3);
-        test[3] = new Vector2(3, 0);
-
-        _unitPath.SetWalkPath(test, _grid);
-        */
+        this.cell = _gameBoard.grid.CalculateGridCoordinates(Position);
+        Position = _gameBoard.grid.CalculateMapPosition(cell);
     }
 
     /// <summary>
@@ -61,7 +49,7 @@ public partial class Unit : Node2D
 
         if (_unitPathMovement != null && _unitCanWalk)
         {
-            _unitPathMovement.WalkUnit(fDelta, _grid, cell);
+            _unitPathMovement.WalkUnit(fDelta, _gameBoard.grid, cell);
         }
     }
 
@@ -70,9 +58,9 @@ public partial class Unit : Node2D
     {
         set
         {
-            if (_grid != null)
+            if (_gameBoard.grid != null)
             {
-                _cell = _grid.Clamp(value);
+                _cell = _gameBoard.grid.Clamp(value);
             }
         }
         get { return _cell; }
