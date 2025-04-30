@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=34 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Texture2D" uid="uid://cvsff4vsbypvk" path="res://Sprites/Test/TestPlanes.png" id="1_8k7wh"]
 [ext_resource type="Texture2D" uid="uid://qti0w81f7cdv" path="res://Sprites/Test/TestSand.png" id="2_iufkg"]
@@ -15,8 +15,10 @@
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="8_lp1f3"]
 [ext_resource type="Script" uid="uid://70nimqy81e3d" path="res://Scripts/Unit/UnitSprite.cs" id="9_5rbs6"]
 [ext_resource type="Script" uid="uid://bw18o174u4r2c" path="res://Scripts/Unit/UnitStats.cs" id="10_201fe"]
+[ext_resource type="Script" uid="uid://dm3c41p3wxfqg" path="res://Scripts/Unit/UnitManager.cs" id="11_4v62a"]
 [ext_resource type="Texture2D" uid="uid://suvveuruoly4" path="res://Sprites/Test/GridCursor.png" id="11_xjl2p"]
 [ext_resource type="Script" uid="uid://b8k2oamcad7ba" path="res://Scripts/Misc/GridCursor.cs" id="11_ytmxh"]
+[ext_resource type="Script" uid="uid://dwoq515u7ummm" path="res://Scripts/Unit/UnitGroup.cs" id="12_c2lnq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qsjrb"]
 texture = ExtResource("1_8k7wh")
@@ -174,33 +176,38 @@ _data = {
 
 [node name="TestScene" type="Node2D"]
 
-[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath")]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager")]
 script = ExtResource("8_lp1f3")
 _grid = ExtResource("5_qsjrb")
-_unitWalkHighlights = NodePath("UnitWalkHighlights")
-_unitPath = NodePath("UnitPath")
+_unitWalkHighlights = NodePath("Map/UnitWalkHighlights")
+_unitPath = NodePath("Map/UnitPath")
+_unitManager = NodePath("Units")
 
-[node name="Map" type="TileMapLayer" parent="GameBoard"]
+[node name="Map" type="Node2D" parent="GameBoard"]
+
+[node name="Terrain" type="TileMapLayer" parent="GameBoard/Map"]
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAADAAMAAAAAAAAAAAACAAMAAAAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_5rbs6")
 
-[node name="Grid" type="TileMapLayer" parent="GameBoard"]
+[node name="Grid" type="TileMapLayer" parent="GameBoard/Map"]
 tile_map_data = PackedByteArray("AAAAAAMAAAAAAAAAAAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAADAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_201fe")
 
-[node name="UnitWalkHighlights" type="TileMapLayer" parent="GameBoard"]
+[node name="UnitWalkHighlights" type="TileMapLayer" parent="GameBoard/Map"]
 modulate = Color(1, 1, 1, 0.356863)
 tile_set = SubResource("TileSet_c2lnq")
 script = ExtResource("6_fi7j4")
 
-[node name="UnitPath" type="TileMapLayer" parent="GameBoard"]
+[node name="UnitPath" type="TileMapLayer" parent="GameBoard/Map"]
 tile_set = SubResource("TileSet_lp1f3")
 script = ExtResource("6_t2vuu")
 _grid = ExtResource("5_qsjrb")
 
 [node name="Units" type="Node2D" parent="GameBoard"]
+script = ExtResource("11_4v62a")
 
 [node name="PlayerUnits" type="Node2D" parent="GameBoard/Units"]
+script = ExtResource("12_c2lnq")
 
 [node name="Unit" type="Node2D" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_animPlayer")]
 position = Vector2(32, 32)
@@ -273,6 +280,7 @@ libraries = {
 script = ExtResource("10_201fe")
 
 [node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
+script = ExtResource("12_c2lnq")
 
 [node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_timer")]
 position = Vector2(32, 32)

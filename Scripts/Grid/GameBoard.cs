@@ -16,6 +16,7 @@ public partial class GameBoard : Node2D
     [Export] private GridResource _grid;
     [Export] private UnitWalkHighlight _unitWalkHighlights;
     [Export] private UnitPath _unitPath;
+    [Export] private UnitManager _unitManager;
 
     private Unit _selectedUnit;
     private Vector2[] _walkableCells;
@@ -29,7 +30,6 @@ public partial class GameBoard : Node2D
     public override void _Ready()
     {
         Reinitialize();
-
     }
 
     /// <summary>
@@ -200,14 +200,8 @@ public partial class GameBoard : Node2D
     {
         _units.Clear();
 
-        //temp, we will need to change this for a better system
-        foreach (Node2D child in GetChildren())
+        foreach (Unit unit in _unitManager.GetAllUnits())
         {
-            var unit = child as Unit;
-            if (unit == null)
-            {
-                continue;
-            }
             _units[unit.cell] = unit;
         }
     }
