@@ -6,7 +6,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Original Tutorial Author: [Lovato, Nathan]
+ * Original Tutorial Author: [Lovato, Nathan; YT: Heal Moon]
  * Last Updated: [04/28/2025]
  * [game board manages everything on the map]
  */
@@ -18,12 +18,16 @@ public partial class GameBoard : Node2D
     [Export] private UnitPath _unitPath;
     [Export] private UnitManager _unitManager;
     [Export] private GridCursor _gridCursor;
+    [Export] private Map _map;
 
     private Unit _selectedUnit;
     private Vector2[] _walkableCells;
+    private float[,] _movementCosts;
 
     //all units, might want to split this up
     private Godot.Collections.Dictionary<Vector2, Unit> _units = new Godot.Collections.Dictionary<Vector2, Unit>();
+
+    private const float MAX_VALUE = 9999999;
 
     /// <summary>
     /// reinitializes the units
@@ -32,6 +36,8 @@ public partial class GameBoard : Node2D
     {
         _gridCursor.AcceptPress += OnCursorAcceptPress;
         _gridCursor.Moved += OnCursorMoved;
+
+        _movementCosts = _map.GetMovementCosts(_grid);
 
         Reinitialize();
     }
@@ -139,7 +145,7 @@ public partial class GameBoard : Node2D
     /// <returns>array of coords that the unit can walk</returns>
     private Vector2[] GetWalkableCells(Unit unit)
     {
-        return FloodFill(unit.cell, unit.unitStats.moveRange);
+        return Dijksta(unit.cell, unit.unitStats.moveRange);
     }
 
     /// <summary>
@@ -185,6 +191,78 @@ public partial class GameBoard : Node2D
             }
         }
         return walkableCells.ToArray();
+    }
+
+    /// <summary>
+    /// gets walkable units with move cost
+    /// NOTE: tutorial said this is quick and dirty
+    /// </summary>
+    /// <param name="cell">unit coords</param>
+    /// <param name="maxDistance">unit move stat</param>
+    /// <returns>array of walkable units</returns>
+    private Vector2[] Dijksta(Vector2 cell, float maxDistance)
+    {
+        int y = (int)Mathf.Round(grid.gridCell.Y);
+        int x = (int)Mathf.Round(grid.gridCell.X);
+
+        List<Vector2> moveableCells = new List<Vector2>();
+        bool[,] visited = new bool[y,x];
+        float[,] distances = new float[y, x];
+        Vector2[,] previous = new Vector2[y, x];
+
+        moveableCells.Add(cell);
+
+        for (int i = 0; i < y; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                visited[i, j] = false;
+                distances[i, j] = MAX_VALUE;
+            }
+        }
+
+        PriorityQueue<Vector2, float> dijkstaQueue = new PriorityQueue<Vector2, float>();
+        dijkstaQueue.Enqueue(cell, 0);
+        distances[(int)Mathf.Round(cell.Y), (int)Mathf.Round(cell.X)] = 0;
+
+        float tileCost;
+        float distanceToNode;
+
+        while (dijkstaQueue.Count > 0)
+        {
+            dijkstaQueue.TryDequeue(out Vector2 currentValue, out float currentPriority);
+            visited[(int)Mathf.Round(cell.Y), (int)Mathf.Round(cell.X)] = true;
+
+            foreach (Direction dir in Enum.GetValues(typeof(Direction)))
+            {
+                Vector2 coords = currentValue + VectorDirections.Instance.GetDirection(dir);
+                int coordsY = (int)Mathf.Round(coords.Y);
+                int coordsX = (int)Mathf.Round(coords.X);
+                if (_grid.IsWithinBounds(coords))
+                {
+                    if (visited[coordsY, coordsX])
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        tileCost = _movementCosts[coordsY, coordsX];
+                        distanceToNode = currentPriority + tileCost;
+                        visited[coordsY, coordsX] = true;
+                        distances[coordsY, coordsX] = distanceToNode;
+                    }
+
+                    if (distanceToNode <= maxDistance)
+                    {
+                        previous[coordsY, coordsX] = currentValue;
+                        moveableCells.Add(coords);
+                        dijkstaQueue.Enqueue(coords, distanceToNode);
+                    }
+                }
+            }
+        }
+
+        return moveableCells.ToArray();
     }
 
     /// <summary>

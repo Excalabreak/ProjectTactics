@@ -11,5 +11,10 @@ using System;
 
 public partial class TerrainData : TileSet
 {
-    [Export] private Dictionary<int, int> _moveCost;
+    [Export] private Dictionary<int, float> _moveCost;
+
+    public Dictionary<int, float> moveCost
+    {
+        get { return _moveCost; }
+    }
 }
