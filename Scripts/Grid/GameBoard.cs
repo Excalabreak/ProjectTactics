@@ -148,7 +148,7 @@ public partial class GameBoard : Node2D
     /// <param name="cell"></param>
     /// <param name="maxDistance">how far the unit can walk</param>
     /// <returns>array of coords that the unit can walk</returns>
-    private Vector2[] FloodFill(Vector2 cell, int maxDistance)
+    private Vector2[] FloodFill(Vector2 cell, float maxDistance)
     {
         List<Vector2> walkableCells = new List<Vector2>();
 
@@ -165,7 +165,7 @@ public partial class GameBoard : Node2D
             }
 
             Vector2 difference = (current - cell).Abs();
-            int distance = (int)Mathf.Round(difference.X + difference.Y);
+            float distance = difference.X + difference.Y;
             if (distance > maxDistance)
             {
                 continue;

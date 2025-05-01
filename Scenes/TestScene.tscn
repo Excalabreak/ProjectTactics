@@ -1,8 +1,9 @@
-[gd_scene load_steps=34 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=35 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Texture2D" uid="uid://cvsff4vsbypvk" path="res://Sprites/Test/TestPlanes.png" id="1_8k7wh"]
 [ext_resource type="Texture2D" uid="uid://qti0w81f7cdv" path="res://Sprites/Test/TestSand.png" id="2_iufkg"]
 [ext_resource type="Texture2D" uid="uid://d02iaws84wns3" path="res://Sprites/Test/TestWall.png" id="3_0f5h7"]
+[ext_resource type="Script" uid="uid://dn6vl0mpdex1" path="res://Scripts/Grid/TerrainData.cs" id="3_c2lnq"]
 [ext_resource type="Texture2D" uid="uid://cehbm80elwn7v" path="res://Sprites/Test/GridTile.png" id="4_6xh1p"]
 [ext_resource type="Texture2D" uid="uid://1so2e8lmu73j" path="res://Sprites/Test/TestFriendly.png" id="4_iufkg"]
 [ext_resource type="Script" uid="uid://doq6m3w0gkqei" path="res://Scripts/Unit/Unit.cs" id="4_qsjrb"]
@@ -40,6 +41,8 @@ tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_qsjrb")
 sources/1 = SubResource("TileSetAtlasSource_c264a")
 sources/2 = SubResource("TileSetAtlasSource_6xh1p")
+script = ExtResource("3_c2lnq")
+_moveCost = Dictionary[int, int]({})
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5rbs6"]
 texture = ExtResource("4_6xh1p")
