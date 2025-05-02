@@ -77,4 +77,9 @@ public partial class GridResource : Resource
     {
         return (int)(cell.X + _gridSize.X * cell.Y);
     }
+
+    public Vector2 gridCell
+    {
+        get { return _gridSize; }
+    }
 }

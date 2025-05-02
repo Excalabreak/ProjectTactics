@@ -6,7 +6,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Original Tutorial Author: [Lovato, Nathan]
+ * Original Tutorial Author: [Lovato, Nathan; YT: Heal Moon]
  * Last Updated: [04/28/2025]
  * [game board manages everything on the map]
  */
@@ -17,18 +17,28 @@ public partial class GameBoard : Node2D
     [Export] private UnitWalkHighlight _unitWalkHighlights;
     [Export] private UnitPath _unitPath;
     [Export] private UnitManager _unitManager;
+    [Export] private GridCursor _gridCursor;
+    [Export] private Map _map;
 
     private Unit _selectedUnit;
     private Vector2[] _walkableCells;
+    private float[,] _movementCosts;
 
     //all units, might want to split this up
     private Godot.Collections.Dictionary<Vector2, Unit> _units = new Godot.Collections.Dictionary<Vector2, Unit>();
+
+    private const float MAX_VALUE = 9999999;
 
     /// <summary>
     /// reinitializes the units
     /// </summary>
     public override void _Ready()
     {
+        _gridCursor.AcceptPress += OnCursorAcceptPress;
+        _gridCursor.Moved += OnCursorMoved;
+
+        _movementCosts = _map.GetMovementCosts(_grid);
+
         Reinitialize();
     }
 
@@ -135,52 +145,95 @@ public partial class GameBoard : Node2D
     /// <returns>array of coords that the unit can walk</returns>
     private Vector2[] GetWalkableCells(Unit unit)
     {
-        return FloodFill(unit.cell, unit.unitStats.moveRange);
+        return Dijksta(unit.cell, unit.unitStats.moveRange);
     }
 
     /// <summary>
-    /// Returns an array with all the coordinates of walkable cells based on the `max_distance`
+    /// gets walkable units with move cost
+    /// NOTE: tutorial said this is quick and dirty
     /// </summary>
-    /// <param name="cell"></param>
-    /// <param name="maxDistance">how far the unit can walk</param>
-    /// <returns>array of coords that the unit can walk</returns>
-    private Vector2[] FloodFill(Vector2 cell, int maxDistance)
+    /// <param name="cell">unit coords</param>
+    /// <param name="maxDistance">unit move stat</param>
+    /// <returns>array of walkable units</returns>
+    private Vector2[] Dijksta(Vector2 cell, float maxDistance)
     {
-        List<Vector2> walkableCells = new List<Vector2>();
+        int y = (int)Mathf.Round(grid.gridCell.Y);
+        int x = (int)Mathf.Round(grid.gridCell.X);
 
-        Stack<Vector2> checkingCells = new Stack<Vector2>();
-        checkingCells.Push(cell);
+        List<Vector2> moveableCells = new List<Vector2>();
+        bool[,] visited = new bool[y,x];
+        float[,] distances = new float[y, x];
+        Vector2[,] previous = new Vector2[y, x];
 
-        while (checkingCells.Count > 0)
+        moveableCells.Add(cell);
+
+        for (int i = 0; i < y; i++)
         {
-            Vector2 current = checkingCells.Pop();
-
-            if (!_grid.IsWithinBounds(current) || walkableCells.Contains(current))
+            for (int j = 0; j < x; j++)
             {
-                continue;
-            }
-
-            Vector2 difference = (current - cell).Abs();
-            int distance = (int)Mathf.Round(difference.X + difference.Y);
-            if (distance > maxDistance)
-            {
-                continue;
-            }
-
-            walkableCells.Add(current);
-            foreach (Direction dir in Enum.GetValues(typeof(Direction)))
-            {
-                Vector2 nextCoords = current + VectorDirections.Instance.GetDirection(dir);
-
-                if (IsOccupied(nextCoords) || walkableCells.Contains(nextCoords))
-                {
-                    continue;
-                }
-
-                checkingCells.Push(nextCoords);
+                visited[i, j] = false;
+                distances[i, j] = MAX_VALUE;
             }
         }
-        return walkableCells.ToArray();
+
+        PriorityQueue<Vector2, float> dijkstaQueue = new PriorityQueue<Vector2, float>();
+        dijkstaQueue.Enqueue(cell, 0);
+        distances[(int)Mathf.Round(cell.Y), (int)Mathf.Round(cell.X)] = 0;
+
+        float tileCost;
+        float distanceToNode;
+
+        while (dijkstaQueue.Count > 0)
+        {
+            dijkstaQueue.TryDequeue(out Vector2 currentValue, out float currentPriority);
+            visited[(int)Mathf.Round(cell.Y), (int)Mathf.Round(cell.X)] = true;
+
+            foreach (Direction dir in Enum.GetValues(typeof(Direction)))
+            {
+                Vector2 coords = currentValue + VectorDirections.Instance.GetDirection(dir);
+                int coordsY = (int)Mathf.Round(coords.Y);
+                int coordsX = (int)Mathf.Round(coords.X);
+                if (_grid.IsWithinBounds(coords))
+                {
+                    if (visited[coordsY, coordsX])
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        tileCost = _movementCosts[coordsY, coordsX];
+                        distanceToNode = currentPriority + tileCost;
+
+                        //checks if units can pass eachother
+                        if (IsOccupied(coords) && !_unitManager.CanPass(_selectedUnit.unitGroup, _units[coords].unitGroup))
+                        {
+                            distanceToNode = currentPriority + MAX_VALUE;
+                        }
+
+                        visited[coordsY, coordsX] = true;
+                        distances[coordsY, coordsX] = distanceToNode;
+                    }
+
+                    if (distanceToNode <= maxDistance)
+                    {
+                        previous[coordsY, coordsX] = currentValue;
+                        moveableCells.Add(coords);
+                        dijkstaQueue.Enqueue(coords, distanceToNode);
+                    }
+                }
+            }
+        }
+
+        return moveableCells.ToArray();
+    }
+
+    /// <summary>
+    /// makes sure signals are unsubscribed
+    /// </summary>
+    public override void _ExitTree()
+    {
+        _gridCursor.AcceptPress -= OnCursorAcceptPress;
+        _gridCursor.Moved -= OnCursorMoved;
     }
 
     /// <summary>
@@ -204,5 +257,12 @@ public partial class GameBoard : Node2D
         {
             _units[unit.cell] = unit;
         }
+    }
+
+    //properties
+    //note, make export if need to test outside of game board
+    public GridResource grid
+    {
+        get { return _grid; }
     }
 }
