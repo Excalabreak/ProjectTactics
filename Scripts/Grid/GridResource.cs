@@ -82,4 +82,9 @@ public partial class GridResource : Resource
     {
         get { return _gridSize; }
     }
+
+    public Vector2 gridSize
+    {
+        get { return _gridSize; }
+    }
 }
