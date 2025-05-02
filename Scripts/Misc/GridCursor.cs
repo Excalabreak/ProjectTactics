@@ -22,6 +22,9 @@ public partial class GridCursor : Node2D
 
     private Vector2 _cell = Vector2.Zero; //setget
 
+    //dont know if i will have an input manager, so it's here for now
+    private bool _isMouse = false;
+
     /// <summary>
     /// sets timer and first position
     /// </summary>
@@ -30,6 +33,18 @@ public partial class GridCursor : Node2D
         _timer.WaitTime = _uiCooldown;
         cell = _gameBoard.grid.CalculateGridCoordinates(Position);
         Position = _gameBoard.grid.CalculateMapPosition(_cell);
+    }
+
+    public override void _Process(double delta)
+    {
+        if (_isMouse)
+        {
+            Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
+            if (cell != gridCoords)
+            {
+                cell = gridCoords;
+            }
+        }
     }
 
     /// <summary>
@@ -44,7 +59,8 @@ public partial class GridCursor : Node2D
     {
         if (@event is InputEventMouseMotion input)
         {
-            this.cell = _gameBoard.grid.CalculateGridCoordinates(input.Position);
+            _isMouse = true;
+            //this.cell = _gameBoard.grid.CalculateGridCoordinates(input.Position);
         }
         else if (@event.IsActionPressed("Accept"))
         {
@@ -67,18 +83,22 @@ public partial class GridCursor : Node2D
         if (@event.IsAction("Up"))
         {
             this.cell += Vector2.Up;
+            _isMouse = false;
         }
         else if (@event.IsAction("Down"))
         {
             this.cell += Vector2.Down;
+            _isMouse = false;
         }
         else if (@event.IsAction("Left"))
         {
             this.cell += Vector2.Left;
+            _isMouse = false;
         }
         else if (@event.IsAction("Right"))
         {
             this.cell += Vector2.Right;
+            _isMouse = false;
         }
     }
 
