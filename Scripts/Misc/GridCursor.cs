@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [04/23/2025]
+ * Last Updated: [05/02/2025]
  * [script for the cursor]
  */
 
@@ -28,6 +28,7 @@ public partial class GridCursor : Node2D
     public override void _Ready()
     {
         _timer.WaitTime = _uiCooldown;
+        cell = _gameBoard.grid.CalculateGridCoordinates(Position);
         Position = _gameBoard.grid.CalculateMapPosition(_cell);
     }
 
