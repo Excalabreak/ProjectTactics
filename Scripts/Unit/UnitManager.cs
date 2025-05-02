@@ -1,35 +1,29 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [04/29/2025]
+ * Last Updated: [05/02/2025]
  * [manages all units and groups and ]
  */
 
 public partial class UnitManager : Node2D
 {
-    private List<UnitGroup> _unitGroups = new List<UnitGroup>();
+    private Dictionary<UnitGroupEnum, UnitGroup> _unitGroups = new Dictionary<UnitGroupEnum, UnitGroup>();
 
     public override void _Ready()
     {
-        SetUnitGroupList();
-    }
-
-    /// <summary>
-    /// gets all unit groups
-    /// </summary>
-    private void SetUnitGroupList()
-    {
         foreach (Node2D child in GetChildren())
         {
-            var unit = child as UnitGroup;
+            UnitGroup unit = child as UnitGroup;
             if (unit == null)
             {
                 continue;
             }
-            _unitGroups.Add(unit);
+
+            _unitGroups.Add(unit.group, unit);
         }
     }
 
@@ -37,11 +31,23 @@ public partial class UnitManager : Node2D
     {
         List<Unit> units = new List<Unit>();
 
-        foreach (UnitGroup unitGroup in _unitGroups)
+        foreach (KeyValuePair<UnitGroupEnum, UnitGroup> unitGroup in _unitGroups)
         {
-            units.AddRange(unitGroup.GetUnitGroup());
+            units.AddRange(_unitGroups[unitGroup.Key].GetUnitGroup());
         }
 
         return units.ToArray();
+    }
+
+    /// <summary>
+    /// returns weather or not a unit from movingGroup can pass
+    /// a unit from standingGroup
+    /// </summary>
+    /// <param name="movingGroup">unit trying to pass</param>
+    /// <param name="standingGroup">unit that is standing</param>
+    /// <returns>true if moving group can pass standing group</returns>
+    public bool CanPass(UnitGroupEnum movingGroup, UnitGroupEnum standingGroup)
+    {
+        return _unitGroups[movingGroup].CanPass(standingGroup);
     }
 }

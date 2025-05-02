@@ -149,51 +149,6 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
-    /// Returns an array with all the coordinates of walkable cells based on the `max_distance`
-    /// </summary>
-    /// <param name="cell"></param>
-    /// <param name="maxDistance">how far the unit can walk</param>
-    /// <returns>array of coords that the unit can walk</returns>
-    private Vector2[] FloodFill(Vector2 cell, float maxDistance)
-    {
-        List<Vector2> walkableCells = new List<Vector2>();
-
-        Stack<Vector2> checkingCells = new Stack<Vector2>();
-        checkingCells.Push(cell);
-
-        while (checkingCells.Count > 0)
-        {
-            Vector2 current = checkingCells.Pop();
-
-            if (!_grid.IsWithinBounds(current) || walkableCells.Contains(current))
-            {
-                continue;
-            }
-
-            Vector2 difference = (current - cell).Abs();
-            float distance = difference.X + difference.Y;
-            if (distance > maxDistance)
-            {
-                continue;
-            }
-
-            walkableCells.Add(current);
-            foreach (Direction dir in Enum.GetValues(typeof(Direction)))
-            {
-                Vector2 nextCoords = current + VectorDirections.Instance.GetDirection(dir);
-
-                if (IsOccupied(nextCoords) || walkableCells.Contains(nextCoords))
-                {
-                    continue;
-                }
-
-                checkingCells.Push(nextCoords);
-            }
-        }
-        return walkableCells.ToArray();
-    }
-
-    /// <summary>
     /// gets walkable units with move cost
     /// NOTE: tutorial said this is quick and dirty
     /// </summary>
@@ -248,6 +203,13 @@ public partial class GameBoard : Node2D
                     {
                         tileCost = _movementCosts[coordsY, coordsX];
                         distanceToNode = currentPriority + tileCost;
+
+                        //checks if units can pass eachother
+                        if (IsOccupied(coords) && !_unitManager.CanPass(_selectedUnit.unitGroup, _units[coords].unitGroup))
+                        {
+                            distanceToNode = currentPriority + MAX_VALUE;
+                        }
+
                         visited[coordsY, coordsX] = true;
                         distances[coordsY, coordsX] = distanceToNode;
                     }

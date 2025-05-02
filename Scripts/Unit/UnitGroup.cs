@@ -1,15 +1,19 @@
 using Godot;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [04/29/2025]
+ * Last Updated: [05/02/2025]
  * [holds information about the units in a group]
  */
 
 public partial class UnitGroup : Node2D
 {
+    [Export] private UnitGroupEnum _group;
+    [Export] private Godot.Collections.Array<UnitGroupEnum> _passingGroup;
+
     private List<Unit> _units = new List<Unit>();
 
     /// <summary>
@@ -32,6 +36,8 @@ public partial class UnitGroup : Node2D
             {
                 continue;
             }
+
+            unit.unitGroup = _group;
             _units.Add(unit);
         }
     }
@@ -43,5 +49,22 @@ public partial class UnitGroup : Node2D
     public Unit[] GetUnitGroup()
     {
         return _units.ToArray();
+    }
+
+    /// <summary>
+    /// returns weather or not the group can pass this group
+    /// </summary>
+    /// <param name="group">other unit group</param>
+    /// <returns>true if can pass</returns>
+    public bool CanPass(UnitGroupEnum group)
+    {
+        return (group == _group || _passingGroup.Contains(group));
+    }
+
+    // properties
+
+    public UnitGroupEnum group
+    {
+        get { return _group; }
     }
 }

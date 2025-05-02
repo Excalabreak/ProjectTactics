@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=36 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Texture2D" uid="uid://cvsff4vsbypvk" path="res://Sprites/Test/TestPlanes.png" id="1_8k7wh"]
 [ext_resource type="Texture2D" uid="uid://qti0w81f7cdv" path="res://Sprites/Test/TestSand.png" id="2_iufkg"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://suvveuruoly4" path="res://Sprites/Test/GridCursor.png" id="11_xjl2p"]
 [ext_resource type="Script" uid="uid://b8k2oamcad7ba" path="res://Scripts/Misc/GridCursor.cs" id="11_ytmxh"]
 [ext_resource type="Script" uid="uid://dwoq515u7ummm" path="res://Scripts/Unit/UnitGroup.cs" id="12_c2lnq"]
+[ext_resource type="Texture2D" uid="uid://xdhxhuor3wo2" path="res://Sprites/Test/TestEnemy.png" id="19_dwn5r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dwn5r"]
 texture = ExtResource("1_8k7wh")
@@ -217,6 +218,7 @@ script = ExtResource("11_4v62a")
 
 [node name="PlayerUnits" type="Node2D" parent="GameBoard/Units"]
 script = ExtResource("12_c2lnq")
+_passingGroup = Array[int]([0, 1])
 
 [node name="Unit" type="Node2D" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_animPlayer", "_gameBoard")]
 position = Vector2(32, 32)
@@ -328,6 +330,44 @@ _moveRange = 5.0
 
 [node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
 script = ExtResource("12_c2lnq")
+_group = 2
+_passingGroup = Array[int]([2])
+
+[node name="Unit4" type="Node2D" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_animPlayer", "_gameBoard")]
+position = Vector2(96, 160)
+script = ExtResource("4_qsjrb")
+_unitPathMovement = NodePath("UnitPathMovement")
+_unitSprite = NodePath("UnitSprite")
+_unitStats = NodePath("UnitStats")
+_animPlayer = NodePath("AnimationPlayer")
+_gameBoard = NodePath("../../..")
+
+[node name="UnitPathMovement" type="Path2D" parent="GameBoard/Units/EnemyUnits/Unit4" node_paths=PackedStringArray("_unit", "_pathFollow")]
+script = ExtResource("8_hctok")
+_unit = NodePath("..")
+_pathFollow = NodePath("PathFollow2D")
+_moveSpeed = 200.0
+
+[node name="PathFollow2D" type="PathFollow2D" parent="GameBoard/Units/EnemyUnits/Unit4/UnitPathMovement"]
+rotates = false
+loop = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameBoard/Units/EnemyUnits/Unit4/UnitPathMovement/PathFollow2D"]
+remote_path = NodePath("../../../UnitSprite")
+
+[node name="UnitSprite" type="Sprite2D" parent="GameBoard/Units/EnemyUnits/Unit4"]
+texture = ExtResource("19_dwn5r")
+script = ExtResource("9_5rbs6")
+_skin = ExtResource("19_dwn5r")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameBoard/Units/EnemyUnits/Unit4"]
+libraries = {
+&"": SubResource("AnimationLibrary_6xh1p")
+}
+
+[node name="UnitStats" type="Node" parent="GameBoard/Units/EnemyUnits/Unit4"]
+script = ExtResource("10_201fe")
+_moveRange = 5.0
 
 [node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer")]
 position = Vector2(32, 32)

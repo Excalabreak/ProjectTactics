@@ -30,6 +30,8 @@ public partial class Unit : Node2D
 
     [Export] private GameBoard _gameBoard;
 
+    private UnitGroupEnum _unitGroup;
+
     /// <summary>
     /// sets unit's positon
     /// </summary>
@@ -109,5 +111,11 @@ public partial class Unit : Node2D
     public UnitPathMovement unitPathMovement
     {
         get { return _unitPathMovement; }
+    }
+
+    public UnitGroupEnum unitGroup
+    {
+        get { return _unitGroup; }
+        set { _unitGroup = value; }
     }
 }
