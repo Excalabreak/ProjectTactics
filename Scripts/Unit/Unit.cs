@@ -32,11 +32,14 @@ public partial class Unit : Node2D
 
     private UnitGroupEnum _unitGroup;
 
+    public Action<GameBoard> CurrentGameBoard;
+
     /// <summary>
     /// sets unit's positon
     /// </summary>
     public override void _Ready()
     {
+        CurrentGameBoard?.Invoke(_gameBoard);
         this.cell = _gameBoard.grid.CalculateGridCoordinates(Position);
         Position = _gameBoard.grid.CalculateMapPosition(cell);
     }
@@ -53,6 +56,12 @@ public partial class Unit : Node2D
         {
             _unitPathMovement.WalkUnit(fDelta, _gameBoard.grid, cell);
         }
+    }
+
+    public void ChangeGameBoard(GameBoard gameBoard)
+    {
+        _gameBoard = gameBoard;
+        CurrentGameBoard?.Invoke(_gameBoard);
     }
 
     //--- PROPERTIES ---

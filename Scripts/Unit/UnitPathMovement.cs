@@ -9,7 +9,7 @@ using System;
 
 public partial class UnitPathMovement : Path2D
 {
-    [Export] private GameBoard _gameBoard;
+    private GameBoard _gameBoard;
     [Export] private Unit _unit;
 
     //path2d
@@ -22,6 +22,7 @@ public partial class UnitPathMovement : Path2D
 
     public override void _Ready()
     {
+        _unit.CurrentGameBoard += SetGameBoard;
         Curve = new Curve2D();
     }
 
@@ -75,6 +76,16 @@ public partial class UnitPathMovement : Path2D
         }
         _unit.cell = path[path.Length - 1];
         isWalking = true;
+    }
+
+    public override void _ExitTree()
+    {
+        _unit.CurrentGameBoard -= SetGameBoard;
+    }
+
+    private void SetGameBoard(GameBoard gameBoard)
+    {
+        _gameBoard = gameBoard;
     }
 
     //properties
