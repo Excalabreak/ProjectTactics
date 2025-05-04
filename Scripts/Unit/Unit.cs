@@ -29,17 +29,23 @@ public partial class Unit : Node2D
     [Export] private AnimationPlayer _animPlayer;
 
     [Export] private GameBoard _gameBoard;
+    public Action<GameBoard> CurrentGameBoard;
 
     private UnitGroupEnum _unitGroup;
-
-    public Action<GameBoard> CurrentGameBoard;
 
     /// <summary>
     /// sets unit's positon
     /// </summary>
     public override void _Ready()
     {
-        CurrentGameBoard?.Invoke(_gameBoard);
+        if (_gameBoard != null)
+        {
+            CurrentGameBoard?.Invoke(_gameBoard);
+        }
+        else
+        {
+            GD.Print("WARNING: NO GAMEBOARD ON UNIT AT READY");
+        }
         this.cell = _gameBoard.grid.CalculateGridCoordinates(Position);
         Position = _gameBoard.grid.CalculateMapPosition(cell);
     }
