@@ -84,7 +84,6 @@ _unitDirection = NodePath("../../UnitDirection")
 
 [node name="UnitStats" type="Node" parent="."]
 script = ExtResource("5_e33bx")
-_moveRange = 5.0
 
 [node name="UnitPathMovement" type="Path2D" parent="." node_paths=PackedStringArray("_unit", "_pathFollow", "_unitDirection")]
 script = ExtResource("2_ppost")
