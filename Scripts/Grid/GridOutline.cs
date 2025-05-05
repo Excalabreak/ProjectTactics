@@ -13,9 +13,9 @@ public partial class GridOutline : TileMapLayer
 
     public override void _Ready()
     {
-        for (int i = 0; i < (int)Mathf.Round(_gameboard.grid.gridSize.Y); i++)
+        for (int i = 0; i < Mathf.RoundToInt(_gameboard.grid.gridSize.Y); i++)
         {
-            for (int j = 0; j < (int)Mathf.Round(_gameboard.grid.gridSize.X); j++)
+            for (int j = 0; j < Mathf.RoundToInt(_gameboard.grid.gridSize.X); j++)
             {
                 SetCell(new Vector2I(j, i), 0, Vector2I.Zero, 0);
             }

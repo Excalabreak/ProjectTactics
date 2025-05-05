@@ -157,8 +157,8 @@ public partial class GameBoard : Node2D
     /// <returns>array of walkable units</returns>
     private Vector2[] Dijksta(Vector2 cell, float maxDistance)
     {
-        int y = (int)Mathf.Round(grid.gridCell.Y);
-        int x = (int)Mathf.Round(grid.gridCell.X);
+        int y = Mathf.RoundToInt(grid.gridCell.Y);
+        int x = Mathf.RoundToInt(grid.gridCell.X);
 
         List<Vector2> moveableCells = new List<Vector2>();
         bool[,] visited = new bool[y,x];
@@ -178,7 +178,7 @@ public partial class GameBoard : Node2D
 
         PriorityQueue<Vector2, float> dijkstaQueue = new PriorityQueue<Vector2, float>();
         dijkstaQueue.Enqueue(cell, 0);
-        distances[(int)Mathf.Round(cell.Y), (int)Mathf.Round(cell.X)] = 0;
+        distances[Mathf.RoundToInt(cell.Y), Mathf.RoundToInt(cell.X)] = 0;
 
         float tileCost;
         float distanceToNode;
@@ -186,13 +186,13 @@ public partial class GameBoard : Node2D
         while (dijkstaQueue.Count > 0)
         {
             dijkstaQueue.TryDequeue(out Vector2 currentValue, out float currentPriority);
-            visited[(int)Mathf.Round(cell.Y), (int)Mathf.Round(cell.X)] = true;
+            visited[Mathf.RoundToInt(cell.Y), Mathf.RoundToInt(cell.X)] = true;
 
-            foreach (Direction dir in Enum.GetValues(typeof(Direction)))
+            foreach (DirectionEnum dir in Enum.GetValues(typeof(DirectionEnum)))
             {
-                Vector2 coords = currentValue + VectorDirections.Instance.GetDirection(dir);
-                int coordsY = (int)Mathf.Round(coords.Y);
-                int coordsX = (int)Mathf.Round(coords.X);
+                Vector2 coords = currentValue + DirectionManager.Instance.GetVectorDirection(dir);
+                int coordsY = Mathf.RoundToInt(coords.Y);
+                int coordsX = Mathf.RoundToInt(coords.X);
                 if (_grid.IsWithinBounds(coords))
                 {
                     if (visited[coordsY, coordsX])

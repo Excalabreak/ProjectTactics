@@ -39,7 +39,7 @@ public partial class UnitPath : TileMapLayer
         Vector2I[] path = new Vector2I[_currentPath.Length];
         for (int i = 0; i < _currentPath.Length; i++)
         {
-            path[i] = new Vector2I((int)Mathf.Round(_currentPath[i].X), (int)Mathf.Round(_currentPath[i].Y));
+            path[i] = new Vector2I(Mathf.RoundToInt(_currentPath[i].X), Mathf.RoundToInt(_currentPath[i].Y));
         }
         SetCellsTerrainConnect(new Godot.Collections.Array<Vector2I>(path),0,0);
     }
