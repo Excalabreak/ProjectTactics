@@ -61,13 +61,13 @@ public partial class DirectionManager : Node2D
         switch (direction)
         {
             case DirectionEnum.UP:
-                return 0;
+                return 0f;
             case DirectionEnum.DOWN:
-                return 180;
+                return 180f;
             case DirectionEnum.LEFT:
-                return 270;
+                return 270f;
             case DirectionEnum.RIGHT:
-                return 90;
+                return 90f;
         }
         //some how
         return 0;

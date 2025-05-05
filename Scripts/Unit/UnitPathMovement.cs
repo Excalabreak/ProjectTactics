@@ -1,9 +1,11 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [04/24/2025]
+ * Last Updated: [05/05/2025]
  * [moves sprite through path]
  */
 
@@ -19,6 +21,11 @@ public partial class UnitPathMovement : Path2D
 
     //might need to put in a settings
     [Export] private float _moveSpeed = 600f;
+
+    //direction (this seems quick and dirty)
+    [Export] private UnitDirection _unitDirection;
+    private List<DirectionEnum> _pathDirections = new List<DirectionEnum>();
+    private int _currentDirectionIndex = 0;
 
     public override void _Ready()
     {
@@ -38,12 +45,21 @@ public partial class UnitPathMovement : Path2D
     {
         _pathFollow.Progress += _moveSpeed * delta;
 
+        if (_currentDirectionIndex < _pathDirections.Count && _pathFollow.ProgressRatio >= (1f / (float)_pathDirections.Count) * _currentDirectionIndex)
+        {
+            _unitDirection.currentFacing = _pathDirections[_currentDirectionIndex];
+            _currentDirectionIndex++;
+        }
+
         if (_pathFollow.ProgressRatio >= 1f)
         {
             this._isWalking = false;
             _pathFollow.Progress = 0f;
             _unit.Position = grid.CalculateMapPosition(cell);
             Curve.ClearPoints();
+            _pathDirections = new List<DirectionEnum>();
+            _currentDirectionIndex = 0;
+
             EmitSignal("WalkFinished");
         }
     }
@@ -71,18 +87,52 @@ public partial class UnitPathMovement : Path2D
         {
             if (grid.CalculateMapPosition(point) - _unit.Position != Curve.GetPointPosition(Curve.PointCount - 1))
             {
-                Curve.AddPoint(grid.CalculateMapPosition(point) - _unit.Position);
+                Vector2 nextPoint = grid.CalculateMapPosition(point) - _unit.Position;
+                Vector2 lastPoint = Curve.GetPointPosition(Curve.PointCount - 1);
+
+                //checks if point has a triggerable
+                Curve.AddPoint(nextPoint);
+
+                if (Mathf.RoundToInt(nextPoint.Y) != Mathf.RoundToInt(lastPoint.Y))
+                {
+                    if (Mathf.RoundToInt(nextPoint.Y) < Mathf.RoundToInt(lastPoint.Y))
+                    {
+                        _pathDirections.Add(DirectionEnum.UP);
+                    }
+                    else
+                    {
+                        _pathDirections.Add(DirectionEnum.DOWN);
+                    }
+                }
+                else
+                {
+                    if (Mathf.RoundToInt(nextPoint.X) < Mathf.RoundToInt(lastPoint.X))
+                    {
+                        _pathDirections.Add(DirectionEnum.LEFT);
+                    }
+                    else
+                    {
+                        _pathDirections.Add(DirectionEnum.RIGHT);
+                    }
+                }
             }
         }
         _unit.cell = path[path.Length - 1];
         isWalking = true;
     }
 
+    /// <summary>
+    /// unsubs from event
+    /// </summary>
     public override void _ExitTree()
     {
         _unit.CurrentGameBoard -= SetGameBoard;
     }
 
+    /// <summary>
+    /// sets _gameBoard
+    /// </summary>
+    /// <param name="gameBoard">v</param>
     private void SetGameBoard(GameBoard gameBoard)
     {
         _gameBoard = gameBoard;

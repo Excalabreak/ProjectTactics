@@ -1,17 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://cp44coe2c50e7"]
+[gd_scene load_steps=13 format=3 uid="uid://cp44coe2c50e7"]
 
 [ext_resource type="Script" uid="uid://doq6m3w0gkqei" path="res://Scripts/Unit/Unit.cs" id="1_x1v5g"]
 [ext_resource type="Script" uid="uid://dtp17f15wr4c4" path="res://Scripts/Unit/UnitPathMovement.cs" id="2_ppost"]
 [ext_resource type="Texture2D" uid="uid://1so2e8lmu73j" path="res://Sprites/Test/TestFriendly.png" id="3_20lhf"]
 [ext_resource type="Script" uid="uid://70nimqy81e3d" path="res://Scripts/Unit/UnitSprite.cs" id="4_uqujc"]
 [ext_resource type="Script" uid="uid://bw18o174u4r2c" path="res://Scripts/Unit/UnitStats.cs" id="5_e33bx"]
+[ext_resource type="Script" uid="uid://cp0u80h1r603v" path="res://Scripts/Unit/UnitDirection.cs" id="6_uqujc"]
+[ext_resource type="Texture2D" uid="uid://cq8otpm8fmm65" path="res://Sprites/Test/TestDirection.png" id="7_e33bx"]
+[ext_resource type="Script" uid="uid://c77l0088jw6an" path="res://Scripts/Unit/DirectionSprite.cs" id="8_u1ivc"]
 
 [sub_resource type="Animation" id="Animation_qsjrb"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UnitSprite:modulate")
+tracks/0/path = NodePath("Sprites/UnitSprite:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -27,7 +30,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UnitSprite:modulate")
+tracks/0/path = NodePath("Sprites/UnitSprite:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -43,7 +46,7 @@ length = 1.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UnitSprite:modulate")
+tracks/0/path = NodePath("Sprites/UnitSprite:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -63,33 +66,44 @@ _data = {
 [node name="Unit" type="Node2D" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_animPlayer")]
 script = ExtResource("1_x1v5g")
 _unitPathMovement = NodePath("UnitPathMovement")
-_unitSprite = NodePath("UnitSprite")
+_unitSprite = NodePath("Sprites/UnitSprite")
 _unitStats = NodePath("UnitStats")
 _animPlayer = NodePath("AnimationPlayer")
 
-[node name="UnitPathMovement" type="Path2D" parent="." node_paths=PackedStringArray("_unit", "_pathFollow")]
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="UnitSprite" type="Sprite2D" parent="Sprites"]
+texture = ExtResource("3_20lhf")
+script = ExtResource("4_uqujc")
+_skin = ExtResource("3_20lhf")
+
+[node name="DirectionSprite" type="Sprite2D" parent="Sprites" node_paths=PackedStringArray("_unitDirection")]
+texture = ExtResource("7_e33bx")
+script = ExtResource("8_u1ivc")
+_unitDirection = NodePath("../../UnitDirection")
+
+[node name="UnitStats" type="Node" parent="."]
+script = ExtResource("5_e33bx")
+_moveRange = 5.0
+
+[node name="UnitPathMovement" type="Path2D" parent="." node_paths=PackedStringArray("_unit", "_pathFollow", "_unitDirection")]
 script = ExtResource("2_ppost")
 _unit = NodePath("..")
 _pathFollow = NodePath("PathFollow2D")
 _moveSpeed = 200.0
+_unitDirection = NodePath("../UnitDirection")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="UnitPathMovement"]
 rotates = false
 loop = false
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="UnitPathMovement/PathFollow2D"]
-remote_path = NodePath("../../../UnitSprite")
+remote_path = NodePath("../../../Sprites")
 
-[node name="UnitSprite" type="Sprite2D" parent="."]
-texture = ExtResource("3_20lhf")
-script = ExtResource("4_uqujc")
-_skin = ExtResource("3_20lhf")
+[node name="UnitDirection" type="Node2D" parent="."]
+script = ExtResource("6_uqujc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_6xh1p")
 }
-
-[node name="UnitStats" type="Node" parent="."]
-script = ExtResource("5_e33bx")
-_moveRange = 5.0
