@@ -17,7 +17,7 @@ public partial class Map : TileMapLayer
     /// <returns>movement cost of all tiles in map</returns>
     public float[,] GetMovementCosts(GridResource grid)
     {
-        float[,] output = new float[(int)Mathf.Round(grid.gridCell.Y), (int)Mathf.Round(grid.gridCell.X)];
+        float[,] output = new float[Mathf.RoundToInt(grid.gridCell.Y), Mathf.RoundToInt(grid.gridCell.X)];
         for (int i = 0; i < grid.gridCell.Y; i++)
         {
             for (int j = 0; j < grid.gridCell.X; j++)

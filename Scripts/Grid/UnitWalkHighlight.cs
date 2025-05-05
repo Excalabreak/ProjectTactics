@@ -16,7 +16,7 @@ public partial class UnitWalkHighlight : TileMapLayer
 
         foreach (Vector2 cell in cells)
         {
-            SetCell(new Vector2I((int)Mathf.Round(cell.X), (int)Mathf.Round(cell.Y)), 0, Vector2I.Zero, 0);
+            SetCell(new Vector2I(Mathf.RoundToInt(cell.X), Mathf.RoundToInt(cell.Y)), 0, Vector2I.Zero, 0);
         }
     }
 }
