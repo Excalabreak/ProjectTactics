@@ -188,9 +188,9 @@ public partial class GameBoard : Node2D
             dijkstaQueue.TryDequeue(out Vector2 currentValue, out float currentPriority);
             visited[(int)Mathf.Round(cell.Y), (int)Mathf.Round(cell.X)] = true;
 
-            foreach (Direction dir in Enum.GetValues(typeof(Direction)))
+            foreach (DirectionEnum dir in Enum.GetValues(typeof(DirectionEnum)))
             {
-                Vector2 coords = currentValue + VectorDirections.Instance.GetDirection(dir);
+                Vector2 coords = currentValue + DirectionManager.Instance.GetVectorDirection(dir);
                 int coordsY = (int)Mathf.Round(coords.Y);
                 int coordsX = (int)Mathf.Round(coords.X);
                 if (_grid.IsWithinBounds(coords))

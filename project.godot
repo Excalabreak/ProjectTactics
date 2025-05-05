@@ -18,7 +18,7 @@ config/icon="uid://1so2e8lmu73j"
 
 [autoload]
 
-VectorDirections="*res://Scripts/Misc/VectorDirections.cs"
+DirectionManager="*res://Scripts/Misc/DirectionManager.cs"
 
 [display]
 
