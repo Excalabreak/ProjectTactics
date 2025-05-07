@@ -85,9 +85,10 @@ _unitDirection = NodePath("../../UnitDirection")
 [node name="UnitStats" type="Node" parent="."]
 script = ExtResource("5_e33bx")
 
-[node name="UnitPathMovement" type="Path2D" parent="." node_paths=PackedStringArray("_unit", "_pathFollow", "_unitDirection")]
+[node name="UnitPathMovement" type="Path2D" parent="." node_paths=PackedStringArray("_unit", "_walkingLocation", "_pathFollow", "_unitDirection")]
 script = ExtResource("2_ppost")
 _unit = NodePath("..")
+_walkingLocation = NodePath("PathFollow2D/RemoteTransform2D")
 _pathFollow = NodePath("PathFollow2D")
 _moveSpeed = 200.0
 _unitDirection = NodePath("../UnitDirection")

@@ -7,7 +7,7 @@ using System.Linq;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan; YT: Heal Moon]
- * Last Updated: [04/28/2025]
+ * Last Updated: [05/07/2025]
  * [game board manages everything on the map]
  */
 
@@ -101,13 +101,27 @@ public partial class GameBoard : Node2D
             return;
         }
 
-        _units.Remove(_selectedUnit.cell);
-        _units[newCell] = _selectedUnit;
         DeselectSelectedUnit();
         _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath, _grid);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
         ClearSelectedUnit();
+    }
+
+    /// <summary>
+    /// changes where the gameboard is tracking the location of units
+    /// </summary>
+    /// <param name="unit">unit to move</param>
+    /// <param name="newLoc">new location</param>
+    public void ChangeUnitLocationData(Unit unit, Vector2 newLoc)
+    {
+        if (!_units.ContainsKey(unit.cell))
+        {
+            return;
+        }
+
+        _units.Remove(unit.cell);
+        _units[newLoc] = unit;
     }
 
     /// <summary>

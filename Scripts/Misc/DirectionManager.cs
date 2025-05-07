@@ -52,7 +52,7 @@ public partial class DirectionManager : Node2D
     }
 
     /// <summary>
-    /// returns the float value for the rotation of enum
+    /// returns the float value for the DEGREE rotation of enum
     /// </summary>
     /// <param name="direction">direction enum</param>
     /// <returns>float of rotation</returns>
