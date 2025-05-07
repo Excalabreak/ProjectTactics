@@ -139,6 +139,7 @@ tile_set = SubResource("TileSet_8c81w")
 script = ExtResource("6_c2lnq")
 
 [node name="FogOfWar" type="TileMapLayer" parent="GameBoard/MapTiles" node_paths=PackedStringArray("_gameboard", "_map")]
+z_index = 100
 material = SubResource("ShaderMaterial_c2lnq")
 script = ExtResource("6_4v62a")
 _gameboard = NodePath("../..")
