@@ -1,10 +1,12 @@
-[gd_scene load_steps=24 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=27 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Texture2D" uid="uid://dxok463ymyabj" path="res://Sprites/Test/TestTileMap2.png" id="3_lp1f3"]
 [ext_resource type="Texture2D" uid="uid://cehbm80elwn7v" path="res://Sprites/Test/GridTile.png" id="4_6xh1p"]
 [ext_resource type="Texture2D" uid="uid://c77lwl1g215vn" path="res://Sprites/Test/TileHighlight.png" id="5_8c81w"]
+[ext_resource type="Shader" uid="uid://bdqj7j3s2bqv7" path="res://Shaders/FogOfWarShader.gdshader" id="5_fi7j4"]
 [ext_resource type="Texture2D" uid="uid://b7bouj3wqmjsd" path="res://Sprites/Test/arrows.svg" id="5_hctok"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="5_qsjrb"]
+[ext_resource type="Script" uid="uid://b2aqh3nmf5lbc" path="res://Scripts/Grid/FogOfWar.cs" id="6_4v62a"]
 [ext_resource type="Script" uid="uid://cw1cq5bive7vy" path="res://Scripts/Grid/Map.cs" id="6_c2lnq"]
 [ext_resource type="Script" uid="uid://ccvhstia04m7b" path="res://Scripts/Grid/UnitWalkHighlight.cs" id="6_fi7j4"]
 [ext_resource type="Script" uid="uid://c8guc1dvccpxf" path="res://Scripts/Misc/UnitPath.cs" id="6_t2vuu"]
@@ -35,6 +37,9 @@ tile_size = Vector2i(64, 64)
 custom_data_layer_0/name = "MoveCost"
 custom_data_layer_0/type = 3
 sources/0 = SubResource("TileSetAtlasSource_p30di")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2lnq"]
+shader = ExtResource("5_fi7j4")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5rbs6"]
 texture = ExtResource("4_6xh1p")
@@ -133,6 +138,12 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAA
 tile_set = SubResource("TileSet_8c81w")
 script = ExtResource("6_c2lnq")
 
+[node name="FogOfWar" type="TileMapLayer" parent="GameBoard/MapTiles" node_paths=PackedStringArray("_gameboard", "_map")]
+material = SubResource("ShaderMaterial_c2lnq")
+script = ExtResource("6_4v62a")
+_gameboard = NodePath("../..")
+_map = NodePath("../Map")
+
 [node name="Grid" type="TileMapLayer" parent="GameBoard/MapTiles" node_paths=PackedStringArray("_gameboard")]
 tile_set = SubResource("TileSet_201fe")
 script = ExtResource("8_1vcy8")
@@ -156,7 +167,7 @@ script = ExtResource("12_c2lnq")
 _passingGroup = Array[int]([0, 1])
 
 [node name="Unit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
-position = Vector2(26, 31)
+position = Vector2(346, 286)
 _gameBoard = NodePath("../../..")
 
 [node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
