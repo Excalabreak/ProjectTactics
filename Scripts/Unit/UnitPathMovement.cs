@@ -58,6 +58,8 @@ public partial class UnitPathMovement : Path2D
 
             _unitDirection.currentFacing = _pathDirections[_currentDirectionIndex];
             _currentDirectionIndex++;
+
+            _gameBoard.UpdateUnitVision(_unit);
         }
 
         if (_pathFollow.ProgressRatio >= 1f)
@@ -68,6 +70,8 @@ public partial class UnitPathMovement : Path2D
             _gameBoard.ChangeUnitLocationData(_unit, cell);
             _unit.cell = cell;
             _unit.Position = grid.CalculateMapPosition(cell);
+
+            _gameBoard.UpdateUnitVision(_unit);
 
             Curve.ClearPoints();
             _pathDirections = new List<DirectionEnum>();

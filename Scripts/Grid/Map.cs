@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
@@ -25,6 +26,23 @@ public partial class Map : TileMapLayer
                 output[i, j] = (float)GetCellTileData(new Vector2I(j,i)).GetCustomData("MoveCost");
             }
         }
+        return output;
+    }
+
+    /// <summary>
+    /// returns the vision cost of a path of tiles
+    /// </summary>
+    /// <param name="tilePath">list of coordinates</param>
+    /// <returns>vision cost</returns>
+    public float GetTilePathVisionCost(List<Vector2I> tilePath)
+    {
+        float output = 0;
+
+        foreach (Vector2I tile in tilePath)
+        {
+            output += (float)GetCellTileData(tile).GetCustomData("MoveCost");
+        }
+
         return output;
     }
 }

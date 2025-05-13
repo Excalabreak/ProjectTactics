@@ -15,6 +15,13 @@ public partial class FogOfWar : TileMapLayer
     public override void _Ready()
     {
         TileSet = _map.TileSet;
+    }
+
+    /// <summary>
+    /// hides the whole map
+    /// </summary>
+    public void HideWholeMap()
+    {
         for (int i = 0; i < Mathf.RoundToInt(_gameboard.grid.gridSize.Y); i++)
         {
             for (int j = 0; j < Mathf.RoundToInt(_gameboard.grid.gridSize.X); j++)

@@ -25,6 +25,8 @@ public partial class Unit : Node2D
 
     [Export] private UnitStats _unitStats;
 
+    [Export] private UnitDirection _unitDirection;
+
     //animation player, but i might need to make a state machine
     //will keep in here for now to see how is selected works
     [Export] private AnimationPlayer _animPlayer;
@@ -144,5 +146,10 @@ public partial class Unit : Node2D
     {
         get { return _unitGroup; }
         set { _unitGroup = value; }
+    }
+
+    public UnitDirection unitDirection
+    {
+        get { return _unitDirection; }
     }
 }
