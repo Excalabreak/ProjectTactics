@@ -350,7 +350,7 @@ public partial class GameBoard : Node2D
                     if (current == checkCoords)
                     {
                         tileLine.RemoveAt(0);
-                        if (unit.unitStats.visionRange < _map.GetTilePathVisionCost(tileLine))
+                        if (unit.unitStats.visionRange < _map.GetTilePathVisionCost(tileLine) * (startingCell.DistanceTo(checkCoords)/ checkDistance))
                         {
                             break;
                         }
@@ -365,7 +365,7 @@ public partial class GameBoard : Node2D
                         err -= dy;
                         current.X += sx;
                     }
-                    else if (e2 < dx)
+                    if (e2 < dx)
                     {
                         err += dx;
                         current.Y += sy;
