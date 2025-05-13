@@ -2,12 +2,18 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Original Tutorial Author: [Lovato, Nathan; YT: Heal Moon]
- * Last Updated: [04/28/2025]
+ * Original Tutorial Author: 
+ * 
+ * Lovato, Nathan: map
+ * YT: Heal Moon: unit movement
+ * YT: DAY 345: Line of sight
+ * 
+ * Last Updated: [05/12/2025]
  * [game board manages everything on the map]
  */
 
@@ -19,13 +25,19 @@ public partial class GameBoard : Node2D
     [Export] private UnitManager _unitManager;
     [Export] private GridCursor _gridCursor;
     [Export] private Map _map;
+    [Export] private FogOfWar _fogOfWar;
 
     private Unit _selectedUnit;
     private Vector2[] _walkableCells;
     private float[,] _movementCosts;
 
     //all units, might want to split this up
-    private Godot.Collections.Dictionary<Vector2, Unit> _units = new Godot.Collections.Dictionary<Vector2, Unit>();
+    private System.Collections.Generic.Dictionary<Vector2, Unit> _units = new System.Collections.Generic.Dictionary<Vector2, Unit>();
+
+    //probably have to redo this
+    private System.Collections.Generic.Dictionary<Unit, Vector2[]> _unitVision = new System.Collections.Generic.Dictionary<Unit, Vector2[]>();
+    private System.Collections.Generic.Dictionary<Vector2, List<Unit>> _cellRevealedBy = new System.Collections.Generic.Dictionary<Vector2, List<Unit>>();
+
 
     private const float MAX_VALUE = 9999999;
 
@@ -37,9 +49,27 @@ public partial class GameBoard : Node2D
         _gridCursor.AcceptPress += OnCursorAcceptPress;
         _gridCursor.Moved += OnCursorMoved;
 
+        Reinitialize();
+    }
+
+    /// <summary>
+    /// gets all the units in the map
+    /// </summary>
+    private void Reinitialize()
+    {
+        _units.Clear();
+        _fogOfWar.HideWholeMap();
+
+        foreach (Unit unit in _unitManager.GetAllUnits())
+        {
+            _units[unit.cell] = unit;
+            UpdateUnitVision(unit);
+        }
+
         _movementCosts = _map.GetMovementCosts(_grid);
 
-        Reinitialize();
+
+        
     }
 
     /// <summary>
@@ -84,6 +114,9 @@ public partial class GameBoard : Node2D
         _unitPath.Stop();
     }
 
+    /// <summary>
+    /// clears unit from selected
+    /// </summary>
     private void ClearSelectedUnit()
     {
         _selectedUnit = null;
@@ -101,13 +134,27 @@ public partial class GameBoard : Node2D
             return;
         }
 
-        _units.Remove(_selectedUnit.cell);
-        _units[newCell] = _selectedUnit;
         DeselectSelectedUnit();
         _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath, _grid);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
         ClearSelectedUnit();
+    }
+
+    /// <summary>
+    /// changes where the gameboard is tracking the location of units
+    /// </summary>
+    /// <param name="unit">unit to move</param>
+    /// <param name="newLoc">new location</param>
+    public void ChangeUnitLocationData(Unit unit, Vector2 newLoc)
+    {
+        if (!_units.ContainsKey(unit.cell))
+        {
+            return;
+        }
+
+        _units.Remove(unit.cell);
+        _units[newLoc] = unit;
     }
 
     /// <summary>
@@ -228,6 +275,232 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
+    /// updates the PLAYER unit vision on game map
+    /// AFTER THE UNIT HAS MOVED
+    /// </summary>
+    /// <param name="unit">unit being updated</param>
+    public void UpdateUnitVision(Unit unit)
+    {
+        //returns on non player units since only the player can see their units
+        if (unit.unitGroup != UnitGroupEnum.PLAYER)
+        {
+            return;
+        }
+
+        //hides unit's old vision
+        //adds unit to vision dictionary if not there
+        HideVision(unit, true);
+
+        //Vector2I for which tiles get checked
+        Vector2I startingCell = new Vector2I(Mathf.RoundToInt(unit.cell.X), Mathf.RoundToInt(unit.cell.Y));
+        Vector2I unitFacing = DirectionManager.Instance.GetVectorIDirection(unit.unitDirection.currentFacing);
+        Vector2I visionExpand = Vector2I.Down;
+
+        if (unit.unitDirection.currentFacing == DirectionEnum.UP ||
+            unit.unitDirection.currentFacing == DirectionEnum.DOWN)
+        {
+            visionExpand = Vector2I.Right;
+        }
+
+        //list of tiles
+        List<Vector2I> visibleTiles = new List<Vector2I>();
+        List<Vector2I> checkTiles = new List<Vector2I>();
+        List<Vector2I> addedTiles = new List<Vector2I>();
+
+        //adds the fist check
+        visibleTiles.Add(startingCell);
+        if (_grid.IsWithinBounds(startingCell + unitFacing))
+        {
+            checkTiles.Add(startingCell + unitFacing);
+        }
+        if (_grid.IsWithinBounds(startingCell + unitFacing + visionExpand))
+        {
+            checkTiles.Add(startingCell + unitFacing + visionExpand);
+        }
+        if (_grid.IsWithinBounds(startingCell + unitFacing + -visionExpand))
+        {
+            checkTiles.Add(startingCell + unitFacing + -visionExpand);
+        }
+
+        //current vars
+        int checkDistance = 1;
+        bool hasAdded = true;
+
+        //loop that checks tiles
+        while (hasAdded && checkTiles.Count > 0)
+        {
+            hasAdded = false;
+            addedTiles.Clear();
+
+            //checks line from unit to current checking tile
+            foreach (Vector2I checkCoords in checkTiles)
+            {
+                List<Vector2I> tileLine = new List<Vector2I>();
+
+                int dx = Math.Abs(checkCoords.X - startingCell.X);
+                int dy = Math.Abs(checkCoords.Y - startingCell.Y);
+                int sx = startingCell.X < checkCoords.X ? 1 : -1;
+                int sy = startingCell.Y < checkCoords.Y ? 1 : -1;
+                int err = dx - dy;
+
+                Vector2I current = startingCell;
+
+                while (true)
+                {
+                    tileLine.Add(current);
+                    //breaks if tile is within range
+                    if (current == checkCoords)
+                    {
+                        tileLine.RemoveAt(0);
+                        float unitVisionCost = 0f;
+
+                        foreach (Vector2I tile in tileLine)
+                        {
+                            if (IsOccupied(tile) && !_unitManager.CanPass(unit.unitGroup, _units[tile].unitGroup))
+                            {
+                                unitVisionCost += 2f;
+                            }
+                        }
+
+                        if (unit.unitStats.visionRange < 
+                           (_map.GetTilePathVisionCost(tileLine) * (startingCell.DistanceTo(checkCoords)
+                           / checkDistance))+ unitVisionCost)
+                        {
+                            break;
+                        }
+                        visibleTiles.Add(checkCoords);
+                        addedTiles.Add(checkCoords);
+                        hasAdded = true;
+                        break;
+                    }
+
+                    int e2 = 2 * err;
+                    if (e2 > -dy)
+                    {
+                        err -= dy;
+                        current.X += sx;
+                    }
+                    if (e2 < dx)
+                    {
+                        err += dx;
+                        current.Y += sy;
+                    }
+                }
+            }
+            checkTiles.Clear();
+
+            //adds tiles to be checked
+            if (hasAdded)
+            {
+                checkDistance++;
+                
+                foreach (Vector2I addedCoord in addedTiles)
+                {
+                    Vector2I nextCoord = addedCoord + unitFacing;
+                    if (!checkTiles.Contains(nextCoord) && _grid.IsWithinBounds(nextCoord + visionExpand))
+                    {
+                        checkTiles.Add(nextCoord);
+                    }
+
+                    if (unit.unitDirection.currentFacing == DirectionEnum.UP ||
+                    unit.unitDirection.currentFacing == DirectionEnum.DOWN)
+                    {
+                        if (startingCell.X < addedCoord.X && 
+                            _grid.IsWithinBounds(nextCoord + visionExpand) &&
+                            !checkTiles.Contains(nextCoord + visionExpand))
+                        {
+                            checkTiles.Add(nextCoord + visionExpand);
+                        }
+                        else if (startingCell.X > addedCoord.X && 
+                            _grid.IsWithinBounds(nextCoord + -visionExpand) &&
+                            !checkTiles.Contains(nextCoord + -visionExpand))
+                        {
+                            checkTiles.Add(nextCoord + -visionExpand);
+                        }
+                    }
+                    else
+                    {
+                        if (startingCell.Y < addedCoord.Y && 
+                            _grid.IsWithinBounds(nextCoord + visionExpand) &&
+                            !checkTiles.Contains(nextCoord + visionExpand))
+                        {
+                            checkTiles.Add(nextCoord + visionExpand);
+                        }
+                        else if (startingCell.Y > addedCoord.Y && 
+                            _grid.IsWithinBounds(nextCoord + -visionExpand) &&
+                            !checkTiles.Contains(nextCoord + -visionExpand))
+                        {
+                            checkTiles.Add(nextCoord + -visionExpand);
+                        }
+                    }
+                }
+            }
+        }
+
+        //visible tiles get revealed
+        Vector2[] output = new Vector2[visibleTiles.Count()];
+        for (int i = 0; i < visibleTiles.Count(); i++)
+        {
+            output[i] = visibleTiles[i];
+        }
+        ShowVision(unit, output);
+    }
+
+    /// <summary>
+    /// Hides vision of unit
+    /// </summary>
+    /// <param name="unit">unit being updated</param>
+    public void HideVision(Unit unit, bool keepUnitKey)
+    {
+        //hides unit's old vision
+        if (_unitVision.ContainsKey(unit))
+        {
+            foreach (Vector2 coords in _unitVision[unit])
+            {
+                _cellRevealedBy[coords].Remove(unit);
+                if (_cellRevealedBy[coords].Count <= 0)
+                {
+                    _fogOfWar.HideMapCell(coords);
+                    _cellRevealedBy.Remove(coords);
+                }
+            }
+            if (!keepUnitKey)
+            {
+                _unitVision.Remove(unit);
+            }
+        }
+    }
+
+    /// <summary>
+    /// reveals fog of war maps for units
+    /// updates data structures
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <param name="coords"></param>
+    public void ShowVision(Unit unit, Vector2[] coords)
+    {
+        if (!_unitVision.ContainsKey(unit))
+        {
+            _unitVision.Add(unit, coords);
+        }
+        else
+        {
+            _unitVision[unit] = coords;
+        }
+
+        foreach (Vector2 coord in coords)
+        {
+            if (!_cellRevealedBy.ContainsKey(coord))
+            {
+                _cellRevealedBy.Add(coord, new List<Unit>());
+            }
+            _cellRevealedBy[coord].Add(unit);
+
+            _fogOfWar.RevealMapCell(coord);
+        }
+    }
+
+    /// <summary>
     /// makes sure signals are unsubscribed
     /// </summary>
     public override void _ExitTree()
@@ -244,19 +517,6 @@ public partial class GameBoard : Node2D
     private bool IsOccupied(Vector2 cell)
     {
         return _units.ContainsKey(cell);
-    }
-
-    /// <summary>
-    /// gets all the units in the map
-    /// </summary>
-    private void Reinitialize()
-    {
-        _units.Clear();
-
-        foreach (Unit unit in _unitManager.GetAllUnits())
-        {
-            _units[unit.cell] = unit;
-        }
     }
 
     //properties

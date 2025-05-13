@@ -19,10 +19,13 @@ public partial class Unit : Node2D
 
     [Export] private UnitPathMovement _unitPathMovement;
     private bool _unitCanWalk = false;
+    private Vector2 _targetCell = Vector2.Zero;
 
     [Export] private UnitSprite _unitSprite;
 
     [Export] private UnitStats _unitStats;
+
+    [Export] private UnitDirection _unitDirection;
 
     //animation player, but i might need to make a state machine
     //will keep in here for now to see how is selected works
@@ -60,7 +63,7 @@ public partial class Unit : Node2D
 
         if (_unitPathMovement != null && _unitCanWalk)
         {
-            _unitPathMovement.WalkUnit(fDelta, _gameBoard.grid, cell);
+            _unitPathMovement.WalkUnit(fDelta, _gameBoard.grid, _targetCell);
         }
     }
 
@@ -81,6 +84,17 @@ public partial class Unit : Node2D
             }
         }
         get { return _cell; }
+    }
+
+    public Vector2 targetCell
+    {
+        set
+        {
+            if (_gameBoard.grid != null)
+            {
+                _targetCell = _gameBoard.grid.Clamp(value);
+            }
+        }
     }
 
     /// <summary>
@@ -132,5 +146,10 @@ public partial class Unit : Node2D
     {
         get { return _unitGroup; }
         set { _unitGroup = value; }
+    }
+
+    public UnitDirection unitDirection
+    {
+        get { return _unitDirection; }
     }
 }

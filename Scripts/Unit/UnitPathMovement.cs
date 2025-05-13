@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/05/2025]
+ * Last Updated: [05/07/2025]
  * [moves sprite through path]
  */
 
@@ -13,6 +13,8 @@ public partial class UnitPathMovement : Path2D
 {
     private GameBoard _gameBoard;
     [Export] private Unit _unit;
+
+    [Export] private RemoteTransform2D _walkingLocation;
 
     //path2d
     [Signal] public delegate void WalkFinishedEventHandler();
@@ -45,17 +47,32 @@ public partial class UnitPathMovement : Path2D
     {
         _pathFollow.Progress += _moveSpeed * delta;
 
-        if (_currentDirectionIndex < _pathDirections.Count && _pathFollow.ProgressRatio >= (1f / (float)_pathDirections.Count) * _currentDirectionIndex)
+        //this consequncly checks every tile the unit walks on
+        //so this is where units update which tile they are on
+        if (_currentDirectionIndex < _pathDirections.Count &&
+            _pathFollow.ProgressRatio >= (1f / (float)_pathDirections.Count) * _currentDirectionIndex)
         {
+            Vector2 newLoc = _gameBoard.grid.CalculateGridCoordinates(_walkingLocation.GlobalPosition);
+            _gameBoard.ChangeUnitLocationData(_unit, newLoc);
+            _unit.cell = newLoc;
+
             _unitDirection.currentFacing = _pathDirections[_currentDirectionIndex];
             _currentDirectionIndex++;
+
+            _gameBoard.UpdateUnitVision(_unit);
         }
 
         if (_pathFollow.ProgressRatio >= 1f)
         {
             this._isWalking = false;
             _pathFollow.Progress = 0f;
+
+            _gameBoard.ChangeUnitLocationData(_unit, cell);
+            _unit.cell = cell;
             _unit.Position = grid.CalculateMapPosition(cell);
+
+            _gameBoard.UpdateUnitVision(_unit);
+
             Curve.ClearPoints();
             _pathDirections = new List<DirectionEnum>();
             _currentDirectionIndex = 0;
@@ -117,7 +134,7 @@ public partial class UnitPathMovement : Path2D
                 }
             }
         }
-        _unit.cell = path[path.Length - 1];
+        _unit.targetCell = path[path.Length - 1];
         isWalking = true;
     }
 

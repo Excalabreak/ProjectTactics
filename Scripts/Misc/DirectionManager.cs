@@ -4,7 +4,7 @@ using static Godot.TextServer;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/05/2025]
+ * Last Updated: [05/12/2025]
  * [cant make vector 2 const array, 
  * so this was my next idea, 
  * now it also deals in rotation]
@@ -52,7 +52,33 @@ public partial class DirectionManager : Node2D
     }
 
     /// <summary>
-    /// returns the float value for the rotation of enum
+    /// returns a vector 2 for each enum
+    /// </summary>
+    /// <param name="direction">enum of direction</param>
+    /// <returns>Vector2</returns>
+    public Vector2I GetVectorIDirection(DirectionEnum direction)
+    {
+        Vector2I dir = new Vector2I();
+        switch (direction)
+        {
+            case DirectionEnum.UP:
+                dir = Vector2I.Up;
+                break;
+            case DirectionEnum.DOWN:
+                dir = Vector2I.Down;
+                break;
+            case DirectionEnum.LEFT:
+                dir = Vector2I.Left;
+                break;
+            case DirectionEnum.RIGHT:
+                dir = Vector2I.Right;
+                break;
+        }
+        return dir;
+    }
+
+    /// <summary>
+    /// returns the float value for the DEGREE rotation of enum
     /// </summary>
     /// <param name="direction">direction enum</param>
     /// <returns>float of rotation</returns>

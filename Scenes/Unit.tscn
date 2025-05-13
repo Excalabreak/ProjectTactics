@@ -63,11 +63,12 @@ _data = {
 &"UnitTestSelected": SubResource("Animation_c264a")
 }
 
-[node name="Unit" type="Node2D" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_animPlayer")]
+[node name="Unit" type="Node2D" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_unitDirection", "_animPlayer")]
 script = ExtResource("1_x1v5g")
 _unitPathMovement = NodePath("UnitPathMovement")
 _unitSprite = NodePath("Sprites/UnitSprite")
 _unitStats = NodePath("UnitStats")
+_unitDirection = NodePath("UnitDirection")
 _animPlayer = NodePath("AnimationPlayer")
 
 [node name="Sprites" type="Node2D" parent="."]
@@ -84,11 +85,12 @@ _unitDirection = NodePath("../../UnitDirection")
 
 [node name="UnitStats" type="Node" parent="."]
 script = ExtResource("5_e33bx")
-_moveRange = 5.0
+_visionRange = 7.0
 
-[node name="UnitPathMovement" type="Path2D" parent="." node_paths=PackedStringArray("_unit", "_pathFollow", "_unitDirection")]
+[node name="UnitPathMovement" type="Path2D" parent="." node_paths=PackedStringArray("_unit", "_walkingLocation", "_pathFollow", "_unitDirection")]
 script = ExtResource("2_ppost")
 _unit = NodePath("..")
+_walkingLocation = NodePath("PathFollow2D/RemoteTransform2D")
 _pathFollow = NodePath("PathFollow2D")
 _moveSpeed = 200.0
 _unitDirection = NodePath("../UnitDirection")
