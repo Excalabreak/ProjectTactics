@@ -366,6 +366,7 @@ public partial class GameBoard : Node2D
                            (_map.GetTilePathVisionCost(tileLine) * (startingCell.DistanceTo(checkCoords)
                            / checkDistance))+ unitVisionCost)
                         {
+                            //has to check if something is blocking is what is eating up the rest of the walk cost
                             break;
                         }
                         visibleTiles.Add(checkCoords);
