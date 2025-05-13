@@ -40,7 +40,7 @@ public partial class Map : TileMapLayer
 
         foreach (Vector2I tile in tilePath)
         {
-            output += (float)GetCellTileData(tile).GetCustomData("MoveCost");
+            output += (float)GetCellTileData(tile).GetCustomData("VisionCost");
         }
 
         return output;

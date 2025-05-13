@@ -154,16 +154,19 @@ _gameboard = NodePath("../..")
 _map = NodePath("../Map")
 
 [node name="Grid" type="TileMapLayer" parent="GameBoard/MapTiles" node_paths=PackedStringArray("_gameboard")]
+z_index = 60
 tile_set = SubResource("TileSet_201fe")
 script = ExtResource("8_1vcy8")
 _gameboard = NodePath("../..")
 
 [node name="UnitWalkHighlights" type="TileMapLayer" parent="GameBoard/MapTiles"]
 modulate = Color(1, 1, 1, 0.356863)
+z_index = 30
 tile_set = SubResource("TileSet_c2lnq")
 script = ExtResource("6_fi7j4")
 
 [node name="UnitPath" type="TileMapLayer" parent="GameBoard/MapTiles" node_paths=PackedStringArray("_gameBoard")]
+z_index = 45
 tile_set = SubResource("TileSet_lp1f3")
 script = ExtResource("6_t2vuu")
 _gameBoard = NodePath("../..")
@@ -176,7 +179,7 @@ script = ExtResource("12_c2lnq")
 _passingGroup = Array[int]([0, 1])
 
 [node name="Unit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
-position = Vector2(418, 603)
+position = Vector2(419, 668)
 _gameBoard = NodePath("../../..")
 
 [node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]

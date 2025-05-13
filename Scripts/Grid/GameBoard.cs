@@ -305,6 +305,7 @@ public partial class GameBoard : Node2D
         //list of tiles
         List<Vector2I> visibleTiles = new List<Vector2I>();
         List<Vector2I> checkTiles = new List<Vector2I>();
+        List<Vector2I> addedTiles = new List<Vector2I>();
 
         //adds the fist check
         visibleTiles.Add(startingCell);
@@ -329,6 +330,7 @@ public partial class GameBoard : Node2D
         while (hasAdded && checkTiles.Count > 0)
         {
             hasAdded = false;
+            addedTiles.Clear();
 
             //checks line from unit to current checking tile
             foreach (Vector2I checkCoords in checkTiles)
@@ -355,6 +357,7 @@ public partial class GameBoard : Node2D
                             break;
                         }
                         visibleTiles.Add(checkCoords);
+                        addedTiles.Add(checkCoords);
                         hasAdded = true;
                         break;
                     }
@@ -374,24 +377,49 @@ public partial class GameBoard : Node2D
             }
             checkTiles.Clear();
 
+            //adds tiles to be checked
             if (hasAdded)
             {
                 checkDistance++;
-
-                Vector2I nextLayer = startingCell + (unitFacing * checkDistance);
-                if (_grid.IsWithinBounds(nextLayer))
+                
+                foreach (Vector2I addedCoord in addedTiles)
                 {
-                    checkTiles.Add(nextLayer);
-                }
-                for (int i = 1; i <= checkDistance; i++)
-                {
-                    if (_grid.IsWithinBounds(nextLayer + (visionExpand * i)))
+                    Vector2I nextCoord = addedCoord + unitFacing;
+                    if (!checkTiles.Contains(nextCoord) && _grid.IsWithinBounds(nextCoord + visionExpand))
                     {
-                        checkTiles.Add(nextLayer + (visionExpand * i));
+                        checkTiles.Add(nextCoord);
                     }
-                    if (_grid.IsWithinBounds(nextLayer + (visionExpand * -i)))
+
+                    if (unit.unitDirection.currentFacing == DirectionEnum.UP ||
+                    unit.unitDirection.currentFacing == DirectionEnum.DOWN)
                     {
-                        checkTiles.Add(nextLayer + (visionExpand * -i));
+                        if (startingCell.X < addedCoord.X && 
+                            _grid.IsWithinBounds(nextCoord + visionExpand) &&
+                            !checkTiles.Contains(nextCoord + visionExpand))
+                        {
+                            checkTiles.Add(nextCoord + visionExpand);
+                        }
+                        else if (startingCell.X > addedCoord.X && 
+                            _grid.IsWithinBounds(nextCoord + -visionExpand) &&
+                            !checkTiles.Contains(nextCoord + -visionExpand))
+                        {
+                            checkTiles.Add(nextCoord + -visionExpand);
+                        }
+                    }
+                    else
+                    {
+                        if (startingCell.Y < addedCoord.Y && 
+                            _grid.IsWithinBounds(nextCoord + visionExpand) &&
+                            !checkTiles.Contains(nextCoord + visionExpand))
+                        {
+                            checkTiles.Add(nextCoord + visionExpand);
+                        }
+                        else if (startingCell.Y > addedCoord.Y && 
+                            _grid.IsWithinBounds(nextCoord + -visionExpand) &&
+                            !checkTiles.Contains(nextCoord + -visionExpand))
+                        {
+                            checkTiles.Add(nextCoord + -visionExpand);
+                        }
                     }
                 }
             }
