@@ -187,6 +187,10 @@ script = ExtResource("12_c2lnq")
 _group = 2
 _passingGroup = Array[int]([2])
 
+[node name="Unit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
+position = Vector2(800, 663)
+_gameBoard = NodePath("../../..")
+
 [node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer")]
 z_index = 100
 position = Vector2(350, 474)

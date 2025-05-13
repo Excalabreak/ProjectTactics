@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [04/18/2025]
+ * Last Updated: [05/12/2025]
  * [class for unit stats]
  */
 

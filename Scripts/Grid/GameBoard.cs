@@ -352,7 +352,19 @@ public partial class GameBoard : Node2D
                     if (current == checkCoords)
                     {
                         tileLine.RemoveAt(0);
-                        if (unit.unitStats.visionRange < _map.GetTilePathVisionCost(tileLine) * (startingCell.DistanceTo(checkCoords)/ checkDistance))
+                        float unitVisionCost = 0f;
+
+                        foreach (Vector2I tile in tileLine)
+                        {
+                            if (IsOccupied(tile) && !_unitManager.CanPass(unit.unitGroup, _units[tile].unitGroup))
+                            {
+                                unitVisionCost += 2f;
+                            }
+                        }
+
+                        if (unit.unitStats.visionRange < 
+                           (_map.GetTilePathVisionCost(tileLine) * (startingCell.DistanceTo(checkCoords)
+                           / checkDistance))+ unitVisionCost)
                         {
                             break;
                         }
