@@ -12,8 +12,9 @@ using System.Linq;
  * Lovato, Nathan: map
  * YT: Heal Moon: unit movement
  * YT: DAY 345: Line of sight
+ * YT: NoBS Code: circle
  * 
- * Last Updated: [05/12/2025]
+ * Last Updated: [05/13/2025]
  * [game board manages everything on the map]
  */
 
@@ -26,6 +27,7 @@ public partial class GameBoard : Node2D
     [Export] private GridCursor _gridCursor;
     [Export] private Map _map;
     [Export] private FogOfWar _fogOfWar;
+    [Export] private BlockedOverlay _blockedOverlay;
 
     private Unit _selectedUnit;
     private Vector2[] _walkableCells;
@@ -274,6 +276,7 @@ public partial class GameBoard : Node2D
         return moveableCells.ToArray();
     }
 
+    /*
     /// <summary>
     /// updates the PLAYER unit vision on game map
     /// AFTER THE UNIT HAS MOVED
@@ -406,13 +409,13 @@ public partial class GameBoard : Node2D
                     if (unit.unitDirection.currentFacing == DirectionEnum.UP ||
                     unit.unitDirection.currentFacing == DirectionEnum.DOWN)
                     {
-                        if (startingCell.X < addedCoord.X && 
+                        if (startingCell.X <= addedCoord.X && 
                             _grid.IsWithinBounds(nextCoord + visionExpand) &&
                             !checkTiles.Contains(nextCoord + visionExpand))
                         {
                             checkTiles.Add(nextCoord + visionExpand);
                         }
-                        else if (startingCell.X > addedCoord.X && 
+                        else if (startingCell.X >= addedCoord.X && 
                             _grid.IsWithinBounds(nextCoord + -visionExpand) &&
                             !checkTiles.Contains(nextCoord + -visionExpand))
                         {
@@ -421,19 +424,179 @@ public partial class GameBoard : Node2D
                     }
                     else
                     {
-                        if (startingCell.Y < addedCoord.Y && 
+                        if (startingCell.Y <= addedCoord.Y && 
                             _grid.IsWithinBounds(nextCoord + visionExpand) &&
                             !checkTiles.Contains(nextCoord + visionExpand))
                         {
                             checkTiles.Add(nextCoord + visionExpand);
                         }
-                        else if (startingCell.Y > addedCoord.Y && 
+                        else if (startingCell.Y >= addedCoord.Y && 
                             _grid.IsWithinBounds(nextCoord + -visionExpand) &&
                             !checkTiles.Contains(nextCoord + -visionExpand))
                         {
                             checkTiles.Add(nextCoord + -visionExpand);
                         }
                     }
+                }
+            }
+        }
+
+        //visible tiles get revealed
+        Vector2[] output = new Vector2[visibleTiles.Count()];
+        for (int i = 0; i < visibleTiles.Count(); i++)
+        {
+            output[i] = visibleTiles[i];
+        }
+        ShowVision(unit, output);
+    }*/
+
+    /// <summary>
+    /// updates the PLAYER unit vision on game map
+    /// AFTER THE UNIT HAS MOVED
+    /// </summary>
+    /// <param name="unit">unit being updated</param>
+    public void UpdateUnitVision(Unit unit)
+    {
+        //returns on non player units since only the player can see their units
+        if (unit.unitGroup != UnitGroupEnum.PLAYER)
+        {
+            return;
+        }
+
+        //hides unit's old vision
+        //adds unit to vision dictionary if not there
+        HideVision(unit, true);
+
+        //Vector2I for which tiles get checked
+        Vector2I startingCell = new Vector2I(Mathf.RoundToInt(unit.cell.X), Mathf.RoundToInt(unit.cell.Y));
+        Vector2I unitFacing = DirectionManager.Instance.GetVectorIDirection(unit.unitDirection.currentFacing);
+        Vector2I visionExpand = Vector2I.Down;
+
+        if (unit.unitDirection.currentFacing == DirectionEnum.UP ||
+            unit.unitDirection.currentFacing == DirectionEnum.DOWN)
+        {
+            visionExpand = Vector2I.Right;
+        }
+
+        //list of tiles
+        List<Vector2I> visibleTiles = new List<Vector2I>();
+        List<Vector2I> checkTiles = new List<Vector2I>();
+
+        visibleTiles.Add(startingCell);
+
+        int r = Mathf.RoundToInt(unit.unitStats.visionRange);
+
+        int count = r-3;
+        for (int i = 0; i < count; i++)
+        {
+            int x = 0;
+            int y = -r;
+            int p = -r;
+
+            while (x < -y)
+            {
+                if (p > 0)
+                {
+                    y += 1;
+                    p += 2 * (x + y) + 1;
+                }
+                else
+                {
+                    p += 2 * x + 1;
+                }
+
+                switch (unit.unitDirection.currentFacing)
+                {
+                    case DirectionEnum.UP:
+                        checkTiles.Add(startingCell + new Vector2I(x, y));
+                        checkTiles.Add(startingCell + new Vector2I(-x, y));
+                        break;
+                    case DirectionEnum.DOWN:
+                        checkTiles.Add(startingCell + new Vector2I(x, -y));
+                        checkTiles.Add(startingCell + new Vector2I(-x, -y));
+                        break;
+                    case DirectionEnum.RIGHT:
+                        checkTiles.Add(startingCell + new Vector2I(-y, x));
+                        checkTiles.Add(startingCell + new Vector2I(-y, -x));
+                        break;
+                    case DirectionEnum.LEFT:
+                        checkTiles.Add(startingCell + new Vector2I(y, x));
+                        checkTiles.Add(startingCell + new Vector2I(y, -x));
+                        break;
+                    default:
+                        GD.Print("something went wrong");
+                        break;
+                }
+
+                x += 1;
+            }
+            r--;
+        }
+        
+
+        //checks line from unit to current checking tile
+        foreach (Vector2I checkCoords in checkTiles)
+        {
+            List<Vector2I> tileLine = new List<Vector2I>();
+
+            int dx = Math.Abs(checkCoords.X - startingCell.X);
+            int dy = Math.Abs(checkCoords.Y - startingCell.Y);
+            int sx = startingCell.X < checkCoords.X ? 1 : -1;
+            int sy = startingCell.Y < checkCoords.Y ? 1 : -1;
+            int err = dx - dy;
+
+            Vector2I current = startingCell;
+
+            while (true)
+            {
+                tileLine.Add(current);
+                //breaks if tile is within range
+                if (current == checkCoords)
+                {
+                    tileLine.RemoveAt(0);
+
+                    float visionCost = 0f;
+                    for (int i = 0; i < tileLine.Count; i++)
+                    {
+                        if (!_grid.IsWithinBounds(tileLine[i]))
+                        {
+                            break;
+                        }
+
+                        float curVisionCost = 0f;
+
+                        curVisionCost += _map.GetTileVisionCost(tileLine[i]);
+
+                        if (IsOccupied(tileLine[i]) && !_unitManager.CanPass(unit.unitGroup, _units[tileLine[i]].unitGroup))
+                        {
+                            curVisionCost += 2f;
+                        }
+
+                        if (unit.unitStats.visionRange < visionCost + curVisionCost)
+                        {
+                            if (unit.unitStats.visionRange < visionCost)
+                            {
+                                visibleTiles.Add(tileLine[i]);
+                            }
+                            break;
+                        }
+
+                        visibleTiles.Add(tileLine[i]);
+                        visionCost += curVisionCost;
+                    }
+                    break;
+                }
+
+                int e2 = 2 * err;
+                if (e2 > -dy)
+                {
+                    err -= dy;
+                    current.X += sx;
+                }
+                if (e2 < dx)
+                {
+                    err += dx;
+                    current.Y += sy;
                 }
             }
         }

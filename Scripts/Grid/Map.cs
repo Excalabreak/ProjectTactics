@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [YT: Radical Oyster/Heal Moon]
- * Last Updated: [05/12/2025]
+ * Last Updated: [05/13/2025]
  * [gives data about tiles in the map]
  */
 
@@ -44,5 +44,15 @@ public partial class Map : TileMapLayer
         }
 
         return output;
+    }
+
+    /// <summary>
+    /// gets the vision cost of a singular tile
+    /// </summary>
+    /// <param name="tile">coordinates of tile</param>
+    /// <returns>vision cost of coordinates</returns>
+    public float GetTileVisionCost(Vector2I tile)
+    {
+        return (float)GetCellTileData(tile).GetCustomData("VisionCost");
     }
 }

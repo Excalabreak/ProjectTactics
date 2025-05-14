@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bd2fp8u65wgwx"
-path="res://.godot/imported/ObscuredTileMap.png-51b4646d3729a14b15c8231f280ca038.ctex"
+uid="uid://d0b36idsyuh7p"
+path="res://.godot/imported/BlockedOverlay.png-c6f0d1850ef62ce3bb7031f8eb869c8b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Test/ObscuredTileMap.png"
-dest_files=["res://.godot/imported/ObscuredTileMap.png-51b4646d3729a14b15c8231f280ca038.ctex"]
+source_file="res://Sprites/Test/BlockedOverlay.png"
+dest_files=["res://.godot/imported/BlockedOverlay.png-c6f0d1850ef62ce3bb7031f8eb869c8b.ctex"]
 
 [params]
 
