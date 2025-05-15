@@ -10,11 +10,12 @@ using System.Linq;
  * Original Tutorial Author: 
  * 
  * Lovato, Nathan: map
- * YT: Heal Moon: unit movement
- * YT: DAY 345: Line of sight
- * YT: NoBS Code: circle
+ * YT:
+ * Heal Moon: unit movement
+ * DAY 345: Line of sight
+ * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [05/13/2025]
+ * Last Updated: [05/14/2025]
  * [game board manages everything on the map]
  */
 
@@ -535,68 +536,137 @@ public partial class GameBoard : Node2D
         
 
         //checks line from unit to current checking tile
+        //NOTE: Make sure to check if 
         foreach (Vector2I checkCoords in checkTiles)
         {
             List<Vector2I> tileLine = new List<Vector2I>();
+            bool reverse = false;
 
-            int dx = Math.Abs(checkCoords.X - startingCell.X);
-            int dy = Math.Abs(checkCoords.Y - startingCell.Y);
-            int sx = startingCell.X < checkCoords.X ? 1 : -1;
-            int sy = startingCell.Y < checkCoords.Y ? 1 : -1;
-            int err = dx - dy;
+            float x0 = startingCell.X;
+            float y0 = startingCell.Y;
+            float x1 = checkCoords.X;
+            float y1 = checkCoords.Y;
 
-            Vector2I current = startingCell;
-
-            while (true)
+            if (Mathf.Abs(y1 - y0) < Mathf.Abs(x1 - x0))
             {
-                tileLine.Add(current);
-                //breaks if tile is within range
-                if (current == checkCoords)
+                if (x1 < x0)
                 {
-                    tileLine.RemoveAt(0);
+                    reverse = true;
+                    (x0, x1) = (x1, x0);
+                    (y0, y1) = (y1, y0);
+                }
 
-                    float visionCost = 0f;
-                    for (int i = 0; i < tileLine.Count; i++)
+                float dx = x1 - x0;
+                float dy = y1 - y0;
+                float m = (dx != 0) ? dy / dx : 1;
+
+                for (int i = 0; i <= Mathf.Abs(Mathf.RoundToInt(dx)); i++)
+                {
+                    float x = x0 + i;
+                    float y = y0 + i * m;
+                    int ix = (int)x;
+                    int iy = (int)y;
+                    float dist = y - (float)iy;
+                    if (dist < .5f)
                     {
-                        if (!_grid.IsWithinBounds(tileLine[i]))
+                        Vector2I newCoord = new Vector2I(ix, iy);
+
+                        if (reverse)
                         {
-                            break;
+                            tileLine.Insert(0, newCoord);
                         }
-
-                        float curVisionCost = 0f;
-
-                        curVisionCost += _map.GetTileVisionCost(tileLine[i]);
-
-                        if (IsOccupied(tileLine[i]) && !_unitManager.CanPass(unit.unitGroup, _units[tileLine[i]].unitGroup))
+                        else
                         {
-                            curVisionCost += 2f;
+                            tileLine.Add(newCoord);
                         }
-
-                        if (unit.unitStats.visionRange < visionCost + curVisionCost)
-                        {
-                            if (unit.unitStats.visionRange < visionCost)
-                            {
-                                visibleTiles.Add(tileLine[i]);
-                            }
-                            break;
-                        }
-
-                        visibleTiles.Add(tileLine[i]);
-                        visionCost += curVisionCost;
                     }
-                    break;
+                    else
+                    {
+                        Vector2I newCoord = new Vector2I(ix, iy + 1);
+
+                        if (reverse)
+                        {
+                            tileLine.Insert(0, newCoord);
+                        }
+                        else
+                        {
+                            tileLine.Add(newCoord);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (y1 < y0)
+                {
+                    reverse = true;
+                    (x0, x1) = (x1, x0);
+                    (y0, y1) = (y1, y0);
                 }
 
-                int e2 = 2 * err;
-                if (e2 > -dy)
+                float dx = x1 - x0;
+                float dy = y1 - y0;
+                float m = (dy != 0) ? dx / dy : 1;
+
+                for (int i = 0; i <= Mathf.Abs(Mathf.RoundToInt(dy)); i++)
                 {
-                    err -= dy;
-                    current.X += sx;
+                    float x = x0 + i * m;
+                    float y = y0 + i;
+                    int ix = (int)x;
+                    int iy = (int)y;
+                    float dist = x - (float)ix;
+                    //add is within bounds
+                    if (dist < .5f)
+                    {
+                        Vector2I newCoord = new Vector2I(ix, iy);
+
+                        if (reverse)
+                        {
+                            tileLine.Insert(0, newCoord);
+                        }
+                        else
+                        {
+                            tileLine.Add(newCoord);
+                        }
+                    }
+                    else
+                    {
+                        Vector2I newCoord = new Vector2I(ix + 1, iy);
+
+                        if (reverse)
+                        {
+                            tileLine.Insert(0, newCoord);
+                        }
+                        else
+                        {
+                            tileLine.Add(newCoord);
+                        }
+                    }
                 }
-                if (e2 < dx)
+            }
+
+            //check for visible tiles
+            tileLine.RemoveAt(0);
+
+            float totalVisionCost = 0f;
+
+            foreach (Vector2I tile in tileLine)
+            {
+                if (!_grid.IsWithinBounds(tile))
                 {
-                    err += dx;
-                    current.Y += sy;
+                    continue;
+                }
+
+                totalVisionCost += _map.GetTileVisionCost(tile);
+
+                if (IsOccupied(tile) && !_unitManager.CanPass(unit.unitGroup, _units[tile].unitGroup))
+                {
+                    totalVisionCost += 2f;
+                }
+
+                if (unit.unitStats.visionRange >= totalVisionCost)
+                {
+                    visibleTiles.Add(tile);
                 }
             }
         }
