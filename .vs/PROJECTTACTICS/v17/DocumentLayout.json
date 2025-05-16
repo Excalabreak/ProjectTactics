@@ -54,8 +54,7 @@
               "RelativeToolTip": "Scripts\\Grid\\TileVisibilityState.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T23:41:53.102Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-15T23:41:53.102Z"
             },
             {
               "$type": "Document",
@@ -67,8 +66,7 @@
               "RelativeToolTip": "Scripts\\Grid\\BlockedOverlay.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T03:25:11.278Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T03:25:11.278Z"
             },
             {
               "$type": "Document",
@@ -80,8 +78,7 @@
               "RelativeToolTip": "Scripts\\Misc\\DirectionManager.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-12T22:15:49.405Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-12T22:15:49.405Z"
             },
             {
               "$type": "Document",
@@ -93,8 +90,7 @@
               "RelativeToolTip": "Scripts\\Unit\\UnitGroup.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-12T21:37:08.995Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-12T21:37:08.995Z"
             },
             {
               "$type": "Document",
@@ -104,7 +100,7 @@
               "RelativeDocumentMoniker": "Scripts\\Grid\\GameBoard.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GameBoard.cs",
               "RelativeToolTip": "Scripts\\Grid\\GameBoard.cs",
-              "ViewState": "AgIAAAoCAAAAAAAAAAAUwD8CAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAABMCAAAAAAAAAAAkwJECAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-07T18:40:09.965Z",
               "EditorCaption": ""
@@ -119,8 +115,7 @@
               "RelativeToolTip": "Scripts\\Grid\\FogOfWar.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-07T21:33:33.993Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-07T21:33:33.993Z"
             },
             {
               "$type": "Document",
@@ -132,8 +127,7 @@
               "RelativeToolTip": "Scripts\\Unit\\UnitStats.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-12T22:26:46.982Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-12T22:26:46.982Z"
             },
             {
               "$type": "Document",

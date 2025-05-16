@@ -207,7 +207,11 @@ script = ExtResource("12_c2lnq")
 _passingGroup = Array[int]([0, 1])
 
 [node name="Unit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
-position = Vector2(988, 602)
+position = Vector2(221, 675)
+_gameBoard = NodePath("../../..")
+
+[node name="Unit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
+position = Vector2(356, 917)
 _gameBoard = NodePath("../../..")
 
 [node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
