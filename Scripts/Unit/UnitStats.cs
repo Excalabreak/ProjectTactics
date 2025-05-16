@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/12/2025]
+ * Last Updated: [05/15/2025]
  * [class for unit stats]
  */
 
@@ -13,8 +13,6 @@ public partial class UnitStats : Node
     [Export] private float _moveRange = 6;
 
     [Export] private float _visionRange = 6;
-
-
 
     //simple property
     public float moveRange

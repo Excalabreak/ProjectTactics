@@ -3,19 +3,15 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/07/2025]
- * [Fog of war that obscures enemies when player can't see them]
+ * Last Updated: [05/13/2025]
+ * [Fog of war that obscures enemies when player can't see them
+ * NOTE, FOG OF WAR SPRITE SHEET AND REGULAR MAP SPRITE SHEET HAS TO MATCH]
  */
 
 public partial class FogOfWar : TileMapLayer
 {
     [Export] private GameBoard _gameboard;
     [Export] private Map _map;
-
-    public override void _Ready()
-    {
-        TileSet = _map.TileSet;
-    }
 
     /// <summary>
     /// hides the whole map
@@ -38,6 +34,7 @@ public partial class FogOfWar : TileMapLayer
     public void HideMapCell(Vector2 coords)
     {
         Vector2I mapCoords = new Vector2I(Mathf.RoundToInt(coords.X), Mathf.RoundToInt(coords.Y));
+        
         SetCell(mapCoords, 0, _map.GetCellAtlasCoords(mapCoords), 0);
     }
 
