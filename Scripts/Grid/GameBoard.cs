@@ -15,7 +15,7 @@ using System.Linq;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [05/14/2025]
+ * Last Updated: [05/15/2025]
  * [game board manages everything on the map]
  */
 
@@ -40,6 +40,8 @@ public partial class GameBoard : Node2D
     //probably have to redo this
     private System.Collections.Generic.Dictionary<Unit, Vector2[]> _unitVision = new System.Collections.Generic.Dictionary<Unit, Vector2[]>();
     private System.Collections.Generic.Dictionary<Vector2, List<Unit>> _cellRevealedBy = new System.Collections.Generic.Dictionary<Vector2, List<Unit>>();
+    private System.Collections.Generic.Dictionary<Unit, Vector2[]> _unitVisionBlocked = new System.Collections.Generic.Dictionary<Unit, Vector2[]>();
+    private System.Collections.Generic.Dictionary<Vector2, List<Unit>> _cellBlockedBy = new System.Collections.Generic.Dictionary<Vector2, List<Unit>>();
 
 
     private const float MAX_VALUE = 9999999;
@@ -277,7 +279,6 @@ public partial class GameBoard : Node2D
         return moveableCells.ToArray();
     }
 
-    /*
     /// <summary>
     /// updates the PLAYER unit vision on game map
     /// AFTER THE UNIT HAS MOVED
@@ -309,179 +310,7 @@ public partial class GameBoard : Node2D
         //list of tiles
         List<Vector2I> visibleTiles = new List<Vector2I>();
         List<Vector2I> checkTiles = new List<Vector2I>();
-        List<Vector2I> addedTiles = new List<Vector2I>();
-
-        //adds the fist check
-        visibleTiles.Add(startingCell);
-        if (_grid.IsWithinBounds(startingCell + unitFacing))
-        {
-            checkTiles.Add(startingCell + unitFacing);
-        }
-        if (_grid.IsWithinBounds(startingCell + unitFacing + visionExpand))
-        {
-            checkTiles.Add(startingCell + unitFacing + visionExpand);
-        }
-        if (_grid.IsWithinBounds(startingCell + unitFacing + -visionExpand))
-        {
-            checkTiles.Add(startingCell + unitFacing + -visionExpand);
-        }
-
-        //current vars
-        int checkDistance = 1;
-        bool hasAdded = true;
-
-        //loop that checks tiles
-        while (hasAdded && checkTiles.Count > 0)
-        {
-            hasAdded = false;
-            addedTiles.Clear();
-
-            //checks line from unit to current checking tile
-            foreach (Vector2I checkCoords in checkTiles)
-            {
-                List<Vector2I> tileLine = new List<Vector2I>();
-
-                int dx = Math.Abs(checkCoords.X - startingCell.X);
-                int dy = Math.Abs(checkCoords.Y - startingCell.Y);
-                int sx = startingCell.X < checkCoords.X ? 1 : -1;
-                int sy = startingCell.Y < checkCoords.Y ? 1 : -1;
-                int err = dx - dy;
-
-                Vector2I current = startingCell;
-
-                while (true)
-                {
-                    tileLine.Add(current);
-                    //breaks if tile is within range
-                    if (current == checkCoords)
-                    {
-                        tileLine.RemoveAt(0);
-                        float unitVisionCost = 0f;
-
-                        foreach (Vector2I tile in tileLine)
-                        {
-                            if (IsOccupied(tile) && !_unitManager.CanPass(unit.unitGroup, _units[tile].unitGroup))
-                            {
-                                unitVisionCost += 2f;
-                            }
-                        }
-
-                        if (unit.unitStats.visionRange < 
-                           (_map.GetTilePathVisionCost(tileLine) * (startingCell.DistanceTo(checkCoords)
-                           / checkDistance))+ unitVisionCost)
-                        {
-                            //has to check if something is blocking is what is eating up the rest of the walk cost
-                            break;
-                        }
-                        visibleTiles.Add(checkCoords);
-                        addedTiles.Add(checkCoords);
-                        hasAdded = true;
-                        break;
-                    }
-
-                    int e2 = 2 * err;
-                    if (e2 > -dy)
-                    {
-                        err -= dy;
-                        current.X += sx;
-                    }
-                    if (e2 < dx)
-                    {
-                        err += dx;
-                        current.Y += sy;
-                    }
-                }
-            }
-            checkTiles.Clear();
-
-            //adds tiles to be checked
-            if (hasAdded)
-            {
-                checkDistance++;
-                
-                foreach (Vector2I addedCoord in addedTiles)
-                {
-                    Vector2I nextCoord = addedCoord + unitFacing;
-                    if (!checkTiles.Contains(nextCoord) && _grid.IsWithinBounds(nextCoord + visionExpand))
-                    {
-                        checkTiles.Add(nextCoord);
-                    }
-
-                    if (unit.unitDirection.currentFacing == DirectionEnum.UP ||
-                    unit.unitDirection.currentFacing == DirectionEnum.DOWN)
-                    {
-                        if (startingCell.X <= addedCoord.X && 
-                            _grid.IsWithinBounds(nextCoord + visionExpand) &&
-                            !checkTiles.Contains(nextCoord + visionExpand))
-                        {
-                            checkTiles.Add(nextCoord + visionExpand);
-                        }
-                        else if (startingCell.X >= addedCoord.X && 
-                            _grid.IsWithinBounds(nextCoord + -visionExpand) &&
-                            !checkTiles.Contains(nextCoord + -visionExpand))
-                        {
-                            checkTiles.Add(nextCoord + -visionExpand);
-                        }
-                    }
-                    else
-                    {
-                        if (startingCell.Y <= addedCoord.Y && 
-                            _grid.IsWithinBounds(nextCoord + visionExpand) &&
-                            !checkTiles.Contains(nextCoord + visionExpand))
-                        {
-                            checkTiles.Add(nextCoord + visionExpand);
-                        }
-                        else if (startingCell.Y >= addedCoord.Y && 
-                            _grid.IsWithinBounds(nextCoord + -visionExpand) &&
-                            !checkTiles.Contains(nextCoord + -visionExpand))
-                        {
-                            checkTiles.Add(nextCoord + -visionExpand);
-                        }
-                    }
-                }
-            }
-        }
-
-        //visible tiles get revealed
-        Vector2[] output = new Vector2[visibleTiles.Count()];
-        for (int i = 0; i < visibleTiles.Count(); i++)
-        {
-            output[i] = visibleTiles[i];
-        }
-        ShowVision(unit, output);
-    }*/
-
-    /// <summary>
-    /// updates the PLAYER unit vision on game map
-    /// AFTER THE UNIT HAS MOVED
-    /// </summary>
-    /// <param name="unit">unit being updated</param>
-    public void UpdateUnitVision(Unit unit)
-    {
-        //returns on non player units since only the player can see their units
-        if (unit.unitGroup != UnitGroupEnum.PLAYER)
-        {
-            return;
-        }
-
-        //hides unit's old vision
-        //adds unit to vision dictionary if not there
-        HideVision(unit, true);
-
-        //Vector2I for which tiles get checked
-        Vector2I startingCell = new Vector2I(Mathf.RoundToInt(unit.cell.X), Mathf.RoundToInt(unit.cell.Y));
-        Vector2I unitFacing = DirectionManager.Instance.GetVectorIDirection(unit.unitDirection.currentFacing);
-        Vector2I visionExpand = Vector2I.Down;
-
-        if (unit.unitDirection.currentFacing == DirectionEnum.UP ||
-            unit.unitDirection.currentFacing == DirectionEnum.DOWN)
-        {
-            visionExpand = Vector2I.Right;
-        }
-
-        //list of tiles
-        List<Vector2I> visibleTiles = new List<Vector2I>();
-        List<Vector2I> checkTiles = new List<Vector2I>();
+        List<Vector2I> blockingTiles = new List<Vector2I>();
 
         visibleTiles.Add(startingCell);
 
@@ -571,6 +400,11 @@ public partial class GameBoard : Node2D
                     {
                         Vector2I newCoord = new Vector2I(ix, iy);
 
+                        if (tileLine.Contains(newCoord))
+                        {
+                            continue;
+                        }
+
                         if (reverse)
                         {
                             tileLine.Insert(0, newCoord);
@@ -583,6 +417,11 @@ public partial class GameBoard : Node2D
                     else
                     {
                         Vector2I newCoord = new Vector2I(ix, iy + 1);
+
+                        if (tileLine.Contains(newCoord))
+                        {
+                            continue;
+                        }
 
                         if (reverse)
                         {
@@ -620,6 +459,11 @@ public partial class GameBoard : Node2D
                     {
                         Vector2I newCoord = new Vector2I(ix, iy);
 
+                        if (tileLine.Contains(newCoord))
+                        {
+                            continue;
+                        }
+
                         if (reverse)
                         {
                             tileLine.Insert(0, newCoord);
@@ -633,6 +477,11 @@ public partial class GameBoard : Node2D
                     {
                         Vector2I newCoord = new Vector2I(ix + 1, iy);
 
+                        if (tileLine.Contains(newCoord))
+                        {
+                            continue;
+                        }
+
                         if (reverse)
                         {
                             tileLine.Insert(0, newCoord);
@@ -644,7 +493,6 @@ public partial class GameBoard : Node2D
                     }
                 }
             }
-
             //check for visible tiles
             tileLine.RemoveAt(0);
 
@@ -668,16 +516,31 @@ public partial class GameBoard : Node2D
                 {
                     visibleTiles.Add(tile);
                 }
+                else
+                {
+                    blockingTiles.Add(tile);
+                    break;
+                }
             }
         }
 
         //visible tiles get revealed
-        Vector2[] output = new Vector2[visibleTiles.Count()];
+        Vector2[] outputVision = new Vector2[visibleTiles.Count()];
+        Vector2[] outputBlocked = new Vector2[blockingTiles.Count()];
+
         for (int i = 0; i < visibleTiles.Count(); i++)
         {
-            output[i] = visibleTiles[i];
+            outputVision[i] = visibleTiles[i];
         }
-        ShowVision(unit, output);
+
+        if (blockingTiles.Count() > 0)
+        {
+            for (int i = 0; i < blockingTiles.Count(); i++)
+            {
+                outputBlocked[i] = blockingTiles[i];
+            }
+        }
+        ShowVision(unit, outputVision, outputBlocked);
     }
 
     /// <summary>
@@ -692,15 +555,48 @@ public partial class GameBoard : Node2D
             foreach (Vector2 coords in _unitVision[unit])
             {
                 _cellRevealedBy[coords].Remove(unit);
-                if (_cellRevealedBy[coords].Count <= 0)
+
+                if (_cellRevealedBy[coords].Count <= 0 )
                 {
-                    _fogOfWar.HideMapCell(coords);
+                    if (_cellBlockedBy.ContainsKey(coords) && _cellBlockedBy[coords].Count > 0)
+                    {
+                        ChangeTileVisibilityState(TileVisibilityState.BLOCKING, coords);
+                    }
+                    else
+                    {
+                        ChangeTileVisibilityState(TileVisibilityState.UNSEEN, coords);
+                    }
                     _cellRevealedBy.Remove(coords);
                 }
             }
             if (!keepUnitKey)
             {
                 _unitVision.Remove(unit);
+            }
+        }
+
+        if (_unitVisionBlocked.ContainsKey(unit))
+        {
+            foreach (Vector2 coords in _unitVisionBlocked[unit])
+            {
+                _cellBlockedBy[coords].Remove(unit);
+
+                if (_cellBlockedBy[coords].Count <= 0)
+                {
+                    if (_cellRevealedBy.ContainsKey(coords) && _cellRevealedBy[coords].Count > 0)
+                    {
+                        ChangeTileVisibilityState(TileVisibilityState.VISIBLE, coords);
+                    }
+                    else
+                    {
+                        ChangeTileVisibilityState(TileVisibilityState.UNSEEN, coords);
+                    }
+                    _cellBlockedBy.Remove(coords);
+                }
+            }
+            if (!keepUnitKey)
+            {
+                _unitVisionBlocked.Remove(unit);
             }
         }
     }
@@ -710,19 +606,20 @@ public partial class GameBoard : Node2D
     /// updates data structures
     /// </summary>
     /// <param name="unit"></param>
-    /// <param name="coords"></param>
-    public void ShowVision(Unit unit, Vector2[] coords)
+    /// <param name="visibleCoords">coordinates that are visible</param>
+    /// <param name="blockedCoords">coordinates that are blocked</param>
+    public void ShowVision(Unit unit, Vector2[] visibleCoords, Vector2[] blockedCoords)
     {
         if (!_unitVision.ContainsKey(unit))
         {
-            _unitVision.Add(unit, coords);
+            _unitVision.Add(unit, visibleCoords);
         }
         else
         {
-            _unitVision[unit] = coords;
+            _unitVision[unit] = visibleCoords;
         }
 
-        foreach (Vector2 coord in coords)
+        foreach (Vector2 coord in visibleCoords)
         {
             if (!_cellRevealedBy.ContainsKey(coord))
             {
@@ -730,7 +627,58 @@ public partial class GameBoard : Node2D
             }
             _cellRevealedBy[coord].Add(unit);
 
-            _fogOfWar.RevealMapCell(coord);
+            ChangeTileVisibilityState(TileVisibilityState.VISIBLE, coord);
+        }
+
+        if (!_unitVisionBlocked.ContainsKey(unit))
+        {
+            _unitVisionBlocked.Add(unit, blockedCoords);
+        }
+        else
+        {
+            _unitVisionBlocked[unit] = blockedCoords;
+        }
+
+
+        if (blockedCoords.Length > 0)
+        {
+            foreach (Vector2 coord in blockedCoords)
+            {
+                if (!_cellBlockedBy.ContainsKey(coord))
+                {
+                    _cellBlockedBy.Add(coord, new List<Unit>());
+                }
+                _cellBlockedBy[coord].Add(unit);
+
+                if (!_cellRevealedBy.ContainsKey(coord))
+                {
+                    ChangeTileVisibilityState(TileVisibilityState.BLOCKING, coord);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// calls to chage the tiles visibility
+    /// </summary>
+    /// <param name="state">what state the tile is in</param>
+    /// <param name="tileCoord">which tile</param>
+    private void ChangeTileVisibilityState(TileVisibilityState state, Vector2 tileCoord)
+    {
+        switch (state)
+        {
+            case TileVisibilityState.UNSEEN:
+                _fogOfWar.HideMapCell(tileCoord);
+                _blockedOverlay.RemoveBlockCell(tileCoord);
+                break;
+            case TileVisibilityState.BLOCKING:
+                _fogOfWar.RevealMapCell(tileCoord);
+                _blockedOverlay.BlockCell(tileCoord);
+                break;
+            case TileVisibilityState.VISIBLE:
+                _fogOfWar.RevealMapCell(tileCoord);
+                _blockedOverlay.RemoveBlockCell(tileCoord);
+                break;
         }
     }
 

@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/13/2025]
+ * Last Updated: [05/15/2025]
  * [class for unit stats]
  */
 
@@ -13,9 +13,6 @@ public partial class UnitStats : Node
     [Export] private float _moveRange = 6;
 
     [Export] private float _visionRange = 6;
-    [Export] private int _visionWidth = 6;
-
-
 
     //simple property
     public float moveRange
@@ -28,11 +25,5 @@ public partial class UnitStats : Node
     {
         get { return _visionRange; }
         set { _visionRange = value; }
-    }
-
-    public int visionWidth
-    {
-        get { return _visionWidth; }
-        set { _visionWidth = value; }
     }
 }

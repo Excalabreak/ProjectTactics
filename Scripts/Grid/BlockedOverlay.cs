@@ -14,7 +14,7 @@ public partial class BlockedOverlay : TileMapLayer
     /// hides the map cell by covering it with a second tile map
     /// </summary>
     /// <param name="coords">coordinates of tile to hide</param>
-    public void HideMapCell(Vector2 coords)
+    public void BlockCell(Vector2 coords)
     {
         Vector2I mapCoords = new Vector2I(Mathf.RoundToInt(coords.X), Mathf.RoundToInt(coords.Y));
 
@@ -25,7 +25,7 @@ public partial class BlockedOverlay : TileMapLayer
     /// reveals map cell
     /// </summary>
     /// <param name="coords">coordinates of tile to show</param>
-    public void RevealMapCell(Vector2 coords)
+    public void RemoveBlockCell(Vector2 coords)
     {
         EraseCell(new Vector2I(Mathf.RoundToInt(coords.X), Mathf.RoundToInt(coords.Y)));
     }
