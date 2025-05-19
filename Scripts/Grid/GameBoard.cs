@@ -197,7 +197,7 @@ public partial class GameBoard : Node2D
     /// <returns>array of coords that the unit can walk</returns>
     private Vector2[] GetWalkableCells(Unit unit)
     {
-        return Dijksta(unit.cell, unit.unitStats.moveRange);
+        return Dijksta(unit.cell, (float)unit.unitStats.GetBaseStat(UnitStatEnum.MOVE));
     }
 
     /// <summary>
@@ -298,14 +298,6 @@ public partial class GameBoard : Node2D
 
         //Vector2I for which tiles get checked
         Vector2I startingCell = new Vector2I(Mathf.RoundToInt(unit.cell.X), Mathf.RoundToInt(unit.cell.Y));
-        Vector2I unitFacing = DirectionManager.Instance.GetVectorIDirection(unit.unitDirection.currentFacing);
-        Vector2I visionExpand = Vector2I.Down;
-
-        if (unit.unitDirection.currentFacing == DirectionEnum.UP ||
-            unit.unitDirection.currentFacing == DirectionEnum.DOWN)
-        {
-            visionExpand = Vector2I.Right;
-        }
 
         //list of tiles
         List<Vector2I> visibleTiles = new List<Vector2I>();
@@ -314,7 +306,7 @@ public partial class GameBoard : Node2D
 
         visibleTiles.Add(startingCell);
 
-        int r = Mathf.RoundToInt(unit.unitStats.visionRange);
+        int r = unit.unitStats.GetBaseStat(UnitStatEnum.VISION);
 
         int count = r-3;
         for (int i = 0; i < count; i++)
@@ -512,7 +504,7 @@ public partial class GameBoard : Node2D
                     totalVisionCost += 2f;
                 }
 
-                if (unit.unitStats.visionRange >= totalVisionCost)
+                if ((float)unit.unitStats.GetBaseStat(UnitStatEnum.VISION) >= totalVisionCost)
                 {
                     visibleTiles.Add(tile);
                 }
