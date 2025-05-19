@@ -300,15 +300,15 @@ public partial class GameBoard : Node2D
         Vector2I startingCell = new Vector2I(Mathf.RoundToInt(unit.cell.X), Mathf.RoundToInt(unit.cell.Y));
 
         //list of tiles
-        List<Vector2I> visibleTiles = new List<Vector2I>();
         List<Vector2I> checkTiles = new List<Vector2I>();
+        List<Vector2I> visibleTiles = new List<Vector2I>();
         List<Vector2I> blockingTiles = new List<Vector2I>();
 
         visibleTiles.Add(startingCell);
 
         int r = unit.unitStats.GetBaseStat(UnitStatEnum.VISION);
 
-        int count = r-3;
+        int count = r/2;
         for (int i = 0; i < count; i++)
         {
             int x = 0;
@@ -357,7 +357,6 @@ public partial class GameBoard : Node2D
         
 
         //checks line from unit to current checking tile
-        //NOTE: Make sure to check if 
         foreach (Vector2I checkCoords in checkTiles)
         {
             List<Vector2I> tileLine = new List<Vector2I>();

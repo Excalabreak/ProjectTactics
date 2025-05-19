@@ -64,7 +64,7 @@ _data = {
 }
 
 [node name="Unit" type="Node2D" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_unitDirection", "_animPlayer")]
-z_index = 50
+z_index = 14
 script = ExtResource("1_x1v5g")
 _unitPathMovement = NodePath("UnitPathMovement")
 _unitSprite = NodePath("Sprites/UnitSprite")

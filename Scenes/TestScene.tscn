@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=33 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Texture2D" uid="uid://dxok463ymyabj" path="res://Sprites/Test/TestTileMap2.png" id="3_lp1f3"]
 [ext_resource type="Texture2D" uid="uid://cehbm80elwn7v" path="res://Sprites/Test/GridTile.png" id="4_6xh1p"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://b8k2oamcad7ba" path="res://Scripts/Misc/GridCursor.cs" id="11_ytmxh"]
 [ext_resource type="Script" uid="uid://dwoq515u7ummm" path="res://Scripts/Unit/UnitGroup.cs" id="12_c2lnq"]
 [ext_resource type="PackedScene" uid="uid://cp44coe2c50e7" path="res://Scenes/Unit.tscn" id="15_8c81w"]
+[ext_resource type="Texture2D" uid="uid://xdhxhuor3wo2" path="res://Sprites/Test/TestEnemy.png" id="18_c2lnq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
 texture = ExtResource("3_lp1f3")
@@ -194,7 +195,7 @@ tile_set = SubResource("TileSet_c2lnq")
 script = ExtResource("6_fi7j4")
 
 [node name="UnitPath" type="TileMapLayer" parent="GameBoard/MapTiles" node_paths=PackedStringArray("_gameBoard")]
-z_index = 45
+z_index = 17
 tile_set = SubResource("TileSet_lp1f3")
 script = ExtResource("6_t2vuu")
 _gameBoard = NodePath("../..")
@@ -218,6 +219,10 @@ _passingGroup = Array[int]([2])
 [node name="Unit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
 position = Vector2(800, 851)
 _gameBoard = NodePath("../../..")
+
+[node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/Unit2/Sprites" index="0"]
+texture = ExtResource("18_c2lnq")
+_skin = ExtResource("18_c2lnq")
 
 [node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer")]
 z_index = 100
@@ -243,3 +248,5 @@ drag_top_margin = 0.65
 drag_right_margin = 0.8
 drag_bottom_margin = 0.65
 editor_draw_drag_margin = true
+
+[editable path="GameBoard/Units/EnemyUnits/Unit2"]
