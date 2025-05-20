@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [YT: Radical Oyster/Heal Moon]
- * Last Updated: [05/13/2025]
+ * Last Updated: [05/20/2025]
  * [gives data about tiles in the map]
  */
 
@@ -30,23 +30,6 @@ public partial class Map : TileMapLayer
     }
 
     /// <summary>
-    /// returns the vision cost of a path of tiles
-    /// </summary>
-    /// <param name="tilePath">list of coordinates</param>
-    /// <returns>vision cost</returns>
-    public float GetTilePathVisionCost(List<Vector2I> tilePath)
-    {
-        float output = 0;
-
-        foreach (Vector2I tile in tilePath)
-        {
-            output += (float)GetCellTileData(tile).GetCustomData("VisionCost");
-        }
-
-        return output;
-    }
-
-    /// <summary>
     /// gets the vision cost of a singular tile
     /// </summary>
     /// <param name="tile">coordinates of tile</param>
@@ -54,5 +37,10 @@ public partial class Map : TileMapLayer
     public float GetTileVisionCost(Vector2I tile)
     {
         return (float)GetCellTileData(tile).GetCustomData("VisionCost");
+    }
+
+    public float GetTileMoveCost(Vector2I tile)
+    {
+        return (float)GetCellTileData(tile).GetCustomData("MoveCost");
     }
 }

@@ -11,7 +11,7 @@ using System.Linq;
  * 
  * Lovato, Nathan: map
  * YT:
- * Heal Moon: unit movement
+ * Heal Moon: unit movement, attack range, menu
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
@@ -32,12 +32,13 @@ public partial class GameBoard : Node2D
 
     private Unit _selectedUnit;
     private Vector2[] _walkableCells;
+    private Vector2[] _attackableCells;
     private float[,] _movementCosts;
 
     //all units, might want to split this up
     private System.Collections.Generic.Dictionary<Vector2, Unit> _units = new System.Collections.Generic.Dictionary<Vector2, Unit>();
 
-    //probably have to redo this
+    //Dictionary for the fog of war
     private System.Collections.Generic.Dictionary<Unit, Vector2[]> _unitVision = new System.Collections.Generic.Dictionary<Unit, Vector2[]>();
     private System.Collections.Generic.Dictionary<Vector2, List<Unit>> _cellRevealedBy = new System.Collections.Generic.Dictionary<Vector2, List<Unit>>();
     private System.Collections.Generic.Dictionary<Unit, Vector2[]> _unitVisionBlocked = new System.Collections.Generic.Dictionary<Unit, Vector2[]>();
@@ -72,9 +73,6 @@ public partial class GameBoard : Node2D
         }
 
         _movementCosts = _map.GetMovementCosts(_grid);
-
-
-        
     }
 
     /// <summary>
@@ -104,8 +102,13 @@ public partial class GameBoard : Node2D
 
         _selectedUnit = _units[cell];
         _selectedUnit.isSelected = true;
+
         _walkableCells = GetWalkableCells(_selectedUnit);
-        _unitWalkHighlights.DrawHighlights(_walkableCells);
+        _attackableCells = GetAttackableCells(_selectedUnit);
+
+        _unitWalkHighlights.DrawAttackHighlights(_attackableCells);
+        _unitWalkHighlights.DrawWalkHighlights(_walkableCells);
+
         _unitPath.Initialize(_walkableCells);
     }
 
@@ -197,7 +200,100 @@ public partial class GameBoard : Node2D
     /// <returns>array of coords that the unit can walk</returns>
     private Vector2[] GetWalkableCells(Unit unit)
     {
-        return Dijksta(unit.cell, (float)unit.unitStats.GetBaseStat(UnitStatEnum.MOVE));
+        return Dijksta(unit.cell, (float)unit.unitStats.GetBaseStat(UnitStatEnum.MOVE), false);
+    }
+
+    /// <summary>
+    /// gets the cells a unit can attack
+    /// NOTE: inefficient, optimize later
+    /// </summary>
+    /// <param name="unit">selected unit</param>
+    /// <returns>array of cell coordinates</returns>
+    private Vector2[] GetAttackableCells(Unit unit)
+    {
+        List<Vector2> attackableCells = new List<Vector2>();
+        Vector2[] realWalkableCells = Dijksta(unit.cell, unit.unitStats.GetBaseStat(UnitStatEnum.MOVE), true);
+
+        foreach (Vector2 curCell in realWalkableCells)
+        {
+            for (int i = 1; i <= unit.attackRange + 1; i++)
+            {
+                attackableCells.AddRange(FloodFill(curCell, unit.attackRange));
+            }
+        }
+
+        return attackableCells.Except(realWalkableCells).ToArray();
+    }
+
+    /// <summary>
+    /// flood fills based on cell coordinates and max distance
+    /// </summary>
+    /// <param name="cell">coords</param>
+    /// <param name="maxDistance">distance of flood fill</param>
+    /// <returns>array of coords</returns>
+    private Vector2[] FloodFill(Vector2 cell, int maxDistance)
+    {
+        List<Vector2> output = new List<Vector2>();
+        List<Vector2> walls = new List<Vector2>();
+        Stack<Vector2> cellStack = new Stack<Vector2>();
+
+        cellStack.Push(cell);
+
+        while (cellStack.Count > 0)
+        {
+            Vector2 current = cellStack.Pop();
+
+            if (!_grid.IsWithinBounds(current))
+            {
+                continue;
+            }
+            if (output.Contains(current))
+            {
+                continue;
+            }
+
+            Vector2 differences = (current - cell).Abs();
+            int distances = Mathf.RoundToInt(differences.X) + Mathf.RoundToInt(differences.Y);
+            if (distances > maxDistance)
+            {
+                continue;
+            }
+
+            output.Add(current);
+            foreach (DirectionEnum dir in Enum.GetValues(typeof(DirectionEnum)))
+            {
+                Vector2 coords = current + DirectionManager.Instance.GetVectorDirection(dir);
+
+                if (!_grid.IsWithinBounds(coords))
+                {
+                    continue;
+                }
+
+                if (_map.GetTileMoveCost(new Vector2I(Mathf.RoundToInt(coords.X), Mathf.RoundToInt(coords.Y))) > 99)
+                {
+                    walls.Add(coords);
+                }
+
+                /*
+                if (IsOccupied(coords))
+                {
+                    continue;
+                }*/
+                if (output.Contains(coords))
+                {
+                    continue;
+                }
+                if (cellStack.Contains(coords))
+                {
+                    continue;
+                }
+
+                cellStack.Push(coords);
+            }
+        }
+
+
+        return output.Except(walls).ToArray();
     }
 
     /// <summary>
@@ -206,8 +302,9 @@ public partial class GameBoard : Node2D
     /// </summary>
     /// <param name="cell">unit coords</param>
     /// <param name="maxDistance">unit move stat</param>
+    /// <param name="attackableCheck">check unit attack check</param>
     /// <returns>array of walkable units</returns>
-    private Vector2[] Dijksta(Vector2 cell, float maxDistance)
+    private Vector2[] Dijksta(Vector2 cell, float maxDistance, bool attackableCheck)
     {
         int y = Mathf.RoundToInt(grid.gridCell.Y);
         int x = Mathf.RoundToInt(grid.gridCell.X);
@@ -234,6 +331,7 @@ public partial class GameBoard : Node2D
 
         float tileCost;
         float distanceToNode;
+        List<Vector2> occupiedCells = new List<Vector2>();
 
         while (dijkstaQueue.Count > 0)
         {
@@ -257,9 +355,16 @@ public partial class GameBoard : Node2D
                         distanceToNode = currentPriority + tileCost;
 
                         //checks if units can pass eachother
-                        if (IsOccupied(coords) && !_unitManager.CanPass(_selectedUnit.unitGroup, _units[coords].unitGroup))
+                        if (IsOccupied(coords))
                         {
-                            distanceToNode = currentPriority + MAX_VALUE;
+                            if (!_unitManager.CanPass(_selectedUnit.unitGroup, _units[coords].unitGroup))
+                            {
+                                distanceToNode = currentPriority + MAX_VALUE;
+                            }
+                            else if (_units[coords].isWait && attackableCheck)
+                            {
+                                occupiedCells.Add(coords);
+                            }
                         }
 
                         visited[coordsY, coordsX] = true;
@@ -276,7 +381,7 @@ public partial class GameBoard : Node2D
             }
         }
 
-        return moveableCells.ToArray();
+        return moveableCells.Except(occupiedCells).ToArray();
     }
 
     /// <summary>
