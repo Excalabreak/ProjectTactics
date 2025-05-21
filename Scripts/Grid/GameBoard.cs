@@ -15,7 +15,7 @@ using System.Linq;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [05/15/2025]
+ * Last Updated: [05/21/2025]
  * [game board manages everything on the map]
  */
 
@@ -113,6 +113,27 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
+    /// displays information when the cursor is hovering a unit
+    /// </summary>
+    /// <param name="cell">cell to display info</param>
+    private void HoverDisplay(Vector2 cell)
+    {
+        if (!_units.ContainsKey(cell))
+        {
+            //could add options here
+            return;
+        }
+
+        Unit curUnit = _units[cell];
+
+        _walkableCells = GetWalkableCells(curUnit);
+        _attackableCells = GetAttackableCells(curUnit);
+
+        _unitWalkHighlights.DrawAttackHighlights(_attackableCells);
+        _unitWalkHighlights.DrawWalkHighlights(_walkableCells);
+    }
+
+    /// <summary>
     /// deselects units and clears overlays
     /// </summary>
     private void DeselectSelectedUnit()
@@ -174,6 +195,16 @@ public partial class GameBoard : Node2D
         if (_selectedUnit != null && _selectedUnit.isSelected)
         {
             _unitPath.DrawPath(_selectedUnit.cell, newCell);
+        }
+        else if (_unitWalkHighlights != null && (_walkableCells == null || _walkableCells.Length > 0))
+        {
+            _walkableCells = new Vector2[0];
+            _unitWalkHighlights.Clear();
+        }
+
+        if (_units.ContainsKey(newCell) && _selectedUnit == null)
+        {
+            HoverDisplay(newCell);
         }
     }
 
@@ -309,6 +340,7 @@ public partial class GameBoard : Node2D
         int y = Mathf.RoundToInt(grid.gridCell.Y);
         int x = Mathf.RoundToInt(grid.gridCell.X);
 
+        Unit curUnit = _units[cell];
         List<Vector2> moveableCells = new List<Vector2>();
         bool[,] visited = new bool[y,x];
         float[,] distances = new float[y, x];
@@ -357,7 +389,7 @@ public partial class GameBoard : Node2D
                         //checks if units can pass eachother
                         if (IsOccupied(coords))
                         {
-                            if (!_unitManager.CanPass(_selectedUnit.unitGroup, _units[coords].unitGroup))
+                            if (!_unitManager.CanPass(curUnit.unitGroup, _units[coords].unitGroup))
                             {
                                 distanceToNode = currentPriority + MAX_VALUE;
                             }
