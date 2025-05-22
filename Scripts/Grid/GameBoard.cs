@@ -41,6 +41,7 @@ public partial class GameBoard : Node2D
     private float[,] _movementCosts;
     private Vector2 _prevCell;
     private Vector2 _prevPos;
+    private DirectionEnum _prevDir;
 
     //all units, might want to split this up
     private System.Collections.Generic.Dictionary<Vector2, Unit> _units = new System.Collections.Generic.Dictionary<Vector2, Unit>();
@@ -107,6 +108,9 @@ public partial class GameBoard : Node2D
         }
 
         _selectedUnit = _units[cell];
+        _prevCell = cell;
+        _prevPos = _selectedUnit.Position;
+        _prevDir = _selectedUnit.unitDirection.currentFacing;
         _selectedUnit.isSelected = true;
 
         _walkableCells = GetWalkableCells(_selectedUnit);
@@ -152,7 +156,7 @@ public partial class GameBoard : Node2D
     /// <summary>
     /// clears unit from selected
     /// </summary>
-    private void ClearSelectedUnit()
+    public void ClearSelectedUnit()
     {
         _selectedUnit = null;
         _walkableCells = new Vector2[0];
@@ -173,8 +177,35 @@ public partial class GameBoard : Node2D
         _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath, _grid);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
-        ClearSelectedUnit();
+        //ClearSelectedUnit();
         EmitSignal("SelectedMoved");
+    }
+
+    /// <summary>
+    /// resets the unit location after moving
+    /// </summary>
+    public void ResetUnit()
+    {
+        if (_prevPos == new Vector2(-1, -1) || _prevCell == new Vector2(-1, -1))
+        {
+            return;
+        }
+
+        if (_selectedUnit != null && _selectedUnit.cell != _prevCell)
+        {
+            _selectedUnit.Position = _prevPos;
+            _units.Remove(_selectedUnit.cell);
+            _units[_prevCell] = _selectedUnit;
+            _selectedUnit.cell = _prevCell;
+            _prevCell = new Vector2(-1,-1);
+            _prevPos = new Vector2(-1, -1);
+            _selectedUnit.unitDirection.currentFacing = _prevDir;
+
+            UpdateUnitVision(_selectedUnit);
+
+            DeselectSelectedUnit();
+            ClearSelectedUnit();
+        }
     }
 
     /// <summary>
@@ -241,7 +272,6 @@ public partial class GameBoard : Node2D
             else if (!IsOccupied(cell) && _walkableCells.Contains(cell))
             {
                 //wait for unit to move
-                GD.Print("buh");
                 MoveSelectedUnit(cell);
                 await ToSignal(this, "SelectedMoved");
                 CanvasLayer actionMenu = _actionMenu.Instantiate() as CanvasLayer;
@@ -866,5 +896,10 @@ public partial class GameBoard : Node2D
     public GridResource grid
     {
         get { return _grid; }
+    }
+
+    public GridCursor gridCursor
+    {
+        get { return _gridCursor; }
     }
 }

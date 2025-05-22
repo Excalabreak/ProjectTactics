@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bsjvashhk428s" path="res://Scripts/Menu/ActionMenu.cs" id="1_yp5m8"]
 
-[node name="ActionMenu" type="CanvasLayer"]
+[node name="ActionMenu" type="CanvasLayer" node_paths=PackedStringArray("_cursorDefaultStartButton")]
 script = ExtResource("1_yp5m8")
+_cursorDefaultStartButton = NodePath("VBoxContainer/AttackButton")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 8
@@ -37,6 +38,10 @@ text = "Talk
 layout_mode = 2
 text = "Move"
 
+[node name="TurnButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Turn"
+
 [node name="ItemButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Items"
@@ -44,6 +49,10 @@ text = "Items"
 [node name="TradeButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Trade"
+
+[node name="CancelButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Cancel"
 
 [node name="WaitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -53,6 +62,8 @@ text = "Wait"
 [connection signal="pressed" from="VBoxContainer/SkillButton" to="." method="OnSkillButtonPress"]
 [connection signal="pressed" from="VBoxContainer/TalkButton" to="." method="OnTalkButtonPress"]
 [connection signal="pressed" from="VBoxContainer/MoveButton" to="." method="OnMoveButtonPress"]
+[connection signal="pressed" from="VBoxContainer/TurnButton" to="." method="OnTurnButtonPress"]
 [connection signal="pressed" from="VBoxContainer/ItemButton" to="." method="OnItemButtonPress"]
 [connection signal="pressed" from="VBoxContainer/TradeButton" to="." method="OnTradeButtonPress"]
+[connection signal="pressed" from="VBoxContainer/CancelButton" to="." method="OnCancelButtonPress"]
 [connection signal="pressed" from="VBoxContainer/WaitButton" to="." method="OnWaitButtonPress"]
