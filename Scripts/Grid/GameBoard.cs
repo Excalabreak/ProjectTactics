@@ -224,9 +224,11 @@ public partial class GameBoard : Node2D
         if (_selectedUnit == null && _units.ContainsKey(cell))
         {
             SelectUnit(cell);
+            //show action menu w/ move button (18:30 of tutorial)
         }
         else if (_selectedUnit != null)
         {
+            //----- move to move button -----
             if (IsOccupied(cell) && _units[cell] == _selectedUnit)
             {
                 CanvasLayer actionMenu = _actionMenu.Instantiate() as CanvasLayer;
@@ -245,6 +247,7 @@ public partial class GameBoard : Node2D
                 CanvasLayer actionMenu = _actionMenu.Instantiate() as CanvasLayer;
                 AddChild(actionMenu);
             }
+            //----- end -----
         }
         else
         {
