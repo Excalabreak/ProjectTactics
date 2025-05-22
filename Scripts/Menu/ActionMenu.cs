@@ -51,7 +51,8 @@ public partial class ActionMenu : CanvasLayer
 
     private void OnMoveButtonPress()
     {
-
+        HideMenu();
+        _gameBoard.MoveAction();
     }
 
     private void OnTurnButtonPress()
@@ -78,18 +79,14 @@ public partial class ActionMenu : CanvasLayer
         // reset unit pos
         _gameBoard.ResetUnit();
 
-        _gridCursor.ProcessMode = ProcessModeEnum.Inherit;
-        _gridCursor.ResetCursor();
-        _gridCursor.Show();
-        QueueFree();
-    }
-
-    private void OnWaitButtonPress()
-    {
-        //set unit to wait
-
+        _gameBoard.DeselectSelectedUnit();
         _gameBoard.ClearSelectedUnit();
 
+        HideMenu();
+    }
+
+    private void HideMenu()
+    {
         _gridCursor.ProcessMode = ProcessModeEnum.Inherit;
         _gridCursor.ResetCursor();
         _gridCursor.Show();

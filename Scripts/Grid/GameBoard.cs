@@ -43,6 +43,8 @@ public partial class GameBoard : Node2D
     private Vector2 _prevPos;
     private DirectionEnum _prevDir;
 
+    private bool _handleMoveAction;
+
     //all units, might want to split this up
     private System.Collections.Generic.Dictionary<Vector2, Unit> _units = new System.Collections.Generic.Dictionary<Vector2, Unit>();
 
@@ -133,6 +135,7 @@ public partial class GameBoard : Node2D
     /// <param name="cell">cell to display info</param>
     private void HoverDisplay(Vector2 cell)
     {
+        //add condition for hidden enemy unit
         if (!_units.ContainsKey(cell))
         {
             //could add options here
@@ -151,7 +154,7 @@ public partial class GameBoard : Node2D
     /// <summary>
     /// deselects units and clears overlays
     /// </summary>
-    private void DeselectSelectedUnit()
+    public void DeselectSelectedUnit()
     {
         _selectedUnit.isSelected = false;
         _unitWalkHighlights.Clear();
@@ -182,12 +185,13 @@ public partial class GameBoard : Node2D
         _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath, _grid);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
-        //ClearSelectedUnit();
+        ClearSelectedUnit();
         EmitSignal("SelectedMoved");
     }
 
     /// <summary>
     /// resets the unit location after moving
+    /// not needed anymore, but is here if i want to go back to this
     /// </summary>
     public void ResetUnit()
     {
@@ -253,42 +257,50 @@ public partial class GameBoard : Node2D
 
     /// <summary>
     /// calls to select or move unit
+    /// maybe make a state machine for accept press
+    /// 
     /// </summary>
     /// <param name="cell">cell cursor is on</param>
     private async void OnCursorAcceptPress(Vector2 cell)
     {
+        //need to add a condition for enemy units
         if (_selectedUnit == null && _units.ContainsKey(cell))
         {
             SelectUnit(cell);
+            CanvasLayer actionMenu = _actionMenu.Instantiate() as CanvasLayer;
+            AddChild(actionMenu);
             //show action menu w/ move button (18:30 of tutorial)
         }
-        else if (_selectedUnit != null)
+        else if (_selectedUnit != null && _handleMoveAction)
         {
             //----- move to move button -----
             if (IsOccupied(cell) && _units[cell] == _selectedUnit)
             {
-                CanvasLayer actionMenu = _actionMenu.Instantiate() as CanvasLayer;
-
                 _units.Remove(_selectedUnit.cell);
                 _units[cell] = _selectedUnit;
+                DeselectSelectedUnit();
+                ClearSelectedUnit();
 
-                AddChild(actionMenu);
             }
             else if (!IsOccupied(cell) && _walkableCells.Contains(cell))
             {
                 //wait for unit to move
                 MoveSelectedUnit(cell);
                 await ToSignal(this, "SelectedMoved");
-                CanvasLayer actionMenu = _actionMenu.Instantiate() as CanvasLayer;
-                AddChild(actionMenu);
             }
+            _handleMoveAction = false;
             //----- end -----
         }
-        else
+        else if (_selectedUnit == null)
         {
             CanvasLayer pauseMenu = _pauseMenu.Instantiate() as CanvasLayer;
             AddChild(pauseMenu);
         }
+    }
+
+    public void MoveAction()
+    {
+        _handleMoveAction = true;
     }
 
     /// <summary>

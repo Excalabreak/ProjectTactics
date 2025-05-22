@@ -43,14 +43,19 @@ public partial class PauseScreen : CanvasLayer
     private void OnClosePressed()
     {
 
-        _gridCursor.ProcessMode = ProcessModeEnum.Inherit;
-        _gridCursor.ResetCursor();
-        _gridCursor.Show();
-        QueueFree();
+        HideMenu();
     }
 
     private void OnEndTurnPressed()
     {
 
+    }
+
+    private void HideMenu()
+    {
+        _gridCursor.ProcessMode = ProcessModeEnum.Inherit;
+        _gridCursor.ResetCursor();
+        _gridCursor.Show();
+        QueueFree();
     }
 }
