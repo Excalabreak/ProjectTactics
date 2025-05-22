@@ -1,7 +1,9 @@
-[gd_scene load_steps=35 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=37 format=4 uid="uid://cbymeb2u0whko"]
 
+[ext_resource type="PackedScene" uid="uid://c24kesd8eggv4" path="res://Scenes/Menus/ActionMenu.tscn" id="3_65o0v"]
 [ext_resource type="Texture2D" uid="uid://dxok463ymyabj" path="res://Sprites/Test/TestTileMap2.png" id="3_lp1f3"]
 [ext_resource type="Texture2D" uid="uid://cehbm80elwn7v" path="res://Sprites/Test/GridTile.png" id="4_6xh1p"]
+[ext_resource type="PackedScene" uid="uid://cthmnrjp6uu61" path="res://Scenes/Menus/PauseScreen.tscn" id="4_o5yho"]
 [ext_resource type="Texture2D" uid="uid://c77lwl1g215vn" path="res://Sprites/Test/TileHighlight.png" id="5_8c81w"]
 [ext_resource type="Texture2D" uid="uid://dvp5cs678jp83" path="res://Sprites/Test/TempFogOfWarTileMap.png" id="5_fi7j4"]
 [ext_resource type="Texture2D" uid="uid://b7bouj3wqmjsd" path="res://Sprites/Test/arrows.svg" id="5_hctok"]
@@ -168,6 +170,8 @@ _gridCursor = NodePath("Cursor")
 _map = NodePath("MapTiles/Map")
 _fogOfWar = NodePath("MapTiles/FogOfWar")
 _blockedOverlay = NodePath("MapTiles/BlockedOverlay")
+_actionMenu = ExtResource("3_65o0v")
+_pauseMenu = ExtResource("4_o5yho")
 
 [node name="MapTiles" type="Node2D" parent="GameBoard"]
 

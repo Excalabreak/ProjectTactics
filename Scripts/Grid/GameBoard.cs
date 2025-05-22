@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 
 /*
  * Author: [Lam, Justin]
@@ -30,10 +31,16 @@ public partial class GameBoard : Node2D
     [Export] private FogOfWar _fogOfWar;
     [Export] private BlockedOverlay _blockedOverlay;
 
+    [Export] private PackedScene _actionMenu;
+    [Export] private PackedScene _pauseMenu;
+    [Signal] public delegate void SelectedMovedEventHandler();
+
     private Unit _selectedUnit;
     private Vector2[] _walkableCells;
     private Vector2[] _attackableCells;
     private float[,] _movementCosts;
+    private Vector2 _prevCell;
+    private Vector2 _prevPos;
 
     //all units, might want to split this up
     private System.Collections.Generic.Dictionary<Vector2, Unit> _units = new System.Collections.Generic.Dictionary<Vector2, Unit>();
@@ -43,7 +50,6 @@ public partial class GameBoard : Node2D
     private System.Collections.Generic.Dictionary<Vector2, List<Unit>> _cellRevealedBy = new System.Collections.Generic.Dictionary<Vector2, List<Unit>>();
     private System.Collections.Generic.Dictionary<Unit, Vector2[]> _unitVisionBlocked = new System.Collections.Generic.Dictionary<Unit, Vector2[]>();
     private System.Collections.Generic.Dictionary<Vector2, List<Unit>> _cellBlockedBy = new System.Collections.Generic.Dictionary<Vector2, List<Unit>>();
-
 
     private const float MAX_VALUE = 9999999;
 
@@ -168,6 +174,7 @@ public partial class GameBoard : Node2D
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
         ClearSelectedUnit();
+        EmitSignal("SelectedMoved");
     }
 
     /// <summary>
@@ -212,15 +219,37 @@ public partial class GameBoard : Node2D
     /// calls to select or move unit
     /// </summary>
     /// <param name="cell">cell cursor is on</param>
-    private void OnCursorAcceptPress(Vector2 cell)
+    private async void OnCursorAcceptPress(Vector2 cell)
     {
-        if (_selectedUnit == null)
+        if (_selectedUnit == null && _units.ContainsKey(cell))
         {
             SelectUnit(cell);
         }
-        else if (_selectedUnit.isSelected)
+        else if (_selectedUnit != null)
         {
-            MoveSelectedUnit(cell);
+            if (IsOccupied(cell) && _units[cell] == _selectedUnit)
+            {
+                CanvasLayer actionMenu = _actionMenu.Instantiate() as CanvasLayer;
+
+                _units.Remove(_selectedUnit.cell);
+                _units[cell] = _selectedUnit;
+
+                AddChild(actionMenu);
+            }
+            else if (!IsOccupied(cell) && _walkableCells.Contains(cell))
+            {
+                //wait for unit to move
+                GD.Print("buh");
+                MoveSelectedUnit(cell);
+                await ToSignal(this, "SelectedMoved");
+                CanvasLayer actionMenu = _actionMenu.Instantiate() as CanvasLayer;
+                AddChild(actionMenu);
+            }
+        }
+        else
+        {
+            CanvasLayer pauseMenu = _pauseMenu.Instantiate() as CanvasLayer;
+            AddChild(pauseMenu);
         }
     }
 
