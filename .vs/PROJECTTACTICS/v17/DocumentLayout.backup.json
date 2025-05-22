@@ -7,12 +7,28 @@
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|c:\\users\\justin\\desktop\\projecttactics\\scripts\\grid\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|c:\\users\\justin\\desktop\\projecttactics\\scripts\\unit\\unitpathmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\unit\\unitpathmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|c:\\users\\justin\\desktop\\projecttactics\\scripts\\misc\\gridcursor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\misc\\gridcursor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|c:\\users\\justin\\desktop\\projecttactics\\scripts\\grid\\unitwalkhighlight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\unitwalkhighlight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|c:\\users\\justin\\desktop\\projecttactics\\scripts\\grid\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Menu\\ActionMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Scripts\\Menu\\ActionMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|c:\\users\\justin\\desktop\\projecttactics\\scripts\\menu\\pausescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\pausescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|c:\\users\\justin\\desktop\\projecttactics\\scripts\\unit\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,11 +50,63 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "UnitPathMovement.cs",
+              "DocumentMoniker": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Unit\\UnitPathMovement.cs",
+              "RelativeDocumentMoniker": "Scripts\\Unit\\UnitPathMovement.cs",
+              "ToolTip": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Unit\\UnitPathMovement.cs",
+              "RelativeToolTip": "Scripts\\Unit\\UnitPathMovement.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAA5wEwAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T00:58:42.189Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GridCursor.cs",
+              "DocumentMoniker": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Misc\\GridCursor.cs",
+              "RelativeDocumentMoniker": "Scripts\\Misc\\GridCursor.cs",
+              "ToolTip": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Misc\\GridCursor.cs",
+              "RelativeToolTip": "Scripts\\Misc\\GridCursor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADsAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T00:43:17.774Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PauseScreen.cs",
+              "DocumentMoniker": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Menu\\PauseScreen.cs",
+              "RelativeDocumentMoniker": "Scripts\\Menu\\PauseScreen.cs",
+              "ToolTip": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Menu\\PauseScreen.cs",
+              "RelativeToolTip": "Scripts\\Menu\\PauseScreen.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T23:37:13.245Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ActionMenu.cs",
+              "DocumentMoniker": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Menu\\ActionMenu.cs",
+              "RelativeDocumentMoniker": "Scripts\\Menu\\ActionMenu.cs",
+              "ToolTip": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Menu\\ActionMenu.cs",
+              "RelativeToolTip": "Scripts\\Menu\\ActionMenu.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T23:36:33.981Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Map.cs",
               "DocumentMoniker": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Grid\\Map.cs",
               "RelativeDocumentMoniker": "Scripts\\Grid\\Map.cs",
@@ -46,11 +114,12 @@
               "RelativeToolTip": "Scripts\\Grid\\Map.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-20T21:03:26.107Z"
+              "WhenOpened": "2025-05-20T21:03:26.107Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "UnitWalkHighlight.cs",
               "DocumentMoniker": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Grid\\UnitWalkHighlight.cs",
               "RelativeDocumentMoniker": "Scripts\\Grid\\UnitWalkHighlight.cs",
@@ -58,7 +127,8 @@
               "RelativeToolTip": "Scripts\\Grid\\UnitWalkHighlight.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-20T18:53:37.474Z"
+              "WhenOpened": "2025-05-20T18:53:37.474Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -68,14 +138,14 @@
               "RelativeDocumentMoniker": "Scripts\\Grid\\GameBoard.cs",
               "ToolTip": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Grid\\GameBoard.cs",
               "RelativeToolTip": "Scripts\\Grid\\GameBoard.cs",
-              "ViewState": "AgIAAK8AAAAAAAAAAAAUwMYAAABKAAAAAAAAAA==",
+              "ViewState": "AgIAAM8AAAAAAAAAAAAkwOcAAABSAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-19T21:01:14.91Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "UnitStatEnum.cs",
               "DocumentMoniker": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Unit\\UnitStatEnum.cs",
               "RelativeDocumentMoniker": "Scripts\\Unit\\UnitStatEnum.cs",
@@ -87,7 +157,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "Unit.cs",
               "DocumentMoniker": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Unit\\Unit.cs",
               "RelativeDocumentMoniker": "Scripts\\Unit\\Unit.cs",
@@ -99,7 +169,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "UnitStats.cs",
               "DocumentMoniker": "C:\\Users\\Justin\\Desktop\\ProjectTactics\\Scripts\\Unit\\UnitStats.cs",
               "RelativeDocumentMoniker": "Scripts\\Unit\\UnitStats.cs",
