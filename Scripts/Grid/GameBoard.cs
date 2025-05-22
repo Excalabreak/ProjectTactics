@@ -79,6 +79,11 @@ public partial class GameBoard : Node2D
             UpdateUnitVision(unit);
         }
 
+        foreach (KeyValuePair<Vector2,Unit> unit in _units)
+        {
+            UpdateUnitVision(unit.Value);
+        }
+
         _movementCosts = _map.GetMovementCosts(_grid);
     }
 
