@@ -31,6 +31,7 @@ public partial class GameBoard : Node2D
     [Export] private FogOfWar _fogOfWar;
     [Export] private BlockedOverlay _blockedOverlay;
 
+    [Export] private MenuStateMachine _menuStateMachine;
     [Export] private PackedScene _actionMenu;
     [Export] private PackedScene _pauseMenu;
     [Signal] public delegate void SelectedMovedEventHandler();
@@ -42,8 +43,6 @@ public partial class GameBoard : Node2D
     private Vector2 _prevCell;
     private Vector2 _prevPos;
     private DirectionEnum _prevDir;
-
-    private bool _handleMoveAction;
 
     //all units, might want to split this up
     private System.Collections.Generic.Dictionary<Vector2, Unit> _units = new System.Collections.Generic.Dictionary<Vector2, Unit>();
@@ -256,12 +255,19 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
-    /// calls to select or move unit
-    /// maybe make a state machine for accept press
-    /// 
+    /// calls state machine to handle
     /// </summary>
     /// <param name="cell">cell cursor is on</param>
-    private async void OnCursorAcceptPress(Vector2 cell)
+    private void OnCursorAcceptPress(Vector2 cell)
+    {
+        _menuStateMachine.currentState.OnCursorAccept(cell);
+    }
+
+    /// <summary>
+    /// selects unit and brings up menu if needed
+    /// </summary>
+    /// <param name="cell"></param>
+    public void OnUnSelectedAccept(Vector2 cell)
     {
         //need to add a condition for enemy units
         if (_selectedUnit == null && _units.ContainsKey(cell))
@@ -269,27 +275,10 @@ public partial class GameBoard : Node2D
             SelectUnit(cell);
             CanvasLayer actionMenu = _actionMenu.Instantiate() as CanvasLayer;
             AddChild(actionMenu);
-            //show action menu w/ move button (18:30 of tutorial)
         }
-        else if (_selectedUnit != null && _handleMoveAction)
+        else if (_selectedUnit != null)
         {
-            //----- move to move button -----
-            if (IsOccupied(cell) && _units[cell] == _selectedUnit)
-            {
-                _units.Remove(_selectedUnit.cell);
-                _units[cell] = _selectedUnit;
-                DeselectSelectedUnit();
-                ClearSelectedUnit();
-
-            }
-            else if (!IsOccupied(cell) && _walkableCells.Contains(cell))
-            {
-                //wait for unit to move
-                MoveSelectedUnit(cell);
-                await ToSignal(this, "SelectedMoved");
-            }
-            _handleMoveAction = false;
-            //----- end -----
+            return;
         }
         else if (_selectedUnit == null)
         {
@@ -298,9 +287,27 @@ public partial class GameBoard : Node2D
         }
     }
 
-    public void MoveAction()
+    /// <summary>
+    /// moves unit to cell
+    /// </summary>
+    /// <param name="cell"></param>
+    public async void OnMoveAction(Vector2 cell)
     {
-        _handleMoveAction = true;
+        if (IsOccupied(cell) && _units[cell] == _selectedUnit)
+        {
+            _units.Remove(_selectedUnit.cell);
+            _units[cell] = _selectedUnit;
+            DeselectSelectedUnit();
+            ClearSelectedUnit();
+
+        }
+        else if (!IsOccupied(cell) && _walkableCells.Contains(cell))
+        {
+            //wait for unit to move
+            MoveSelectedUnit(cell);
+            await ToSignal(this, "SelectedMoved");
+        }
+        _menuStateMachine.TransitionTo("UnSelectedState");
     }
 
     /// <summary>
@@ -918,5 +925,10 @@ public partial class GameBoard : Node2D
     public GridCursor gridCursor
     {
         get { return _gridCursor; }
+    }
+
+    public MenuStateMachine menuStateMachine
+    {
+        get { return _menuStateMachine; }
     }
 }

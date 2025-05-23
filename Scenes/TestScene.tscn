@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=40 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="PackedScene" uid="uid://c24kesd8eggv4" path="res://Scenes/Menus/ActionMenu.tscn" id="3_65o0v"]
 [ext_resource type="Texture2D" uid="uid://dxok463ymyabj" path="res://Sprites/Test/TestTileMap2.png" id="3_lp1f3"]
@@ -23,6 +23,9 @@
 [ext_resource type="Texture2D" uid="uid://b2e6fnaytryuk" path="res://Sprites/Test/attackRange.png" id="12_dwn5r"]
 [ext_resource type="PackedScene" uid="uid://cp44coe2c50e7" path="res://Scenes/Unit.tscn" id="15_8c81w"]
 [ext_resource type="Texture2D" uid="uid://xdhxhuor3wo2" path="res://Sprites/Test/TestEnemy.png" id="18_c2lnq"]
+[ext_resource type="Script" uid="uid://do8g05v3r4qn8" path="res://Scripts/Menu/MenuStateMachine/MenuStateMachine.cs" id="24_o5yho"]
+[ext_resource type="Script" uid="uid://8rtvmkb53l3a" path="res://Scripts/Menu/MenuStateMachine/States/UnSelectedState.cs" id="25_w2urx"]
+[ext_resource type="Script" uid="uid://c7dh1mhyvoxy3" path="res://Scripts/Menu/MenuStateMachine/States/MoveState.cs" id="26_l6hhx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
 texture = ExtResource("3_lp1f3")
@@ -160,7 +163,7 @@ sources/0 = SubResource("TileSetAtlasSource_t2vuu")
 
 [node name="TestScene" type="Node2D"]
 
-[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay")]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_menuStateMachine")]
 script = ExtResource("8_lp1f3")
 _grid = ExtResource("5_qsjrb")
 _unitWalkHighlights = NodePath("MapTiles/UnitWalkHighlights")
@@ -170,6 +173,7 @@ _gridCursor = NodePath("Cursor")
 _map = NodePath("MapTiles/Map")
 _fogOfWar = NodePath("MapTiles/FogOfWar")
 _blockedOverlay = NodePath("MapTiles/BlockedOverlay")
+_menuStateMachine = NodePath("MenuStateMachine")
 _actionMenu = ExtResource("3_65o0v")
 _pauseMenu = ExtResource("4_o5yho")
 
@@ -259,6 +263,17 @@ drag_top_margin = 0.65
 drag_right_margin = 0.8
 drag_bottom_margin = 0.65
 editor_draw_drag_margin = true
+
+[node name="MenuStateMachine" type="Node" parent="GameBoard" node_paths=PackedStringArray("_gameBoard")]
+script = ExtResource("24_o5yho")
+initialState = NodePath("UnSelectedState")
+_gameBoard = NodePath("..")
+
+[node name="UnSelectedState" type="Node" parent="GameBoard/MenuStateMachine"]
+script = ExtResource("25_w2urx")
+
+[node name="MoveState" type="Node" parent="GameBoard/MenuStateMachine"]
+script = ExtResource("26_l6hhx")
 
 [editable path="GameBoard/Units/PlayerUnits/Unit"]
 [editable path="GameBoard/Units/EnemyUnits/Unit"]

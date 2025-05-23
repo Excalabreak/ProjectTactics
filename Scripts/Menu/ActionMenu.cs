@@ -52,7 +52,7 @@ public partial class ActionMenu : CanvasLayer
     private void OnMoveButtonPress()
     {
         HideMenu();
-        _gameBoard.MoveAction();
+        _gameBoard.menuStateMachine.TransitionTo("MoveState");
     }
 
     private void OnTurnButtonPress()
@@ -76,11 +76,9 @@ public partial class ActionMenu : CanvasLayer
     /// </summary>
     private void OnCancelButtonPress()
     {
-        // reset unit pos
-        _gameBoard.ResetUnit();
-
         _gameBoard.DeselectSelectedUnit();
         _gameBoard.ClearSelectedUnit();
+        _gameBoard.menuStateMachine.TransitionTo("UnSelectedState");
 
         HideMenu();
     }
