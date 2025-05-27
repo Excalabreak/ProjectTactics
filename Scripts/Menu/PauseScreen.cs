@@ -40,9 +40,11 @@ public partial class PauseScreen : CanvasLayer
 
     }
 
-    private void OnClosePressed()
+    /// <summary>
+    /// closes pause menu
+    /// </summary>
+    public void OnClosePressed()
     {
-
         HideMenu();
     }
 

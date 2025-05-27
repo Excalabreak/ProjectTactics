@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [05/21/2025]
+ * Last Updated: [05/27/2025]
  * [game board manages everything on the map]
  */
 
@@ -40,6 +40,9 @@ public partial class GameBoard : Node2D
     private Vector2[] _walkableCells;
     private Vector2[] _attackableCells;
     private float[,] _movementCosts;
+
+    private ActionMenu _actionMenuInstance;
+    private PauseScreen _pauseScreenInstance;
     private Vector2 _prevCell;
     private Vector2 _prevPos;
     private DirectionEnum _prevDir;
@@ -94,10 +97,17 @@ public partial class GameBoard : Node2D
     /// <param name="event"></param>
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (_selectedUnit != null && @event.IsActionPressed("Decline"))
+        if (@event.IsActionPressed("Decline"))
         {
-            DeselectSelectedUnit();
-            ClearSelectedUnit();
+            if (_selectedUnit != null)
+            {
+                _actionMenuInstance.OnCancelButtonPress();
+            }
+            //might want to change so gameboard isn't handling options
+            else if (IsInstanceValid(_pauseScreenInstance))
+            {
+                _pauseScreenInstance.OnClosePressed();
+            }
         }
     }
 
@@ -273,8 +283,8 @@ public partial class GameBoard : Node2D
         if (_selectedUnit == null && _units.ContainsKey(cell))
         {
             SelectUnit(cell);
-            CanvasLayer actionMenu = _actionMenu.Instantiate() as CanvasLayer;
-            AddChild(actionMenu);
+            _actionMenuInstance = _actionMenu.Instantiate() as ActionMenu;
+            AddChild(_actionMenuInstance);
         }
         else if (_selectedUnit != null)
         {
@@ -282,8 +292,8 @@ public partial class GameBoard : Node2D
         }
         else if (_selectedUnit == null)
         {
-            CanvasLayer pauseMenu = _pauseMenu.Instantiate() as CanvasLayer;
-            AddChild(pauseMenu);
+            _pauseScreenInstance = _pauseMenu.Instantiate() as PauseScreen;
+            AddChild(_pauseScreenInstance);
         }
     }
 

@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: YT:Heal Moon
- * Last Updated: [05/21/2025]
+ * Last Updated: [05/27/2025]
  * [menu for unit action
  * NOTE: can probably make this and pause menu the same script
  * will do after tutorial]
@@ -74,7 +74,7 @@ public partial class ActionMenu : CanvasLayer
     /// going to put this here for now, but will likely just move it to the
     /// decline buttion
     /// </summary>
-    private void OnCancelButtonPress()
+    public void OnCancelButtonPress()
     {
         _gameBoard.DeselectSelectedUnit();
         _gameBoard.ClearSelectedUnit();
