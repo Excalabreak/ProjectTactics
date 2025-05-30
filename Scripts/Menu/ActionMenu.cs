@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: YT:Heal Moon
- * Last Updated: [05/27/2025]
+ * Last Updated: [05/30/2025]
  * [menu for unit action
  * NOTE: can probably make this and pause menu the same script
  * will do after tutorial]
@@ -37,7 +37,9 @@ public partial class ActionMenu : CanvasLayer
 
     private void OnAttackButtonPress()
     {
-
+        HideMenu();
+        _gameBoard.ShowCurrentAttackRange();
+        _gameBoard.menuStateMachine.TransitionTo("AttackState");
     }
 
     private void OnSkillButtonPress()
@@ -76,9 +78,7 @@ public partial class ActionMenu : CanvasLayer
     /// </summary>
     public void OnCancelButtonPress()
     {
-        _gameBoard.DeselectSelectedUnit();
-        _gameBoard.ClearSelectedUnit();
-        _gameBoard.menuStateMachine.TransitionTo("UnSelectedState");
+        _gameBoard.ResetMenu();
 
         HideMenu();
     }

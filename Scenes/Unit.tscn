@@ -84,7 +84,7 @@ texture = ExtResource("7_e33bx")
 script = ExtResource("8_u1ivc")
 _unitDirection = NodePath("../../UnitDirection")
 
-[node name="UnitStats" type="Node" parent="."]
+[node name="UnitStats" type="Node" parent="." node_paths=PackedStringArray("_healthLable")]
 script = ExtResource("5_e33bx")
 _baseStats = Dictionary[int, int]({
 0: 10,
@@ -98,6 +98,7 @@ _baseStats = Dictionary[int, int]({
 8: 6,
 9: 8
 })
+_healthLable = NodePath("../TempHealthLable")
 
 [node name="UnitPathMovement" type="Path2D" parent="." node_paths=PackedStringArray("_unit", "_walkingLocation", "_pathFollow", "_unitDirection")]
 script = ExtResource("2_ppost")
@@ -121,3 +122,10 @@ script = ExtResource("6_uqujc")
 libraries = {
 &"": SubResource("AnimationLibrary_6xh1p")
 }
+
+[node name="TempHealthLable" type="Label" parent="."]
+offset_left = -22.0
+offset_top = 8.0
+offset_right = 21.0
+offset_bottom = 31.0
+text = "10/10"

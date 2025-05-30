@@ -4,13 +4,18 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/19/2025]
+ * Last Updated: [05/29/2025]
  * [class for unit stats]
  */
 
 public partial class UnitStats : Node
 {
     [Export] private Dictionary<UnitStatEnum, int> _baseStats = new Dictionary<UnitStatEnum, int>();
+    //temp, make pretty later
+
+    [Export] private Label _healthLable;
+    private int _maxHP = 10;
+    private int _currentHP = 10;
 
     /// <summary>
     /// makes sure stats has all enums
@@ -26,6 +31,34 @@ public partial class UnitStats : Node
 
             _baseStats.Add(stat, 1);
         }
+
+        _maxHP = _baseStats[UnitStatEnum.HEALTH];
+        _currentHP = _maxHP;
+        UpdateHealthUI();
+    }
+
+    /// <summary>
+    /// damages the unit and checks for death
+    /// NOTE: very simple now
+    /// </summary>
+    /// <param name="damage"></param>
+    public void DamageUnit(int damage)
+    {
+        _currentHP -= damage;
+        UpdateHealthUI();
+        if (_currentHP <= 0)
+        {
+            GD.Print("unit dead");
+            //unit dies
+        }
+    }
+
+    /// <summary>
+    /// updates the UI for 
+    /// </summary>
+    public void UpdateHealthUI()
+    {
+        _healthLable.Text = _currentHP + "/" + _maxHP;
     }
 
     /// <summary>
@@ -36,5 +69,16 @@ public partial class UnitStats : Node
     public int GetBaseStat(UnitStatEnum stat)
     {
         return _baseStats[stat];
+    }
+
+    /// <summary>
+    /// adds the amount to stat
+    /// to subtract, just use negative
+    /// </summary>
+    /// <param name="stat">stat to change</param>
+    /// <param name="amount">amount to add</param>
+    public void AddToStat(UnitStatEnum stat, int amount)
+    {
+        _baseStats[stat] = _baseStats[stat] + amount;
     }
 }

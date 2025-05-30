@@ -99,7 +99,7 @@ public partial class GameBoard : Node2D
     {
         if (@event.IsActionPressed("Decline"))
         {
-            if (_selectedUnit != null)
+            if (IsInstanceValid(_actionMenuInstance))
             {
                 _actionMenuInstance.OnCancelButtonPress();
             }
@@ -108,7 +108,18 @@ public partial class GameBoard : Node2D
             {
                 _pauseScreenInstance.OnClosePressed();
             }
+            ResetMenu();
         }
+    }
+
+    /// <summary>
+    /// resets menu
+    /// </summary>
+    public void ResetMenu()
+    {
+        DeselectSelectedUnit();
+        ClearSelectedUnit();
+        menuStateMachine.TransitionTo("UnSelectedState");
     }
 
     /// <summary>
@@ -318,6 +329,24 @@ public partial class GameBoard : Node2D
             await ToSignal(this, "SelectedMoved");
         }
         _menuStateMachine.TransitionTo("UnSelectedState");
+    }
+
+    /// <summary>
+    /// selects unit for attack
+    /// </summary>
+    /// <param name="cell"></param>
+    public void OnAttackAction(Vector2 cell)
+    {
+        
+    }
+
+    /// <summary>
+    /// shows the attack range of the current selected unit
+    /// </summary>
+    public void ShowCurrentAttackRange()
+    {
+        _unitWalkHighlights.Clear();
+        _unitWalkHighlights.DrawAttackHighlights(FloodFill(_selectedUnit.cell, _selectedUnit.attackRange));
     }
 
     /// <summary>
