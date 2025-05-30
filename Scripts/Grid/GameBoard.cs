@@ -259,14 +259,17 @@ public partial class GameBoard : Node2D
     /// <param name="newCell">cell cursor is moving to</param>
     private void OnCursorMoved(Vector2 newCell)
     {
-        if (_selectedUnit != null && _selectedUnit.isSelected)
+        if (_menuStateMachine.currentState.Name == "MoveState")
         {
-            _unitPath.DrawPath(_selectedUnit.cell, newCell);
-        }
-        else if (_unitWalkHighlights != null && (_walkableCells == null || _walkableCells.Length > 0))
-        {
-            _walkableCells = new Vector2[0];
-            _unitWalkHighlights.Clear();
+            if (_selectedUnit != null && _selectedUnit.isSelected)
+            {
+                _unitPath.DrawPath(_selectedUnit.cell, newCell);
+            }
+            else if (_unitWalkHighlights != null && (_walkableCells == null || _walkableCells.Length > 0))
+            {
+                _walkableCells = new Vector2[0];
+                _unitWalkHighlights.Clear();
+            }
         }
 
         if (_units.ContainsKey(newCell) && _selectedUnit == null)
