@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [05/27/2025]
+ * Last Updated: [05/31/2025]
  * [game board manages everything on the map]
  */
 
@@ -58,6 +58,8 @@ public partial class GameBoard : Node2D
 
     private const float MAX_VALUE = 9999999;
 
+    //---------- SET UP -----------
+
     /// <summary>
     /// reinitializes the units
     /// </summary>
@@ -92,6 +94,17 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
+    /// makes sure signals are unsubscribed
+    /// </summary>
+    public override void _ExitTree()
+    {
+        _gridCursor.AcceptPress -= OnCursorAcceptPress;
+        _gridCursor.Moved -= OnCursorMoved;
+    }
+
+    //------------ INPUT ----------
+
+    /// <summary>
     /// if the player inputs decline, deselect unit
     /// </summary>
     /// <param name="event"></param>
@@ -113,14 +126,37 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
-    /// resets menu
+    /// updates the unit path when the cursor moves
     /// </summary>
-    public void ResetMenu()
+    /// <param name="newCell">cell cursor is moving to</param>
+    private void OnCursorMoved(Vector2 newCell)
     {
-        DeselectSelectedUnit();
-        ClearSelectedUnit();
-        menuStateMachine.TransitionTo("UnSelectedState");
+        if (_selectedUnit != null && _selectedUnit.isSelected)
+        {
+            _unitPath.DrawPath(_selectedUnit.cell, newCell);
+        }
+        else if (_unitWalkHighlights != null && (_walkableCells == null || _walkableCells.Length > 0))
+        {
+            _walkableCells = new Vector2[0];
+            _unitWalkHighlights.Clear();
+        }
+
+        if (_units.ContainsKey(newCell) && _selectedUnit == null)
+        {
+            HoverDisplay(newCell);
+        }
     }
+
+    /// <summary>
+    /// calls state machine to handle
+    /// </summary>
+    /// <param name="cell">cell cursor is on</param>
+    private void OnCursorAcceptPress(Vector2 cell)
+    {
+        _menuStateMachine.currentState.OnCursorAccept(cell);
+    }
+
+    //------------ SELECT UNIT ----------
 
     /// <summary>
     /// selects unit
@@ -176,7 +212,10 @@ public partial class GameBoard : Node2D
     /// </summary>
     public void DeselectSelectedUnit()
     {
-        _selectedUnit.isSelected = false;
+        if (_selectedUnit != null)
+        {
+            _selectedUnit.isSelected = false;
+        }
         _unitWalkHighlights.Clear();
         _unitPath.Stop();
     }
@@ -188,25 +227,6 @@ public partial class GameBoard : Node2D
     {
         _selectedUnit = null;
         _walkableCells = new Vector2[0];
-    }
-
-    /// <summary>
-    /// moves the selected unit to a new cell
-    /// </summary>
-    /// <param name="newCell"></param>
-    private async void MoveSelectedUnit(Vector2 newCell)
-    {
-        if (IsOccupied(newCell) || !_walkableCells.Contains(newCell))
-        {
-            return;
-        }
-
-        DeselectSelectedUnit();
-        _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath, _grid);
-
-        await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
-        ClearSelectedUnit();
-        EmitSignal("SelectedMoved");
     }
 
     /// <summary>
@@ -237,6 +257,27 @@ public partial class GameBoard : Node2D
         }
     }
 
+    //---------- MOVE UNIT -----------
+
+    /// <summary>
+    /// moves the selected unit to a new cell
+    /// </summary>
+    /// <param name="newCell"></param>
+    private async void MoveSelectedUnit(Vector2 newCell)
+    {
+        if (IsOccupied(newCell) || !_walkableCells.Contains(newCell))
+        {
+            return;
+        }
+
+        DeselectSelectedUnit();
+        _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath, _grid);
+
+        await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
+        ClearSelectedUnit();
+        EmitSignal("SelectedMoved");
+    }
+
     /// <summary>
     /// changes where the gameboard is tracking the location of units
     /// </summary>
@@ -253,39 +294,7 @@ public partial class GameBoard : Node2D
         _units[newLoc] = unit;
     }
 
-    /// <summary>
-    /// updates the unit path when the cursor moves
-    /// </summary>
-    /// <param name="newCell">cell cursor is moving to</param>
-    private void OnCursorMoved(Vector2 newCell)
-    {
-        if (_menuStateMachine.currentState.Name == "MoveState")
-        {
-            if (_selectedUnit != null && _selectedUnit.isSelected)
-            {
-                _unitPath.DrawPath(_selectedUnit.cell, newCell);
-            }
-            else if (_unitWalkHighlights != null && (_walkableCells == null || _walkableCells.Length > 0))
-            {
-                _walkableCells = new Vector2[0];
-                _unitWalkHighlights.Clear();
-            }
-        }
-
-        if (_units.ContainsKey(newCell) && _selectedUnit == null)
-        {
-            HoverDisplay(newCell);
-        }
-    }
-
-    /// <summary>
-    /// calls state machine to handle
-    /// </summary>
-    /// <param name="cell">cell cursor is on</param>
-    private void OnCursorAcceptPress(Vector2 cell)
-    {
-        _menuStateMachine.currentState.OnCursorAccept(cell);
-    }
+    //---------- MENUS -----------
 
     /// <summary>
     /// selects unit and brings up menu if needed
@@ -344,6 +353,18 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
+    /// resets menu
+    /// </summary>
+    public void ResetMenu()
+    {
+        DeselectSelectedUnit();
+        ClearSelectedUnit();
+        menuStateMachine.TransitionTo("UnSelectedState");
+    }
+
+    //---------- DISPLAY HIGHLIGHTS ----------
+
+    /// <summary>
     /// shows the attack range of the current selected unit
     /// </summary>
     public void ShowCurrentAttackRange()
@@ -383,6 +404,8 @@ public partial class GameBoard : Node2D
 
         return attackableCells.Except(realWalkableCells).ToArray();
     }
+
+    //----------- HIGHLIGHT ALGORITHIMS -----------
 
     /// <summary>
     /// flood fills based on cell coordinates and max distance
@@ -543,6 +566,18 @@ public partial class GameBoard : Node2D
 
         return moveableCells.Except(occupiedCells).ToArray();
     }
+
+    /// <summary>
+    /// Returns `true` if the cell is occupied by a unit.
+    /// </summary>
+    /// <param name="cell">coordinates of grid that are occupied</param>
+    /// <returns>true if cell is occupied</returns>
+    private bool IsOccupied(Vector2 cell)
+    {
+        return _units.ContainsKey(cell);
+    }
+
+    //---------- VISION/FOG OF WAR ----------
 
     /// <summary>
     /// updates the PLAYER unit vision on game map
@@ -938,26 +973,8 @@ public partial class GameBoard : Node2D
         }
     }
 
-    /// <summary>
-    /// makes sure signals are unsubscribed
-    /// </summary>
-    public override void _ExitTree()
-    {
-        _gridCursor.AcceptPress -= OnCursorAcceptPress;
-        _gridCursor.Moved -= OnCursorMoved;
-    }
+    //---------- PROPERTIES ----------
 
-    /// <summary>
-    /// Returns `true` if the cell is occupied by a unit.
-    /// </summary>
-    /// <param name="cell">coordinates of grid that are occupied</param>
-    /// <returns>true if cell is occupied</returns>
-    private bool IsOccupied(Vector2 cell)
-    {
-        return _units.ContainsKey(cell);
-    }
-
-    //properties
     //note, make export if need to test outside of game board
     public GridResource grid
     {
