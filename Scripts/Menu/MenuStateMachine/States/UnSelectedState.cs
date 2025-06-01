@@ -11,6 +11,11 @@ public partial class UnSelectedState : MenuState
 {
     public override void OnCursorAccept(Vector2 cell)
     {
-        stateMachine.gameBoard.OnUnSelectedAccept(cell);
+        stateMachine.gameBoard.MenuUnSelectedStateAccept(cell);
+    }
+
+    public override void OnCursorMove(Vector2 newCell)
+    {
+        stateMachine.gameBoard.MenuUnSelectedStateCursorMove(newCell);
     }
 }

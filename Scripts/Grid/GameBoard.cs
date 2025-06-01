@@ -131,6 +131,8 @@ public partial class GameBoard : Node2D
     /// <param name="newCell">cell cursor is moving to</param>
     private void OnCursorMoved(Vector2 newCell)
     {
+        _menuStateMachine.currentState.OnCursorMove(newCell);
+        /*
         if (_selectedUnit != null && _selectedUnit.isSelected)
         {
             _unitPath.DrawPath(_selectedUnit.cell, newCell);
@@ -144,7 +146,7 @@ public partial class GameBoard : Node2D
         if (_units.ContainsKey(newCell) && _selectedUnit == null)
         {
             HoverDisplay(newCell);
-        }
+        }*/
     }
 
     /// <summary>
@@ -189,7 +191,7 @@ public partial class GameBoard : Node2D
     /// displays information when the cursor is hovering a unit
     /// </summary>
     /// <param name="cell">cell to display info</param>
-    private void HoverDisplay(Vector2 cell)
+    public void HoverDisplay(Vector2 cell)
     {
         //add condition for hidden enemy unit
         if (!_units.ContainsKey(cell))
@@ -294,13 +296,13 @@ public partial class GameBoard : Node2D
         _units[newLoc] = unit;
     }
 
-    //---------- MENUS -----------
+    //---------- MENU CURSOR ACCEPT -----------
 
     /// <summary>
     /// selects unit and brings up menu if needed
     /// </summary>
     /// <param name="cell"></param>
-    public void OnUnSelectedAccept(Vector2 cell)
+    public void MenuUnSelectedStateAccept(Vector2 cell)
     {
         //need to add a condition for enemy units
         if (_selectedUnit == null && _units.ContainsKey(cell))
@@ -324,7 +326,7 @@ public partial class GameBoard : Node2D
     /// moves unit to cell
     /// </summary>
     /// <param name="cell"></param>
-    public async void OnMoveAction(Vector2 cell)
+    public async void MenuMoveStateAccept(Vector2 cell)
     {
         if (IsOccupied(cell) && _units[cell] == _selectedUnit)
         {
@@ -347,10 +349,36 @@ public partial class GameBoard : Node2D
     /// selects unit for attack
     /// </summary>
     /// <param name="cell"></param>
-    public void OnAttackAction(Vector2 cell)
+    public void MenuAttackStateAccept(Vector2 cell)
     {
         
     }
+
+    //---------- MENU CURSOR MOVE ----------
+
+    public void MenuUnSelectedStateCursorMove(Vector2 newCell)
+    {
+        _unitWalkHighlights.Clear();
+        if (_units.ContainsKey(newCell) && _selectedUnit == null)
+        {
+            HoverDisplay(newCell);
+        }
+    }
+
+    public void MenuMoveStateCursorMove(Vector2 newCell)
+    {
+        if (_selectedUnit != null && _selectedUnit.isSelected)
+        {
+            _unitPath.DrawPath(_selectedUnit.cell, newCell);
+        }
+        else if (_unitWalkHighlights != null && (_walkableCells == null || _walkableCells.Length > 0))
+        {
+            _walkableCells = new Vector2[0];
+            _unitWalkHighlights.Clear();
+        }
+    }
+
+    //---------- OTHER MENU ----------
 
     /// <summary>
     /// resets menu
@@ -989,5 +1017,10 @@ public partial class GameBoard : Node2D
     public MenuStateMachine menuStateMachine
     {
         get { return _menuStateMachine; }
+    }
+
+    public Unit selectedUnit
+    {
+        get { return _selectedUnit; }
     }
 }

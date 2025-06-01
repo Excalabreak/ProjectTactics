@@ -26,8 +26,14 @@ public partial class MenuState : Node
     public virtual void Ready() { }
 
     /// <summary>
-    /// what happens while in this state
+    /// what happens with cursor clicks while in this state
     /// </summary>
     /// <param name="cell">cell</param>
     public virtual void OnCursorAccept(Vector2 cell) { }
+
+    /// <summary>
+    /// what happens with cursor movements while in this state
+    /// </summary>
+    /// <param name="cell">cell</param>
+    public virtual void OnCursorMove(Vector2 newCell) { }
 }

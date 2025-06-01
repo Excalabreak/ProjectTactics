@@ -11,6 +11,6 @@ public partial class AttackState : MenuState
 {
     public override void OnCursorAccept(Vector2 cell)
     {
-        stateMachine.gameBoard.OnAttackAction(cell);
+        stateMachine.gameBoard.MenuAttackStateAccept(cell);
     }
 }
