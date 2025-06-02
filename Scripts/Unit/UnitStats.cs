@@ -1,29 +1,84 @@
 using Godot;
+using Godot.Collections;
 using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/15/2025]
+ * Last Updated: [05/29/2025]
  * [class for unit stats]
  */
 
 public partial class UnitStats : Node
 {
-    //might need to make this a resource
-    [Export] private float _moveRange = 6;
+    [Export] private Dictionary<UnitStatEnum, int> _baseStats = new Dictionary<UnitStatEnum, int>();
+    //temp, make pretty later
 
-    [Export] private float _visionRange = 6;
+    [Export] private Label _healthLable;
+    private int _maxHP = 10;
+    private int _currentHP = 10;
 
-    //simple property
-    public float moveRange
+    /// <summary>
+    /// makes sure stats has all enums
+    /// </summary>
+    public override void _Ready()
     {
-        get { return _moveRange; }
-        set { _moveRange = value; }
+        foreach (UnitStatEnum stat in Enum.GetValues(typeof(DirectionEnum)))
+        {
+            if (_baseStats.ContainsKey(stat))
+            {
+                continue;
+            }
+
+            _baseStats.Add(stat, 1);
+        }
+
+        _maxHP = _baseStats[UnitStatEnum.HEALTH];
+        _currentHP = _maxHP;
+        UpdateHealthUI();
     }
 
-    public float visionRange
+    /// <summary>
+    /// damages the unit and checks for death
+    /// NOTE: very simple now
+    /// </summary>
+    /// <param name="damage"></param>
+    public void DamageUnit(int damage)
     {
-        get { return _visionRange; }
-        set { _visionRange = value; }
+        _currentHP -= damage;
+        if (_currentHP <= 0)
+        {
+            GD.Print("unit dead");
+            //unit dies
+        }
+        UpdateHealthUI();
+    }
+
+    /// <summary>
+    /// updates the UI for 
+    /// </summary>
+    public void UpdateHealthUI()
+    {
+        _healthLable.Text = _currentHP + "/" + _maxHP;
+    }
+
+    /// <summary>
+    /// gets the base stats of a unit
+    /// </summary>
+    /// <param name="stat">which stat</param>
+    /// <returns>base stat</returns>
+    public int GetBaseStat(UnitStatEnum stat)
+    {
+        return _baseStats[stat];
+    }
+
+    /// <summary>
+    /// adds the amount to stat
+    /// to subtract, just use negative
+    /// </summary>
+    /// <param name="stat">stat to change</param>
+    /// <param name="amount">amount to add</param>
+    public void AddToStat(UnitStatEnum stat, int amount)
+    {
+        _baseStats[stat] = _baseStats[stat] + amount;
     }
 }

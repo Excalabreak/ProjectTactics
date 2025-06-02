@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/02/2025]
+ * Last Updated: [06/02/2025]
  * [holds information about the units in a group]
  */
 
@@ -13,6 +13,7 @@ public partial class UnitGroup : Node2D
 {
     [Export] private UnitGroupEnum _group;
     [Export] private Godot.Collections.Array<UnitGroupEnum> _passingGroup;
+    [Export] private Godot.Collections.Array<UnitGroupEnum> _attackingGroup;
 
     private List<Unit> _units = new List<Unit>();
 
@@ -59,6 +60,16 @@ public partial class UnitGroup : Node2D
     public bool CanPass(UnitGroupEnum group)
     {
         return (group == _group || _passingGroup.Contains(group));
+    }
+
+    /// <summary>
+    /// returns weather or not a group can attack this group
+    /// </summary>
+    /// <param name="group">other unit group</param>
+    /// <returns>true if they can attack</returns>
+    public bool CanAttack(UnitGroupEnum group)
+    {
+        return (group != _group && _attackingGroup.Contains(group));
     }
 
     // properties

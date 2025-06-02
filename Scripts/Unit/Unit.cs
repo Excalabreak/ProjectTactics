@@ -4,11 +4,8 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [04/28/2025]
- * [Unit Main Script
- * NOTE: all of this is one script for now,
- * but will likely need to be split up into different
- * scripts. comments of node type will likely be where they split]
+ * Last Updated: [05/20/2025]
+ * [Unit Main Script]
  */
 
 public partial class Unit : Node2D
@@ -33,6 +30,11 @@ public partial class Unit : Node2D
 
     [Export] private GameBoard _gameBoard;
     public Action<GameBoard> CurrentGameBoard;
+
+    //might take out since im going to lean twoards dnd action econome\y
+    [Export] private bool _isWait = false;
+    //temp, move to equiptment
+    [Export] private int _attackRange = 1;
 
     private UnitGroupEnum _unitGroup;
 
@@ -151,5 +153,15 @@ public partial class Unit : Node2D
     public UnitDirection unitDirection
     {
         get { return _unitDirection; }
+    }
+
+    public bool isWait
+    {
+        get { return _isWait; }
+    }
+
+    public int attackRange
+    {
+        get { return _attackRange; }
     }
 }

@@ -103,6 +103,18 @@ public partial class GridCursor : Node2D
     }
 
     /// <summary>
+    /// makes sure cursor is at right location on mouse
+    /// </summary>
+    public void ResetCursor()
+    {
+        if (_isMouse)
+        {
+            Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
+            cell = gridCoords;
+        }
+    }
+
+    /// <summary>
     /// property for cell
     /// when setting:
     /// check if cell is viable to change

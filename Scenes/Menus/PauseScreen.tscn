@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://cthmnrjp6uu61"]
+
+[ext_resource type="Script" uid="uid://b7seot04yy56w" path="res://Scripts/Menu/PauseScreen.cs" id="1_snaop"]
+
+[node name="PauseScreen" type="CanvasLayer" node_paths=PackedStringArray("_cursorDefaultStartButton")]
+script = ExtResource("1_snaop")
+_cursorDefaultStartButton = NodePath("VBoxContainer/UnitsButtons")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UnitsButtons" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Units"
+
+[node name="OptionsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="CloseButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Close"
+
+[node name="EndTurnButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "End Turn"
+
+[connection signal="pressed" from="VBoxContainer/UnitsButtons" to="." method="OnUnitsPressed"]
+[connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="OnOptionsPressed"]
+[connection signal="pressed" from="VBoxContainer/CloseButton" to="." method="OnClosePressed"]
+[connection signal="pressed" from="VBoxContainer/EndTurnButton" to="." method="OnEndTurnPressed"]
