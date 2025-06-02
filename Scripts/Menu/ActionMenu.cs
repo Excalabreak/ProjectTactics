@@ -33,12 +33,13 @@ public partial class ActionMenu : CanvasLayer
         //disables cursor
         _gridCursor.Hide();
         _gridCursor.ProcessMode = ProcessModeEnum.Disabled;
+        
+        //add a function to show and hide action menu buttons
     }
 
     private void OnAttackButtonPress()
     {
         HideMenu();
-        _gameBoard.ShowCurrentAttackRange();
         _gameBoard.menuStateMachine.TransitionTo("AttackState");
     }
 

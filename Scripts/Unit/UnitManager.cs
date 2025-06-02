@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/02/2025]
+ * Last Updated: [06/02/2025]
  * [manages all units and groups and ]
  */
 
@@ -49,5 +49,17 @@ public partial class UnitManager : Node2D
     public bool CanPass(UnitGroupEnum movingGroup, UnitGroupEnum standingGroup)
     {
         return _unitGroups[movingGroup].CanPass(standingGroup);
+    }
+
+    /// <summary>
+    /// returns weather or not a unit from attackingGroup can attack
+    /// a unit from defendingGroup
+    /// </summary>
+    /// <param name="attackingGroup">unit that initiates combat</param>
+    /// <param name="defendingGroup">unit that is being attacked</param>
+    /// <returns>true if the units can fight</returns>
+    public bool CanAttack(UnitGroupEnum attackingGroup, UnitGroupEnum defendingGroup)
+    {
+        return _unitGroups[attackingGroup].CanAttack(defendingGroup);
     }
 }

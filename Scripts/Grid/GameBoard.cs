@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [05/31/2025]
+ * Last Updated: [06/02/2025]
  * [game board manages everything on the map]
  */
 
@@ -132,21 +132,6 @@ public partial class GameBoard : Node2D
     private void OnCursorMoved(Vector2 newCell)
     {
         _menuStateMachine.currentState.OnCursorMove(newCell);
-        /*
-        if (_selectedUnit != null && _selectedUnit.isSelected)
-        {
-            _unitPath.DrawPath(_selectedUnit.cell, newCell);
-        }
-        else if (_unitWalkHighlights != null && (_walkableCells == null || _walkableCells.Length > 0))
-        {
-            _walkableCells = new Vector2[0];
-            _unitWalkHighlights.Clear();
-        }
-
-        if (_units.ContainsKey(newCell) && _selectedUnit == null)
-        {
-            HoverDisplay(newCell);
-        }*/
     }
 
     /// <summary>
@@ -351,7 +336,47 @@ public partial class GameBoard : Node2D
     /// <param name="cell"></param>
     public void MenuAttackStateAccept(Vector2 cell)
     {
-        
+        if (!IsOccupied(cell))
+        {
+            return;
+        }
+
+        Unit opposingUnit = _units[cell];
+        if (!_unitManager.CanAttack(_selectedUnit.unitGroup, opposingUnit.unitGroup))
+        {
+            return;
+        }
+
+        Vector2[] attackableCells = FloodFill(_selectedUnit.cell, _selectedUnit.attackRange);
+        if (!attackableCells.Contains(cell))
+        {
+            return;
+        }
+
+        //very basic combat for now
+        _unitWalkHighlights.Clear();
+
+        UnitStats attackingStats = _selectedUnit.unitStats;
+        UnitStats defendingStats = opposingUnit.unitStats;
+        Battle(attackingStats, defendingStats);
+
+        //counter attack
+        //temp, there is a faster way of doing this
+        //figure out later
+        Vector2[] opposingAttackableCells = FloodFill(opposingUnit.cell, opposingUnit.attackRange);
+        if (opposingAttackableCells.Contains(_selectedUnit.cell))
+        {
+            Battle(defendingStats, attackingStats);
+        }
+
+        DeselectSelectedUnit();
+        ClearSelectedUnit();
+        _menuStateMachine.TransitionTo("UnSelectedState");
+    }
+
+    private void Battle(UnitStats attackingUnit, UnitStats defendingUnit)
+    {
+        defendingUnit.DamageUnit(attackingUnit.GetBaseStat(UnitStatEnum.STRENGTH) - defendingUnit.GetBaseStat(UnitStatEnum.DEFENSE));
     }
 
     //---------- MENU CURSOR MOVE ----------

@@ -45,12 +45,12 @@ public partial class UnitStats : Node
     public void DamageUnit(int damage)
     {
         _currentHP -= damage;
-        UpdateHealthUI();
         if (_currentHP <= 0)
         {
             GD.Print("unit dead");
             //unit dies
         }
+        UpdateHealthUI();
     }
 
     /// <summary>
