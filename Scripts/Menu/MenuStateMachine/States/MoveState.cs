@@ -25,4 +25,9 @@ public partial class MoveState : MenuState
     {
         stateMachine.gameBoard.MenuMoveStateCursorMove(newCell);
     }
+
+    public override void OnCursorRelease(Vector2 cell)
+    {
+        stateMachine.gameBoard.MenuMoveStateAcceptRelease(cell);
+    }
 }

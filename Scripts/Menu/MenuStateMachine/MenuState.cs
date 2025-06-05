@@ -32,6 +32,12 @@ public partial class MenuState : Node
     public virtual void OnCursorAccept(Vector2 cell) { }
 
     /// <summary>
+    /// what happens with cursor accept is released while in this state
+    /// </summary>
+    /// <param name="cell">cell</param>
+    public virtual void OnCursorRelease(Vector2 cell) { }
+
+    /// <summary>
     /// what happens with cursor movements while in this state
     /// </summary>
     /// <param name="cell">cell</param>

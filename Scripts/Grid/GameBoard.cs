@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [06/02/2025]
+ * Last Updated: [06/05/2025]
  * [game board manages everything on the map]
  */
 
@@ -63,6 +63,7 @@ public partial class GameBoard : Node2D
     public override void _Ready()
     {
         _gridCursor.AcceptPress += OnCursorAcceptPress;
+        _gridCursor.AcceptRelease += OnCursorAcceptRelease;
         _gridCursor.Moved += OnCursorMoved;
 
         Reinitialize();
@@ -96,6 +97,7 @@ public partial class GameBoard : Node2D
     public override void _ExitTree()
     {
         _gridCursor.AcceptPress -= OnCursorAcceptPress;
+        _gridCursor.AcceptRelease -= OnCursorAcceptRelease;
         _gridCursor.Moved -= OnCursorMoved;
     }
 
@@ -123,7 +125,8 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
-    /// updates the unit path when the cursor moves
+    /// calls state machine to handle which cursor move
+    /// method to use
     /// </summary>
     /// <param name="newCell">cell cursor is moving to</param>
     private void OnCursorMoved(Vector2 newCell)
@@ -132,12 +135,23 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
-    /// calls state machine to handle
+    /// calls state machine to handle which accept press
+    /// method to use
     /// </summary>
     /// <param name="cell">cell cursor is on</param>
     private void OnCursorAcceptPress(Vector2 cell)
     {
         _menuStateMachine.currentState.OnCursorAccept(cell);
+    }
+
+    /// <summary>
+    /// calls state machine to handle which accept release
+    /// method to use
+    /// </summary>
+    /// <param name="cell">cell cursor is on</param>
+    private void OnCursorAcceptRelease(Vector2 cell)
+    {
+        _menuStateMachine.currentState.OnCursorRelease(cell);
     }
 
     //------------ SELECT UNIT ----------
@@ -278,7 +292,7 @@ public partial class GameBoard : Node2D
     /// </summary>
     /// <param name="cell"></param>
     public async void MenuMoveStateAccept(Vector2 cell)
-    {
+    {/*
         if (IsOccupied(cell) && _units[cell] == _selectedUnit)
         {
             _units.Remove(_selectedUnit.cell);
@@ -293,7 +307,7 @@ public partial class GameBoard : Node2D
             MoveSelectedUnit(cell);
             await ToSignal(this, "SelectedMoved");
         }
-        _menuStateMachine.TransitionTo("UnSelectedState");
+        _menuStateMachine.TransitionTo("UnSelectedState");*/
     }
 
     /// <summary>
@@ -367,6 +381,13 @@ public partial class GameBoard : Node2D
             _walkableCells = new Vector2[0];
             _unitWalkHighlights.Clear();
         }
+    }
+
+    //---------- MENU CURSOR RELEASE ----------
+
+    public void MenuMoveStateAcceptRelease(Vector2 cell)
+    {
+        GD.Print("move release");
     }
 
     //---------- OTHER MENU ----------
