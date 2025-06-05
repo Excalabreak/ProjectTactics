@@ -43,9 +43,6 @@ public partial class GameBoard : Node2D
 
     private ActionMenu _actionMenuInstance;
     private PauseScreen _pauseScreenInstance;
-    private Vector2 _prevCell;
-    private Vector2 _prevPos;
-    private DirectionEnum _prevDir;
 
     //all units, might want to split this up
     private System.Collections.Generic.Dictionary<Vector2, Unit> _units = new System.Collections.Generic.Dictionary<Vector2, Unit>();
@@ -158,9 +155,6 @@ public partial class GameBoard : Node2D
         }
 
         _selectedUnit = _units[cell];
-        _prevCell = cell;
-        _prevPos = _selectedUnit.Position;
-        _prevDir = _selectedUnit.unitDirection.currentFacing;
         _selectedUnit.isSelected = true;
 
         _walkableCells = GetWalkableCells(_selectedUnit);
@@ -214,34 +208,6 @@ public partial class GameBoard : Node2D
     {
         _selectedUnit = null;
         _walkableCells = new Vector2[0];
-    }
-
-    /// <summary>
-    /// resets the unit location after moving
-    /// not needed anymore, but is here if i want to go back to this
-    /// </summary>
-    public void ResetUnit()
-    {
-        if (_prevPos == new Vector2(-1, -1) || _prevCell == new Vector2(-1, -1))
-        {
-            return;
-        }
-
-        if (_selectedUnit != null && _selectedUnit.cell != _prevCell)
-        {
-            _selectedUnit.Position = _prevPos;
-            _units.Remove(_selectedUnit.cell);
-            _units[_prevCell] = _selectedUnit;
-            _selectedUnit.cell = _prevCell;
-            _prevCell = new Vector2(-1,-1);
-            _prevPos = new Vector2(-1, -1);
-            _selectedUnit.unitDirection.currentFacing = _prevDir;
-
-            UpdateUnitVision(_selectedUnit);
-
-            DeselectSelectedUnit();
-            ClearSelectedUnit();
-        }
     }
 
     //---------- MOVE UNIT -----------
