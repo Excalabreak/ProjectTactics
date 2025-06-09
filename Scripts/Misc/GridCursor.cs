@@ -149,6 +149,7 @@ public partial class GridCursor : Node2D
             _cell = newCell;
 
             Position = _gameBoard.grid.CalculateMapPosition(_cell);
+
             EmitSignal("Moved", _cell);
             _timer.Start();
         }
@@ -158,5 +159,10 @@ public partial class GridCursor : Node2D
     public bool acceptHeld
     {
         get { return _acceptHeld; }
+    }
+
+    public bool isMouse
+    {
+        get { return _isMouse; }
     }
 }

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [06/05/2025]
+ * Last Updated: [06/09/2025]
  * [game board manages everything on the map]
  */
 
@@ -105,6 +105,8 @@ public partial class GameBoard : Node2D
 
     /// <summary>
     /// if the player inputs decline, deselect unit
+    /// 
+    /// TODO: maybe move this into cursor with the other input
     /// </summary>
     /// <param name="event"></param>
     public override void _UnhandledInput(InputEvent @event)
@@ -164,7 +166,6 @@ public partial class GameBoard : Node2D
     {
         if (!_units.ContainsKey(cell))
         {
-            //could add options here
             return;
         }
 
@@ -292,7 +293,15 @@ public partial class GameBoard : Node2D
     /// </summary>
     /// <param name="cell"></param>
     public async void MenuMoveStateAccept(Vector2 cell)
-    {/*
+    {
+        //start drawing path
+
+        if (_gridCursor.isMouse)
+        {
+
+        }
+
+        /*
         if (IsOccupied(cell) && _units[cell] == _selectedUnit)
         {
             _units.Remove(_selectedUnit.cell);
@@ -372,6 +381,9 @@ public partial class GameBoard : Node2D
 
     public void MenuMoveStateCursorMove(Vector2 newCell)
     {
+        //if drawing path gets too long, auto path it
+        //draws path based on cursor movements
+        /*
         if (_selectedUnit != null && _selectedUnit.isSelected)
         {
             _unitPath.DrawPath(_selectedUnit.cell, newCell);
@@ -380,13 +392,14 @@ public partial class GameBoard : Node2D
         {
             _walkableCells = new Vector2[0];
             _unitWalkHighlights.Clear();
-        }
+        }*/
     }
 
     //---------- MENU CURSOR RELEASE ----------
 
     public void MenuMoveStateAcceptRelease(Vector2 cell)
     {
+        //move path
         GD.Print("move release");
     }
 

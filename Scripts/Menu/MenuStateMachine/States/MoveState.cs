@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/23/2025]
+ * Last Updated: [06/09/2025]
  * [State when move is selected]
  */
 
@@ -14,6 +14,14 @@ public partial class MoveState : MenuState
         //probably a terrable way of doing this...
         //oh well
         stateMachine.gameBoard.HoverDisplay(stateMachine.gameBoard.selectedUnit.cell);
+        if (stateMachine.gameBoard.gridCursor.isMouse)
+        {
+            Input.WarpMouse(stateMachine.gameBoard.selectedUnit.GetGlobalTransformWithCanvas().Origin);
+        }
+        else
+        {
+            stateMachine.gameBoard.gridCursor.cell = stateMachine.gameBoard.selectedUnit.cell;
+        }
     }
 
     public override void OnCursorAccept(Vector2 cell)
