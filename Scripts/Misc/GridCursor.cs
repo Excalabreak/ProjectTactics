@@ -63,7 +63,7 @@ public partial class GridCursor : Node2D
         {
             _isMouse = true;
         }
-        else if (@event.IsActionPressed("Accept", true))
+        else if (@event.IsActionPressed("ui_accept", true))
         {
             if (!@event.IsEcho())
             {
@@ -76,7 +76,7 @@ public partial class GridCursor : Node2D
                 _acceptHeld = true;
             }
         }
-        else if (@event.IsActionReleased("Accept"))
+        else if (@event.IsActionReleased("ui_accept"))
         {
             _acceptHeld = false;
             EmitSignal("AcceptRelease", cell);
@@ -96,22 +96,22 @@ public partial class GridCursor : Node2D
             return;
         }
 
-        if (@event.IsAction("Up"))
+        if (@event.IsAction("ui_up"))
         {
             this.cell += Vector2.Up;
             _isMouse = false;
         }
-        else if (@event.IsAction("Down"))
+        else if (@event.IsAction("ui_down"))
         {
             this.cell += Vector2.Down;
             _isMouse = false;
         }
-        else if (@event.IsAction("Left"))
+        else if (@event.IsAction("ui_left"))
         {
             this.cell += Vector2.Left;
             _isMouse = false;
         }
-        else if (@event.IsAction("Right"))
+        else if (@event.IsAction("ui_right"))
         {
             this.cell += Vector2.Right;
             _isMouse = false;

@@ -63,7 +63,6 @@ public partial class GameBoard : Node2D
     public override void _Ready()
     {
         _gridCursor.AcceptPress += OnCursorAcceptPress;
-        _gridCursor.AcceptRelease += OnCursorAcceptRelease;
         _gridCursor.Moved += OnCursorMoved;
 
         Reinitialize();
@@ -97,7 +96,6 @@ public partial class GameBoard : Node2D
     public override void _ExitTree()
     {
         _gridCursor.AcceptPress -= OnCursorAcceptPress;
-        _gridCursor.AcceptRelease -= OnCursorAcceptRelease;
         _gridCursor.Moved -= OnCursorMoved;
     }
 
@@ -144,16 +142,6 @@ public partial class GameBoard : Node2D
     private void OnCursorAcceptPress(Vector2 cell)
     {
         _menuStateMachine.currentState.OnCursorAccept(cell);
-    }
-
-    /// <summary>
-    /// calls state machine to handle which accept release
-    /// method to use
-    /// </summary>
-    /// <param name="cell">cell cursor is on</param>
-    private void OnCursorAcceptRelease(Vector2 cell)
-    {
-        _menuStateMachine.currentState.OnCursorRelease(cell);
     }
 
     //------------ SELECT UNIT ----------
@@ -294,14 +282,6 @@ public partial class GameBoard : Node2D
     /// <param name="cell"></param>
     public async void MenuMoveStateAccept(Vector2 cell)
     {
-        //start drawing path
-
-        if (_gridCursor.isMouse)
-        {
-
-        }
-
-        /*
         if (IsOccupied(cell) && _units[cell] == _selectedUnit)
         {
             _units.Remove(_selectedUnit.cell);
@@ -316,7 +296,7 @@ public partial class GameBoard : Node2D
             MoveSelectedUnit(cell);
             await ToSignal(this, "SelectedMoved");
         }
-        _menuStateMachine.TransitionTo("UnSelectedState");*/
+        _menuStateMachine.TransitionTo("UnSelectedState");
     }
 
     /// <summary>
@@ -383,7 +363,6 @@ public partial class GameBoard : Node2D
     {
         //if drawing path gets too long, auto path it
         //draws path based on cursor movements
-        /*
         if (_selectedUnit != null && _selectedUnit.isSelected)
         {
             _unitPath.DrawPath(_selectedUnit.cell, newCell);
@@ -392,15 +371,7 @@ public partial class GameBoard : Node2D
         {
             _walkableCells = new Vector2[0];
             _unitWalkHighlights.Clear();
-        }*/
-    }
-
-    //---------- MENU CURSOR RELEASE ----------
-
-    public void MenuMoveStateAcceptRelease(Vector2 cell)
-    {
-        //move path
-        GD.Print("move release");
+        }
     }
 
     //---------- OTHER MENU ----------
@@ -413,6 +384,18 @@ public partial class GameBoard : Node2D
         DeselectSelectedUnit();
         ClearSelectedUnit();
         menuStateMachine.TransitionTo("UnSelectedState");
+    }
+
+    public void ResetMovePath()
+    {
+        if (_gridCursor.isMouse)
+        {
+            Input.WarpMouse(_selectedUnit.GetGlobalTransformWithCanvas().Origin);
+        }
+        else
+        {
+            _gridCursor.cell = _selectedUnit.cell;
+        }
     }
 
     //---------- DISPLAY HIGHLIGHTS ----------

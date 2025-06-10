@@ -14,14 +14,7 @@ public partial class MoveState : MenuState
         //probably a terrable way of doing this...
         //oh well
         stateMachine.gameBoard.HoverDisplay(stateMachine.gameBoard.selectedUnit.cell);
-        if (stateMachine.gameBoard.gridCursor.isMouse)
-        {
-            Input.WarpMouse(stateMachine.gameBoard.selectedUnit.GetGlobalTransformWithCanvas().Origin);
-        }
-        else
-        {
-            stateMachine.gameBoard.gridCursor.cell = stateMachine.gameBoard.selectedUnit.cell;
-        }
+        stateMachine.gameBoard.ResetMovePath();
     }
 
     public override void OnCursorAccept(Vector2 cell)
@@ -32,10 +25,5 @@ public partial class MoveState : MenuState
     public override void OnCursorMove(Vector2 newCell)
     {
         stateMachine.gameBoard.MenuMoveStateCursorMove(newCell);
-    }
-
-    public override void OnCursorRelease(Vector2 cell)
-    {
-        stateMachine.gameBoard.MenuMoveStateAcceptRelease(cell);
     }
 }
