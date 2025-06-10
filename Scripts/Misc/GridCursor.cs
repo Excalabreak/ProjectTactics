@@ -12,10 +12,10 @@ public partial class GridCursor : Node2D
 {
     //when pressed
     [Signal] public delegate void AcceptPressEventHandler(Vector2 cell);
-    //when released
-    [Signal] public delegate void AcceptReleaseEventHandler(Vector2 cell);
     //when moved
     [Signal] public delegate void MovedEventHandler(Vector2 nextCell);
+
+    [Signal] public delegate void DeclineEventHandler();
 
     [Export] private GameBoard _gameBoard;
 
@@ -23,7 +23,6 @@ public partial class GridCursor : Node2D
     [Export] private float _uiCooldown = .1f;
 
     private Vector2 _cell = Vector2.Zero; //setget
-    private bool _acceptHeld = false;
 
     //dont know if i will have an input manager, so it's here for now
     private bool _isMouse = false;
@@ -63,23 +62,15 @@ public partial class GridCursor : Node2D
         {
             _isMouse = true;
         }
-        else if (@event.IsActionPressed("ui_accept", true))
+        else if (@event.IsActionPressed("ui_accept"))
         {
-            if (!@event.IsEcho())
-            {
-                _acceptHeld = false;
-                EmitSignal("AcceptPress", cell);
-                GetViewport().SetInputAsHandled();
-            }
-            else
-            {
-                _acceptHeld = true;
-            }
+            EmitSignal("AcceptPress", cell);
+            GetViewport().SetInputAsHandled();
         }
-        else if (@event.IsActionReleased("ui_accept"))
+
+        if (@event.IsActionPressed("Decline"))
         {
-            _acceptHeld = false;
-            EmitSignal("AcceptRelease", cell);
+            EmitSignal("Decline");
             GetViewport().SetInputAsHandled();
         }
 
@@ -154,11 +145,6 @@ public partial class GridCursor : Node2D
             _timer.Start();
         }
         get { return _cell; }
-    }
-
-    public bool acceptHeld
-    {
-        get { return _acceptHeld; }
     }
 
     public bool isMouse

@@ -26,4 +26,9 @@ public partial class MoveState : MenuState
     {
         stateMachine.gameBoard.MenuMoveStateCursorMove(newCell);
     }
+
+    public override void OnCursorDecline()
+    {
+        stateMachine.gameBoard.StandardCursorDecline();
+    }
 }

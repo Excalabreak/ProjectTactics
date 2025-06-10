@@ -64,6 +64,7 @@ public partial class GameBoard : Node2D
     {
         _gridCursor.AcceptPress += OnCursorAcceptPress;
         _gridCursor.Moved += OnCursorMoved;
+        _gridCursor.Decline += OnCursorDecline;
 
         Reinitialize();
     }
@@ -97,32 +98,10 @@ public partial class GameBoard : Node2D
     {
         _gridCursor.AcceptPress -= OnCursorAcceptPress;
         _gridCursor.Moved -= OnCursorMoved;
+        _gridCursor.Decline -= OnCursorDecline;
     }
 
     //------------ INPUT ----------
-
-    /// <summary>
-    /// if the player inputs decline, deselect unit
-    /// 
-    /// TODO: maybe move this into cursor with the other input
-    /// </summary>
-    /// <param name="event"></param>
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (@event.IsActionPressed("Decline"))
-        {
-            if (IsInstanceValid(_actionMenuInstance))
-            {
-                _actionMenuInstance.OnCancelButtonPress();
-            }
-            //might want to change so gameboard isn't handling options
-            else if (IsInstanceValid(_pauseScreenInstance))
-            {
-                _pauseScreenInstance.OnClosePressed();
-            }
-            ResetMenu();
-        }
-    }
 
     /// <summary>
     /// calls state machine to handle which cursor move
@@ -142,6 +121,11 @@ public partial class GameBoard : Node2D
     private void OnCursorAcceptPress(Vector2 cell)
     {
         _menuStateMachine.currentState.OnCursorAccept(cell);
+    }
+
+    private void OnCursorDecline()
+    {
+        _menuStateMachine.currentState.OnCursorDecline();
     }
 
     //------------ SELECT UNIT ----------
@@ -372,6 +356,22 @@ public partial class GameBoard : Node2D
             _walkableCells = new Vector2[0];
             _unitWalkHighlights.Clear();
         }
+    }
+
+    //---------- MENU CURSOR DECLINE ----------
+
+    public void StandardCursorDecline()
+    {
+        if (IsInstanceValid(_actionMenuInstance))
+        {
+            _actionMenuInstance.OnCancelButtonPress();
+        }
+        //might want to change so gameboard isn't handling options
+        else if (IsInstanceValid(_pauseScreenInstance))
+        {
+            _pauseScreenInstance.OnClosePressed();
+        }
+        ResetMenu();
     }
 
     //---------- OTHER MENU ----------

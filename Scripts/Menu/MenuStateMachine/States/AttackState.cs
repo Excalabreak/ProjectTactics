@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/02/2025]
+ * Last Updated: [06/09/2025]
  * [which function to call for the attack state]
  */
 
@@ -17,5 +17,10 @@ public partial class AttackState : MenuState
     public override void OnCursorAccept(Vector2 cell)
     {
         stateMachine.gameBoard.MenuAttackStateAccept(cell);
+    }
+
+    public override void OnCursorDecline()
+    {
+        stateMachine.gameBoard.StandardCursorDecline();
     }
 }
