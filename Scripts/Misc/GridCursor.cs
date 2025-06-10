@@ -89,23 +89,23 @@ public partial class GridCursor : Node2D
 
         if (@event.IsAction("ui_up"))
         {
-            this.cell += Vector2.Up;
             _isMouse = false;
+            this.cell += Vector2.Up;
         }
         else if (@event.IsAction("ui_down"))
         {
-            this.cell += Vector2.Down;
             _isMouse = false;
+            this.cell += Vector2.Down;
         }
         else if (@event.IsAction("ui_left"))
         {
-            this.cell += Vector2.Left;
             _isMouse = false;
+            this.cell += Vector2.Left;
         }
         else if (@event.IsAction("ui_right"))
         {
-            this.cell += Vector2.Right;
             _isMouse = false;
+            this.cell += Vector2.Right;
         }
     }
 
@@ -140,6 +140,12 @@ public partial class GridCursor : Node2D
             _cell = newCell;
 
             Position = _gameBoard.grid.CalculateMapPosition(_cell);
+
+            if (GetWindow().HasFocus() && !_isMouse)
+            {
+                Input.WarpMouse(this.GetGlobalTransformWithCanvas().Origin);
+                _isMouse = false;
+            }
 
             EmitSignal("Moved", _cell);
             _timer.Start();
