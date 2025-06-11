@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [06/09/2025]
+ * Last Updated: [06/11/2025]
  * [game board manages everything on the map]
  */
 
@@ -150,7 +150,7 @@ public partial class GameBoard : Node2D
         _unitWalkHighlights.DrawAttackHighlights(_attackableCells);
         _unitWalkHighlights.DrawWalkHighlights(_walkableCells);
 
-        _unitPath.Initialize(_walkableCells);
+        _unitPath.Initialize(_walkableCells, _selectedUnit.cell);
     }
 
     /// <summary>
@@ -266,6 +266,11 @@ public partial class GameBoard : Node2D
     /// <param name="cell"></param>
     public async void MenuMoveStateAccept(Vector2 cell)
     {
+        if (!_walkableCells.Contains(cell))
+        {
+            return;
+        }
+
         if (IsOccupied(cell) && _units[cell] == _selectedUnit)
         {
             _units.Remove(_selectedUnit.cell);
@@ -347,10 +352,9 @@ public partial class GameBoard : Node2D
     {
         //if drawing path gets too long, auto path it
         //draws path based on cursor movements
-        GD.Print("buh");
         if (_selectedUnit != null && _selectedUnit.isSelected)
         {
-            _unitPath.DrawPath(_selectedUnit.cell, newCell);
+            _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
         }
         else if (_unitWalkHighlights != null && (_walkableCells == null || _walkableCells.Length > 0))
         {

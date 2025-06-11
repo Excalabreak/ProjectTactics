@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [04/24/2025]
+ * Last Updated: [06/11/2025]
  * [pathfinding for units]
  */
 
@@ -15,33 +15,43 @@ public partial class UnitPath : TileMapLayer
 
     private Pathfinder _pathfinder;
 
-    private Vector2[] _currentPath;
+    private List<Vector2> _currentPath = new List<Vector2>();
+    private Vector2 _unitPos;
 
     /// <summary>
     /// initializes path
     /// </summary>
     /// <param name="walkableCells">cells to walk through</param>
-    public void Initialize(Vector2[] walkableCells)
+    /// <param name="unitPos">the first coordinate in unit pos</param>
+    public void Initialize(Vector2[] walkableCells, Vector2 unitPos)
     {
         _pathfinder = new Pathfinder(_gameBoard.grid, walkableCells);
+        _unitPos = unitPos;
+        ResetCurrentPath();
     }
 
     /// <summary>
-    /// draws path on tile map
+    /// draws path on tile map automatically
     /// </summary>
     /// <param name="cellStart">start location</param>
     /// <param name="cellEnd">last location</param>
-    public void DrawPath(Vector2 cellStart, Vector2 cellEnd)
+    public void DrawAutoPath(Vector2 cellStart, Vector2 cellEnd)
     {
         Clear();
-        _currentPath = _pathfinder.CalculatePointPath(cellStart, cellEnd);
+        _currentPath.Clear();
+        _currentPath.AddRange(_pathfinder.CalculatePointPath(cellStart, cellEnd));
 
-        Vector2I[] path = new Vector2I[_currentPath.Length];
-        for (int i = 0; i < _currentPath.Length; i++)
+        DrawPathLine(_currentPath.ToArray());
+    }
+
+    private void DrawPathLine(Vector2[] pathCoord)
+    {
+        Vector2I[] path = new Vector2I[pathCoord.Length];
+        for (int i = 0; i < pathCoord.Length; i++)
         {
-            path[i] = new Vector2I(Mathf.RoundToInt(_currentPath[i].X), Mathf.RoundToInt(_currentPath[i].Y));
+            path[i] = new Vector2I(Mathf.RoundToInt(pathCoord[i].X), Mathf.RoundToInt(pathCoord[i].Y));
         }
-        SetCellsTerrainConnect(new Godot.Collections.Array<Vector2I>(path),0,0);
+        SetCellsTerrainConnect(new Godot.Collections.Array<Vector2I>(path), 0, 0);
     }
 
     /// <summary>
@@ -49,14 +59,35 @@ public partial class UnitPath : TileMapLayer
     /// </summary>
     public void Stop()
     {
+        _unitPos = new Vector2(-1,-1);
         _pathfinder = null;
         Clear();
+    }
+
+    public void ResetCurrentPath()
+    {
+        _currentPath.Clear();
+        _currentPath.Add(_unitPos);
+    }
+
+    /// <summary>
+    /// gets a Vector2I version of _currentPath
+    /// </summary>
+    /// <returns>Vector2I[] of current path</returns>
+    public Vector2I[] GetIntCurrentPath()
+    {
+        Vector2I[] path = new Vector2I[_currentPath.Count];
+        for (int i = 0; i < _currentPath.Count; i++)
+        {
+            path[i] = new Vector2I(Mathf.RoundToInt(_currentPath[i].X), Mathf.RoundToInt(_currentPath[i].Y));
+        }
+        return path;
     }
 
     //properties
 
     public Vector2[] currentPath
     {
-        get { return _currentPath; }
+        get { return _currentPath.ToArray(); }
     }
 }
