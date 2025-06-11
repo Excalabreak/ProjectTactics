@@ -347,6 +347,7 @@ public partial class GameBoard : Node2D
     {
         //if drawing path gets too long, auto path it
         //draws path based on cursor movements
+        GD.Print("buh");
         if (_selectedUnit != null && _selectedUnit.isSelected)
         {
             _unitPath.DrawPath(_selectedUnit.cell, newCell);
@@ -390,7 +391,7 @@ public partial class GameBoard : Node2D
     {
         if (_gridCursor.isMouse)
         {
-            Input.WarpMouse(_selectedUnit.GetGlobalTransformWithCanvas().Origin);
+            _gridCursor.WarpMouseWithoutSignal(_selectedUnit.GetGlobalTransformWithCanvas().Origin);
         }
         else
         {

@@ -26,6 +26,7 @@ public partial class GridCursor : Node2D
 
     //dont know if i will have an input manager, so it's here for now
     private bool _isMouse = false;
+    private bool _dontEmitMoveSignal = false;
 
     /// <summary>
     /// sets timer and first position
@@ -122,6 +123,16 @@ public partial class GridCursor : Node2D
     }
 
     /// <summary>
+    /// warps the mouse w/o emiting a move signal
+    /// </summary>
+    /// <param name="screenPos">position of the screen for the mouse</param>
+    public void WarpMouseWithoutSignal(Vector2 screenPos)
+    {
+        _dontEmitMoveSignal = true;
+        Input.WarpMouse(screenPos);
+    }
+
+    /// <summary>
     /// property for cell
     /// when setting:
     /// check if cell is viable to change
@@ -147,8 +158,15 @@ public partial class GridCursor : Node2D
                 _isMouse = false;
             }
 
-            EmitSignal("Moved", _cell);
-            _timer.Start();
+            if (!_dontEmitMoveSignal)
+            {
+                EmitSignal("Moved", _cell);
+            }
+            else
+            {
+                _dontEmitMoveSignal = false;
+            }
+                _timer.Start();
         }
         get { return _cell; }
     }
