@@ -83,7 +83,7 @@ public partial class GameBoard : Node2D
             UpdateUnitVision(unit);
         }
 
-        foreach (KeyValuePair<Vector2,Unit> unit in _units)
+        foreach (KeyValuePair<Vector2, Unit> unit in _units)
         {
             UpdateUnitVision(unit.Value);
         }
@@ -205,7 +205,7 @@ public partial class GameBoard : Node2D
     /// <param name="newCell"></param>
     private async void MoveSelectedUnit(Vector2 newCell)
     {
-        if (IsOccupied(newCell) || !_walkableCells.Contains(newCell))
+        if (!IsValidMoveLoc(newCell))
         {
             return;
         }
@@ -232,6 +232,26 @@ public partial class GameBoard : Node2D
 
         _units.Remove(unit.cell);
         _units[newLoc] = unit;
+    }
+
+    /// <summary>
+    /// checks if cell coords is
+    /// a valid end point
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <returns></returns>
+    private bool IsValidMoveLoc(Vector2 cell)
+    {
+        if ((_walkableCells != null || _walkableCells.Length > 0) && !_walkableCells.Contains(cell))
+        {
+            return false;
+        }
+        if (_selectedUnit != null && IsOccupied(cell) && (cell != _selectedUnit.cell || _unitPath.currentPath.Length <= 1))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     //---------- MENU CURSOR ACCEPT -----------
@@ -266,28 +286,16 @@ public partial class GameBoard : Node2D
     /// <param name="cell"></param>
     public async void MenuMoveStateAccept(Vector2 cell)
     {
-        if (!_walkableCells.Contains(cell))
+        if (!IsValidMoveLoc(cell))
         {
             return;
         }
 
-        if (IsOccupied(cell) && _units[cell] == _selectedUnit)
-        {
-            _units.Remove(_selectedUnit.cell);
-            _units[cell] = _selectedUnit;
-            DeselectSelectedUnit();
-            ClearSelectedUnit();
-            _walkableCells = new Vector2[0];
-            _unitWalkHighlights.Clear();
-        }
-        else if (!IsOccupied(cell) && _walkableCells.Contains(cell))
-        {
-            //wait for unit to move
-            MoveSelectedUnit(cell);
-            _walkableCells = new Vector2[0];
-            _unitWalkHighlights.Clear();
-            await ToSignal(this, "SelectedMoved");
-        }
+        MoveSelectedUnit(cell);
+        _walkableCells = new Vector2[0];
+        _unitWalkHighlights.Clear();
+        await ToSignal(this, "SelectedMoved");
+
         _menuStateMachine.TransitionTo("UnSelectedState");
     }
 
