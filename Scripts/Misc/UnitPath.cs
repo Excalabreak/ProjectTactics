@@ -72,12 +72,10 @@ public partial class UnitPath : TileMapLayer
     {
         if (_currentPath.Count == 0)
         {
-            GD.Print("current path size 0");
             return false;
         }
         if (!_gameBoard.grid.IsWithinBounds(cell))
         {
-            GD.Print("cell is not within bounds");
             return false;
         }
 
@@ -89,7 +87,6 @@ public partial class UnitPath : TileMapLayer
                 return true;
             }
         }
-        GD.Print("not connected");
         return false;
     }
 
@@ -108,6 +105,7 @@ public partial class UnitPath : TileMapLayer
     /// </summary>
     public void ResetCurrentPath()
     {
+        Clear();
         _currentPath.Clear();
         _currentPath.Add(_unitPos);
     }

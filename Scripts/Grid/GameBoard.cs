@@ -368,13 +368,11 @@ public partial class GameBoard : Node2D
         //path move cost
         if (!_walkableCells.Contains(newCell))
         {
-            GD.Print("auto path for not walkable");
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
             return;
         }
         if (!_unitPath.CoordConnects(newCell))
         {
-            GD.Print("auto path for no connection");
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
             return;
         }
@@ -385,26 +383,11 @@ public partial class GameBoard : Node2D
         if (_map.GetPathMoveCost(_unitPath.GetIntCurrentPath()) + _map.GetTileMoveCost(intNewCell) 
             > _selectedUnit.unitStats.GetBaseStat(UnitStatEnum.MOVE))
         {
-            GD.Print("auto path for move cost");
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
             return;
         }
 
         _unitPath.AddTileToCurrentPath(newCell);
-
-        //old
-        /*
-        if (_selectedUnit != null && _selectedUnit.isSelected)
-        {
-            _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
-        }
-        //move to accept?
-        else if (_unitWalkHighlights != null && (_walkableCells == null || _walkableCells.Length > 0))
-        {
-            _walkableCells = new Vector2[0];
-            _unitWalkHighlights.Clear();
-        }
-        */
     }
 
     //---------- MENU CURSOR DECLINE ----------
@@ -427,6 +410,18 @@ public partial class GameBoard : Node2D
         ResetMenu();
     }
 
+    public void MoveStateCursorDecline()
+    {
+        if (_gridCursor.cell == _selectedUnit.cell)
+        {
+            StandardCursorDecline();
+            return;
+        }
+
+        ResetMovePath();
+        _unitPath.ResetCurrentPath();
+    }
+
     //---------- OTHER MENU ----------
 
     /// <summary>
@@ -439,6 +434,9 @@ public partial class GameBoard : Node2D
         menuStateMachine.TransitionTo("UnSelectedState");
     }
 
+    /// <summary>
+    /// moves the grid cursor back onto the selected unit
+    /// </summary>
     public void ResetMovePath()
     {
         if (_gridCursor.isMouse)
