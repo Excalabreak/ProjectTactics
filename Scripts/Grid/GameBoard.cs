@@ -277,12 +277,15 @@ public partial class GameBoard : Node2D
             _units[cell] = _selectedUnit;
             DeselectSelectedUnit();
             ClearSelectedUnit();
-
+            _walkableCells = new Vector2[0];
+            _unitWalkHighlights.Clear();
         }
         else if (!IsOccupied(cell) && _walkableCells.Contains(cell))
         {
             //wait for unit to move
             MoveSelectedUnit(cell);
+            _walkableCells = new Vector2[0];
+            _unitWalkHighlights.Clear();
             await ToSignal(this, "SelectedMoved");
         }
         _menuStateMachine.TransitionTo("UnSelectedState");
@@ -334,11 +337,16 @@ public partial class GameBoard : Node2D
 
     private void Battle(UnitStats attackingUnit, UnitStats defendingUnit)
     {
+        GD.Print("uses base stat for battle");
         defendingUnit.DamageUnit(attackingUnit.GetBaseStat(UnitStatEnum.STRENGTH) - defendingUnit.GetBaseStat(UnitStatEnum.DEFENSE));
     }
 
     //---------- MENU CURSOR MOVE ----------
 
+    /// <summary>
+    /// shows the hover display for unit on new cell
+    /// </summary>
+    /// <param name="newCell">new cell</param>
     public void MenuUnSelectedStateCursorMove(Vector2 newCell)
     {
         _unitWalkHighlights.Clear();
@@ -348,23 +356,63 @@ public partial class GameBoard : Node2D
         }
     }
 
+    /// <summary>
+    /// draws path for move action
+    /// </summary>
+    /// <param name="newCell"></param>
     public void MenuMoveStateCursorMove(Vector2 newCell)
     {
-        //if drawing path gets too long, auto path it
-        //draws path based on cursor movements
+        //things to check for auto path:
+        //is a walkable cell (WISH: maybe path find around if not walkable)
+        //if coords even connects
+        //path move cost
+        if (!_walkableCells.Contains(newCell))
+        {
+            GD.Print("auto path for not walkable");
+            _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
+            return;
+        }
+        if (!_unitPath.CoordConnects(newCell))
+        {
+            GD.Print("auto path for no connection");
+            _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
+            return;
+        }
+
+        GD.Print("uses base stat for move");
+
+        Vector2I intNewCell = new Vector2I(Mathf.RoundToInt(newCell.X), Mathf.RoundToInt(newCell.Y));
+        if (_map.GetPathMoveCost(_unitPath.GetIntCurrentPath()) + _map.GetTileMoveCost(intNewCell) 
+            > _selectedUnit.unitStats.GetBaseStat(UnitStatEnum.MOVE))
+        {
+            GD.Print("auto path for move cost");
+            _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
+            return;
+        }
+
+        _unitPath.AddTileToCurrentPath(newCell);
+
+        //old
+        /*
         if (_selectedUnit != null && _selectedUnit.isSelected)
         {
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
         }
+        //move to accept?
         else if (_unitWalkHighlights != null && (_walkableCells == null || _walkableCells.Length > 0))
         {
             _walkableCells = new Vector2[0];
             _unitWalkHighlights.Clear();
         }
+        */
     }
 
     //---------- MENU CURSOR DECLINE ----------
 
+    /// <summary>
+    /// default cursor decline for menu, 
+    /// just changes state to unselected state
+    /// </summary>
     public void StandardCursorDecline()
     {
         if (IsInstanceValid(_actionMenuInstance))
@@ -421,6 +469,7 @@ public partial class GameBoard : Node2D
     /// <returns>array of coords that the unit can walk</returns>
     private Vector2[] GetWalkableCells(Unit unit)
     {
+        GD.Print("uses base stat for getting walkable cells");
         return Dijksta(unit.cell, (float)unit.unitStats.GetBaseStat(UnitStatEnum.MOVE), false);
     }
 
@@ -432,6 +481,7 @@ public partial class GameBoard : Node2D
     /// <returns>array of cell coordinates</returns>
     private Vector2[] GetAttackableCells(Unit unit)
     {
+        GD.Print("uses base stat for getting attackable cell");
         List<Vector2> attackableCells = new List<Vector2>();
         Vector2[] realWalkableCells = Dijksta(unit.cell, unit.unitStats.GetBaseStat(UnitStatEnum.MOVE), true);
 
@@ -647,6 +697,7 @@ public partial class GameBoard : Node2D
 
         visibleTiles.Add(startingCell);
 
+        //GD.Print("uses base stat for vision");
         int r = unit.unitStats.GetBaseStat(UnitStatEnum.VISION);
 
         int count = r/2;
@@ -844,6 +895,7 @@ public partial class GameBoard : Node2D
                     totalVisionCost += 2f;
                 }
 
+                GD.Print("uses base stat for vision");
                 if ((float)unit.unitStats.GetBaseStat(UnitStatEnum.VISION) >= totalVisionCost)
                 {
                     visibleTiles.Add(tile);

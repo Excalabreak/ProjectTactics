@@ -44,6 +44,14 @@ public partial class UnitPath : TileMapLayer
         DrawPathLine(_currentPath.ToArray());
     }
 
+    public void AddTileToCurrentPath(Vector2 newCell)
+    {
+        Clear();
+        _currentPath.Add(newCell);
+
+        DrawPathLine(_currentPath.ToArray());
+    }
+
     private void DrawPathLine(Vector2[] pathCoord)
     {
         Vector2I[] path = new Vector2I[pathCoord.Length];
@@ -52,6 +60,37 @@ public partial class UnitPath : TileMapLayer
             path[i] = new Vector2I(Mathf.RoundToInt(pathCoord[i].X), Mathf.RoundToInt(pathCoord[i].Y));
         }
         SetCellsTerrainConnect(new Godot.Collections.Array<Vector2I>(path), 0, 0);
+    }
+
+    /// <summary>
+    /// checks if cell is connected to the last point
+    /// on the current path
+    /// </summary>
+    /// <param name="cell">coordinate of cell</param>
+    /// <returns>true if the coord is next to the path</returns>
+    public bool CoordConnects(Vector2 cell)
+    {
+        if (_currentPath.Count == 0)
+        {
+            GD.Print("current path size 0");
+            return false;
+        }
+        if (!_gameBoard.grid.IsWithinBounds(cell))
+        {
+            GD.Print("cell is not within bounds");
+            return false;
+        }
+
+        foreach (DirectionEnum dir in Enum.GetValues(typeof(DirectionEnum)))
+        {
+            if ((_currentPath[_currentPath.Count - 1] + DirectionManager.Instance.GetVectorDirection(dir))
+                .IsEqualApprox(cell))
+            {
+                return true;
+            }
+        }
+        GD.Print("not connected");
+        return false;
     }
 
     /// <summary>
@@ -64,6 +103,9 @@ public partial class UnitPath : TileMapLayer
         Clear();
     }
 
+    /// <summary>
+    /// resets the current path
+    /// </summary>
     public void ResetCurrentPath()
     {
         _currentPath.Clear();
