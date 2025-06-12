@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [06/11/2025]
+ * Last Updated: [06/12/2025]
  * [game board manages everything on the map]
  */
 
@@ -553,11 +553,7 @@ public partial class GameBoard : Node2D
                     walls.Add(coords);
                 }
 
-                /*
-                if (IsOccupied(coords))
-                {
-                    continue;
-                }*/
+                
                 if (output.Contains(coords))
                 {
                     continue;
@@ -670,6 +666,21 @@ public partial class GameBoard : Node2D
     /// <param name="cell">coordinates of grid that are occupied</param>
     /// <returns>true if cell is occupied</returns>
     private bool IsOccupied(Vector2 cell)
+    {
+        return _units.ContainsKey(cell);
+    }
+    
+    /// <summary>
+    /// like IsOccupied, but will return true if the player doesn't know
+    /// a unit is in the fog of war
+    /// 
+    /// NOTE:
+    /// -will have to update move
+    /// -stops unit if moves into other unit
+    /// </summary>
+    /// <param name="cell">coordinates on grid</param>
+    /// <returns>true if the player should know 100% that a unit is occupying the cell</returns>
+    private bool IsKnownOccupied(Vector2 cell)
     {
         return _units.ContainsKey(cell);
     }
