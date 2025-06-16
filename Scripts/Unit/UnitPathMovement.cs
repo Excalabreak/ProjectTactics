@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/07/2025]
+ * Last Updated: [06/16/2025]
  * [moves sprite through path]
  */
 
@@ -49,6 +49,7 @@ public partial class UnitPathMovement : Path2D
 
         //this consequncly checks every tile the unit walks on
         //so this is where units update which tile they are on
+        //this is probably a bad way of doing this...OH WELL
         if (_currentDirectionIndex < _pathDirections.Count &&
             _pathFollow.ProgressRatio >= (1f / (float)_pathDirections.Count) * _currentDirectionIndex)
         {
@@ -60,25 +61,42 @@ public partial class UnitPathMovement : Path2D
             _currentDirectionIndex++;
 
             _gameBoard.UpdateUnitVision(_unit);
+
+
+            Vector2 nextTile = _unit.cell + DirectionManager.Instance.GetVectorDirection(_unitDirection.currentFacing);
+            if (_currentDirectionIndex + 1 <= _pathDirections.Count && _gameBoard.IsOccupied(nextTile))
+            {
+                StopWalk(grid, newLoc);
+            }
         }
 
         if (_pathFollow.ProgressRatio >= 1f)
         {
-            this._isWalking = false;
-            _pathFollow.Progress = 0f;
-
-            _gameBoard.ChangeUnitLocationData(_unit, cell);
-            _unit.cell = cell;
-            _unit.Position = grid.CalculateMapPosition(cell);
-
-            _gameBoard.UpdateUnitVision(_unit);
-
-            Curve.ClearPoints();
-            _pathDirections = new List<DirectionEnum>();
-            _currentDirectionIndex = 0;
-
-            EmitSignal("WalkFinished");
+            StopWalk(grid, cell);
         }
+    }
+
+    /// <summary>
+    /// stops the unit from walking
+    /// </summary>
+    /// <param name="grid">grid info</param>
+    /// <param name="cell">where to stop unit</param>
+    private void StopWalk(GridResource grid, Vector2 cell)
+    {
+        this._isWalking = false;
+        _pathFollow.Progress = 0f;
+
+        _gameBoard.ChangeUnitLocationData(_unit, cell);
+        _unit.cell = cell;
+        _unit.Position = grid.CalculateMapPosition(cell);
+
+        _gameBoard.UpdateUnitVision(_unit);
+
+        Curve.ClearPoints();
+        _pathDirections = new List<DirectionEnum>();
+        _currentDirectionIndex = 0;
+
+        EmitSignal("WalkFinished");
     }
 
     /// <summary>

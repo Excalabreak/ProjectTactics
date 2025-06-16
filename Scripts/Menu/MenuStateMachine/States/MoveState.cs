@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/23/2025]
+ * Last Updated: [06/12/2025]
  * [State when move is selected]
  */
 
@@ -14,6 +14,7 @@ public partial class MoveState : MenuState
         //probably a terrable way of doing this...
         //oh well
         stateMachine.gameBoard.HoverDisplay(stateMachine.gameBoard.selectedUnit.cell);
+        stateMachine.gameBoard.ResetMovePath();
     }
 
     public override void OnCursorAccept(Vector2 cell)
@@ -24,5 +25,10 @@ public partial class MoveState : MenuState
     public override void OnCursorMove(Vector2 newCell)
     {
         stateMachine.gameBoard.MenuMoveStateCursorMove(newCell);
+    }
+
+    public override void OnCursorDecline()
+    {
+        stateMachine.gameBoard.MoveStateCursorDecline();
     }
 }

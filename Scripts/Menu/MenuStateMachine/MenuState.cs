@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [YT: Mina Pêcheux]
- * Last Updated: [05/23/2025]
+ * Last Updated: [06/09/2025]
  * [script for the menu state]
  */
 
@@ -36,4 +36,9 @@ public partial class MenuState : Node
     /// </summary>
     /// <param name="cell">cell</param>
     public virtual void OnCursorMove(Vector2 newCell) { }
+
+    /// <summary>
+    /// what happens with cursor declines while in this state
+    /// </summary>
+    public virtual void OnCursorDecline() { }
 }

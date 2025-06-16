@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [05/02/2025]
+ * Last Updated: [06/11/2025]
  * [script for the cursor]
  */
 
@@ -15,6 +15,8 @@ public partial class GridCursor : Node2D
     //when moved
     [Signal] public delegate void MovedEventHandler(Vector2 nextCell);
 
+    [Signal] public delegate void DeclineEventHandler();
+
     [Export] private GameBoard _gameBoard;
 
     [Export] private Timer _timer;
@@ -24,6 +26,7 @@ public partial class GridCursor : Node2D
 
     //dont know if i will have an input manager, so it's here for now
     private bool _isMouse = false;
+    private bool _dontEmitMoveSignal = false;
 
     /// <summary>
     /// sets timer and first position
@@ -50,24 +53,29 @@ public partial class GridCursor : Node2D
     /// <summary>
     /// inputs for cursor
     /// 
-    /// TODO: use input maps
-    /// TODO: look into input device detection
     /// for mouse and keyboard or controller
     /// </summary>
     /// <param name="event"></param>
     public override void _UnhandledInput(InputEvent @event)
     {
+        //inputs for accept
         if (@event is InputEventMouseMotion input)
         {
             _isMouse = true;
-            //this.cell = _gameBoard.grid.CalculateGridCoordinates(input.Position);
         }
-        else if (@event.IsActionPressed("Accept"))
+        else if (@event.IsActionPressed("ui_accept"))
         {
             EmitSignal("AcceptPress", cell);
             GetViewport().SetInputAsHandled();
         }
 
+        if (@event.IsActionPressed("Decline"))
+        {
+            EmitSignal("Decline");
+            GetViewport().SetInputAsHandled();
+        }
+
+        //inputs for move
         bool shouldMove = @event.IsPressed();
 
         if (@event.IsEcho())
@@ -80,25 +88,25 @@ public partial class GridCursor : Node2D
             return;
         }
 
-        if (@event.IsAction("Up"))
+        if (@event.IsAction("ui_up"))
         {
+            _isMouse = false;
             this.cell += Vector2.Up;
-            _isMouse = false;
         }
-        else if (@event.IsAction("Down"))
+        else if (@event.IsAction("ui_down"))
         {
+            _isMouse = false;
             this.cell += Vector2.Down;
-            _isMouse = false;
         }
-        else if (@event.IsAction("Left"))
+        else if (@event.IsAction("ui_left"))
         {
+            _isMouse = false;
             this.cell += Vector2.Left;
-            _isMouse = false;
         }
-        else if (@event.IsAction("Right"))
+        else if (@event.IsAction("ui_right"))
         {
-            this.cell += Vector2.Right;
             _isMouse = false;
+            this.cell += Vector2.Right;
         }
     }
 
@@ -112,6 +120,16 @@ public partial class GridCursor : Node2D
             Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
             cell = gridCoords;
         }
+    }
+
+    /// <summary>
+    /// warps the mouse w/o emiting a move signal
+    /// </summary>
+    /// <param name="screenPos">position of the screen for the mouse</param>
+    public void WarpMouseWithoutSignal(Vector2 screenPos)
+    {
+        _dontEmitMoveSignal = true;
+        Input.WarpMouse(screenPos);
     }
 
     /// <summary>
@@ -133,9 +151,28 @@ public partial class GridCursor : Node2D
             _cell = newCell;
 
             Position = _gameBoard.grid.CalculateMapPosition(_cell);
-            EmitSignal("Moved", _cell);
-            _timer.Start();
+
+            if (GetWindow().HasFocus() && !_isMouse)
+            {
+                Input.WarpMouse(this.GetGlobalTransformWithCanvas().Origin);
+                _isMouse = false;
+            }
+
+            if (!_dontEmitMoveSignal)
+            {
+                EmitSignal("Moved", _cell);
+            }
+            else
+            {
+                _dontEmitMoveSignal = false;
+            }
+                _timer.Start();
         }
         get { return _cell; }
+    }
+
+    public bool isMouse
+    {
+        get { return _isMouse; }
     }
 }
