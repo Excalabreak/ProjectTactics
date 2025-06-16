@@ -46,6 +46,7 @@ public partial class GameBoard : Node2D
 
     //all units, might want to split this up
     private System.Collections.Generic.Dictionary<Vector2, Unit> _units = new System.Collections.Generic.Dictionary<Vector2, Unit>();
+    private List<Vector2> _knownUnitLocations = new List<Vector2>(); 
 
     //Dictionary for the fog of war
     private System.Collections.Generic.Dictionary<Unit, Vector2[]> _unitVision = new System.Collections.Generic.Dictionary<Unit, Vector2[]>();
@@ -54,6 +55,12 @@ public partial class GameBoard : Node2D
     private System.Collections.Generic.Dictionary<Vector2, List<Unit>> _cellBlockedBy = new System.Collections.Generic.Dictionary<Vector2, List<Unit>>();
 
     private const float MAX_VALUE = 9999999;
+
+    private bool _visionWarning = true;
+    private bool _walkableWarning = true;
+    private bool _moveCursorWarning = true;
+    private bool _attackableWarning = true;
+    private bool _battleWarning = true;
 
     //---------- SET UP -----------
 
@@ -67,6 +74,9 @@ public partial class GameBoard : Node2D
         _gridCursor.Decline += OnCursorDecline;
 
         Reinitialize();
+
+        GD.Print("NOTE: _knownUnitLocation needs to be reset on every turn " +
+            "(atleast clear all location that doesn't have a unit in vision)");
     }
 
     /// <summary>
@@ -246,7 +256,7 @@ public partial class GameBoard : Node2D
         {
             return false;
         }
-        if (_selectedUnit != null && IsOccupied(cell) && (cell != _selectedUnit.cell || _unitPath.currentPath.Length <= 1))
+        if (_selectedUnit != null && IsKnownOccupied(cell) && (cell != _selectedUnit.cell || _unitPath.currentPath.Length <= 1))
         {
             return false;
         }
@@ -305,6 +315,8 @@ public partial class GameBoard : Node2D
     /// <param name="cell"></param>
     public void MenuAttackStateAccept(Vector2 cell)
     {
+        //maybe change to IsKnownOccupied(),
+        //but might want to keep blind swings
         if (!IsOccupied(cell))
         {
             return;
@@ -345,7 +357,11 @@ public partial class GameBoard : Node2D
 
     private void Battle(UnitStats attackingUnit, UnitStats defendingUnit)
     {
-        GD.Print("uses base stat for battle");
+        if (_battleWarning)
+        {
+            _battleWarning = false;
+            GD.Print("uses base stat for battle");
+        }
         defendingUnit.DamageUnit(attackingUnit.GetBaseStat(UnitStatEnum.STRENGTH) - defendingUnit.GetBaseStat(UnitStatEnum.DEFENSE));
     }
 
@@ -385,7 +401,11 @@ public partial class GameBoard : Node2D
             return;
         }
 
-        GD.Print("uses base stat for move");
+        if (_moveCursorWarning)
+        {
+            _moveCursorWarning = false;
+            GD.Print("uses base stat for move cursor");
+        }
 
         Vector2I intNewCell = new Vector2I(Mathf.RoundToInt(newCell.X), Mathf.RoundToInt(newCell.Y));
         if (_map.GetPathMoveCost(_unitPath.GetIntCurrentPath()) + _map.GetTileMoveCost(intNewCell) 
@@ -475,7 +495,11 @@ public partial class GameBoard : Node2D
     /// <returns>array of coords that the unit can walk</returns>
     private Vector2[] GetWalkableCells(Unit unit)
     {
-        GD.Print("uses base stat for getting walkable cells");
+        if (_walkableWarning)
+        {
+            _walkableWarning = false;
+            GD.Print("uses base stat for getting walkable cells");
+        }
         return Dijksta(unit.cell, (float)unit.unitStats.GetBaseStat(UnitStatEnum.MOVE), false);
     }
 
@@ -487,7 +511,11 @@ public partial class GameBoard : Node2D
     /// <returns>array of cell coordinates</returns>
     private Vector2[] GetAttackableCells(Unit unit)
     {
-        GD.Print("uses base stat for getting attackable cell");
+        if (_attackableWarning)
+        {
+            _attackableWarning = false;
+            GD.Print("uses base stat for getting attackable cell");
+        }
         List<Vector2> attackableCells = new List<Vector2>();
         Vector2[] realWalkableCells = Dijksta(unit.cell, unit.unitStats.GetBaseStat(UnitStatEnum.MOVE), true);
 
@@ -631,7 +659,7 @@ public partial class GameBoard : Node2D
                         distanceToNode = currentPriority + tileCost;
 
                         //checks if units can pass eachother
-                        if (IsOccupied(coords))
+                        if (IsKnownOccupied(coords))
                         {
                             if (!_unitManager.CanPass(curUnit.unitGroup, _units[coords].unitGroup))
                             {
@@ -682,7 +710,18 @@ public partial class GameBoard : Node2D
     /// <returns>true if the player should know 100% that a unit is occupying the cell</returns>
     private bool IsKnownOccupied(Vector2 cell)
     {
-        return _units.ContainsKey(cell);
+        return _knownUnitLocations.Contains(cell);
+    }
+
+    /// <summary>
+    /// like IsOccupied, but will return true if the player doesn't know
+    /// a unit is in the fog of war
+    /// </summary>
+    /// <param name="cell">coordinates on grid</param>
+    /// <returns>true if the player should know 100% that a unit is occupying the cell</returns>
+    private bool IsKnownOccupied(Vector2I cell)
+    {
+        return _knownUnitLocations.Contains(new Vector2(cell.X, cell.Y));
     }
 
     //---------- VISION/FOG OF WAR ----------
@@ -716,7 +755,7 @@ public partial class GameBoard : Node2D
 
         //GD.Print("uses base stat for vision");
         int r = unit.unitStats.GetBaseStat(UnitStatEnum.VISION);
-
+        
         int count = r/2;
         for (int i = 0; i < count; i++)
         {
@@ -910,9 +949,19 @@ public partial class GameBoard : Node2D
                 if (IsOccupied(tile) && !_unitManager.CanPass(unit.unitGroup, _units[tile].unitGroup))
                 {
                     totalVisionCost += 2f;
+
+                    //checks if unit location is known
+                    if (!IsKnownOccupied(tile))
+                    {
+                        _knownUnitLocations.Add(new Vector2(tile.X, tile.Y));
+                    }
                 }
 
-                GD.Print("uses base stat for vision");
+                if (_visionWarning)
+                {
+                    _visionWarning = false;
+                    GD.Print("uses base stat for vision");
+                }
                 if ((float)unit.unitStats.GetBaseStat(UnitStatEnum.VISION) >= totalVisionCost)
                 {
                     visibleTiles.Add(tile);
