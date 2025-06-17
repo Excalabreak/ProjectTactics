@@ -55,19 +55,21 @@ public partial class UnitPathMovement : Path2D
         {
             _unitDirection.currentFacing = _pathDirections[_currentDirectionIndex];
 
-            Vector2 nextTile = _unit.cell + DirectionManager.Instance.GetVectorDirection(_pathDirections[_currentDirectionIndex]);
-            GD.Print(nextTile);
+            Vector2 newLoc = _gameBoard.grid.CalculateGridCoordinates(_walkingLocation.GlobalPosition);
+            _gameBoard.ChangeUnitLocationData(_unit, newLoc);
+            _unit.cell = newLoc;
+
+            _gameBoard.UpdateUnitVision(_unit);
+
+            Vector2 nextTile = newLoc + DirectionManager.Instance.GetVectorDirection(_pathDirections[_currentDirectionIndex]);
+            
+            //need to expand for friendly
             if (_gameBoard.IsOccupied(nextTile))
             {
                 GD.Print(_unit.cell);
                 StopWalk(grid, _unit.cell);
             }
 
-            Vector2 newLoc = _gameBoard.grid.CalculateGridCoordinates(_walkingLocation.GlobalPosition);
-            _gameBoard.ChangeUnitLocationData(_unit, newLoc);
-            _unit.cell = newLoc;
-
-            _gameBoard.UpdateUnitVision(_unit);
 
             if (_currentDirectionIndex != 0)
             {
@@ -103,8 +105,6 @@ public partial class UnitPathMovement : Path2D
         Curve.ClearPoints();
         _pathDirections = new List<DirectionEnum>();
         _currentDirectionIndex = 0;
-
-        GD.Print(_unit.unitStats.currentMove);
 
         EmitSignal("WalkFinished");
     }
