@@ -53,25 +53,33 @@ public partial class UnitPathMovement : Path2D
         if (_currentDirectionIndex < _pathDirections.Count &&
             _pathFollow.ProgressRatio >= (1f / (float)_pathDirections.Count) * _currentDirectionIndex)
         {
+            _unitDirection.currentFacing = _pathDirections[_currentDirectionIndex];
+
+            Vector2 nextTile = _unit.cell + DirectionManager.Instance.GetVectorDirection(_pathDirections[_currentDirectionIndex]);
+            GD.Print(nextTile);
+            if (_gameBoard.IsOccupied(nextTile))
+            {
+                GD.Print(_unit.cell);
+                StopWalk(grid, _unit.cell);
+            }
+
             Vector2 newLoc = _gameBoard.grid.CalculateGridCoordinates(_walkingLocation.GlobalPosition);
             _gameBoard.ChangeUnitLocationData(_unit, newLoc);
             _unit.cell = newLoc;
 
-            _unitDirection.currentFacing = _pathDirections[_currentDirectionIndex];
-            _currentDirectionIndex++;
-
             _gameBoard.UpdateUnitVision(_unit);
 
-
-            Vector2 nextTile = _unit.cell + DirectionManager.Instance.GetVectorDirection(_unitDirection.currentFacing);
-            if (_currentDirectionIndex + 1 <= _pathDirections.Count && _gameBoard.IsOccupied(nextTile))
+            if (_currentDirectionIndex != 0)
             {
-                StopWalk(grid, newLoc);
+                _unit.unitStats.UseMove(_gameBoard.map.GetTileMoveCost(newLoc));
             }
+
+            _currentDirectionIndex++;
         }
 
         if (_pathFollow.ProgressRatio >= 1f)
         {
+            _unit.unitStats.UseMove(_gameBoard.map.GetTileMoveCost(cell));
             StopWalk(grid, cell);
         }
     }
@@ -95,6 +103,8 @@ public partial class UnitPathMovement : Path2D
         Curve.ClearPoints();
         _pathDirections = new List<DirectionEnum>();
         _currentDirectionIndex = 0;
+
+        GD.Print(_unit.unitStats.currentMove);
 
         EmitSignal("WalkFinished");
     }

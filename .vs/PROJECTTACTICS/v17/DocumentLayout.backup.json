@@ -15,12 +15,16 @@
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\menustatemachine\\states\\movestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\menustatemachine\\states\\movestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\misc\\gridcursor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\misc\\gridcursor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\menustatemachine\\states\\movestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\menustatemachine\\states\\movestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\grid\\gridresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\gridresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\actionmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,8 +38,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GridResource.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GridResource.cs",
+              "RelativeDocumentMoniker": "Scripts\\Grid\\GridResource.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GridResource.cs",
+              "RelativeToolTip": "Scripts\\Grid\\GridResource.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-12T18:21:39.33Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -44,27 +61,27 @@
               "RelativeDocumentMoniker": "Scripts\\Grid\\Map.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\Map.cs",
               "RelativeToolTip": "Scripts\\Grid\\Map.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-11T19:13:24.881Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "MoveState.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MenuStateMachine\\States\\MoveState.cs",
               "RelativeDocumentMoniker": "Scripts\\Menu\\MenuStateMachine\\States\\MoveState.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MenuStateMachine\\States\\MoveState.cs",
               "RelativeToolTip": "Scripts\\Menu\\MenuStateMachine\\States\\MoveState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-05T23:26:39.923Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "GridCursor.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Misc\\GridCursor.cs",
               "RelativeDocumentMoniker": "Scripts\\Misc\\GridCursor.cs",
@@ -77,7 +94,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "ActionMenu.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\ActionMenu.cs",
               "RelativeDocumentMoniker": "Scripts\\Menu\\ActionMenu.cs",
@@ -95,7 +112,7 @@
               "RelativeDocumentMoniker": "Scripts\\Grid\\GameBoard.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GameBoard.cs",
               "RelativeToolTip": "Scripts\\Grid\\GameBoard.cs",
-              "ViewState": "AgIAAEABAAAAAAAAAAAqwHcBAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAGACAAAAAAAAAADwv6QCAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-19T21:01:14.91Z",
               "EditorCaption": ""
@@ -108,7 +125,7 @@
               "RelativeDocumentMoniker": "Scripts\\Misc\\UnitPath.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Misc\\UnitPath.cs",
               "RelativeToolTip": "Scripts\\Misc\\UnitPath.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAQwEwAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-11T18:47:35.125Z",
               "EditorCaption": ""
