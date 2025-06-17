@@ -57,9 +57,6 @@ public partial class GameBoard : Node2D
     private const float MAX_VALUE = 9999999;
 
     private bool _visionWarning = true;
-    private bool _walkableWarning = true;
-    private bool _moveCursorWarning = true;
-    private bool _attackableWarning = true;
     private bool _battleWarning = true;
 
     //---------- SET UP -----------
@@ -217,6 +214,9 @@ public partial class GameBoard : Node2D
     {
         if (!IsValidMoveLoc(newCell))
         {
+            DeselectSelectedUnit();
+            ClearSelectedUnit();
+            EmitSignal("SelectedMoved");
             return;
         }
 
@@ -298,6 +298,9 @@ public partial class GameBoard : Node2D
     {
         if (!IsValidMoveLoc(cell))
         {
+            _walkableCells = new Vector2[0];
+            _unitWalkHighlights.Clear();
+            _menuStateMachine.TransitionTo("UnSelectedState");
             return;
         }
 
@@ -401,15 +404,9 @@ public partial class GameBoard : Node2D
             return;
         }
 
-        if (_moveCursorWarning)
-        {
-            _moveCursorWarning = false;
-            GD.Print("uses base stat for move cursor");
-        }
-
         Vector2I intNewCell = new Vector2I(Mathf.RoundToInt(newCell.X), Mathf.RoundToInt(newCell.Y));
         if (_map.GetPathMoveCost(_unitPath.GetIntCurrentPath()) + _map.GetTileMoveCost(intNewCell) 
-            > _selectedUnit.unitStats.GetBaseStat(UnitStatEnum.MOVE))
+            > _selectedUnit.unitStats.currentMove)
         {
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
             return;
@@ -495,12 +492,7 @@ public partial class GameBoard : Node2D
     /// <returns>array of coords that the unit can walk</returns>
     private Vector2[] GetWalkableCells(Unit unit)
     {
-        if (_walkableWarning)
-        {
-            _walkableWarning = false;
-            GD.Print("uses base stat for getting walkable cells");
-        }
-        return Dijksta(unit.cell, (float)unit.unitStats.GetBaseStat(UnitStatEnum.MOVE), false);
+        return Dijksta(unit.cell, (float)unit.unitStats.currentMove, false);
     }
 
     /// <summary>
@@ -511,13 +503,8 @@ public partial class GameBoard : Node2D
     /// <returns>array of cell coordinates</returns>
     private Vector2[] GetAttackableCells(Unit unit)
     {
-        if (_attackableWarning)
-        {
-            _attackableWarning = false;
-            GD.Print("uses base stat for getting attackable cell");
-        }
         List<Vector2> attackableCells = new List<Vector2>();
-        Vector2[] realWalkableCells = Dijksta(unit.cell, unit.unitStats.GetBaseStat(UnitStatEnum.MOVE), true);
+        Vector2[] realWalkableCells = Dijksta(unit.cell, unit.unitStats.currentMove, true);
 
         foreach (Vector2 curCell in realWalkableCells)
         {
@@ -1153,5 +1140,10 @@ public partial class GameBoard : Node2D
     public Unit selectedUnit
     {
         get { return _selectedUnit; }
+    }
+
+    public Map map
+    {
+        get { return _map; }
     }
 }

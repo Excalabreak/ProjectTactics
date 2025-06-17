@@ -63,4 +63,15 @@ public partial class Map : TileMapLayer
     {
         return (float)GetCellTileData(tile).GetCustomData("MoveCost");
     }
+
+    /// <summary>
+    /// gets the move cost of a singular tile
+    /// </summary>
+    /// <param name="tile">coordinates of tile</param>
+    /// <returns>move cost of coordinates</returns>
+    public float GetTileMoveCost(Vector2 tile)
+    {
+        return (float)GetCellTileData(new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.Y)))
+            .GetCustomData("MoveCost");
+    }
 }
