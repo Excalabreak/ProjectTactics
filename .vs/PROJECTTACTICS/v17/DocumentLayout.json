@@ -38,8 +38,7 @@
               "RelativeToolTip": "Scripts\\Misc\\UnitPath.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T23:59:03.507Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T23:59:03.507Z"
             },
             {
               "$type": "Document",
@@ -49,7 +48,7 @@
               "RelativeDocumentMoniker": "Scripts\\Unit\\UnitPathMovement.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Unit\\UnitPathMovement.cs",
               "RelativeToolTip": "Scripts\\Unit\\UnitPathMovement.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAxwE0AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-16T23:45:38.585Z",
               "EditorCaption": ""
@@ -64,8 +63,7 @@
               "RelativeToolTip": "Scripts\\Unit\\UnitStats.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T23:36:04.199Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T23:36:04.199Z"
             },
             {
               "$type": "Document",
@@ -77,8 +75,7 @@
               "RelativeToolTip": "Scripts\\Grid\\GameBoard.cs",
               "ViewState": "AgIAANAAAAAAAAAAAAAgwPEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T21:01:14.91Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T21:01:14.91Z"
             }
           ]
         }

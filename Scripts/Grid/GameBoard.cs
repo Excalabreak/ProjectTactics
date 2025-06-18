@@ -46,7 +46,7 @@ public partial class GameBoard : Node2D
 
     //all units, might want to split this up
     private System.Collections.Generic.Dictionary<Vector2, Unit> _units = new System.Collections.Generic.Dictionary<Vector2, Unit>();
-    private List<Vector2> _knownUnitLocations = new List<Vector2>(); 
+    private List<Vector2> _knownUnitLocations = new List<Vector2>();
 
     //Dictionary for the fog of war
     private System.Collections.Generic.Dictionary<Unit, Vector2[]> _unitVision = new System.Collections.Generic.Dictionary<Unit, Vector2[]>();
@@ -405,7 +405,7 @@ public partial class GameBoard : Node2D
         }
 
         Vector2I intNewCell = new Vector2I(Mathf.RoundToInt(newCell.X), Mathf.RoundToInt(newCell.Y));
-        if (_map.GetPathMoveCost(_unitPath.GetIntCurrentPath()) + _map.GetTileMoveCost(intNewCell) 
+        if (_map.GetPathMoveCost(_unitPath.GetIntCurrentPath()) + _map.GetTileMoveCost(intNewCell)
             > _selectedUnit.unitStats.currentMove)
         {
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
@@ -568,7 +568,7 @@ public partial class GameBoard : Node2D
                     walls.Add(coords);
                 }
 
-                
+
                 if (output.Contains(coords))
                 {
                     continue;
@@ -601,7 +601,7 @@ public partial class GameBoard : Node2D
 
         Unit curUnit = _units[cell];
         List<Vector2> moveableCells = new List<Vector2>();
-        bool[,] visited = new bool[y,x];
+        bool[,] visited = new bool[y, x];
         float[,] distances = new float[y, x];
         Vector2[,] previous = new Vector2[y, x];
 
@@ -684,7 +684,7 @@ public partial class GameBoard : Node2D
     {
         return _units.ContainsKey(cell);
     }
-    
+
     /// <summary>
     /// like IsOccupied, but will return true if the player doesn't know
     /// a unit is in the fog of war
@@ -709,6 +709,27 @@ public partial class GameBoard : Node2D
     private bool IsKnownOccupied(Vector2I cell)
     {
         return _knownUnitLocations.Contains(new Vector2(cell.X, cell.Y));
+    }
+
+    /// <summary>
+    /// checks if unit can pass through a tile
+    /// </summary>
+    /// <param name="unit">unit checking</param>
+    /// <param name="tile">tile passing</param>
+    /// <returns>true if the unit can pass tile</returns>
+    public bool CheckCanPass(Unit unit, Vector2 tile)
+    {
+        if (!IsOccupied(tile))
+        {
+            return true;
+        }
+
+        if (_unitManager.CanPass(unit.unitGroup, _units[tile].unitGroup))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     //---------- VISION/FOG OF WAR ----------
@@ -933,7 +954,7 @@ public partial class GameBoard : Node2D
 
                 totalVisionCost += _map.GetTileVisionCost(tile);
 
-                if (IsOccupied(tile) && !_unitManager.CanPass(unit.unitGroup, _units[tile].unitGroup))
+                if (!CheckCanPass(unit, tile))
                 {
                     totalVisionCost += 2f;
 
@@ -1145,5 +1166,11 @@ public partial class GameBoard : Node2D
     public Map map
     {
         get { return _map; }
+    }
+
+    //maybe temp get gameboard
+    public UnitManager unitManager
+    {
+        get { return _unitManager; }
     }
 }

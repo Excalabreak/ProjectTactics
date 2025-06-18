@@ -50,7 +50,8 @@ public partial class UnitPathMovement : Path2D
         //this consequncly checks every tile the unit walks on
         //so this is where units update which tile they are on
         //this is probably a bad way of doing this...OH WELL
-        if (_currentDirectionIndex < _pathDirections.Count &&
+        if (_pathFollow.ProgressRatio < 1f &&
+            _currentDirectionIndex < _pathDirections.Count &&
             _pathFollow.ProgressRatio >= (1f / (float)_pathDirections.Count) * _currentDirectionIndex)
         {
             _unitDirection.currentFacing = _pathDirections[_currentDirectionIndex];
@@ -64,7 +65,7 @@ public partial class UnitPathMovement : Path2D
             Vector2 nextTile = newLoc + DirectionManager.Instance.GetVectorDirection(_pathDirections[_currentDirectionIndex]);
             
             //need to expand for friendly
-            if (_gameBoard.IsOccupied(nextTile))
+            if (!_gameBoard.CheckCanPass(_unit, nextTile))
             {
                 GD.Print(_unit.cell);
                 StopWalk(grid, _unit.cell);

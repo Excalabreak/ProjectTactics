@@ -229,6 +229,11 @@ position = Vector2(222, 731)
 _gameBoard = NodePath("../../..")
 _attackRange = 2
 
+[node name="Unit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
+position = Vector2(290, 732)
+_gameBoard = NodePath("../../..")
+_attackRange = 2
+
 [node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
 script = ExtResource("12_c2lnq")
 _group = 2
@@ -236,7 +241,7 @@ _passingGroup = Array[int]([2])
 _attackingGroup = Array[int]([0, 1])
 
 [node name="Unit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
-position = Vector2(351, 738)
+position = Vector2(423, 727)
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/Unit/Sprites" index="0"]
@@ -244,7 +249,7 @@ texture = ExtResource("18_c2lnq")
 _skin = ExtResource("18_c2lnq")
 
 [node name="Unit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
-position = Vector2(217, 605)
+position = Vector2(218, 656)
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/Unit2/Sprites" index="0"]
@@ -291,5 +296,6 @@ script = ExtResource("26_l6hhx")
 script = ExtResource("27_kjcbk")
 
 [editable path="GameBoard/Units/PlayerUnits/Unit"]
+[editable path="GameBoard/Units/PlayerUnits/Unit2"]
 [editable path="GameBoard/Units/EnemyUnits/Unit"]
 [editable path="GameBoard/Units/EnemyUnits/Unit2"]
