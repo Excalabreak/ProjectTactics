@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [06/16/2025]
+ * Last Updated: [06/18/2025]
  * [game board manages everything on the map]
  */
 
@@ -84,12 +84,20 @@ public partial class GameBoard : Node2D
         _units.Clear();
         _fogOfWar.HideWholeMap();
 
+
         foreach (Unit unit in _unitManager.GetAllUnits())
         {
             _units[unit.cell] = unit;
+
+            if (unit.unitGroup == UnitGroupEnum.PLAYER)
+            {
+                _knownUnitLocations.Add(unit.cell);
+            }
+
             UpdateUnitVision(unit);
         }
 
+        //why did i have the game do this twice?
         foreach (KeyValuePair<Vector2, Unit> unit in _units)
         {
             UpdateUnitVision(unit.Value);
@@ -230,6 +238,8 @@ public partial class GameBoard : Node2D
 
     /// <summary>
     /// changes where the gameboard is tracking the location of units
+    /// 
+    /// NOTE: DOES NOT CHANGE UNIT.CELL
     /// </summary>
     /// <param name="unit">unit to move</param>
     /// <param name="newLoc">new location</param>
@@ -242,6 +252,12 @@ public partial class GameBoard : Node2D
 
         _units.Remove(unit.cell);
         _units[newLoc] = unit;
+
+        if (unit.unitGroup == UnitGroupEnum.PLAYER)
+        {
+            _knownUnitLocations.Remove(unit.cell);
+            _knownUnitLocations.Add(newLoc);
+        }
     }
 
     /// <summary>
@@ -252,11 +268,19 @@ public partial class GameBoard : Node2D
     /// <returns></returns>
     private bool IsValidMoveLoc(Vector2 cell)
     {
-        if ((_walkableCells != null || _walkableCells.Length > 0) && !_walkableCells.Contains(cell))
+        if (_selectedUnit == null)
         {
             return false;
         }
-        if (_selectedUnit != null && IsKnownOccupied(cell) && (cell != _selectedUnit.cell || _unitPath.currentPath.Length <= 1))
+        if (_walkableCells == null || _walkableCells.Length <= 0)
+        {
+            return false;
+        }
+        if (!_walkableCells.Contains(cell))
+        {
+            return false;
+        }
+        if (IsKnownOccupied(cell) && (cell != _selectedUnit.cell || _unitPath.currentPath.Length <= 1))
         {
             return false;
         }

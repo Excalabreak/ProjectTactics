@@ -241,7 +241,7 @@ _passingGroup = Array[int]([2])
 _attackingGroup = Array[int]([0, 1])
 
 [node name="Unit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
-position = Vector2(423, 727)
+position = Vector2(348, 729)
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/Unit/Sprites" index="0"]

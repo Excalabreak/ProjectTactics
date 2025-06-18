@@ -1,11 +1,12 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/16/2025]
+ * Last Updated: [06/18/2025]
  * [moves sprite through path]
  */
 
@@ -47,6 +48,8 @@ public partial class UnitPathMovement : Path2D
     {
         _pathFollow.Progress += _moveSpeed * delta;
 
+
+
         //this consequncly checks every tile the unit walks on
         //so this is where units update which tile they are on
         //this is probably a bad way of doing this...OH WELL
@@ -62,16 +65,16 @@ public partial class UnitPathMovement : Path2D
 
             _gameBoard.UpdateUnitVision(_unit);
 
+
+            //checks next tile
             Vector2 nextTile = newLoc + DirectionManager.Instance.GetVectorDirection(_pathDirections[_currentDirectionIndex]);
-            
-            //need to expand for friendly
             if (!_gameBoard.CheckCanPass(_unit, nextTile))
             {
-                GD.Print(_unit.cell);
+                //check future tiles here
                 StopWalk(grid, _unit.cell);
             }
 
-
+            
             if (_currentDirectionIndex != 0)
             {
                 _unit.unitStats.UseMove(_gameBoard.map.GetTileMoveCost(newLoc));
@@ -114,13 +117,15 @@ public partial class UnitPathMovement : Path2D
     /// sets the walk path based on the coordinates
     /// 
     /// note, grid might need to be taken out and put in a map manager
+    /// NOTE: PATH INCLUDES THE INDEX THE UNIT IS STANDING ON 
     /// </summary>
     /// <param name="path">array of grid coordinates</param>
     /// <param name="grid">grid infp</param>
     public void SetWalkPath(Vector2[] path, GridResource grid)
     {
-        if (path.Length <= 0)
+        if (path.Length <= 1)
         {
+            StopWalk(_gameBoard.grid, _unit.cell);
             return;
         }
         if (Curve == null)
@@ -128,8 +133,42 @@ public partial class UnitPathMovement : Path2D
             Curve = new Curve2D();
         }
 
+        //check path here
+        List<Vector2> walkablePath = new List<Vector2>();
+        int lastStandableIndex = 0;
+        for (int i = 0; i < path.Length; i++)
+        {
+            if (path[i] == _unit.cell)
+            {
+                lastStandableIndex = i;
+                continue;
+            }
+            if (!_gameBoard.CheckCanPass(_unit, path[i]))
+            {
+                break;
+            }
+            if (_gameBoard.IsOccupied(path[i]))
+            {
+                continue;
+            }
+
+            lastStandableIndex = i;
+        }
+
+        //adds the walkable tiles to the list
+        //(i feel like there is a better way of doing this
+        //but can't find it)
+        if (lastStandableIndex > 0)
+        {
+            for (int i = 0; i <= lastStandableIndex; i++)
+            {
+                walkablePath.Add(path[i]);
+            }
+        }
+        
+
         Curve.AddPoint(Vector2.Zero);
-        foreach (Vector2 point in path)
+        foreach (Vector2 point in walkablePath)
         {
             if (grid.CalculateMapPosition(point) - _unit.Position != Curve.GetPointPosition(Curve.PointCount - 1))
             {
@@ -163,7 +202,7 @@ public partial class UnitPathMovement : Path2D
                 }
             }
         }
-        _unit.targetCell = path[path.Length - 1];
+        _unit.targetCell = walkablePath[lastStandableIndex];
         isWalking = true;
     }
 
