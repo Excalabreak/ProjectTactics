@@ -322,8 +322,10 @@ public partial class GameBoard : Node2D
     {
         if (!IsValidMoveLoc(cell))
         {
+            //does not clear selection
             _walkableCells = new Vector2[0];
             _unitWalkHighlights.Clear();
+            // _unitPath.Clear();
             _menuStateMachine.TransitionTo("UnSelectedState");
             return;
         }

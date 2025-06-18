@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -158,52 +159,68 @@ public partial class UnitPathMovement : Path2D
         //adds the walkable tiles to the list
         //(i feel like there is a better way of doing this
         //but can't find it)
-        if (lastStandableIndex > 0)
+        for (int i = 0; i <= lastStandableIndex; i++)
         {
-            for (int i = 0; i <= lastStandableIndex; i++)
-            {
-                walkablePath.Add(path[i]);
-            }
+            walkablePath.Add(path[i]);
         }
-        
 
         Curve.AddPoint(Vector2.Zero);
-        foreach (Vector2 point in walkablePath)
+        if (lastStandableIndex > 0)
         {
-            if (grid.CalculateMapPosition(point) - _unit.Position != Curve.GetPointPosition(Curve.PointCount - 1))
+            foreach (Vector2 point in walkablePath)
             {
-                Vector2 nextPoint = grid.CalculateMapPosition(point) - _unit.Position;
-                Vector2 lastPoint = Curve.GetPointPosition(Curve.PointCount - 1);
-
-                //checks if point has a triggerable
-                Curve.AddPoint(nextPoint);
-
-                if (Mathf.RoundToInt(nextPoint.Y) != Mathf.RoundToInt(lastPoint.Y))
+                if (grid.CalculateMapPosition(point) - _unit.Position != Curve.GetPointPosition(Curve.PointCount - 1))
                 {
-                    if (Mathf.RoundToInt(nextPoint.Y) < Mathf.RoundToInt(lastPoint.Y))
-                    {
-                        _pathDirections.Add(DirectionEnum.UP);
-                    }
-                    else
-                    {
-                        _pathDirections.Add(DirectionEnum.DOWN);
-                    }
-                }
-                else
-                {
-                    if (Mathf.RoundToInt(nextPoint.X) < Mathf.RoundToInt(lastPoint.X))
-                    {
-                        _pathDirections.Add(DirectionEnum.LEFT);
-                    }
-                    else
-                    {
-                        _pathDirections.Add(DirectionEnum.RIGHT);
-                    }
+                    Vector2 nextPoint = grid.CalculateMapPosition(point) - _unit.Position;
+                    Vector2 lastPoint = Curve.GetPointPosition(Curve.PointCount - 1);
+
+                    //checks if point has a triggerable
+                    Curve.AddPoint(nextPoint);
+
+                    _pathDirections.Add(GetNextDirEnum(nextPoint, lastPoint));
                 }
             }
+        }
+        else
+        {
+            _pathDirections.Add(GetNextDirEnum(grid.CalculateMapPosition(path[1]) - _unit.Position, Curve.GetPointPosition(Curve.PointCount - 1)));
         }
         _unit.targetCell = walkablePath[lastStandableIndex];
         isWalking = true;
+    }
+
+    /// <summary>
+    /// gets the direction from last point to next point
+    /// 
+    /// NOTE: coordinates have to be next to each other
+    /// </summary>
+    /// <param name="nextPoint">point next to the starting point</param>
+    /// <param name="lastPoint">starting point</param>
+    /// <returns>Direction Enum of the 2 points</returns>
+    private DirectionEnum GetNextDirEnum(Vector2 nextPoint, Vector2 lastPoint)
+    {
+        if (Mathf.RoundToInt(nextPoint.Y) != Mathf.RoundToInt(lastPoint.Y))
+        {
+            if (Mathf.RoundToInt(nextPoint.Y) < Mathf.RoundToInt(lastPoint.Y))
+            {
+                return DirectionEnum.UP;
+            }
+            else
+            {
+                return DirectionEnum.DOWN;
+            }
+        }
+        else
+        {
+            if (Mathf.RoundToInt(nextPoint.X) < Mathf.RoundToInt(lastPoint.X))
+            {
+                return DirectionEnum.LEFT;
+            }
+            else
+            {
+                return DirectionEnum.RIGHT;
+            }
+        }
     }
 
     /// <summary>
