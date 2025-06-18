@@ -22,6 +22,8 @@ public partial class UnitPathMovement : Path2D
     [Signal] public delegate void WalkFinishedEventHandler();
     [Export] private PathFollow2D _pathFollow;
     private bool _isWalking = false;
+    private bool _delayStop = false;
+    private bool _hasdelayStop = false;
 
     //might need to put in a settings
     [Export] private float _moveSpeed = 600f;
@@ -47,9 +49,21 @@ public partial class UnitPathMovement : Path2D
     /// <param name="cell">final pos of unit</param>
     public void WalkUnit(float delta, GridResource grid, Vector2 cell)
     {
+        if (_delayStop)
+        {
+            if (_hasdelayStop)
+            {
+                _delayStop = false;
+                _hasdelayStop = false;
+                StopWalk(_gameBoard.grid, _unit.cell);
+            }
+            else
+            {
+                _hasdelayStop = true;
+            }
+            return;
+        }
         _pathFollow.Progress += _moveSpeed * delta;
-
-
 
         //this consequncly checks every tile the unit walks on
         //so this is where units update which tile they are on
@@ -98,7 +112,7 @@ public partial class UnitPathMovement : Path2D
     /// <param name="cell">where to stop unit</param>
     private void StopWalk(GridResource grid, Vector2 cell)
     {
-        this._isWalking = false;
+        this.isWalking = false;
         _pathFollow.Progress = 0f;
 
         _gameBoard.ChangeUnitLocationData(_unit, cell);
@@ -156,6 +170,16 @@ public partial class UnitPathMovement : Path2D
             lastStandableIndex = i;
         }
 
+        //if completely blocked, do this instead
+        if (lastStandableIndex <= 0)
+        {
+            _unitDirection.currentFacing = GetNextDirEnum(path[1], path[0]);
+            isWalking = true;
+            _delayStop = true;
+            _unit.targetCell = _unit.cell;
+            return;
+        }
+
         //adds the walkable tiles to the list
         //(i feel like there is a better way of doing this
         //but can't find it)
@@ -165,25 +189,18 @@ public partial class UnitPathMovement : Path2D
         }
 
         Curve.AddPoint(Vector2.Zero);
-        if (lastStandableIndex > 0)
+        foreach (Vector2 point in walkablePath)
         {
-            foreach (Vector2 point in walkablePath)
+            if (grid.CalculateMapPosition(point) - _unit.Position != Curve.GetPointPosition(Curve.PointCount - 1))
             {
-                if (grid.CalculateMapPosition(point) - _unit.Position != Curve.GetPointPosition(Curve.PointCount - 1))
-                {
-                    Vector2 nextPoint = grid.CalculateMapPosition(point) - _unit.Position;
-                    Vector2 lastPoint = Curve.GetPointPosition(Curve.PointCount - 1);
+                Vector2 nextPoint = grid.CalculateMapPosition(point) - _unit.Position;
+                Vector2 lastPoint = Curve.GetPointPosition(Curve.PointCount - 1);
 
-                    //checks if point has a triggerable
-                    Curve.AddPoint(nextPoint);
+                //checks if point has a triggerable
+                Curve.AddPoint(nextPoint);
 
-                    _pathDirections.Add(GetNextDirEnum(nextPoint, lastPoint));
-                }
+                _pathDirections.Add(GetNextDirEnum(nextPoint, lastPoint));
             }
-        }
-        else
-        {
-            _pathDirections.Add(GetNextDirEnum(grid.CalculateMapPosition(path[1]) - _unit.Position, Curve.GetPointPosition(Curve.PointCount - 1)));
         }
         _unit.targetCell = walkablePath[lastStandableIndex];
         isWalking = true;

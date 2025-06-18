@@ -232,6 +232,7 @@ public partial class GameBoard : Node2D
         _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath, _grid);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
+        GD.Print("huh");
         ClearSelectedUnit();
         EmitSignal("SelectedMoved");
     }
@@ -323,9 +324,9 @@ public partial class GameBoard : Node2D
         if (!IsValidMoveLoc(cell))
         {
             //does not clear selection
+            DeselectSelectedUnit();
+            ClearSelectedUnit();
             _walkableCells = new Vector2[0];
-            _unitWalkHighlights.Clear();
-            // _unitPath.Clear();
             _menuStateMachine.TransitionTo("UnSelectedState");
             return;
         }
