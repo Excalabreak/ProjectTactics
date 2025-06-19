@@ -229,10 +229,10 @@ public partial class GameBoard : Node2D
         }
 
         DeselectSelectedUnit();
+        _menuStateMachine.TransitionTo("BlankState");
         _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath, _grid);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
-        GD.Print("huh");
         ClearSelectedUnit();
         EmitSignal("SelectedMoved");
     }
