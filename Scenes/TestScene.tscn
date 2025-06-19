@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=42 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="PackedScene" uid="uid://c24kesd8eggv4" path="res://Scenes/Menus/ActionMenu.tscn" id="3_65o0v"]
 [ext_resource type="Texture2D" uid="uid://dxok463ymyabj" path="res://Sprites/Test/TestTileMap2.png" id="3_lp1f3"]
@@ -27,6 +27,7 @@
 [ext_resource type="Script" uid="uid://8rtvmkb53l3a" path="res://Scripts/Menu/MenuStateMachine/States/UnSelectedState.cs" id="25_w2urx"]
 [ext_resource type="Script" uid="uid://c7dh1mhyvoxy3" path="res://Scripts/Menu/MenuStateMachine/States/MoveState.cs" id="26_l6hhx"]
 [ext_resource type="Script" uid="uid://cum60gpotm147" path="res://Scripts/Menu/MenuStateMachine/States/AttackState.cs" id="27_kjcbk"]
+[ext_resource type="Script" uid="uid://do6ttbkj61oci" path="res://Scripts/Menu/MenuStateMachine/States/BlankState.cs" id="28_837su"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
 texture = ExtResource("3_lp1f3")
@@ -229,6 +230,11 @@ position = Vector2(222, 731)
 _gameBoard = NodePath("../../..")
 _attackRange = 2
 
+[node name="Unit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
+position = Vector2(347, 728)
+_gameBoard = NodePath("../../..")
+_attackRange = 2
+
 [node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
 script = ExtResource("12_c2lnq")
 _group = 2
@@ -236,7 +242,7 @@ _passingGroup = Array[int]([2])
 _attackingGroup = Array[int]([0, 1])
 
 [node name="Unit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
-position = Vector2(351, 738)
+position = Vector2(409, 728)
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/Unit/Sprites" index="0"]
@@ -244,7 +250,7 @@ texture = ExtResource("18_c2lnq")
 _skin = ExtResource("18_c2lnq")
 
 [node name="Unit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
-position = Vector2(217, 605)
+position = Vector2(217, 601)
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/Unit2/Sprites" index="0"]
@@ -290,6 +296,10 @@ script = ExtResource("26_l6hhx")
 [node name="AttackState" type="Node" parent="GameBoard/MenuStateMachine"]
 script = ExtResource("27_kjcbk")
 
+[node name="BlankState" type="Node" parent="GameBoard/MenuStateMachine"]
+script = ExtResource("28_837su")
+
 [editable path="GameBoard/Units/PlayerUnits/Unit"]
+[editable path="GameBoard/Units/PlayerUnits/Unit2"]
 [editable path="GameBoard/Units/EnemyUnits/Unit"]
 [editable path="GameBoard/Units/EnemyUnits/Unit2"]

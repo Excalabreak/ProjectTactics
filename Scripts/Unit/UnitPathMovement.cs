@@ -1,11 +1,13 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/16/2025]
+ * Last Updated: [06/18/2025]
  * [moves sprite through path]
  */
 
@@ -20,6 +22,8 @@ public partial class UnitPathMovement : Path2D
     [Signal] public delegate void WalkFinishedEventHandler();
     [Export] private PathFollow2D _pathFollow;
     private bool _isWalking = false;
+    private bool _delayStop = false;
+    private bool _hasdelayStop = false;
 
     //might need to put in a settings
     [Export] private float _moveSpeed = 600f;
@@ -45,23 +49,30 @@ public partial class UnitPathMovement : Path2D
     /// <param name="cell">final pos of unit</param>
     public void WalkUnit(float delta, GridResource grid, Vector2 cell)
     {
+        if (_delayStop)
+        {
+            if (_hasdelayStop)
+            {
+                _delayStop = false;
+                _hasdelayStop = false;
+                StopWalk(_gameBoard.grid, _unit.cell);
+            }
+            else
+            {
+                _hasdelayStop = true;
+            }
+            return;
+        }
         _pathFollow.Progress += _moveSpeed * delta;
 
         //this consequncly checks every tile the unit walks on
         //so this is where units update which tile they are on
         //this is probably a bad way of doing this...OH WELL
-        if (_currentDirectionIndex < _pathDirections.Count &&
+        if (_pathFollow.ProgressRatio < 1f &&
+            _currentDirectionIndex < _pathDirections.Count &&
             _pathFollow.ProgressRatio >= (1f / (float)_pathDirections.Count) * _currentDirectionIndex)
         {
             _unitDirection.currentFacing = _pathDirections[_currentDirectionIndex];
-
-            Vector2 nextTile = _unit.cell + DirectionManager.Instance.GetVectorDirection(_pathDirections[_currentDirectionIndex]);
-            GD.Print(nextTile);
-            if (_gameBoard.IsOccupied(nextTile))
-            {
-                GD.Print(_unit.cell);
-                StopWalk(grid, _unit.cell);
-            }
 
             Vector2 newLoc = _gameBoard.grid.CalculateGridCoordinates(_walkingLocation.GlobalPosition);
             _gameBoard.ChangeUnitLocationData(_unit, newLoc);
@@ -69,6 +80,16 @@ public partial class UnitPathMovement : Path2D
 
             _gameBoard.UpdateUnitVision(_unit);
 
+
+            //checks next tile
+            Vector2 nextTile = newLoc + DirectionManager.Instance.GetVectorDirection(_pathDirections[_currentDirectionIndex]);
+            if (!_gameBoard.CheckCanPass(_unit, nextTile))
+            {
+                //check future tiles here
+                StopWalk(grid, _unit.cell);
+            }
+
+            
             if (_currentDirectionIndex != 0)
             {
                 _unit.unitStats.UseMove(_gameBoard.map.GetTileMoveCost(newLoc));
@@ -91,7 +112,7 @@ public partial class UnitPathMovement : Path2D
     /// <param name="cell">where to stop unit</param>
     private void StopWalk(GridResource grid, Vector2 cell)
     {
-        this._isWalking = false;
+        this.isWalking = false;
         _pathFollow.Progress = 0f;
 
         _gameBoard.ChangeUnitLocationData(_unit, cell);
@@ -104,8 +125,6 @@ public partial class UnitPathMovement : Path2D
         _pathDirections = new List<DirectionEnum>();
         _currentDirectionIndex = 0;
 
-        GD.Print(_unit.unitStats.currentMove);
-
         EmitSignal("WalkFinished");
     }
 
@@ -113,13 +132,15 @@ public partial class UnitPathMovement : Path2D
     /// sets the walk path based on the coordinates
     /// 
     /// note, grid might need to be taken out and put in a map manager
+    /// NOTE: PATH INCLUDES THE INDEX THE UNIT IS STANDING ON 
     /// </summary>
     /// <param name="path">array of grid coordinates</param>
     /// <param name="grid">grid infp</param>
     public void SetWalkPath(Vector2[] path, GridResource grid)
     {
-        if (path.Length <= 0)
+        if (path.Length <= 1)
         {
+            StopWalk(_gameBoard.grid, _unit.cell);
             return;
         }
         if (Curve == null)
@@ -127,8 +148,48 @@ public partial class UnitPathMovement : Path2D
             Curve = new Curve2D();
         }
 
+        //check path here
+        List<Vector2> walkablePath = new List<Vector2>();
+        int lastStandableIndex = 0;
+        for (int i = 0; i < path.Length; i++)
+        {
+            if (path[i] == _unit.cell)
+            {
+                lastStandableIndex = i;
+                continue;
+            }
+            if (!_gameBoard.CheckCanPass(_unit, path[i]))
+            {
+                break;
+            }
+            if (_gameBoard.IsOccupied(path[i]))
+            {
+                continue;
+            }
+
+            lastStandableIndex = i;
+        }
+
+        //if completely blocked, do this instead
+        if (lastStandableIndex <= 0)
+        {
+            _unitDirection.currentFacing = GetNextDirEnum(path[1], path[0]);
+            isWalking = true;
+            _delayStop = true;
+            _unit.targetCell = _unit.cell;
+            return;
+        }
+
+        //adds the walkable tiles to the list
+        //(i feel like there is a better way of doing this
+        //but can't find it)
+        for (int i = 0; i <= lastStandableIndex; i++)
+        {
+            walkablePath.Add(path[i]);
+        }
+
         Curve.AddPoint(Vector2.Zero);
-        foreach (Vector2 point in path)
+        foreach (Vector2 point in walkablePath)
         {
             if (grid.CalculateMapPosition(point) - _unit.Position != Curve.GetPointPosition(Curve.PointCount - 1))
             {
@@ -138,32 +199,45 @@ public partial class UnitPathMovement : Path2D
                 //checks if point has a triggerable
                 Curve.AddPoint(nextPoint);
 
-                if (Mathf.RoundToInt(nextPoint.Y) != Mathf.RoundToInt(lastPoint.Y))
-                {
-                    if (Mathf.RoundToInt(nextPoint.Y) < Mathf.RoundToInt(lastPoint.Y))
-                    {
-                        _pathDirections.Add(DirectionEnum.UP);
-                    }
-                    else
-                    {
-                        _pathDirections.Add(DirectionEnum.DOWN);
-                    }
-                }
-                else
-                {
-                    if (Mathf.RoundToInt(nextPoint.X) < Mathf.RoundToInt(lastPoint.X))
-                    {
-                        _pathDirections.Add(DirectionEnum.LEFT);
-                    }
-                    else
-                    {
-                        _pathDirections.Add(DirectionEnum.RIGHT);
-                    }
-                }
+                _pathDirections.Add(GetNextDirEnum(nextPoint, lastPoint));
             }
         }
-        _unit.targetCell = path[path.Length - 1];
+        _unit.targetCell = walkablePath[lastStandableIndex];
         isWalking = true;
+    }
+
+    /// <summary>
+    /// gets the direction from last point to next point
+    /// 
+    /// NOTE: coordinates have to be next to each other
+    /// </summary>
+    /// <param name="nextPoint">point next to the starting point</param>
+    /// <param name="lastPoint">starting point</param>
+    /// <returns>Direction Enum of the 2 points</returns>
+    private DirectionEnum GetNextDirEnum(Vector2 nextPoint, Vector2 lastPoint)
+    {
+        if (Mathf.RoundToInt(nextPoint.Y) != Mathf.RoundToInt(lastPoint.Y))
+        {
+            if (Mathf.RoundToInt(nextPoint.Y) < Mathf.RoundToInt(lastPoint.Y))
+            {
+                return DirectionEnum.UP;
+            }
+            else
+            {
+                return DirectionEnum.DOWN;
+            }
+        }
+        else
+        {
+            if (Mathf.RoundToInt(nextPoint.X) < Mathf.RoundToInt(lastPoint.X))
+            {
+                return DirectionEnum.LEFT;
+            }
+            else
+            {
+                return DirectionEnum.RIGHT;
+            }
+        }
     }
 
     /// <summary>
