@@ -170,7 +170,7 @@ script = ExtResource("8_lp1f3")
 _grid = ExtResource("5_qsjrb")
 _unitWalkHighlights = NodePath("MapTiles/UnitWalkHighlights")
 _unitPath = NodePath("MapTiles/UnitPath")
-_unitManager = NodePath("Units")
+_unitManager = NodePath("UnitManager")
 _gridCursor = NodePath("Cursor")
 _map = NodePath("MapTiles/Map")
 _fogOfWar = NodePath("MapTiles/FogOfWar")
@@ -217,43 +217,43 @@ tile_set = SubResource("TileSet_lp1f3")
 script = ExtResource("6_t2vuu")
 _gameBoard = NodePath("../..")
 
-[node name="Units" type="Node2D" parent="GameBoard"]
+[node name="UnitManager" type="Node2D" parent="GameBoard"]
 script = ExtResource("11_4v62a")
 
-[node name="PlayerUnits" type="Node2D" parent="GameBoard/Units"]
+[node name="PlayerUnits" type="Node2D" parent="GameBoard/UnitManager"]
 script = ExtResource("12_c2lnq")
 _passingGroup = Array[int]([0, 1])
 _attackingGroup = Array[int]([2])
 
-[node name="Unit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
+[node name="Unit" parent="GameBoard/UnitManager/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
 position = Vector2(222, 731)
 _gameBoard = NodePath("../../..")
 _attackRange = 2
 
-[node name="Unit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
+[node name="Unit2" parent="GameBoard/UnitManager/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
 position = Vector2(347, 728)
 _gameBoard = NodePath("../../..")
 _attackRange = 2
 
-[node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
+[node name="EnemyUnits" type="Node2D" parent="GameBoard/UnitManager"]
 script = ExtResource("12_c2lnq")
 _group = 2
 _passingGroup = Array[int]([2])
 _attackingGroup = Array[int]([0, 1])
 
-[node name="Unit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
+[node name="Unit" parent="GameBoard/UnitManager/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
 position = Vector2(409, 728)
 _gameBoard = NodePath("../../..")
 
-[node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/Unit/Sprites" index="0"]
+[node name="UnitSprite" parent="GameBoard/UnitManager/EnemyUnits/Unit/Sprites" index="0"]
 texture = ExtResource("18_c2lnq")
 _skin = ExtResource("18_c2lnq")
 
-[node name="Unit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
+[node name="Unit2" parent="GameBoard/UnitManager/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("15_8c81w")]
 position = Vector2(217, 601)
 _gameBoard = NodePath("../../..")
 
-[node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/Unit2/Sprites" index="0"]
+[node name="UnitSprite" parent="GameBoard/UnitManager/EnemyUnits/Unit2/Sprites" index="0"]
 texture = ExtResource("18_c2lnq")
 _skin = ExtResource("18_c2lnq")
 
@@ -299,7 +299,7 @@ script = ExtResource("27_kjcbk")
 [node name="BlankState" type="Node" parent="GameBoard/MenuStateMachine"]
 script = ExtResource("28_837su")
 
-[editable path="GameBoard/Units/PlayerUnits/Unit"]
-[editable path="GameBoard/Units/PlayerUnits/Unit2"]
-[editable path="GameBoard/Units/EnemyUnits/Unit"]
-[editable path="GameBoard/Units/EnemyUnits/Unit2"]
+[editable path="GameBoard/UnitManager/PlayerUnits/Unit"]
+[editable path="GameBoard/UnitManager/PlayerUnits/Unit2"]
+[editable path="GameBoard/UnitManager/EnemyUnits/Unit"]
+[editable path="GameBoard/UnitManager/EnemyUnits/Unit2"]
