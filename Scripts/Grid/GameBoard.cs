@@ -100,18 +100,13 @@ public partial class GameBoard : Node2D
             {
                 _knownUnitLocations.Add(unit.cell);
             }
-
-            UpdateUnitVision(unit);
         }
 
-        //why did i have the game do this twice?
-        //... ill keep it commented just in case
-        /*
+        //this makes sure all units are in _units before updating the unit vision
         foreach (KeyValuePair<Vector2, Unit> unit in _units)
         {
             UpdateUnitVision(unit.Value);
         }
-        */
 
         _unitGroupTurns = _unitManager.GetAllUnitGroupEnums();
         _turnIndex = (int)_startingGroup;
@@ -160,6 +155,8 @@ public partial class GameBoard : Node2D
 
     /// <summary>
     /// selects unit
+    /// 
+    /// MODIFY FOR AI
     /// </summary>
     /// <param name="cell">cell to select unit</param>
     private void SelectUnit(Vector2 cell)
@@ -168,6 +165,13 @@ public partial class GameBoard : Node2D
         {
             return;
         }
+
+        /*
+        if (_unitGroupTurns[_turnIndex] != _units[cell].unitGroup)
+        {
+            return;
+        }
+        */
 
         _selectedUnit = _units[cell];
         _selectedUnit.isSelected = true;
@@ -188,6 +192,11 @@ public partial class GameBoard : Node2D
     public void HoverDisplay(Vector2 cell)
     {
         //add condition for hidden enemy unit
+        if (!_knownUnitLocations.Contains(cell))
+        {
+            return;
+        }
+
         if (!_units.ContainsKey(cell))
         {
             //could add options here
@@ -229,6 +238,7 @@ public partial class GameBoard : Node2D
 
     /// <summary>
     /// moves the selected unit to a new cell
+    /// MODIFY FOR AI
     /// </summary>
     /// <param name="newCell"></param>
     private async void MoveSelectedUnit(Vector2 newCell)
@@ -496,7 +506,7 @@ public partial class GameBoard : Node2D
     {
         DeselectSelectedUnit();
         ClearSelectedUnit();
-        menuStateMachine.TransitionTo("UnSelectedState");
+        _menuStateMachine.TransitionTo("UnSelectedState");
     }
 
     /// <summary>
@@ -524,6 +534,19 @@ public partial class GameBoard : Node2D
         {
             _turnIndex = 0;
         }
+
+        if (_unitGroupTurns[_turnIndex] == UnitGroupEnum.PLAYER)
+        {
+            _menuStateMachine.TransitionTo("UnSelectedState");
+        }
+        else
+        {
+            //commented out while working on ai
+            //_menuStateMachine.TransitionTo("BlankState");
+        }
+
+        //reset move of needed units
+        //reset known units
 
         GD.Print(_unitGroupTurns[_turnIndex]);
     }
