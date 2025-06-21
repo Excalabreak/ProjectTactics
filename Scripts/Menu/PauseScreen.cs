@@ -10,19 +10,21 @@ using System;
 
 public partial class PauseScreen : CanvasLayer
 {
+    private GameBoard _gameBoard;
     private GridCursor _gridCursor;
+
     [Export]private Button _cursorDefaultStartButton;
 
     public override void _Ready()
     {
-        GameBoard gameBoard = GetParent() as GameBoard;
+        _gameBoard = GetParent() as GameBoard;
 
-        if (gameBoard == null)
+        if (_gameBoard == null)
         {
             GD.PrintErr("MENU ISN'T CHILD OF GAMEBOARD, SHIT HIT THE FAN");
         }
 
-        _gridCursor = gameBoard.gridCursor;
+        _gridCursor = _gameBoard.gridCursor;
         _cursorDefaultStartButton.GrabFocus();
 
         //disables cursor
@@ -50,7 +52,8 @@ public partial class PauseScreen : CanvasLayer
 
     private void OnEndTurnPressed()
     {
-
+        HideMenu();
+        _gameBoard.EndTurn();
     }
 
     private void HideMenu()

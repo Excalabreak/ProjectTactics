@@ -27,6 +27,10 @@ public partial class UnitManager : Node2D
         }
     }
 
+    /// <summary>
+    /// gets all units in array
+    /// </summary>
+    /// <returns>array of all units</returns>
     public Unit[] GetAllUnits()
     {
         List<Unit> units = new List<Unit>();
@@ -37,6 +41,24 @@ public partial class UnitManager : Node2D
         }
 
         return units.ToArray();
+    }
+
+    /// <summary>
+    /// gets the enums of the groups
+    /// </summary>
+    /// <returns>array of UnitGroupEnum sorted</returns>
+    public UnitGroupEnum[] GetAllUnitGroupEnums()
+    {
+        List<UnitGroupEnum> groups = new List<UnitGroupEnum>();
+
+        foreach (KeyValuePair<UnitGroupEnum, UnitGroup> unitGroup in _unitGroups)
+        {
+            groups.Add(unitGroup.Key);
+        }
+
+        groups.Sort();
+
+        return groups.ToArray();
     }
 
     /// <summary>
