@@ -3,13 +3,23 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/22/2025]
+ * Last Updated: [06/23/2025]
  * [state for npc ai]
  */
 
 public partial class NPCAiState : Node
 {
     public NPCAiStateMachine stateMachine;
+
+    /// <summary>
+    /// the logic in this function will determine
+    /// which state to transition to
+    /// </summary>
+    /// <returns>next state</returns>
+    public virtual NPCAiState CheckTrigger()
+    {
+        return this;
+    }
 
     /// <summary>
     /// when the machine goes into the state

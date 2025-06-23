@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/22/2025]
+ * Last Updated: [06/23/2025]
  * [state machine for npc AI]
  */
 
@@ -34,6 +34,20 @@ public partial class NPCAiStateMachine : Node
         }
         _currentState = GetNode<NPCAiState>(initialState);
         _currentState.Enter();
+    }
+
+    /// <summary>
+    /// runs logic of current state to
+    /// determine what to do and check for switching
+    /// states
+    /// </summary>
+    public void DoTurn()
+    {
+        NPCAiState nextState = _currentState.CheckTrigger();
+        if (_currentState != nextState)
+        {
+            TransitionTo(nextState.Name);
+        }
     }
 
     /// <summary>

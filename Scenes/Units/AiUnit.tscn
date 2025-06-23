@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://dffwt6w7o7q8w"]
+
+[ext_resource type="PackedScene" uid="uid://cp44coe2c50e7" path="res://Scenes/Units/Unit.tscn" id="1_u4pv5"]
+[ext_resource type="Texture2D" uid="uid://xdhxhuor3wo2" path="res://Sprites/Test/TestEnemy.png" id="2_vr8b2"]
+[ext_resource type="Script" uid="uid://bwp6grlwr5m4d" path="res://Scripts/NPCAi/NPCAiStateMachine.cs" id="3_ckoml"]
+[ext_resource type="Script" uid="uid://5dawylqqga4u" path="res://Scripts/NPCAi/NPCAiStates/IdleState.cs" id="4_utq4m"]
+
+[node name="AiUnit" instance=ExtResource("1_u4pv5")]
+
+[node name="UnitSprite" parent="Sprites" index="0"]
+texture = ExtResource("2_vr8b2")
+_skin = ExtResource("2_vr8b2")
+
+[node name="AiStateMachine" type="Node" parent="." index="2"]
+script = ExtResource("3_ckoml")
+initialState = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="AiStateMachine" index="0"]
+script = ExtResource("4_utq4m")
