@@ -47,7 +47,7 @@ public partial class UnitPathMovement : Path2D
     /// <param name="delta">time between frames</param>
     /// <param name="grid">grid info</param>
     /// <param name="cell">final pos of unit</param>
-    public void WalkUnit(float delta, GridResource grid, Vector2 cell)
+    public void WalkUnit(float delta, Vector2 cell)
     {
         if (_delayStop)
         {
@@ -55,7 +55,7 @@ public partial class UnitPathMovement : Path2D
             {
                 _delayStop = false;
                 _hasdelayStop = false;
-                StopWalk(_gameBoard.grid, _unit.cell);
+                StopWalk(_unit.cell);
             }
             else
             {
@@ -86,7 +86,7 @@ public partial class UnitPathMovement : Path2D
             if (!_gameBoard.CheckCanPass(_unit, nextTile))
             {
                 //check future tiles here
-                StopWalk(grid, _unit.cell);
+                StopWalk(_unit.cell);
             }
 
             
@@ -101,23 +101,22 @@ public partial class UnitPathMovement : Path2D
         if (_pathFollow.ProgressRatio >= 1f)
         {
             _unit.unitStats.UseMove(_gameBoard.map.GetTileMoveCost(cell));
-            StopWalk(grid, cell);
+            StopWalk(cell);
         }
     }
 
     /// <summary>
     /// stops the unit from walking
     /// </summary>
-    /// <param name="grid">grid info</param>
     /// <param name="cell">where to stop unit</param>
-    private void StopWalk(GridResource grid, Vector2 cell)
+    private void StopWalk(Vector2 cell)
     {
         this.isWalking = false;
         _pathFollow.Progress = 0f;
 
         _gameBoard.ChangeUnitLocationData(_unit, cell);
         _unit.cell = cell;
-        _unit.Position = grid.CalculateMapPosition(cell);
+        _unit.Position = _gameBoard.grid.CalculateMapPosition(cell);
 
         _gameBoard.UpdateUnitVision(_unit);
 
@@ -135,12 +134,11 @@ public partial class UnitPathMovement : Path2D
     /// NOTE: PATH INCLUDES THE INDEX THE UNIT IS STANDING ON 
     /// </summary>
     /// <param name="path">array of grid coordinates</param>
-    /// <param name="grid">grid infp</param>
-    public void SetWalkPath(Vector2[] path, GridResource grid)
+    public void SetWalkPath(Vector2[] path)
     {
         if (path.Length <= 1)
         {
-            StopWalk(_gameBoard.grid, _unit.cell);
+            StopWalk(_unit.cell);
             return;
         }
         if (Curve == null)
@@ -191,9 +189,9 @@ public partial class UnitPathMovement : Path2D
         Curve.AddPoint(Vector2.Zero);
         foreach (Vector2 point in walkablePath)
         {
-            if (grid.CalculateMapPosition(point) - _unit.Position != Curve.GetPointPosition(Curve.PointCount - 1))
+            if (_gameBoard.grid.CalculateMapPosition(point) - _unit.Position != Curve.GetPointPosition(Curve.PointCount - 1))
             {
-                Vector2 nextPoint = grid.CalculateMapPosition(point) - _unit.Position;
+                Vector2 nextPoint = _gameBoard.grid.CalculateMapPosition(point) - _unit.Position;
                 Vector2 lastPoint = Curve.GetPointPosition(Curve.PointCount - 1);
 
                 //checks if point has a triggerable

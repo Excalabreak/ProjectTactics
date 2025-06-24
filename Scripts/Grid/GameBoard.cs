@@ -253,7 +253,7 @@ public partial class GameBoard : Node2D
 
         DeselectSelectedUnit();
         _menuStateMachine.TransitionTo("BlankState");
-        _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath, _grid);
+        _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
         ClearSelectedUnit();
@@ -454,8 +454,16 @@ public partial class GameBoard : Node2D
             return;
         }
 
+        //something weird about this logic calls true
+        //at max distance
         Vector2I intNewCell = new Vector2I(Mathf.RoundToInt(newCell.X), Mathf.RoundToInt(newCell.Y));
-        if (_map.GetPathMoveCost(_unitPath.GetIntCurrentPath()) + _map.GetTileMoveCost(intNewCell)
+        List<Vector2I> path = new List<Vector2I>();
+        if (_unitPath.GetIntCurrentPath().Length > 0)
+        {
+            path.AddRange(_unitPath.GetIntCurrentPath());
+            path.RemoveAt(0);
+        }
+        if (_map.GetPathMoveCost(path.ToArray()) + _map.GetTileMoveCost(intNewCell)
             > _selectedUnit.unitStats.currentMove)
         {
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
@@ -563,11 +571,11 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
-    /// Returns an array of cells a given unit can walk using the flood fill algorithm
+    /// Returns an array of cells a given unit can walk using the dijkasta algorithm
     /// </summary>
     /// <param name="unit">selected unit</param>
     /// <returns>array of coords that the unit can walk</returns>
-    private Vector2[] GetWalkableCells(Unit unit)
+    public Vector2[] GetWalkableCells(Unit unit)
     {
         return Dijksta(unit.cell, (float)unit.unitStats.currentMove, false);
     }

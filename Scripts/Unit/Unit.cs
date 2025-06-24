@@ -65,7 +65,7 @@ public partial class Unit : Node2D
 
         if (_unitPathMovement != null && _unitCanWalk)
         {
-            _unitPathMovement.WalkUnit(fDelta, _gameBoard.grid, _targetCell);
+            _unitPathMovement.WalkUnit(fDelta, _targetCell);
         }
     }
 

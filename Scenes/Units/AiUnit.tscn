@@ -11,7 +11,7 @@
 texture = ExtResource("2_vr8b2")
 _skin = ExtResource("2_vr8b2")
 
-[node name="AiStateMachine" type="Node" parent="." index="2"]
+[node name="AiStateMachine" type="Node" parent="." index="3"]
 script = ExtResource("3_ckoml")
 initialState = NodePath("IdleState")
 
