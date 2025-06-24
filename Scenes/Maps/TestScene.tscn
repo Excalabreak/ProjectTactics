@@ -243,10 +243,6 @@ _attackingGroup = Array[int]([0, 1])
 position = Vector2(416, 408)
 _gameBoard = NodePath("../../..")
 
-[node name="AiUnit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
-position = Vector2(415, 729)
-_gameBoard = NodePath("../../..")
-
 [node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer")]
 z_index = 100
 position = Vector2(350, 474)
