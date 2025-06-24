@@ -64,13 +64,14 @@ _data = {
 &"UnitTestSelected": SubResource("Animation_c264a")
 }
 
-[node name="Unit" type="Node2D" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_unitDirection", "_animPlayer")]
+[node name="Unit" type="Node2D" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_unitDirection", "_unitActionEconomy", "_animPlayer")]
 z_index = 14
 script = ExtResource("1_x1v5g")
 _unitPathMovement = NodePath("UnitPathMovement")
 _unitSprite = NodePath("Sprites/UnitSprite")
 _unitStats = NodePath("UnitStats")
 _unitDirection = NodePath("UnitDirection")
+_unitActionEconomy = NodePath("UnitActionEconomy")
 _animPlayer = NodePath("AnimationPlayer")
 
 [node name="Sprites" type="Node2D" parent="."]

@@ -24,6 +24,8 @@ public partial class Unit : Node2D
 
     [Export] private UnitDirection _unitDirection;
 
+    [Export] private UnitActionEconomy _unitActionEconomy;
+
     //animation player, but i might need to make a state machine
     //will keep in here for now to see how is selected works
     [Export] private AnimationPlayer _animPlayer;
@@ -153,6 +155,11 @@ public partial class Unit : Node2D
     public UnitDirection unitDirection
     {
         get { return _unitDirection; }
+    }
+
+    public UnitActionEconomy unitActionEconomy
+    {
+        get { return _unitActionEconomy; }
     }
 
     public bool isWait

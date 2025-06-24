@@ -364,6 +364,7 @@ public partial class GameBoard : Node2D
 
     /// <summary>
     /// selects unit for attack
+    /// might need to change for ai
     /// </summary>
     /// <param name="cell"></param>
     public void MenuAttackStateAccept(Vector2 cell)
@@ -388,6 +389,7 @@ public partial class GameBoard : Node2D
         }
 
         //very basic combat for now
+        _selectedUnit.unitActionEconomy.UseAction();
         _unitWalkHighlights.Clear();
 
         UnitStats attackingStats = _selectedUnit.unitStats;
