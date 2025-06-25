@@ -4,16 +4,19 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/23/2025]
+ * Last Updated: [06/25/2025]
  * [state machine for npc AI]
  */
 
 public partial class NPCAiStateMachine : Node
 {
+    [Export] public Unit _unit;
     [Export] public NodePath initialState;
 
     private Dictionary<string, NPCAiState> _states;
     private NPCAiState _currentState;
+
+    private GameBoard _gameBoard;
 
     /// <summary>
     /// sets up state machine
@@ -34,6 +37,8 @@ public partial class NPCAiStateMachine : Node
         }
         _currentState = GetNode<NPCAiState>(initialState);
         _currentState.Enter();
+
+        _unit.CurrentGameBoard += SetGameBoard;
     }
 
     /// <summary>
@@ -46,6 +51,7 @@ public partial class NPCAiStateMachine : Node
         NPCAiState nextState = _currentState.CheckTrigger();
         if (_currentState != nextState)
         {
+            GD.Print("transition to: " + nextState.Name);
             TransitionTo(nextState.Name);
         }
     }
@@ -66,8 +72,35 @@ public partial class NPCAiStateMachine : Node
         _currentState.Enter();
     }
 
+    /// <summary>
+    /// unsubs from event
+    /// </summary>
+    public override void _ExitTree()
+    {
+        _unit.CurrentGameBoard -= SetGameBoard;
+    }
+
+    /// <summary>
+    /// sets _gameBoard
+    /// </summary>
+    /// <param name="gameBoard">v</param>
+    private void SetGameBoard(GameBoard gameBoard)
+    {
+        _gameBoard = gameBoard;
+    }
+
     public NPCAiState currentState
     {
         get { return _currentState; }
+    }
+
+    public GameBoard gameBoard
+    {
+        get { return _gameBoard; }
+    }
+
+    public Unit unit
+    {
+        get { return _unit; }
     }
 }

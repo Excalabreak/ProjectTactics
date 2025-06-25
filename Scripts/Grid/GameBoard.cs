@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [06/20/2025]
+ * Last Updated: [06/25/2025]
  * [game board manages everything on the map]
  */
 
@@ -588,7 +588,7 @@ public partial class GameBoard : Node2D
     /// </summary>
     /// <param name="unit">selected unit</param>
     /// <returns>array of cell coordinates</returns>
-    private Vector2[] GetAttackableCells(Unit unit)
+    public Vector2[] GetAttackableCells(Unit unit)
     {
         List<Vector2> attackableCells = new List<Vector2>();
         Vector2[] realWalkableCells = Dijksta(unit.cell, unit.unitStats.currentMove, true);
@@ -814,6 +814,47 @@ public partial class GameBoard : Node2D
         if (_unitManager.CanPass(unit.unitGroup, _units[tile].unitGroup))
         {
             return true;
+        }
+
+        return false;
+    }
+
+    //---------- DETECTION ----------
+
+    /// <summary>
+    /// checks if a unit of group
+    /// can attack something
+    /// </summary>
+    /// <param name="group">group of attacking unit</param>
+    /// <param name="area">array of coords</param>
+    /// <returns>true if group can attack something</returns>
+    public bool CheckAreaForAttackableGroup(UnitGroupEnum group, Vector2[] area)
+    {
+        foreach (Vector2 coord in area)
+        {
+            if (_units.ContainsKey(coord) && _unitManager.CanAttack(group, _units[coord].unitGroup))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// checks if a unit group is in
+    /// an area
+    /// </summary>
+    /// <param name="group">group to check for</param>
+    /// <param name="area">array of coords</param>
+    /// <returns>true if unit is in there</returns>
+    public bool CheckAreaForGroup(UnitGroupEnum group, Vector2[] area)
+    {
+        foreach (Vector2 coord in area)
+        {
+            if (_units.ContainsKey(coord) && _units[coord].unitGroup == group)
+            {
+                return true;
+            }
         }
 
         return false;

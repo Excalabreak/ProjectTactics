@@ -58,8 +58,15 @@ public partial class UnitActionEconomy : Node
         _actionsLeft = _maxActions;
     }
 
+    /// <summary>
+    /// checks if there is an action
+    /// the unit can take
+    /// </summary>
+    /// <returns>true if the unit has actions</returns>
     public bool HasActions()
     {
+        //might need to check individual actions
+        //like attack ranges
         return _actionsLeft > 0;
     }
 

@@ -3,13 +3,20 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/23/2025]
+ * Last Updated: [06/25/2025]
  * [state for npc ai]
  */
 
 public partial class NPCAiState : Node
 {
     public NPCAiStateMachine stateMachine;
+
+    [Export] protected NPCAiState[] _nextPossibleStates;
+
+    /// <summary>
+    /// the logic for unit for the turn
+    /// </summary>
+    public virtual void TurnLogic() { }
 
     /// <summary>
     /// the logic in this function will determine
