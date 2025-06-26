@@ -6,7 +6,8 @@
 [ext_resource type="Script" uid="uid://b7e8x3qb01jsp" path="res://Scripts/NPCAi/NPCAiStates/Enemy/BasicPrototype/EnemyIdleState.cs" id="4_ckoml"]
 [ext_resource type="Script" uid="uid://dnfra0njam3yc" path="res://Scripts/NPCAi/NPCAiStates/Enemy/BasicPrototype/EnemyAttackState.cs" id="5_utq4m"]
 
-[node name="AiUnit" instance=ExtResource("1_u4pv5")]
+[node name="AiUnit" node_paths=PackedStringArray("_aiStateMachine") instance=ExtResource("1_u4pv5")]
+_aiStateMachine = NodePath("AiStateMachine")
 
 [node name="UnitSprite" parent="Sprites" index="0"]
 texture = ExtResource("2_vr8b2")

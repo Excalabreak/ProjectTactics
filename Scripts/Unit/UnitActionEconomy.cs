@@ -34,8 +34,6 @@ public partial class UnitActionEconomy : Node
             {
                 return true;
             }
-
-            return false;
         }
 
         if (_gameBoard.GetWalkableCells(_unit).Length > 1)

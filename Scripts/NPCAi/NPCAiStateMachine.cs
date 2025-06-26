@@ -57,6 +57,8 @@ public partial class NPCAiStateMachine : Node
             {
                 GD.Print("transition to: " + nextState.Name);
                 TransitionTo(nextState.Name);
+                //temp just so it isn't in an infinate loop
+                break;
             }
         }
     }
