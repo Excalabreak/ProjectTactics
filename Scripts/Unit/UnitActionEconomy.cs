@@ -26,11 +26,16 @@ public partial class UnitActionEconomy : Node
     /// it can take including moving
     /// </summary>
     /// <returns>true if </returns>
-    public bool HasAnyActions()
+    public bool CanTakeAnyActions()
     {
         if (HasActions())
         {
-            return true;
+            if (CanAttackAction())
+            {
+                return true;
+            }
+
+            return false;
         }
 
         if (_gameBoard.GetWalkableCells(_unit).Length > 1)
@@ -65,9 +70,17 @@ public partial class UnitActionEconomy : Node
     /// <returns>true if the unit has actions</returns>
     public bool HasActions()
     {
-        //might need to check individual actions
-        //like attack ranges
         return _actionsLeft > 0;
+    }
+
+    /// <summary>
+    /// calls to check for units that the current unit can attack
+    /// </summary>
+    /// <returns></returns>
+    public bool CanAttackAction()
+    {
+        return _gameBoard.CheckAreaForAttackableGroup(
+            _unit.unitGroup, _gameBoard.FloodFill(_unit.cell, _unit.attackRange));
     }
 
     /// <summary>

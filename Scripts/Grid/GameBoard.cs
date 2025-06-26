@@ -551,14 +551,36 @@ public partial class GameBoard : Node2D
         }
         else
         {
-            //commented out while working on ai
-            //_menuStateMachine.TransitionTo("BlankState");
+            _menuStateMachine.TransitionTo("BlankState");
+            AiTurn(_unitGroupTurns[_turnIndex]);
         }
 
         //reset move of needed units
         //reset known units
 
         GD.Print(_unitGroupTurns[_turnIndex]);
+    }
+    //---------- BASIC AI ----------
+
+    /// <summary>
+    /// goes through all ai and have them perform
+    /// their logic
+    /// NOTE: Very simple now, will grow later
+    /// </summary>
+    /// <param name="group">which ai group is running</param>
+    private void AiTurn(UnitGroupEnum group)
+    {
+        Unit[] units = _unitManager.GetGroupUnits(group);
+        //loops through each unit and loops their logic until 
+        //they exaust all their actions
+
+        foreach (Unit unit in units)
+        {
+            if (IsInstanceValid(unit))
+            {
+                unit.aiStateMachine.DoTurn();
+            }
+        }
     }
 
     //---------- DISPLAY HIGHLIGHTS ----------
@@ -612,7 +634,7 @@ public partial class GameBoard : Node2D
     /// <param name="cell">coords</param>
     /// <param name="maxDistance">distance of flood fill</param>
     /// <returns>array of coords</returns>
-    private Vector2[] FloodFill(Vector2 cell, int maxDistance)
+    public Vector2[] FloodFill(Vector2 cell, int maxDistance)
     {
         List<Vector2> output = new List<Vector2>();
         List<Vector2> walls = new List<Vector2>();

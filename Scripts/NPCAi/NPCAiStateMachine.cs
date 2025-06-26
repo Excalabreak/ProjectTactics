@@ -48,11 +48,16 @@ public partial class NPCAiStateMachine : Node
     /// </summary>
     public void DoTurn()
     {
-        NPCAiState nextState = _currentState.CheckTrigger();
-        if (_currentState != nextState)
+        while (_unit.unitActionEconomy.CanTakeAnyActions())
         {
-            GD.Print("transition to: " + nextState.Name);
-            TransitionTo(nextState.Name);
+
+
+            NPCAiState nextState = _currentState.CheckTrigger();
+            if (_currentState != nextState)
+            {
+                GD.Print("transition to: " + nextState.Name);
+                TransitionTo(nextState.Name);
+            }
         }
     }
 
