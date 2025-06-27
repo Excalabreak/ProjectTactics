@@ -45,6 +45,22 @@ public partial class Map : TileMapLayer
     }
 
     /// <summary>
+    /// gets the move cost of a list of coords
+    /// </summary>
+    /// <param name="path">array of coordinates</param>
+    /// <returns>move cost of path</returns>
+    public float GetPathMoveCost(Vector2[] path)
+    {
+        float output = 0;
+        foreach (Vector2 tile in path)
+        {
+            Vector2I iTile = new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.X));
+            output += (float)GetCellTileData(iTile).GetCustomData("MoveCost");
+        }
+        return output;
+    }
+
+    /// <summary>
     /// gets the vision cost of a singular tile
     /// </summary>
     /// <param name="tile">coordinates of tile</param>

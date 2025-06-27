@@ -576,11 +576,62 @@ public partial class GameBoard : Node2D
 
         foreach (Unit unit in units)
         {
-            if (IsInstanceValid(unit))
+            if (IsInstanceValid(unit) && unit.IsAi())
             {
                 unit.aiStateMachine.DoTurn();
             }
         }
+    }
+
+    /// <summary>
+    /// gets the closest unit from cell
+    /// that is of a specific group
+    /// </summary>
+    /// <param name="group">group to look for</param>
+    /// <param name="cell">cell to search from</param>
+    /// <returns></returns>
+    public Vector2 ClosestUnitPosition(UnitGroupEnum group, Vector2 cell)
+    {
+        Unit[] searchUnits = _unitManager.GetGroupUnits(group);
+
+        if (searchUnits.Length <= 0)
+        {
+            GD.Print("no units for ClosestUnitPosition");
+            return Vector2.Zero;
+        }
+
+        Pathfinder pathfinder = new Pathfinder(_grid, _grid.GetAllCellCoords());
+
+        Vector2 currentClosest = new Vector2(-1,-1);
+
+        List<Vector2> path = new List<Vector2>();
+        float currentMoveCost = 999999;
+        for (int i = 0; i < searchUnits.Length; i++)
+        {
+            path.Clear();
+
+            path.AddRange(pathfinder.CalculatePointPath(cell, searchUnits[i].cell));
+            path.RemoveAt(0);
+            path.RemoveAt(path.Count - 1);
+            if (path.Count <= 0)
+            {
+                currentClosest = searchUnits[i].cell;
+                break;
+            }
+
+            float moveCost = _map.GetPathMoveCost(path.ToArray());
+            if (moveCost < currentMoveCost)
+            {
+                currentClosest = searchUnits[i].cell;
+                currentMoveCost = moveCost;
+            }
+        }
+
+        if (currentClosest == new Vector2(-1, -1))
+        {
+            GD.Print("No close units found in ClosestUnitPosition");
+        }
+        return currentClosest;
     }
 
     //---------- DISPLAY HIGHLIGHTS ----------
@@ -887,6 +938,7 @@ public partial class GameBoard : Node2D
     /// <summary>
     /// updates the PLAYER unit vision on game map
     /// AFTER THE UNIT HAS MOVED
+    /// NOTE: separate out getting tiles and showing tiles for ai
     /// </summary>
     /// <param name="unit">unit being updated</param>
     public void UpdateUnitVision(Unit unit)

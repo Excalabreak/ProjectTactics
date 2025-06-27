@@ -18,10 +18,8 @@ script = ExtResource("3_ckoml")
 _unit = NodePath("..")
 initialState = NodePath("EnemyIdleState")
 
-[node name="EnemyIdleState" type="Node" parent="AiStateMachine" index="0" node_paths=PackedStringArray("_nextPossibleStates")]
+[node name="EnemyIdleState" type="Node" parent="AiStateMachine" index="0"]
 script = ExtResource("4_ckoml")
-_nextPossibleStates = [NodePath("../EnemyAttackState")]
 
-[node name="EnemyAttackState" type="Node" parent="AiStateMachine" index="1" node_paths=PackedStringArray("_nextPossibleStates")]
+[node name="EnemyAttackState" type="Node" parent="AiStateMachine" index="1"]
 script = ExtResource("5_utq4m")
-_nextPossibleStates = []

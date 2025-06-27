@@ -14,8 +14,7 @@ public partial class EnemyIdleState : NPCAiState
     /// checks if a unit is in the enemy
     /// range, then attacks
     /// </summary>
-    /// <returns></returns>
-    public override NPCAiState CheckTrigger()
+    public override void TurnLogic()
     {
         List<Vector2> checkTiles = new List<Vector2>();
         checkTiles.AddRange(stateMachine.gameBoard.GetWalkableCells(stateMachine.unit));
@@ -23,8 +22,8 @@ public partial class EnemyIdleState : NPCAiState
 
         if (stateMachine.gameBoard.CheckAreaForAttackableGroup(stateMachine.unit.unitGroup, checkTiles.ToArray()))
         {
-            return _nextPossibleStates[0];
+            stateMachine.TransitionTo("EnemyAttackState");
+            stateMachine.DoTurn();
         }
-        return this;
     }
 }

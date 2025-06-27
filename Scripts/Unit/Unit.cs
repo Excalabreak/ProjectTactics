@@ -79,6 +79,11 @@ public partial class Unit : Node2D
         CurrentGameBoard?.Invoke(_gameBoard);
     }
 
+    public bool IsAi()
+    {
+        return _aiStateMachine != null;
+    }
+
     //--- PROPERTIES ---
     public Vector2 cell
     {

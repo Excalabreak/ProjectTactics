@@ -11,22 +11,10 @@ public partial class NPCAiState : Node
 {
     public NPCAiStateMachine stateMachine;
 
-    [Export] protected NPCAiState[] _nextPossibleStates;
-
     /// <summary>
     /// the logic for unit for the turn
     /// </summary>
     public virtual void TurnLogic() { }
-
-    /// <summary>
-    /// the logic in this function will determine
-    /// which state to transition to
-    /// </summary>
-    /// <returns>next state</returns>
-    public virtual NPCAiState CheckTrigger()
-    {
-        return this;
-    }
 
     /// <summary>
     /// when the machine goes into the state
