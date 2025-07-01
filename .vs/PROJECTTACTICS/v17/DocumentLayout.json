@@ -3,36 +3,28 @@
   "WorkspaceRootPath": "E:\\Projects\\ProjectTactics\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\npcai\\npcaistatemachine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\npcai\\npcaistatemachine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\unit\\unitgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\unit\\unitgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\npcai\\npcaistates\\enemy\\basicprototype\\enemyidlestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\npcai\\npcaistates\\enemy\\basicprototype\\enemyidlestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\npcai\\npcaistates\\enemy\\basicprototype\\enemyattackstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\npcai\\npcaistates\\enemy\\basicprototype\\enemyattackstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\grid\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\npcai\\npcaistate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\npcai\\npcaistate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\misc\\unitpath.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\misc\\unitpath.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\unit\\unitmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\unit\\unitmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\grid\\gridresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\gridresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\unit\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\unit\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\grid\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\misc\\dijkstraprioritylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\misc\\dijkstraprioritylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\misc\\pathfinder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\misc\\pathfinder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,110 +34,84 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "NPCAiState.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiState.cs",
-              "RelativeDocumentMoniker": "Scripts\\NPCAi\\NPCAiState.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiState.cs",
-              "RelativeToolTip": "Scripts\\NPCAi\\NPCAiState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAnAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "DijkstraPriorityList.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Misc\\DijkstraPriorityList.cs",
+              "RelativeDocumentMoniker": "Scripts\\Misc\\DijkstraPriorityList.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Misc\\DijkstraPriorityList.cs",
+              "RelativeToolTip": "Scripts\\Misc\\DijkstraPriorityList.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAgwA8AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-26T23:51:12.093Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Unit.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Unit\\Unit.cs",
-              "RelativeDocumentMoniker": "Scripts\\Unit\\Unit.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Unit\\Unit.cs",
-              "RelativeToolTip": "Scripts\\Unit\\Unit.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAQwFMAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-26T23:36:39.483Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "EnemyIdleState.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyIdleState.cs",
-              "RelativeDocumentMoniker": "Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyIdleState.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyIdleState.cs",
-              "RelativeToolTip": "Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyIdleState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-26T23:34:49.752Z",
+              "WhenOpened": "2025-06-30T23:17:20.863Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "EnemyAttackState.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyAttackState.cs",
-              "RelativeDocumentMoniker": "Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyAttackState.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyAttackState.cs",
-              "RelativeToolTip": "Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyAttackState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "Map.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\Map.cs",
+              "RelativeDocumentMoniker": "Scripts\\Grid\\Map.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\Map.cs",
+              "RelativeToolTip": "Scripts\\Grid\\Map.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwBkAAABjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-26T23:34:39.486Z",
+              "WhenOpened": "2025-06-30T21:18:59.846Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UnitGroup.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Unit\\UnitGroup.cs",
-              "RelativeDocumentMoniker": "Scripts\\Unit\\UnitGroup.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Unit\\UnitGroup.cs",
-              "RelativeToolTip": "Scripts\\Unit\\UnitGroup.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAaAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "GridResource.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GridResource.cs",
+              "RelativeDocumentMoniker": "Scripts\\Grid\\GridResource.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GridResource.cs",
+              "RelativeToolTip": "Scripts\\Grid\\GridResource.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAxwAYAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-25T20:46:31.814Z",
+              "WhenOpened": "2025-06-30T21:17:47.343Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UnitManager.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Unit\\UnitManager.cs",
-              "RelativeDocumentMoniker": "Scripts\\Unit\\UnitManager.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Unit\\UnitManager.cs",
-              "RelativeToolTip": "Scripts\\Unit\\UnitManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-25T20:07:21.04Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "GameBoard.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GameBoard.cs",
               "RelativeDocumentMoniker": "Scripts\\Grid\\GameBoard.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GameBoard.cs",
               "RelativeToolTip": "Scripts\\Grid\\GameBoard.cs",
-              "ViewState": "AgIAABQCAAAAAAAAAADwv0ACAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAGUDAAAAAAAAAAAQwKkDAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-24T23:03:06.413Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "NPCAiStateMachine.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiStateMachine.cs",
-              "RelativeDocumentMoniker": "Scripts\\NPCAi\\NPCAiStateMachine.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiStateMachine.cs",
-              "RelativeToolTip": "Scripts\\NPCAi\\NPCAiStateMachine.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADIAAAAlAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "UnitPath.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Misc\\UnitPath.cs",
+              "RelativeDocumentMoniker": "Scripts\\Misc\\UnitPath.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Misc\\UnitPath.cs",
+              "RelativeToolTip": "Scripts\\Misc\\UnitPath.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAwwGMAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T04:11:42.618Z",
+              "WhenOpened": "2025-06-30T20:15:53.934Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Pathfinder.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Misc\\Pathfinder.cs",
+              "RelativeDocumentMoniker": "Scripts\\Misc\\Pathfinder.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Misc\\Pathfinder.cs",
+              "RelativeToolTip": "Scripts\\Misc\\Pathfinder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T18:12:11.111Z",
               "EditorCaption": ""
             }
           ]

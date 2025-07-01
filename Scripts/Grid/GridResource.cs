@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [06/27/2025]
+ * Last Updated: [06/30/2025]
  * [holds information about a map]
  */
 
@@ -96,11 +96,6 @@ public partial class GridResource : Resource
             }
         }
         return coords;
-    }
-
-    public Vector2 gridCell
-    {
-        get { return _gridSize; }
     }
 
     public Vector2 gridSize

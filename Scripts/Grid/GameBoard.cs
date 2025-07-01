@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [06/25/2025]
+ * Last Updated: [06/30/2025]
  * [game board manages everything on the map]
  */
 
@@ -602,7 +602,7 @@ public partial class GameBoard : Node2D
 
         Pathfinder pathfinder = new Pathfinder(_grid, _grid.GetAllCellCoords());
 
-        Vector2 currentClosest = new Vector2(-1,-1);
+        Vector2 currentClosest = new Vector2(-1, -1);
 
         List<Vector2> path = new List<Vector2>();
         float currentMoveCost = 999999;
@@ -652,7 +652,7 @@ public partial class GameBoard : Node2D
     /// <returns>array of coords that the unit can walk</returns>
     public Vector2[] GetWalkableCells(Unit unit)
     {
-        return Dijksta(unit.cell, (float)unit.unitStats.currentMove, false);
+        return DijkstaFill(unit.cell, (float)unit.unitStats.currentMove, false);
     }
 
     /// <summary>
@@ -664,7 +664,7 @@ public partial class GameBoard : Node2D
     public Vector2[] GetAttackableCells(Unit unit)
     {
         List<Vector2> attackableCells = new List<Vector2>();
-        Vector2[] realWalkableCells = Dijksta(unit.cell, unit.unitStats.currentMove, true);
+        Vector2[] realWalkableCells = DijkstaFill(unit.cell, unit.unitStats.currentMove, true);
 
         foreach (Vector2 curCell in realWalkableCells)
         {
@@ -754,10 +754,10 @@ public partial class GameBoard : Node2D
     /// <param name="maxDistance">unit move stat</param>
     /// <param name="attackableCheck">check unit attack check</param>
     /// <returns>array of walkable units</returns>
-    private Vector2[] Dijksta(Vector2 cell, float maxDistance, bool attackableCheck)
+    private Vector2[] DijkstaFill(Vector2 cell, float maxDistance, bool attackableCheck)
     {
-        int y = Mathf.RoundToInt(grid.gridCell.Y);
-        int x = Mathf.RoundToInt(grid.gridCell.X);
+        int y = Mathf.RoundToInt(grid.gridSize.Y);
+        int x = Mathf.RoundToInt(grid.gridSize.X);
 
         Unit curUnit = _units[cell];
         List<Vector2> moveableCells = new List<Vector2>();
@@ -787,52 +787,159 @@ public partial class GameBoard : Node2D
         while (dijkstaQueue.Count > 0)
         {
             dijkstaQueue.TryDequeue(out Vector2 currentValue, out float currentPriority);
-            visited[Mathf.RoundToInt(cell.Y), Mathf.RoundToInt(cell.X)] = true;
+            visited[Mathf.RoundToInt(currentValue.Y), Mathf.RoundToInt(currentValue.X)] = true;
 
             foreach (DirectionEnum dir in Enum.GetValues(typeof(DirectionEnum)))
             {
                 Vector2 coords = currentValue + DirectionManager.Instance.GetVectorDirection(dir);
                 int coordsY = Mathf.RoundToInt(coords.Y);
                 int coordsX = Mathf.RoundToInt(coords.X);
-                if (_grid.IsWithinBounds(coords))
+                if (!_grid.IsWithinBounds(coords))
                 {
-                    if (visited[coordsY, coordsX])
+                    continue;
+                }
+                if (visited[coordsY, coordsX])
+                {
+                    continue;
+                }
+
+                tileCost = _movementCosts[coordsY, coordsX];
+                distanceToNode = currentPriority + tileCost;
+
+                //checks if units can pass eachother
+                if (IsKnownOccupied(coords))
+                {
+                    if (!_unitManager.CanPass(curUnit.unitGroup, _units[coords].unitGroup))
                     {
-                        continue;
+                        distanceToNode = currentPriority + MAX_VALUE;
                     }
-                    else
+                    else if (_units[coords].isWait && attackableCheck)
                     {
-                        tileCost = _movementCosts[coordsY, coordsX];
-                        distanceToNode = currentPriority + tileCost;
-
-                        //checks if units can pass eachother
-                        if (IsKnownOccupied(coords))
-                        {
-                            if (!_unitManager.CanPass(curUnit.unitGroup, _units[coords].unitGroup))
-                            {
-                                distanceToNode = currentPriority + MAX_VALUE;
-                            }
-                            else if (_units[coords].isWait && attackableCheck)
-                            {
-                                occupiedCells.Add(coords);
-                            }
-                        }
-
-                        visited[coordsY, coordsX] = true;
-                        distances[coordsY, coordsX] = distanceToNode;
-                    }
-
-                    if (distanceToNode <= maxDistance)
-                    {
-                        previous[coordsY, coordsX] = currentValue;
-                        moveableCells.Add(coords);
-                        dijkstaQueue.Enqueue(coords, distanceToNode);
+                        occupiedCells.Add(coords);
                     }
                 }
+
+                visited[coordsY, coordsX] = true;
+                distances[coordsY, coordsX] = distanceToNode;
+
+                if (distanceToNode <= maxDistance)
+                {
+                    previous[coordsY, coordsX] = currentValue;
+                    moveableCells.Add(coords);
+                    dijkstaQueue.Enqueue(coords, distanceToNode);
+                }
+
             }
         }
 
         return moveableCells.Except(occupiedCells).ToArray();
+    }
+
+    /// <summary>
+    /// uses dijkstra to pathfind between 2 points
+    /// </summary>
+    /// <param name="startCell">first coord</param>
+    /// <param name="endCell">last coord</param>
+    /// <param name="maxDistance">limit to distance</param>
+    /// <returns>array of coords</returns>
+    public Vector2[] DijkstraPathFinding(Vector2 startCell, Vector2 endCell, float maxDistance = -1)
+    {
+        int y = Mathf.RoundToInt(grid.gridSize.Y);
+        int x = Mathf.RoundToInt(grid.gridSize.X);
+
+        bool hasStartUnit = _units.TryGetValue(startCell, out Unit curUnit);
+
+        List<Vector2> path = new List<Vector2>();
+
+        bool[,] visited = new bool[y, x];
+        float[,] distances = new float[y, x];
+        Vector2[,] previous = new Vector2[y, x];
+
+        for (int i = 0; i < y; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                visited[i, j] = false;
+                distances[i, j] = MAX_VALUE;
+                previous[i, j] = new Vector2(-1,-1);
+            }
+        }
+
+        DijkstraPriorityList dijkstaQueue = new DijkstraPriorityList();
+        dijkstaQueue.Enqueue(startCell, 0);
+        distances[Mathf.RoundToInt(startCell.Y), Mathf.RoundToInt(startCell.X)] = 0;
+
+        float tileCost;
+        float distanceToNode;
+
+        while (!visited[Mathf.RoundToInt(endCell.Y), Mathf.RoundToInt(endCell.X)] && dijkstaQueue.Count() > 0)
+        {
+            dijkstaQueue.TryDequeue(out Vector2 currentValue, out float currentPriority);
+            visited[Mathf.RoundToInt(currentValue.Y), Mathf.RoundToInt(currentValue.X)] = true;
+
+
+            foreach (DirectionEnum dir in Enum.GetValues(typeof(DirectionEnum)))
+            {
+                Vector2 coords = currentValue + DirectionManager.Instance.GetVectorDirection(dir);
+                int coordsY = Mathf.RoundToInt(coords.Y);
+                int coordsX = Mathf.RoundToInt(coords.X);
+
+                if (!_grid.IsWithinBounds(coords))
+                {
+                    continue;
+                }
+                if (visited[coordsY, coordsX])
+                {
+                    continue;
+                }
+
+                tileCost = _movementCosts[coordsY, coordsX];
+                distanceToNode = currentPriority + tileCost;
+
+                //checks if units can pass eachother
+                if (IsKnownOccupied(coords))
+                {
+                    if (hasStartUnit && !_unitManager.CanPass(curUnit.unitGroup, _units[coords].unitGroup))
+                    {
+                        distanceToNode = currentPriority + MAX_VALUE;
+                    }
+                }
+                if (distanceToNode < distances[coordsY, coordsX]
+                    || previous[coordsY, coordsX] == new Vector2(-1, -1))
+                {
+                    distances[coordsY, coordsX] = distanceToNode;
+                    previous[coordsY, coordsX] = currentValue;
+
+                    if (dijkstaQueue.ContainsValue(coords))
+                    {
+                        dijkstaQueue.ChangePriority(coords, distanceToNode);
+                    }
+                    else
+                    {
+                        dijkstaQueue.Enqueue(coords, distanceToNode);
+                    }
+                }
+
+            }
+        }
+        path.Add(endCell);
+        Vector2 current = endCell;
+        while (current != startCell)
+        {
+            current = previous[Mathf.RoundToInt(current.Y), Mathf.RoundToInt(current.X)];
+            path.Add(current);
+        }
+        path.Reverse();
+
+        if (maxDistance > -1)
+        {
+            if (_map.GetPathMoveCost(path.ToArray()) > maxDistance)
+            {
+                path = new List<Vector2>();
+            }
+        }
+
+        return path.ToArray();
     }
 
     /// <summary>
