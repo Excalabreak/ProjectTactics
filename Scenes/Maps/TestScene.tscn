@@ -226,11 +226,11 @@ _passingGroup = Array[int]([0, 1])
 _attackingGroup = Array[int]([2])
 
 [node name="Unit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
-position = Vector2(348, 797)
+position = Vector2(349, 807)
 _gameBoard = NodePath("../../..")
 
 [node name="Unit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
-position = Vector2(347, 728)
+position = Vector2(353, 731)
 _gameBoard = NodePath("../../..")
 
 [node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
