@@ -5,7 +5,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/01/2025]
+ * Last Updated: [07/02/2025]
  * [attack state for enemy ai
  * NOTE: very basic for now]
  */
@@ -54,7 +54,8 @@ public partial class EnemyAttackState : NPCAiState
 
         if (validIndex != -1)
         {
-            GD.Print("Enemy moves to: " + path[validIndex]);
+            stateMachine.gameBoard.DrawAutoPathForAi(stateMachine.unit.cell, path[validIndex]);
+            stateMachine.gameBoard.MoveSelectedUnit(path[validIndex]);
         }
     }
 }

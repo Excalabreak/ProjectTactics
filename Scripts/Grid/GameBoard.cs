@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [06/30/2025]
+ * Last Updated: [07/02/2025]
  * [game board manages everything on the map]
  */
 
@@ -166,12 +166,10 @@ public partial class GameBoard : Node2D
             return;
         }
 
-        /*
-        if (_unitGroupTurns[_turnIndex] != _units[cell].unitGroup)
+        if (currentTurn != _units[cell].unitGroup)
         {
             return;
         }
-        */
 
         _selectedUnit = _units[cell];
         _selectedUnit.isSelected = true;
@@ -179,10 +177,13 @@ public partial class GameBoard : Node2D
         _walkableCells = GetWalkableCells(_selectedUnit);
         _attackableCells = GetAttackableCells(_selectedUnit);
 
-        _unitWalkHighlights.DrawAttackHighlights(_attackableCells);
-        _unitWalkHighlights.DrawWalkHighlights(_walkableCells);
+        if (_selectedUnit.unitGroup == UnitGroupEnum.PLAYER)
+        {
+            _unitWalkHighlights.DrawAttackHighlights(_attackableCells);
+            _unitWalkHighlights.DrawWalkHighlights(_walkableCells);
 
-        _unitPath.Initialize(_walkableCells, _selectedUnit.cell);
+            _unitPath.Initialize(_walkableCells, _selectedUnit.cell);
+        }
     }
 
     /// <summary>
@@ -241,10 +242,11 @@ public partial class GameBoard : Node2D
     /// MODIFY FOR AI
     /// </summary>
     /// <param name="newCell"></param>
-    private async void MoveSelectedUnit(Vector2 newCell)
+    public async void MoveSelectedUnit(Vector2 newCell)
     {
         if (!IsValidMoveLoc(newCell))
         {
+            GD.Print("buh");
             DeselectSelectedUnit();
             ClearSelectedUnit();
             EmitSignal("SelectedMoved");
@@ -252,11 +254,12 @@ public partial class GameBoard : Node2D
         }
 
         DeselectSelectedUnit();
-        _menuStateMachine.TransitionTo("BlankState");
+        OnlyPlayerTurnMenuStateTransition("BlankState");
         _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
         ClearSelectedUnit();
+        _walkableCells = new Vector2[0];
         EmitSignal("SelectedMoved");
     }
 
@@ -350,16 +353,15 @@ public partial class GameBoard : Node2D
             DeselectSelectedUnit();
             ClearSelectedUnit();
             _walkableCells = new Vector2[0];
-            _menuStateMachine.TransitionTo("UnSelectedState");
+            OnlyPlayerTurnMenuStateTransition("UnSelectedState");
             return;
         }
 
         MoveSelectedUnit(cell);
-        _walkableCells = new Vector2[0];
         _unitWalkHighlights.Clear();
         await ToSignal(this, "SelectedMoved");
 
-        _menuStateMachine.TransitionTo("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
     }
 
     /// <summary>
@@ -407,7 +409,7 @@ public partial class GameBoard : Node2D
 
         DeselectSelectedUnit();
         ClearSelectedUnit();
-        _menuStateMachine.TransitionTo("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
     }
 
     private void Battle(UnitStats attackingUnit, UnitStats defendingUnit)
@@ -516,7 +518,7 @@ public partial class GameBoard : Node2D
     {
         DeselectSelectedUnit();
         ClearSelectedUnit();
-        _menuStateMachine.TransitionTo("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
     }
 
     /// <summary>
@@ -545,20 +547,20 @@ public partial class GameBoard : Node2D
             _turnIndex = 0;
         }
 
-        if (_unitGroupTurns[_turnIndex] == UnitGroupEnum.PLAYER)
+        if (currentTurn == UnitGroupEnum.PLAYER)
         {
             _menuStateMachine.TransitionTo("UnSelectedState");
         }
         else
         {
             _menuStateMachine.TransitionTo("BlankState");
-            AiTurn(_unitGroupTurns[_turnIndex]);
+            AiTurn(currentTurn);
         }
 
         //reset move of needed units
         //reset known units
 
-        GD.Print(_unitGroupTurns[_turnIndex]);
+        GD.Print(currentTurn);
     }
     //---------- BASIC AI ----------
 
@@ -578,6 +580,7 @@ public partial class GameBoard : Node2D
         {
             if (IsInstanceValid(unit) && unit.IsAi())
             {
+                SelectUnit(unit.cell);
                 unit.aiStateMachine.DoTurn();
             }
         }
@@ -632,6 +635,16 @@ public partial class GameBoard : Node2D
             GD.Print("No close units found in ClosestUnitPosition");
         }
         return currentClosest;
+    }
+
+    /// <summary>
+    /// draws autopath for ai unit
+    /// </summary>
+    /// <param name="start">starting cell</param>
+    /// <param name="end">ending cell</param>
+    public void DrawAutoPathForAi(Vector2 start, Vector2 end)
+    {
+        _unitPath.DrawAutoPath(start, end);
     }
 
     //---------- DISPLAY HIGHLIGHTS ----------
@@ -1448,6 +1461,19 @@ public partial class GameBoard : Node2D
                 break;
         }
     }
+    //---------- MISC ----------
+
+    /// <summary>
+    /// transition menu state machine only on player turn
+    /// </summary>
+    /// <param name="state">state to transition to</param>
+    private void OnlyPlayerTurnMenuStateTransition(string state)
+    {
+        if (currentTurn == UnitGroupEnum.PLAYER)
+        {
+            menuStateMachine.TransitionTo(state);
+        }
+    }
 
     //---------- PROPERTIES ----------
 
@@ -1481,5 +1507,10 @@ public partial class GameBoard : Node2D
     public UnitManager unitManager
     {
         get { return _unitManager; }
+    }
+
+    private UnitGroupEnum currentTurn
+    {
+        get { return _unitGroupTurns[_turnIndex]; }
     }
 }
