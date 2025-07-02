@@ -23,6 +23,7 @@ public partial class NPCAiStateMachine : Node
     /// </summary>
     public override void _Ready()
     {
+        _unit.CurrentGameBoard += SetGameBoard;
         _states = new Dictionary<string, NPCAiState>();
         foreach (Node node in GetChildren())
         {
@@ -37,8 +38,6 @@ public partial class NPCAiStateMachine : Node
         }
         _currentState = GetNode<NPCAiState>(initialState);
         _currentState.Enter();
-
-        _unit.CurrentGameBoard += SetGameBoard;
     }
 
     /// <summary>

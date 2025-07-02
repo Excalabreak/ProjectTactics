@@ -12,11 +12,12 @@ using System.Linq;
 
 public partial class EnemyAttackState : NPCAiState
 {
+    private bool isWalking = false;
     /// <summary>
     /// finds the closest unit and goes for
     /// attacks
     /// </summary>
-    public override void TurnLogic()
+    public override async void TurnLogic()
     {
         Vector2 target = stateMachine.gameBoard.ClosestUnitPosition(UnitGroupEnum.PLAYER, stateMachine.unit.cell);
 
@@ -29,10 +30,21 @@ public partial class EnemyAttackState : NPCAiState
         {
             MoveLogic(path.ToArray(), stateMachine.unit.unitStats.currentMove);
         }
-
+        if (isWalking)
+        {
+            isWalking = false;
+            await ToSignal(stateMachine.gameBoard, "SelectedMoved");
+        }
+        
+        if (stateMachine.gameBoard.CheckAreaForAttackableGroup(
+            stateMachine.unit.unitGroup, stateMachine.gameBoard.FloodFill(
+                stateMachine.unit.cell, stateMachine.unit.attackRange)))
+        {
+            GD.Print("can attack");
+        }
     }
 
-    private void MoveLogic(Vector2[] path, float moveLimit)
+    private async void MoveLogic(Vector2[] path, float moveLimit)
     {
         float currentMoveCost = 0;
         int validIndex = -1;
@@ -54,6 +66,7 @@ public partial class EnemyAttackState : NPCAiState
 
         if (validIndex != -1)
         {
+            isWalking = true;
             stateMachine.gameBoard.DrawAutoPathForAi(stateMachine.unit.cell, path[validIndex]);
             stateMachine.gameBoard.MoveSelectedUnit(path[validIndex]);
         }

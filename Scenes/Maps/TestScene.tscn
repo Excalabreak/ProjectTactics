@@ -287,3 +287,4 @@ script = ExtResource("28_a4mff")
 
 [editable path="GameBoard/Units/PlayerUnits/Unit"]
 [editable path="GameBoard/Units/PlayerUnits/Unit2"]
+[editable path="GameBoard/Units/EnemyUnits/AiUnit"]

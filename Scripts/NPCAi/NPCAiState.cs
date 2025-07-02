@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/25/2025]
+ * Last Updated: [07/02/2025]
  * [state for npc ai]
  */
 
