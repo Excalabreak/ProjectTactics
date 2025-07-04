@@ -40,11 +40,11 @@ public partial class EnemyAttackState : NPCAiState
             stateMachine.unit.unitGroup, stateMachine.gameBoard.FloodFill(
                 stateMachine.unit.cell, stateMachine.unit.attackRange)))
         {
-            GD.Print("can attack");
+            stateMachine.gameBoard.UnitCombat(stateMachine.unit.cell, target);
         }
     }
 
-    private async void MoveLogic(Vector2[] path, float moveLimit)
+    private void MoveLogic(Vector2[] path, float moveLimit)
     {
         float currentMoveCost = 0;
         int validIndex = -1;
@@ -67,6 +67,7 @@ public partial class EnemyAttackState : NPCAiState
         if (validIndex != -1)
         {
             isWalking = true;
+            stateMachine.gameBoard.SelectUnit(stateMachine.unit.cell);
             stateMachine.gameBoard.DrawAutoPathForAi(stateMachine.unit.cell, path[validIndex]);
             stateMachine.gameBoard.MoveSelectedUnit(path[validIndex]);
         }

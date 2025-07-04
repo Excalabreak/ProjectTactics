@@ -159,7 +159,7 @@ public partial class GameBoard : Node2D
     /// MODIFY FOR AI
     /// </summary>
     /// <param name="cell">cell to select unit</param>
-    private void SelectUnit(Vector2 cell)
+    public void SelectUnit(Vector2 cell)
     {
         if (!_units.ContainsKey(cell))
         {
@@ -258,6 +258,7 @@ public partial class GameBoard : Node2D
         _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
+
         ClearSelectedUnit();
         _walkableCells = new Vector2[0];
         EmitSignal("SelectedMoved");
@@ -391,35 +392,13 @@ public partial class GameBoard : Node2D
         }
 
         //very basic combat for now
-        _selectedUnit.unitActionEconomy.UseAction();
         _unitWalkHighlights.Clear();
 
-        UnitStats attackingStats = _selectedUnit.unitStats;
-        UnitStats defendingStats = opposingUnit.unitStats;
-        Battle(attackingStats, defendingStats);
-
-        //counter attack
-        //temp, there is a faster way of doing this
-        //figure out later
-        Vector2[] opposingAttackableCells = FloodFill(opposingUnit.cell, opposingUnit.attackRange);
-        if (opposingAttackableCells.Contains(_selectedUnit.cell))
-        {
-            Battle(defendingStats, attackingStats);
-        }
+        UnitCombat(_selectedUnit, opposingUnit);
 
         DeselectSelectedUnit();
         ClearSelectedUnit();
         OnlyPlayerTurnMenuStateTransition("UnSelectedState");
-    }
-
-    private void Battle(UnitStats attackingUnit, UnitStats defendingUnit)
-    {
-        if (_battleWarning)
-        {
-            _battleWarning = false;
-            GD.Print("uses base stat for battle");
-        }
-        defendingUnit.DamageUnit(attackingUnit.GetBaseStat(UnitStatEnum.STRENGTH) - defendingUnit.GetBaseStat(UnitStatEnum.DEFENSE));
     }
 
     //---------- MENU CURSOR MOVE ----------
@@ -562,6 +541,69 @@ public partial class GameBoard : Node2D
 
         GD.Print(currentTurn);
     }
+
+    //---------- COMBAT ----------
+
+    /// <summary>
+    /// UnitCombat, but uses position
+    /// </summary>
+    /// <param name="initPos">position of initiating unit</param>
+    /// <param name="targetPos">position of targeted unit</param>
+    public void UnitCombat(Vector2 initPos, Vector2 targetPos)
+    {
+        if (!_units.ContainsKey(initPos) && !_units.ContainsKey(targetPos))
+        {
+            return;
+        }
+
+        Unit initUnit = _units[initPos];
+        Unit targetUnit = _units[targetPos];
+        if (!_unitManager.CanAttack(initUnit.unitGroup, targetUnit.unitGroup))
+        {
+            return;
+        }
+
+        UnitCombat(initUnit, targetUnit);
+    }
+
+    /// <summary>
+    /// calls to calculate unit combat
+    /// </summary>
+    /// <param name="initUnit">unit initiating comabat</param>
+    /// <param name="targetUnit">unit targeted</param>
+    public void UnitCombat(Unit initUnit, Unit targetUnit)
+    {
+        initUnit.unitActionEconomy.UseAction();
+
+        UnitStats attackingStats = initUnit.unitStats;
+        UnitStats defendingStats = targetUnit.unitStats;
+        Battle(attackingStats, defendingStats);
+
+        //counter attack
+        //temp, there is a faster way of doing this
+        //figure out later
+        Vector2[] opposingAttackableCells = FloodFill(targetUnit.cell, targetUnit.attackRange);
+        if (opposingAttackableCells.Contains(initUnit.cell))
+        {
+            Battle(defendingStats, attackingStats);
+        }
+    }
+
+    /// <summary>
+    /// calls to damage unit
+    /// </summary>
+    /// <param name="attackingUnit">unit that is attacking</param>
+    /// <param name="defendingUnit">unit that is defending </param>
+    private void Battle(UnitStats attackingUnit, UnitStats defendingUnit)
+    {
+        if (_battleWarning)
+        {
+            _battleWarning = false;
+            GD.Print("uses base stat for battle");
+        }
+        defendingUnit.DamageUnit(attackingUnit.GetBaseStat(UnitStatEnum.STRENGTH) - defendingUnit.GetBaseStat(UnitStatEnum.DEFENSE));
+    }
+
     //---------- BASIC AI ----------
 
     /// <summary>
@@ -580,7 +622,6 @@ public partial class GameBoard : Node2D
         {
             if (IsInstanceValid(unit) && unit.IsAi())
             {
-                SelectUnit(unit.cell);
                 unit.aiStateMachine.DoTurn();
             }
         }
@@ -1478,6 +1519,7 @@ public partial class GameBoard : Node2D
     //---------- PROPERTIES ----------
 
     //note, make export if need to test outside of game board
+
     public GridResource grid
     {
         get { return _grid; }
