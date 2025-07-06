@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Last Updated: [06/09/2025]
- * [which function to call for the attack state]
+ * [which function to call for the menu attack state]
  */
 
 public partial class AttackState : MenuState

@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/02/2025]
+ * Last Updated: [06/25/2025]
  * [manages all units and groups and ]
  */
 
@@ -37,10 +37,15 @@ public partial class UnitManager : Node2D
 
         foreach (KeyValuePair<UnitGroupEnum, UnitGroup> unitGroup in _unitGroups)
         {
-            units.AddRange(_unitGroups[unitGroup.Key].GetUnitGroup());
+            units.AddRange(_unitGroups[unitGroup.Key].GetUnits());
         }
 
         return units.ToArray();
+    }
+
+    public Unit[] GetGroupUnits(UnitGroupEnum group)
+    {
+        return _unitGroups[group].GetUnits();
     }
 
     /// <summary>

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [YT: Radical Oyster/Heal Moon]
- * Last Updated: [06/12/2025]
+ * Last Updated: [06/30/2025]
  * [gives data about tiles in the map]
  */
 
@@ -18,10 +18,10 @@ public partial class Map : TileMapLayer
     /// <returns>movement cost of all tiles in map</returns>
     public float[,] GetMovementCosts(GridResource grid)
     {
-        float[,] output = new float[Mathf.RoundToInt(grid.gridCell.Y), Mathf.RoundToInt(grid.gridCell.X)];
-        for (int i = 0; i < grid.gridCell.Y; i++)
+        float[,] output = new float[Mathf.RoundToInt(grid.gridSize.Y), Mathf.RoundToInt(grid.gridSize.X)];
+        for (int i = 0; i < grid.gridSize.Y; i++)
         {
-            for (int j = 0; j < grid.gridCell.X; j++)
+            for (int j = 0; j < grid.gridSize.X; j++)
             {
                 output[i, j] = (float)GetCellTileData(new Vector2I(j,i)).GetCustomData("MoveCost");
             }
@@ -40,6 +40,22 @@ public partial class Map : TileMapLayer
         foreach (Vector2I tile in path)
         {
             output += (float)GetCellTileData(tile).GetCustomData("MoveCost");
+        }
+        return output;
+    }
+
+    /// <summary>
+    /// gets the move cost of a list of coords
+    /// </summary>
+    /// <param name="path">array of coordinates</param>
+    /// <returns>move cost of path</returns>
+    public float GetPathMoveCost(Vector2[] path)
+    {
+        float output = 0;
+        foreach (Vector2 tile in path)
+        {
+            Vector2I iTile = new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.X));
+            output += (float)GetCellTileData(iTile).GetCustomData("MoveCost");
         }
         return output;
     }

@@ -24,6 +24,10 @@ public partial class Unit : Node2D
 
     [Export] private UnitDirection _unitDirection;
 
+    [Export] private UnitActionEconomy _unitActionEconomy;
+
+    [Export] private NPCAiStateMachine _aiStateMachine;
+
     //animation player, but i might need to make a state machine
     //will keep in here for now to see how is selected works
     [Export] private AnimationPlayer _animPlayer;
@@ -65,7 +69,7 @@ public partial class Unit : Node2D
 
         if (_unitPathMovement != null && _unitCanWalk)
         {
-            _unitPathMovement.WalkUnit(fDelta, _gameBoard.grid, _targetCell);
+            _unitPathMovement.WalkUnit(fDelta, _targetCell);
         }
     }
 
@@ -73,6 +77,11 @@ public partial class Unit : Node2D
     {
         _gameBoard = gameBoard;
         CurrentGameBoard?.Invoke(_gameBoard);
+    }
+
+    public bool IsAi()
+    {
+        return _aiStateMachine != null;
     }
 
     //--- PROPERTIES ---
@@ -153,6 +162,16 @@ public partial class Unit : Node2D
     public UnitDirection unitDirection
     {
         get { return _unitDirection; }
+    }
+
+    public UnitActionEconomy unitActionEconomy
+    {
+        get { return _unitActionEconomy; }
+    }
+
+    public NPCAiStateMachine aiStateMachine
+    {
+        get { return _aiStateMachine; }
     }
 
     public bool isWait

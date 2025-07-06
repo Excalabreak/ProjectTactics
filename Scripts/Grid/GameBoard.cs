@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [06/20/2025]
+ * Last Updated: [07/02/2025]
  * [game board manages everything on the map]
  */
 
@@ -159,19 +159,17 @@ public partial class GameBoard : Node2D
     /// MODIFY FOR AI
     /// </summary>
     /// <param name="cell">cell to select unit</param>
-    private void SelectUnit(Vector2 cell)
+    public void SelectUnit(Vector2 cell)
     {
         if (!_units.ContainsKey(cell))
         {
             return;
         }
 
-        /*
-        if (_unitGroupTurns[_turnIndex] != _units[cell].unitGroup)
+        if (currentTurn != _units[cell].unitGroup)
         {
             return;
         }
-        */
 
         _selectedUnit = _units[cell];
         _selectedUnit.isSelected = true;
@@ -179,10 +177,13 @@ public partial class GameBoard : Node2D
         _walkableCells = GetWalkableCells(_selectedUnit);
         _attackableCells = GetAttackableCells(_selectedUnit);
 
-        _unitWalkHighlights.DrawAttackHighlights(_attackableCells);
-        _unitWalkHighlights.DrawWalkHighlights(_walkableCells);
+        if (_selectedUnit.unitGroup == UnitGroupEnum.PLAYER)
+        {
+            _unitWalkHighlights.DrawAttackHighlights(_attackableCells);
+            _unitWalkHighlights.DrawWalkHighlights(_walkableCells);
 
-        _unitPath.Initialize(_walkableCells, _selectedUnit.cell);
+            _unitPath.Initialize(_walkableCells, _selectedUnit.cell);
+        }
     }
 
     /// <summary>
@@ -241,10 +242,11 @@ public partial class GameBoard : Node2D
     /// MODIFY FOR AI
     /// </summary>
     /// <param name="newCell"></param>
-    private async void MoveSelectedUnit(Vector2 newCell)
+    public async void MoveSelectedUnit(Vector2 newCell)
     {
         if (!IsValidMoveLoc(newCell))
         {
+            GD.Print("buh");
             DeselectSelectedUnit();
             ClearSelectedUnit();
             EmitSignal("SelectedMoved");
@@ -252,11 +254,13 @@ public partial class GameBoard : Node2D
         }
 
         DeselectSelectedUnit();
-        _menuStateMachine.TransitionTo("BlankState");
-        _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath, _grid);
+        OnlyPlayerTurnMenuStateTransition("BlankState");
+        _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
+
         ClearSelectedUnit();
+        _walkableCells = new Vector2[0];
         EmitSignal("SelectedMoved");
     }
 
@@ -350,20 +354,20 @@ public partial class GameBoard : Node2D
             DeselectSelectedUnit();
             ClearSelectedUnit();
             _walkableCells = new Vector2[0];
-            _menuStateMachine.TransitionTo("UnSelectedState");
+            OnlyPlayerTurnMenuStateTransition("UnSelectedState");
             return;
         }
 
         MoveSelectedUnit(cell);
-        _walkableCells = new Vector2[0];
         _unitWalkHighlights.Clear();
         await ToSignal(this, "SelectedMoved");
 
-        _menuStateMachine.TransitionTo("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
     }
 
     /// <summary>
     /// selects unit for attack
+    /// might need to change for ai
     /// </summary>
     /// <param name="cell"></param>
     public void MenuAttackStateAccept(Vector2 cell)
@@ -390,32 +394,11 @@ public partial class GameBoard : Node2D
         //very basic combat for now
         _unitWalkHighlights.Clear();
 
-        UnitStats attackingStats = _selectedUnit.unitStats;
-        UnitStats defendingStats = opposingUnit.unitStats;
-        Battle(attackingStats, defendingStats);
-
-        //counter attack
-        //temp, there is a faster way of doing this
-        //figure out later
-        Vector2[] opposingAttackableCells = FloodFill(opposingUnit.cell, opposingUnit.attackRange);
-        if (opposingAttackableCells.Contains(_selectedUnit.cell))
-        {
-            Battle(defendingStats, attackingStats);
-        }
+        UnitCombat(_selectedUnit, opposingUnit);
 
         DeselectSelectedUnit();
         ClearSelectedUnit();
-        _menuStateMachine.TransitionTo("UnSelectedState");
-    }
-
-    private void Battle(UnitStats attackingUnit, UnitStats defendingUnit)
-    {
-        if (_battleWarning)
-        {
-            _battleWarning = false;
-            GD.Print("uses base stat for battle");
-        }
-        defendingUnit.DamageUnit(attackingUnit.GetBaseStat(UnitStatEnum.STRENGTH) - defendingUnit.GetBaseStat(UnitStatEnum.DEFENSE));
+        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
     }
 
     //---------- MENU CURSOR MOVE ----------
@@ -454,8 +437,16 @@ public partial class GameBoard : Node2D
             return;
         }
 
+        //something weird about this logic calls true
+        //at max distance
         Vector2I intNewCell = new Vector2I(Mathf.RoundToInt(newCell.X), Mathf.RoundToInt(newCell.Y));
-        if (_map.GetPathMoveCost(_unitPath.GetIntCurrentPath()) + _map.GetTileMoveCost(intNewCell)
+        List<Vector2I> path = new List<Vector2I>();
+        if (_unitPath.GetIntCurrentPath().Length > 0)
+        {
+            path.AddRange(_unitPath.GetIntCurrentPath());
+            path.RemoveAt(0);
+        }
+        if (_map.GetPathMoveCost(path.ToArray()) + _map.GetTileMoveCost(intNewCell)
             > _selectedUnit.unitStats.currentMove)
         {
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
@@ -506,7 +497,7 @@ public partial class GameBoard : Node2D
     {
         DeselectSelectedUnit();
         ClearSelectedUnit();
-        _menuStateMachine.TransitionTo("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
     }
 
     /// <summary>
@@ -535,20 +526,166 @@ public partial class GameBoard : Node2D
             _turnIndex = 0;
         }
 
-        if (_unitGroupTurns[_turnIndex] == UnitGroupEnum.PLAYER)
+        if (currentTurn == UnitGroupEnum.PLAYER)
         {
             _menuStateMachine.TransitionTo("UnSelectedState");
         }
         else
         {
-            //commented out while working on ai
-            //_menuStateMachine.TransitionTo("BlankState");
+            _menuStateMachine.TransitionTo("BlankState");
+            AiTurn(currentTurn);
         }
 
         //reset move of needed units
         //reset known units
 
-        GD.Print(_unitGroupTurns[_turnIndex]);
+        GD.Print(currentTurn);
+    }
+
+    //---------- COMBAT ----------
+
+    /// <summary>
+    /// UnitCombat, but uses position
+    /// </summary>
+    /// <param name="initPos">position of initiating unit</param>
+    /// <param name="targetPos">position of targeted unit</param>
+    public void UnitCombat(Vector2 initPos, Vector2 targetPos)
+    {
+        if (!_units.ContainsKey(initPos) && !_units.ContainsKey(targetPos))
+        {
+            return;
+        }
+
+        Unit initUnit = _units[initPos];
+        Unit targetUnit = _units[targetPos];
+        if (!_unitManager.CanAttack(initUnit.unitGroup, targetUnit.unitGroup))
+        {
+            return;
+        }
+
+        UnitCombat(initUnit, targetUnit);
+    }
+
+    /// <summary>
+    /// calls to calculate unit combat
+    /// </summary>
+    /// <param name="initUnit">unit initiating comabat</param>
+    /// <param name="targetUnit">unit targeted</param>
+    public void UnitCombat(Unit initUnit, Unit targetUnit)
+    {
+        initUnit.unitActionEconomy.UseAction();
+
+        UnitStats attackingStats = initUnit.unitStats;
+        UnitStats defendingStats = targetUnit.unitStats;
+        Battle(attackingStats, defendingStats);
+
+        //counter attack
+        //temp, there is a faster way of doing this
+        //figure out later
+        Vector2[] opposingAttackableCells = FloodFill(targetUnit.cell, targetUnit.attackRange);
+        if (opposingAttackableCells.Contains(initUnit.cell))
+        {
+            Battle(defendingStats, attackingStats);
+        }
+    }
+
+    /// <summary>
+    /// calls to damage unit
+    /// </summary>
+    /// <param name="attackingUnit">unit that is attacking</param>
+    /// <param name="defendingUnit">unit that is defending </param>
+    private void Battle(UnitStats attackingUnit, UnitStats defendingUnit)
+    {
+        if (_battleWarning)
+        {
+            _battleWarning = false;
+            GD.Print("uses base stat for battle");
+        }
+        defendingUnit.DamageUnit(attackingUnit.GetBaseStat(UnitStatEnum.STRENGTH) - defendingUnit.GetBaseStat(UnitStatEnum.DEFENSE));
+    }
+
+    //---------- BASIC AI ----------
+
+    /// <summary>
+    /// goes through all ai and have them perform
+    /// their logic
+    /// NOTE: Very simple now, will grow later
+    /// </summary>
+    /// <param name="group">which ai group is running</param>
+    private void AiTurn(UnitGroupEnum group)
+    {
+        Unit[] units = _unitManager.GetGroupUnits(group);
+        //loops through each unit and loops their logic until 
+        //they exaust all their actions
+
+        foreach (Unit unit in units)
+        {
+            if (IsInstanceValid(unit) && unit.IsAi())
+            {
+                unit.aiStateMachine.DoTurn();
+            }
+        }
+    }
+
+    /// <summary>
+    /// gets the closest unit from cell
+    /// that is of a specific group
+    /// </summary>
+    /// <param name="group">group to look for</param>
+    /// <param name="cell">cell to search from</param>
+    /// <returns></returns>
+    public Vector2 ClosestUnitPosition(UnitGroupEnum group, Vector2 cell)
+    {
+        Unit[] searchUnits = _unitManager.GetGroupUnits(group);
+
+        if (searchUnits.Length <= 0)
+        {
+            GD.Print("no units for ClosestUnitPosition");
+            return Vector2.Zero;
+        }
+
+        Pathfinder pathfinder = new Pathfinder(_grid, _grid.GetAllCellCoords());
+
+        Vector2 currentClosest = new Vector2(-1, -1);
+
+        List<Vector2> path = new List<Vector2>();
+        float currentMoveCost = 999999;
+        for (int i = 0; i < searchUnits.Length; i++)
+        {
+            path.Clear();
+
+            path.AddRange(pathfinder.CalculatePointPath(cell, searchUnits[i].cell));
+            path.RemoveAt(0);
+            path.RemoveAt(path.Count - 1);
+            if (path.Count <= 0)
+            {
+                currentClosest = searchUnits[i].cell;
+                break;
+            }
+
+            float moveCost = _map.GetPathMoveCost(path.ToArray());
+            if (moveCost < currentMoveCost)
+            {
+                currentClosest = searchUnits[i].cell;
+                currentMoveCost = moveCost;
+            }
+        }
+
+        if (currentClosest == new Vector2(-1, -1))
+        {
+            GD.Print("No close units found in ClosestUnitPosition");
+        }
+        return currentClosest;
+    }
+
+    /// <summary>
+    /// draws autopath for ai unit
+    /// </summary>
+    /// <param name="start">starting cell</param>
+    /// <param name="end">ending cell</param>
+    public void DrawAutoPathForAi(Vector2 start, Vector2 end)
+    {
+        _unitPath.DrawAutoPath(start, end);
     }
 
     //---------- DISPLAY HIGHLIGHTS ----------
@@ -563,13 +700,13 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
-    /// Returns an array of cells a given unit can walk using the flood fill algorithm
+    /// Returns an array of cells a given unit can walk using the dijkasta algorithm
     /// </summary>
     /// <param name="unit">selected unit</param>
     /// <returns>array of coords that the unit can walk</returns>
-    private Vector2[] GetWalkableCells(Unit unit)
+    public Vector2[] GetWalkableCells(Unit unit)
     {
-        return Dijksta(unit.cell, (float)unit.unitStats.currentMove, false);
+        return DijkstaFill(unit.cell, (float)unit.unitStats.currentMove, false);
     }
 
     /// <summary>
@@ -578,10 +715,10 @@ public partial class GameBoard : Node2D
     /// </summary>
     /// <param name="unit">selected unit</param>
     /// <returns>array of cell coordinates</returns>
-    private Vector2[] GetAttackableCells(Unit unit)
+    public Vector2[] GetAttackableCells(Unit unit)
     {
         List<Vector2> attackableCells = new List<Vector2>();
-        Vector2[] realWalkableCells = Dijksta(unit.cell, unit.unitStats.currentMove, true);
+        Vector2[] realWalkableCells = DijkstaFill(unit.cell, unit.unitStats.currentMove, true);
 
         foreach (Vector2 curCell in realWalkableCells)
         {
@@ -602,7 +739,7 @@ public partial class GameBoard : Node2D
     /// <param name="cell">coords</param>
     /// <param name="maxDistance">distance of flood fill</param>
     /// <returns>array of coords</returns>
-    private Vector2[] FloodFill(Vector2 cell, int maxDistance)
+    public Vector2[] FloodFill(Vector2 cell, int maxDistance)
     {
         List<Vector2> output = new List<Vector2>();
         List<Vector2> walls = new List<Vector2>();
@@ -671,10 +808,10 @@ public partial class GameBoard : Node2D
     /// <param name="maxDistance">unit move stat</param>
     /// <param name="attackableCheck">check unit attack check</param>
     /// <returns>array of walkable units</returns>
-    private Vector2[] Dijksta(Vector2 cell, float maxDistance, bool attackableCheck)
+    private Vector2[] DijkstaFill(Vector2 cell, float maxDistance, bool attackableCheck)
     {
-        int y = Mathf.RoundToInt(grid.gridCell.Y);
-        int x = Mathf.RoundToInt(grid.gridCell.X);
+        int y = Mathf.RoundToInt(grid.gridSize.Y);
+        int x = Mathf.RoundToInt(grid.gridSize.X);
 
         Unit curUnit = _units[cell];
         List<Vector2> moveableCells = new List<Vector2>();
@@ -704,52 +841,159 @@ public partial class GameBoard : Node2D
         while (dijkstaQueue.Count > 0)
         {
             dijkstaQueue.TryDequeue(out Vector2 currentValue, out float currentPriority);
-            visited[Mathf.RoundToInt(cell.Y), Mathf.RoundToInt(cell.X)] = true;
+            visited[Mathf.RoundToInt(currentValue.Y), Mathf.RoundToInt(currentValue.X)] = true;
 
             foreach (DirectionEnum dir in Enum.GetValues(typeof(DirectionEnum)))
             {
                 Vector2 coords = currentValue + DirectionManager.Instance.GetVectorDirection(dir);
                 int coordsY = Mathf.RoundToInt(coords.Y);
                 int coordsX = Mathf.RoundToInt(coords.X);
-                if (_grid.IsWithinBounds(coords))
+                if (!_grid.IsWithinBounds(coords))
                 {
-                    if (visited[coordsY, coordsX])
+                    continue;
+                }
+                if (visited[coordsY, coordsX])
+                {
+                    continue;
+                }
+
+                tileCost = _movementCosts[coordsY, coordsX];
+                distanceToNode = currentPriority + tileCost;
+
+                //checks if units can pass eachother
+                if (IsKnownOccupied(coords))
+                {
+                    if (!_unitManager.CanPass(curUnit.unitGroup, _units[coords].unitGroup))
                     {
-                        continue;
+                        distanceToNode = currentPriority + MAX_VALUE;
                     }
-                    else
+                    else if (_units[coords].isWait && attackableCheck)
                     {
-                        tileCost = _movementCosts[coordsY, coordsX];
-                        distanceToNode = currentPriority + tileCost;
-
-                        //checks if units can pass eachother
-                        if (IsKnownOccupied(coords))
-                        {
-                            if (!_unitManager.CanPass(curUnit.unitGroup, _units[coords].unitGroup))
-                            {
-                                distanceToNode = currentPriority + MAX_VALUE;
-                            }
-                            else if (_units[coords].isWait && attackableCheck)
-                            {
-                                occupiedCells.Add(coords);
-                            }
-                        }
-
-                        visited[coordsY, coordsX] = true;
-                        distances[coordsY, coordsX] = distanceToNode;
-                    }
-
-                    if (distanceToNode <= maxDistance)
-                    {
-                        previous[coordsY, coordsX] = currentValue;
-                        moveableCells.Add(coords);
-                        dijkstaQueue.Enqueue(coords, distanceToNode);
+                        occupiedCells.Add(coords);
                     }
                 }
+
+                visited[coordsY, coordsX] = true;
+                distances[coordsY, coordsX] = distanceToNode;
+
+                if (distanceToNode <= maxDistance)
+                {
+                    previous[coordsY, coordsX] = currentValue;
+                    moveableCells.Add(coords);
+                    dijkstaQueue.Enqueue(coords, distanceToNode);
+                }
+
             }
         }
 
         return moveableCells.Except(occupiedCells).ToArray();
+    }
+
+    /// <summary>
+    /// uses dijkstra to pathfind between 2 points
+    /// </summary>
+    /// <param name="startCell">first coord</param>
+    /// <param name="endCell">last coord</param>
+    /// <param name="maxDistance">limit to distance</param>
+    /// <returns>array of coords</returns>
+    public Vector2[] DijkstraPathFinding(Vector2 startCell, Vector2 endCell, float maxDistance = -1)
+    {
+        int y = Mathf.RoundToInt(grid.gridSize.Y);
+        int x = Mathf.RoundToInt(grid.gridSize.X);
+
+        bool hasStartUnit = _units.TryGetValue(startCell, out Unit curUnit);
+
+        List<Vector2> path = new List<Vector2>();
+
+        bool[,] visited = new bool[y, x];
+        float[,] distances = new float[y, x];
+        Vector2[,] previous = new Vector2[y, x];
+
+        for (int i = 0; i < y; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                visited[i, j] = false;
+                distances[i, j] = MAX_VALUE;
+                previous[i, j] = new Vector2(-1,-1);
+            }
+        }
+
+        DijkstraPriorityList dijkstaQueue = new DijkstraPriorityList();
+        dijkstaQueue.Enqueue(startCell, 0);
+        distances[Mathf.RoundToInt(startCell.Y), Mathf.RoundToInt(startCell.X)] = 0;
+
+        float tileCost;
+        float distanceToNode;
+
+        while (!visited[Mathf.RoundToInt(endCell.Y), Mathf.RoundToInt(endCell.X)] && dijkstaQueue.Count() > 0)
+        {
+            dijkstaQueue.TryDequeue(out Vector2 currentValue, out float currentPriority);
+            visited[Mathf.RoundToInt(currentValue.Y), Mathf.RoundToInt(currentValue.X)] = true;
+
+
+            foreach (DirectionEnum dir in Enum.GetValues(typeof(DirectionEnum)))
+            {
+                Vector2 coords = currentValue + DirectionManager.Instance.GetVectorDirection(dir);
+                int coordsY = Mathf.RoundToInt(coords.Y);
+                int coordsX = Mathf.RoundToInt(coords.X);
+
+                if (!_grid.IsWithinBounds(coords))
+                {
+                    continue;
+                }
+                if (visited[coordsY, coordsX])
+                {
+                    continue;
+                }
+
+                tileCost = _movementCosts[coordsY, coordsX];
+                distanceToNode = currentPriority + tileCost;
+
+                //checks if units can pass eachother
+                if (IsKnownOccupied(coords))
+                {
+                    if (hasStartUnit && !_unitManager.CanPass(curUnit.unitGroup, _units[coords].unitGroup))
+                    {
+                        distanceToNode = currentPriority + MAX_VALUE;
+                    }
+                }
+                if (distanceToNode < distances[coordsY, coordsX]
+                    || previous[coordsY, coordsX] == new Vector2(-1, -1))
+                {
+                    distances[coordsY, coordsX] = distanceToNode;
+                    previous[coordsY, coordsX] = currentValue;
+
+                    if (dijkstaQueue.ContainsValue(coords))
+                    {
+                        dijkstaQueue.ChangePriority(coords, distanceToNode);
+                    }
+                    else
+                    {
+                        dijkstaQueue.Enqueue(coords, distanceToNode);
+                    }
+                }
+
+            }
+        }
+        path.Add(endCell);
+        Vector2 current = endCell;
+        while (current != startCell)
+        {
+            current = previous[Mathf.RoundToInt(current.Y), Mathf.RoundToInt(current.X)];
+            path.Add(current);
+        }
+        path.Reverse();
+
+        if (maxDistance > -1)
+        {
+            if (_map.GetPathMoveCost(path.ToArray()) > maxDistance)
+            {
+                path = new List<Vector2>();
+            }
+        }
+
+        return path.ToArray();
     }
 
     /// <summary>
@@ -809,11 +1053,53 @@ public partial class GameBoard : Node2D
         return false;
     }
 
+    //---------- DETECTION ----------
+
+    /// <summary>
+    /// checks if a unit of group
+    /// can attack something
+    /// </summary>
+    /// <param name="group">group of attacking unit</param>
+    /// <param name="area">array of coords</param>
+    /// <returns>true if group can attack something</returns>
+    public bool CheckAreaForAttackableGroup(UnitGroupEnum group, Vector2[] area)
+    {
+        foreach (Vector2 coord in area)
+        {
+            if (_units.ContainsKey(coord) && _unitManager.CanAttack(group, _units[coord].unitGroup))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// checks if a unit group is in
+    /// an area
+    /// </summary>
+    /// <param name="group">group to check for</param>
+    /// <param name="area">array of coords</param>
+    /// <returns>true if unit is in there</returns>
+    public bool CheckAreaForGroup(UnitGroupEnum group, Vector2[] area)
+    {
+        foreach (Vector2 coord in area)
+        {
+            if (_units.ContainsKey(coord) && _units[coord].unitGroup == group)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     //---------- VISION/FOG OF WAR ----------
 
     /// <summary>
     /// updates the PLAYER unit vision on game map
     /// AFTER THE UNIT HAS MOVED
+    /// NOTE: separate out getting tiles and showing tiles for ai
     /// </summary>
     /// <param name="unit">unit being updated</param>
     public void UpdateUnitVision(Unit unit)
@@ -1216,10 +1502,24 @@ public partial class GameBoard : Node2D
                 break;
         }
     }
+    //---------- MISC ----------
+
+    /// <summary>
+    /// transition menu state machine only on player turn
+    /// </summary>
+    /// <param name="state">state to transition to</param>
+    private void OnlyPlayerTurnMenuStateTransition(string state)
+    {
+        if (currentTurn == UnitGroupEnum.PLAYER)
+        {
+            menuStateMachine.TransitionTo(state);
+        }
+    }
 
     //---------- PROPERTIES ----------
 
     //note, make export if need to test outside of game board
+
     public GridResource grid
     {
         get { return _grid; }
@@ -1249,5 +1549,10 @@ public partial class GameBoard : Node2D
     public UnitManager unitManager
     {
         get { return _unitManager; }
+    }
+
+    private UnitGroupEnum currentTurn
+    {
+        get { return _unitGroupTurns[_turnIndex]; }
     }
 }

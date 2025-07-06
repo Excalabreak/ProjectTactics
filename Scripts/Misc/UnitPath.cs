@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [06/12/2025]
+ * Last Updated: [06/30/2025]
  * [pathfinding for units]
  */
 
@@ -13,7 +13,7 @@ public partial class UnitPath : TileMapLayer
 {
     [Export] private GameBoard _gameBoard;
 
-    private Pathfinder _pathfinder;
+    //private Pathfinder _pathfinder;
 
     private List<Vector2> _currentPath = new List<Vector2>();
     private Vector2 _unitPos;
@@ -25,7 +25,7 @@ public partial class UnitPath : TileMapLayer
     /// <param name="unitPos">the first coordinate in unit pos</param>
     public void Initialize(Vector2[] walkableCells, Vector2 unitPos)
     {
-        _pathfinder = new Pathfinder(_gameBoard.grid, walkableCells);
+        //_pathfinder = new Pathfinder(_gameBoard.grid, walkableCells);
         _unitPos = unitPos;
         ResetCurrentPath();
     }
@@ -39,7 +39,8 @@ public partial class UnitPath : TileMapLayer
     {
         Clear();
         _currentPath.Clear();
-        _currentPath.AddRange(_pathfinder.CalculatePointPath(cellStart, cellEnd));
+        //_currentPath.AddRange(_pathfinder.CalculatePointPath(cellStart, cellEnd));
+        _currentPath.AddRange(_gameBoard.DijkstraPathFinding(cellStart, cellEnd, _gameBoard.selectedUnit.unitStats.currentMove));
 
         DrawPathLine(_currentPath.ToArray());
     }
@@ -96,7 +97,7 @@ public partial class UnitPath : TileMapLayer
     public void Stop()
     {
         _unitPos = new Vector2(-1,-1);
-        _pathfinder = null;
+        //_pathfinder = null;
         Clear();
     }
 

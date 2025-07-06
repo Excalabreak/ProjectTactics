@@ -15,7 +15,8 @@ public partial class ActionMenu : CanvasLayer
     private GameBoard _gameBoard;
     private GridCursor _gridCursor;
     
-    [Export]private Button _cursorDefaultStartButton;
+    [Export] private Button _cursorDefaultStartButton;
+    [Export] private Button[] _actionButtons;
 
     public override void _Ready()
     {
@@ -33,7 +34,9 @@ public partial class ActionMenu : CanvasLayer
         //disables cursor
         _gridCursor.Hide();
         _gridCursor.ProcessMode = ProcessModeEnum.Disabled;
-        
+
+        ActionVisibility(_gameBoard.selectedUnit.unitActionEconomy.HasActions());
+
         //add a function to show and hide action menu buttons
     }
 
@@ -71,6 +74,18 @@ public partial class ActionMenu : CanvasLayer
     private void OnTradeButtonPress()
     {
 
+    }
+
+    /// <summary>
+    /// shows or hides actionsbased on bool
+    /// </summary>
+    /// <param name="visible">true if unit has actions</param>
+    private void ActionVisibility(bool visible)
+    {
+        foreach (Button button in _actionButtons)
+        {
+            button.Visible = visible;
+        }
     }
 
     /// <summary>

@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [04/11/2025]
+ * Last Updated: [06/30/2025]
  * [holds information about a map]
  */
 
@@ -78,9 +78,24 @@ public partial class GridResource : Resource
         return (int)(cell.X + _gridSize.X * cell.Y);
     }
 
-    public Vector2 gridCell
+    public Vector2[] GetAllCellCoords()
     {
-        get { return _gridSize; }
+        int x = Mathf.RoundToInt(_gridSize.X);
+        int y = Mathf.RoundToInt(_gridSize.Y);
+
+        Vector2[] coords = new Vector2[(x * y)];
+
+        int index = 0;
+
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                coords[index] = new Vector2(i, j);
+                index++;
+            }
+        }
+        return coords;
     }
 
     public Vector2 gridSize

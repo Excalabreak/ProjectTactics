@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/02/2025]
+ * Last Updated: [06/25/2025]
  * [holds information about the units in a group]
  */
 
@@ -47,7 +47,7 @@ public partial class UnitGroup : Node2D
     /// returns an array of units
     /// </summary>
     /// <returns></returns>
-    public Unit[] GetUnitGroup()
+    public Unit[] GetUnits()
     {
         return _units.ToArray();
     }
