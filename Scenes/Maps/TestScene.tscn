@@ -225,10 +225,6 @@ script = ExtResource("19_vgme0")
 _passingGroup = Array[int]([0, 1])
 _attackingGroup = Array[int]([2])
 
-[node name="Unit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
-position = Vector2(349, 807)
-_gameBoard = NodePath("../../..")
-
 [node name="Unit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(353, 731)
 _gameBoard = NodePath("../../..")
@@ -285,6 +281,5 @@ script = ExtResource("27_tl10l")
 [node name="BlankState" type="Node" parent="GameBoard/MenuStateMachine"]
 script = ExtResource("28_a4mff")
 
-[editable path="GameBoard/Units/PlayerUnits/Unit"]
 [editable path="GameBoard/Units/PlayerUnits/Unit2"]
 [editable path="GameBoard/Units/EnemyUnits/AiUnit"]

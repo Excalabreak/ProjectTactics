@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/18/2025]
+ * Last Updated: [07/07/2025]
  * [moves sprite through path]
  */
 
@@ -78,8 +78,8 @@ public partial class UnitPathMovement : Path2D
             _gameBoard.ChangeUnitLocationData(_unit, newLoc);
             _unit.cell = newLoc;
 
+            _gameBoard.MovingUnitVisionUpdate(_unit, newLoc);
             _gameBoard.UpdateUnitVision(_unit);
-
 
             //checks next tile
             Vector2 nextTile = newLoc + DirectionManager.Instance.GetVectorDirection(_pathDirections[_currentDirectionIndex]);
