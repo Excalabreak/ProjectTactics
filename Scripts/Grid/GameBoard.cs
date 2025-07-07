@@ -329,7 +329,7 @@ public partial class GameBoard : Node2D
     public void MenuUnSelectedStateAccept(Vector2 cell)
     {
         //need to add a condition for enemy units
-        if (_selectedUnit == null && _units.ContainsKey(cell))
+        if (_selectedUnit == null && _units.ContainsKey(cell) && _units[cell].unitGroup == UnitGroupEnum.PLAYER)
         {
             SelectUnit(cell);
             _actionMenuInstance = _actionMenu.Instantiate() as ActionMenu;
