@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/02/2025]
+ * Last Updated: [07/08/2025]
  * [idle state for NPCs]
  */
 
@@ -23,7 +23,11 @@ public partial class EnemyIdleState : NPCAiState
         if (stateMachine.gameBoard.CheckAreaForAttackableGroup(stateMachine.unit.unitGroup, checkTiles.ToArray()))
         {
             stateMachine.TransitionTo("EnemyAttackState");
-            stateMachine.DoTurn();
+            stateMachine.DoLogic();
+        }
+        else
+        {
+            stateMachine.UnitFinsh();
         }
     }
 }

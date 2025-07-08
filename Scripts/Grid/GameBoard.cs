@@ -448,7 +448,7 @@ public partial class GameBoard : Node2D
             path.RemoveAt(0);
         }
         if (_map.GetPathMoveCost(path.ToArray()) + _map.GetTileMoveCost(intNewCell)
-            > _selectedUnit.unitStats.currentMove)
+            > _selectedUnit.unitActionEconomy.currentMove)
         {
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
             return;
@@ -528,6 +528,12 @@ public partial class GameBoard : Node2D
         }
 
         ResetKnownOccupied(currentTurn);
+        GD.Print(currentTurn);
+
+        foreach (Unit unit in _unitManager.GetGroupUnits(currentTurn))
+        {
+            unit.unitActionEconomy.ResetActions();
+        }
 
         if (currentTurn == UnitGroupEnum.PLAYER)
         {
@@ -538,11 +544,6 @@ public partial class GameBoard : Node2D
             _menuStateMachine.TransitionTo("BlankState");
             AiTurn(currentTurn);
         }
-
-        //reset move of needed units
-        //reset known units
-
-        GD.Print(currentTurn);
     }
 
     /// <summary>
@@ -664,7 +665,7 @@ public partial class GameBoard : Node2D
     /// NOTE: Very simple now, will grow later
     /// </summary>
     /// <param name="group">which ai group is running</param>
-    private void AiTurn(UnitGroupEnum group)
+    private async void AiTurn(UnitGroupEnum group)
     {
         Unit[] units = _unitManager.GetGroupUnits(group);
         //loops through each unit and loops their logic until 
@@ -674,9 +675,11 @@ public partial class GameBoard : Node2D
         {
             if (IsInstanceValid(unit) && unit.IsAi())
             {
-                unit.aiStateMachine.DoTurn();
+                unit.aiStateMachine.DoLogic();
+                await ToSignal(unit.aiStateMachine, "UnitFinished");
             }
         }
+        EndTurn();
     }
 
     /// <summary>
@@ -758,7 +761,7 @@ public partial class GameBoard : Node2D
     /// <returns>array of coords that the unit can walk</returns>
     public Vector2[] GetWalkableCells(Unit unit)
     {
-        return DijkstaFill(unit.cell, (float)unit.unitStats.currentMove, false);
+        return DijkstaFill(unit.cell, (float)unit.unitActionEconomy.currentMove, false);
     }
 
     /// <summary>
@@ -770,7 +773,7 @@ public partial class GameBoard : Node2D
     public Vector2[] GetAttackableCells(Unit unit)
     {
         List<Vector2> attackableCells = new List<Vector2>();
-        Vector2[] realWalkableCells = DijkstaFill(unit.cell, unit.unitStats.currentMove, true);
+        Vector2[] realWalkableCells = DijkstaFill(unit.cell, unit.unitActionEconomy.currentMove, true);
 
         foreach (Vector2 curCell in realWalkableCells)
         {
