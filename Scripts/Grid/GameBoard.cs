@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [07/02/2025]
+ * Last Updated: [07/07/2025]
  * [game board manages everything on the map]
  */
 
@@ -38,10 +38,12 @@ public partial class GameBoard : Node2D
     [Export] private PackedScene _pauseMenu;
     [Signal] public delegate void SelectedMovedEventHandler();
 
+    [ExportGroup("MoveCost")]
     private Unit _selectedUnit;
     private Vector2[] _walkableCells;
     private Vector2[] _attackableCells;
     private float[,] _movementCosts;
+    [Export] private float _unitPassCost = 2f;
 
     private ActionMenu _actionMenuInstance;
     private PauseScreen _pauseScreenInstance;
@@ -102,14 +104,16 @@ public partial class GameBoard : Node2D
             }
         }
 
+        _unitGroupTurns = _unitManager.GetAllUnitGroupEnums();
+        _turnIndex = (int)_startingGroup;
+
         //this makes sure all units are in _units before updating the unit vision
         foreach (KeyValuePair<Vector2, Unit> unit in _units)
         {
             UpdateUnitVision(unit.Value);
         }
 
-        _unitGroupTurns = _unitManager.GetAllUnitGroupEnums();
-        _turnIndex = (int)_startingGroup;
+        ResetKnownOccupied(currentTurn);
 
         _movementCosts = _map.GetMovementCosts(_grid);
     }
@@ -281,11 +285,8 @@ public partial class GameBoard : Node2D
         _units.Remove(unit.cell);
         _units[newLoc] = unit;
 
-        if (unit.unitGroup == UnitGroupEnum.PLAYER)
-        {
-            _knownUnitLocations.Remove(unit.cell);
-            _knownUnitLocations.Add(newLoc);
-        }
+        _knownUnitLocations.Remove(unit.cell);
+        _knownUnitLocations.Add(newLoc);
     }
 
     /// <summary>
@@ -325,7 +326,7 @@ public partial class GameBoard : Node2D
     public void MenuUnSelectedStateAccept(Vector2 cell)
     {
         //need to add a condition for enemy units
-        if (_selectedUnit == null && _units.ContainsKey(cell))
+        if (_selectedUnit == null && _units.ContainsKey(cell) && _units[cell].unitGroup == UnitGroupEnum.PLAYER)
         {
             SelectUnit(cell);
             _actionMenuInstance = _actionMenu.Instantiate() as ActionMenu;
@@ -447,7 +448,7 @@ public partial class GameBoard : Node2D
             path.RemoveAt(0);
         }
         if (_map.GetPathMoveCost(path.ToArray()) + _map.GetTileMoveCost(intNewCell)
-            > _selectedUnit.unitStats.currentMove)
+            > _selectedUnit.unitActionEconomy.currentMove)
         {
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
             return;
@@ -526,6 +527,14 @@ public partial class GameBoard : Node2D
             _turnIndex = 0;
         }
 
+        ResetKnownOccupied(currentTurn);
+        GD.Print(currentTurn);
+
+        foreach (Unit unit in _unitManager.GetGroupUnits(currentTurn))
+        {
+            unit.unitActionEconomy.ResetActions();
+        }
+
         if (currentTurn == UnitGroupEnum.PLAYER)
         {
             _menuStateMachine.TransitionTo("UnSelectedState");
@@ -535,11 +544,55 @@ public partial class GameBoard : Node2D
             _menuStateMachine.TransitionTo("BlankState");
             AiTurn(currentTurn);
         }
+    }
 
-        //reset move of needed units
-        //reset known units
+    /// <summary>
+    /// clears unit and adds the units of the turn
+    /// and adds units in vision
+    /// </summary>
+    /// <param name="turnGroup">group</param>
+    private void ResetKnownOccupied(UnitGroupEnum turnGroup)
+    {
+        _knownUnitLocations = new List<Vector2>();
+        Unit[] currentGroup = _unitManager.GetGroupUnits(turnGroup);
 
-        GD.Print(currentTurn);
+        foreach (Unit unit in currentGroup)
+        {
+            _knownUnitLocations.Add(unit.cell);
+        }
+
+        //second for each loop to make sure all units are in known units
+        foreach (Unit unit in currentGroup)
+        {
+            if (_unitVision.ContainsKey(unit))
+            {
+                foreach (Vector2 cell in _unitVision[unit])
+                {
+                    if (_knownUnitLocations.Contains(cell))
+                    {
+                        continue;
+                    }
+                    if (IsOccupied(cell))
+                    {
+                        _knownUnitLocations.Add(cell);
+                    }
+                }
+            }
+            if (_unitVisionBlocked.ContainsKey(unit))
+            {
+                foreach (Vector2 cell in _unitVisionBlocked[unit])
+                {
+                    if (_knownUnitLocations.Contains(cell))
+                    {
+                        continue;
+                    }
+                    if (IsOccupied(cell))
+                    {
+                        _knownUnitLocations.Add(cell);
+                    }
+                }
+            }
+        }
     }
 
     //---------- COMBAT ----------
@@ -612,7 +665,7 @@ public partial class GameBoard : Node2D
     /// NOTE: Very simple now, will grow later
     /// </summary>
     /// <param name="group">which ai group is running</param>
-    private void AiTurn(UnitGroupEnum group)
+    private async void AiTurn(UnitGroupEnum group)
     {
         Unit[] units = _unitManager.GetGroupUnits(group);
         //loops through each unit and loops their logic until 
@@ -622,9 +675,11 @@ public partial class GameBoard : Node2D
         {
             if (IsInstanceValid(unit) && unit.IsAi())
             {
-                unit.aiStateMachine.DoTurn();
+                unit.aiStateMachine.DoLogic();
+                await ToSignal(unit.aiStateMachine, "UnitFinished");
             }
         }
+        EndTurn();
     }
 
     /// <summary>
@@ -706,7 +761,7 @@ public partial class GameBoard : Node2D
     /// <returns>array of coords that the unit can walk</returns>
     public Vector2[] GetWalkableCells(Unit unit)
     {
-        return DijkstaFill(unit.cell, (float)unit.unitStats.currentMove, false);
+        return DijkstaFill(unit.cell, (float)unit.unitActionEconomy.currentMove, false);
     }
 
     /// <summary>
@@ -718,7 +773,7 @@ public partial class GameBoard : Node2D
     public Vector2[] GetAttackableCells(Unit unit)
     {
         List<Vector2> attackableCells = new List<Vector2>();
-        Vector2[] realWalkableCells = DijkstaFill(unit.cell, unit.unitStats.currentMove, true);
+        Vector2[] realWalkableCells = DijkstaFill(unit.cell, unit.unitActionEconomy.currentMove, true);
 
         foreach (Vector2 curCell in realWalkableCells)
         {
@@ -1108,8 +1163,8 @@ public partial class GameBoard : Node2D
         if (unit.unitGroup != UnitGroupEnum.PLAYER)
         {
             return;
-        }
 
+        }
         //hides unit's old vision
         //adds unit to vision dictionary if not there
         HideVision(unit, true);
@@ -1127,6 +1182,7 @@ public partial class GameBoard : Node2D
         //GD.Print("uses base stat for vision");
         int r = unit.unitStats.GetBaseStat(UnitStatEnum.VISION);
         
+        //gets the furthest the unit can see
         int count = r/2;
         for (int i = 0; i < count; i++)
         {
@@ -1264,7 +1320,6 @@ public partial class GameBoard : Node2D
                     int ix = (int)x;
                     int iy = (int)y;
                     float dist = x - (float)ix;
-                    //add is within bounds
                     if (dist < .5f)
                     {
                         Vector2I newCoord = new Vector2I(ix, iy);
@@ -1319,9 +1374,10 @@ public partial class GameBoard : Node2D
 
                 if (!CheckCanPass(unit, tile))
                 {
-                    totalVisionCost += 2f;
+                    totalVisionCost += _unitPassCost;
 
                     //checks if unit location is known
+                    //move this to a seperate
                     if (!IsKnownOccupied(tile))
                     {
                         _knownUnitLocations.Add(new Vector2(tile.X, tile.Y));
@@ -1345,23 +1401,32 @@ public partial class GameBoard : Node2D
             }
         }
 
-        //visible tiles get revealed
-        Vector2[] outputVision = new Vector2[visibleTiles.Count()];
-        Vector2[] outputBlocked = new Vector2[blockingTiles.Count()];
-
-        for (int i = 0; i < visibleTiles.Count(); i++)
+        //might need to add npc units to show and hide vision
+        if (unit.unitGroup == UnitGroupEnum.PLAYER)
         {
-            outputVision[i] = visibleTiles[i];
-        }
+            //might be where we set up different cases for groups
+            //visible tiles get revealed
+            Vector2[] outputVision = new Vector2[visibleTiles.Count()];
+            Vector2[] outputBlocked = new Vector2[blockingTiles.Count()];
 
-        if (blockingTiles.Count() > 0)
-        {
-            for (int i = 0; i < blockingTiles.Count(); i++)
+            //NOTE: this is so vector2i are vector2
+            for (int i = 0; i < visibleTiles.Count(); i++)
             {
-                outputBlocked[i] = blockingTiles[i];
+                outputVision[i] = visibleTiles[i];
             }
+
+            if (blockingTiles.Count() > 0)
+            {
+                for (int i = 0; i < blockingTiles.Count(); i++)
+                {
+                    outputBlocked[i] = blockingTiles[i];
+                }
+            }
+
+            ShowVision(unit, outputVision, outputBlocked);
         }
-        ShowVision(unit, outputVision, outputBlocked);
+
+        
     }
 
     /// <summary>
@@ -1477,6 +1542,68 @@ public partial class GameBoard : Node2D
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// updates any unit vision from an enemy unit
+    /// moving into fog of war
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <param name="cell"></param>
+    public void MovingUnitVisionUpdate(Unit unit, Vector2 cell)
+    {
+        if (!_cellBlockedBy.ContainsKey(cell) && !_cellRevealedBy.ContainsKey(cell))
+        {
+            return;
+        }
+        List<Unit> check = new List<Unit>();
+        List<Unit> alreadyChecked = new List<Unit>();
+        alreadyChecked.Add(unit);
+
+        if (_cellRevealedBy.ContainsKey(cell))
+        {
+            bool skip = false;
+            if (_cellRevealedBy[cell].Count <= 1 && _cellRevealedBy[cell][0] == unit)
+            {
+                skip = true;
+            }
+
+            if (!skip)
+            {
+                check = _cellRevealedBy[cell];
+                for (int i = 0; i < check.Count(); i++)
+                {
+                    if (alreadyChecked.Contains(check[i]))
+                    {
+                        continue;
+                    }
+
+                    alreadyChecked.Add(check[i]);
+                    UpdateUnitVision(check[i]);
+                }
+            }
+        }
+
+        if (_cellBlockedBy.ContainsKey(cell))
+        {
+            if (_cellBlockedBy[cell].Count <= 1 && _cellBlockedBy[cell][0] == unit)
+            {
+                return;
+            }
+
+            check = _cellBlockedBy[cell];
+            for (int i = 0; i < check.Count(); i++)
+            {
+                if (alreadyChecked.Contains(_cellBlockedBy[cell][i]))
+                {
+                    continue;
+                }
+
+                alreadyChecked.Add(check[i]);
+                UpdateUnitVision(check[i]);
+            }
+        }
+
     }
 
     /// <summary>

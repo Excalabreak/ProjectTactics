@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/16/2025]
+ * Last Updated: [07/08/2025]
  * [class for unit stats]
  */
 
@@ -16,7 +16,6 @@ public partial class UnitStats : Node
     [Export] private Label _healthLable;
     private int _maxHP = 10;
     private int _currentHP = 10;
-    private float _currentMove = 6;
 
     /// <summary>
     /// makes sure stats has all enums
@@ -35,7 +34,6 @@ public partial class UnitStats : Node
 
         _maxHP = _baseStats[UnitStatEnum.HEALTH];
         _currentHP = _maxHP;
-        _currentMove = (float)_baseStats[UnitStatEnum.MOVE];
         UpdateHealthUI();
     }
 
@@ -53,16 +51,6 @@ public partial class UnitStats : Node
             //unit dies
         }
         UpdateHealthUI();
-    }
-
-    /// <summary>
-    /// subtracts the move cost when
-    /// a unit is moving
-    /// </summary>
-    /// <param name="cost">amount to move to the next tile</param>
-    public void UseMove(float moveCost)
-    {
-        _currentMove -= moveCost;
     }
 
     /// <summary>
@@ -92,10 +80,5 @@ public partial class UnitStats : Node
     public void AddToStat(UnitStatEnum stat, int amount)
     {
         _baseStats[stat] = _baseStats[stat] + amount;
-    }
-
-    public float currentMove
-    {
-        get { return _currentMove; }
     }
 }

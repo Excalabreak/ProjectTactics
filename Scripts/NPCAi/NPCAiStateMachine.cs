@@ -4,12 +4,14 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/25/2025]
+ * Last Updated: [07/08/2025]
  * [state machine for npc AI]
  */
 
 public partial class NPCAiStateMachine : Node
 {
+    [Signal] public delegate void UnitFinishedEventHandler();
+
     [Export] public Unit _unit;
     [Export] public NodePath initialState;
 
@@ -45,10 +47,18 @@ public partial class NPCAiStateMachine : Node
     /// determine what to do and check for switching
     /// states
     /// </summary>
-    public void DoTurn()
+    public void DoLogic()
     {
         GD.Print(_currentState.Name);
         _currentState.TurnLogic();
+    }
+
+    /// <summary>
+    /// signals that the unit is finished
+    /// </summary>
+    public void UnitFinsh()
+    {
+        EmitSignal("UnitFinished");
     }
 
     /// <summary>

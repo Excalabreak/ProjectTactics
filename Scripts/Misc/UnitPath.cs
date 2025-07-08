@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [06/30/2025]
+ * Last Updated: [07/08/2025]
  * [pathfinding for units]
  */
 
@@ -40,7 +40,7 @@ public partial class UnitPath : TileMapLayer
         Clear();
         _currentPath.Clear();
         //_currentPath.AddRange(_pathfinder.CalculatePointPath(cellStart, cellEnd));
-        _currentPath.AddRange(_gameBoard.DijkstraPathFinding(cellStart, cellEnd, _gameBoard.selectedUnit.unitStats.currentMove));
+        _currentPath.AddRange(_gameBoard.DijkstraPathFinding(cellStart, cellEnd, _gameBoard.selectedUnit.unitActionEconomy.currentMove));
 
         DrawPathLine(_currentPath.ToArray());
     }

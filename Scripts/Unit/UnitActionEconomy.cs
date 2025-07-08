@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/24/2025]
+ * Last Updated: [07/08/2025]
  * [keeps track of actions unit can make]
  */
 
@@ -15,10 +15,13 @@ public partial class UnitActionEconomy : Node
     [Export] private UnitStats _unitStats;
     private int _maxActions = 1;
     private int _actionsLeft = 1;
+    private float _currentMove = 6;
 
     public override void _Ready()
     {
         _unit.CurrentGameBoard += SetGameBoard;
+
+        ResetActions();
     }
 
     /// <summary>
@@ -58,7 +61,18 @@ public partial class UnitActionEconomy : Node
     /// </summary>
     public void ResetActions()
     {
+        _currentMove = (float)_unitStats.GetBaseStat(UnitStatEnum.MOVE);
         _actionsLeft = _maxActions;
+    }
+
+    /// <summary>
+    /// subtracts the move cost when
+    /// a unit is moving
+    /// </summary>
+    /// <param name="cost">amount to move to the next tile</param>
+    public void UseMove(float moveCost)
+    {
+        _currentMove -= moveCost;
     }
 
     /// <summary>
@@ -96,5 +110,10 @@ public partial class UnitActionEconomy : Node
     private void SetGameBoard(GameBoard gameBoard)
     {
         _gameBoard = gameBoard;
+    }
+
+    public float currentMove
+    {
+        get { return _currentMove; }
     }
 }
