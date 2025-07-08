@@ -107,13 +107,13 @@ public partial class GameBoard : Node2D
         _unitGroupTurns = _unitManager.GetAllUnitGroupEnums();
         _turnIndex = (int)_startingGroup;
 
-        ResetKnownOccupied(currentTurn);
-
         //this makes sure all units are in _units before updating the unit vision
         foreach (KeyValuePair<Vector2, Unit> unit in _units)
         {
             UpdateUnitVision(unit.Value);
         }
+
+        ResetKnownOccupied(currentTurn);
 
         _movementCosts = _map.GetMovementCosts(_grid);
     }
@@ -285,11 +285,8 @@ public partial class GameBoard : Node2D
         _units.Remove(unit.cell);
         _units[newLoc] = unit;
 
-        if (unit.unitGroup == UnitGroupEnum.PLAYER)
-        {
-            _knownUnitLocations.Remove(unit.cell);
-            _knownUnitLocations.Add(newLoc);
-        }
+        _knownUnitLocations.Remove(unit.cell);
+        _knownUnitLocations.Add(newLoc);
     }
 
     /// <summary>
@@ -550,15 +547,50 @@ public partial class GameBoard : Node2D
 
     /// <summary>
     /// clears unit and adds the units of the turn
+    /// and adds units in vision
     /// </summary>
     /// <param name="turnGroup">group</param>
     private void ResetKnownOccupied(UnitGroupEnum turnGroup)
     {
         _knownUnitLocations = new List<Vector2>();
+        Unit[] currentGroup = _unitManager.GetGroupUnits(turnGroup);
 
-        foreach (Unit unit in _unitManager.GetGroupUnits(turnGroup))
+        foreach (Unit unit in currentGroup)
         {
             _knownUnitLocations.Add(unit.cell);
+        }
+
+        //second for each loop to make sure all units are in known units
+        foreach (Unit unit in currentGroup)
+        {
+            if (_unitVision.ContainsKey(unit))
+            {
+                foreach (Vector2 cell in _unitVision[unit])
+                {
+                    if (_knownUnitLocations.Contains(cell))
+                    {
+                        continue;
+                    }
+                    if (IsOccupied(cell))
+                    {
+                        _knownUnitLocations.Add(cell);
+                    }
+                }
+            }
+            if (_unitVisionBlocked.ContainsKey(unit))
+            {
+                foreach (Vector2 cell in _unitVisionBlocked[unit])
+                {
+                    if (_knownUnitLocations.Contains(cell))
+                    {
+                        continue;
+                    }
+                    if (IsOccupied(cell))
+                    {
+                        _knownUnitLocations.Add(cell);
+                    }
+                }
+            }
         }
     }
 
