@@ -37,7 +37,7 @@ public partial class BaseMenu : CanvasLayer
    /// <summary>
    /// hides the menu by queue free
    /// </summary>
-    protected void HideMenu()
+    public void HideMenu()
     {
         _gridCursor.ProcessMode = ProcessModeEnum.Inherit;
         _gridCursor.ResetCursor();

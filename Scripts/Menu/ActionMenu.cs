@@ -43,7 +43,8 @@ public partial class ActionMenu : BaseMenu
 
     private void OnTurnButtonPress()
     {
-
+        HideMenu();
+        _gameBoard.SpawnTurnMenu();
     }
 
     private void OnItemButtonPress()

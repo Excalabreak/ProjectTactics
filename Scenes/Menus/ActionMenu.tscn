@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bsjvashhk428s" path="res://Scripts/Menu/ActionMenu.cs" id="1_yp5m8"]
 
-[node name="ActionMenu" type="CanvasLayer" node_paths=PackedStringArray("_actionButtons")]
+[node name="ActionMenu" type="CanvasLayer" node_paths=PackedStringArray("_actionButtons", "_cursorDefaultStartButton")]
 script = ExtResource("1_yp5m8")
 _actionButtons = [NodePath("VBoxContainer/AttackButton")]
+_cursorDefaultStartButton = NodePath("VBoxContainer/AttackButton")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 8

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dis0gsl4d7t3q"
-path="res://.godot/imported/TempTurnButton.png-dbbfa49c4324aca75c7483c467ef6ba5.ctex"
+uid="uid://dfjkxear1uuwc"
+path="res://.godot/imported/TempRightButton.png-62a6a4106113241f8b126e78cbba1f04.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Test/TempTurnButton.png"
-dest_files=["res://.godot/imported/TempTurnButton.png-dbbfa49c4324aca75c7483c467ef6ba5.ctex"]
+source_file="res://Sprites/Test/TempRightButton.png"
+dest_files=["res://.godot/imported/TempRightButton.png-62a6a4106113241f8b126e78cbba1f04.ctex"]
 
 [params]
 

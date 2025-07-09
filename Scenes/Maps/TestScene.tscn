@@ -1,9 +1,10 @@
-[gd_scene load_steps=42 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=43 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
 [ext_resource type="PackedScene" uid="uid://c24kesd8eggv4" path="res://Scenes/Menus/ActionMenu.tscn" id="3_0ccgp"]
 [ext_resource type="PackedScene" uid="uid://cthmnrjp6uu61" path="res://Scenes/Menus/PauseScreen.tscn" id="4_r77ll"]
+[ext_resource type="PackedScene" uid="uid://2b0edy02ekfi" path="res://Scenes/Menus/TurnMenu.tscn" id="5_668gq"]
 [ext_resource type="Texture2D" uid="uid://dxok463ymyabj" path="res://Sprites/Test/TestTileMap2.png" id="5_jsdi5"]
 [ext_resource type="Script" uid="uid://cw1cq5bive7vy" path="res://Scripts/Grid/Map.cs" id="6_ns1vp"]
 [ext_resource type="Texture2D" uid="uid://dvp5cs678jp83" path="res://Sprites/Test/TempFogOfWarTileMap.png" id="7_maqlv"]
@@ -178,6 +179,7 @@ _blockedOverlay = NodePath("MapTiles/BlockedOverlay")
 _menuStateMachine = NodePath("MenuStateMachine")
 _actionMenu = ExtResource("3_0ccgp")
 _pauseMenu = ExtResource("4_r77ll")
+_turnMenu = ExtResource("5_668gq")
 
 [node name="MapTiles" type="Node2D" parent="GameBoard"]
 
