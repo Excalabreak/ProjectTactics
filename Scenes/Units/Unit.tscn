@@ -129,8 +129,9 @@ loop = false
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="UnitPathMovement/PathFollow2D"]
 remote_path = NodePath("../../../Sprites")
 
-[node name="UnitDirection" type="Node2D" parent="."]
+[node name="UnitDirection" type="Node2D" parent="." node_paths=PackedStringArray("_unit")]
 script = ExtResource("6_uqujc")
+_unit = NodePath("..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

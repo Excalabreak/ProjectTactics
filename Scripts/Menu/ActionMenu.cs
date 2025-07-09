@@ -4,40 +4,20 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: YT:Heal Moon
- * Last Updated: [05/30/2025]
+ * Last Updated: [07/09/2025]
  * [menu for unit action
  * NOTE: can probably make this and pause menu the same script
  * will do after tutorial]
  */
 
-public partial class ActionMenu : CanvasLayer
+public partial class ActionMenu : BaseMenu
 {
-    private GameBoard _gameBoard;
-    private GridCursor _gridCursor;
-    
-    [Export] private Button _cursorDefaultStartButton;
     [Export] private Button[] _actionButtons;
 
     public override void _Ready()
     {
-        _gameBoard = GetParent() as GameBoard;
-
-        if (_gameBoard == null)
-        {
-            GD.PrintErr("MENU ISN'T CHILD OF GAMEBOARD, SHIT HIT THE FAN");
-        }
-
-        _gridCursor = _gameBoard.gridCursor;
-
-        _cursorDefaultStartButton.GrabFocus();
-
-        //disables cursor
-        _gridCursor.Hide();
-        _gridCursor.ProcessMode = ProcessModeEnum.Disabled;
-
+        base._Ready();
         ActionVisibility(_gameBoard.selectedUnit.unitActionEconomy.HasActions());
-
-        //add a function to show and hide action menu buttons
     }
 
     private void OnAttackButtonPress()
@@ -97,13 +77,5 @@ public partial class ActionMenu : CanvasLayer
         _gameBoard.ResetMenu();
 
         HideMenu();
-    }
-
-    private void HideMenu()
-    {
-        _gridCursor.ProcessMode = ProcessModeEnum.Inherit;
-        _gridCursor.ResetCursor();
-        _gridCursor.Show();
-        QueueFree();
     }
 }
