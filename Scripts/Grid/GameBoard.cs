@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [07/07/2025]
+ * Last Updated: [07/09/2025]
  * [game board manages everything on the map]
  */
 
@@ -36,6 +36,7 @@ public partial class GameBoard : Node2D
     [Export] private MenuStateMachine _menuStateMachine;
     [Export] private PackedScene _actionMenu;
     [Export] private PackedScene _pauseMenu;
+    [Export] private PackedScene _turnMenu;
     [Signal] public delegate void SelectedMovedEventHandler();
 
     [ExportGroup("MoveCost")]
@@ -47,6 +48,7 @@ public partial class GameBoard : Node2D
 
     private ActionMenu _actionMenuInstance;
     private PauseScreen _pauseScreenInstance;
+    private TurnMenu _turnMenuInstance;
 
     //all units, might want to split this up
     private System.Collections.Generic.Dictionary<Vector2, Unit> _units = new System.Collections.Generic.Dictionary<Vector2, Unit>();
@@ -462,6 +464,8 @@ public partial class GameBoard : Node2D
     /// <summary>
     /// default cursor decline for menu, 
     /// just changes state to unselected state
+    /// 
+    /// NOTE: might want to take this out of game board
     /// </summary>
     public void StandardCursorDecline()
     {
@@ -473,6 +477,10 @@ public partial class GameBoard : Node2D
         else if (IsInstanceValid(_pauseScreenInstance))
         {
             _pauseScreenInstance.OnClosePressed();
+        }
+        else if (IsInstanceValid(_turnMenuInstance))
+        {
+            _turnMenuInstance.OnCancelPressed();
         }
         ResetMenu();
     }
@@ -499,6 +507,18 @@ public partial class GameBoard : Node2D
         DeselectSelectedUnit();
         ClearSelectedUnit();
         OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+    }
+
+    /// <summary>
+    /// shows the turn menu
+    /// 
+    /// here for future if i want the buttons
+    /// closer to the unit
+    /// </summary>
+    public void SpawnTurnMenu()
+    {
+        _turnMenuInstance = _turnMenu.Instantiate() as TurnMenu;
+        AddChild(_turnMenuInstance);
     }
 
     /// <summary>
@@ -604,7 +624,7 @@ public partial class GameBoard : Node2D
     /// <param name="targetPos">position of targeted unit</param>
     public void UnitCombat(Vector2 initPos, Vector2 targetPos)
     {
-        if (!_units.ContainsKey(initPos) && !_units.ContainsKey(targetPos))
+        if (!_units.ContainsKey(initPos) || !_units.ContainsKey(targetPos))
         {
             return;
         }
@@ -626,6 +646,16 @@ public partial class GameBoard : Node2D
     /// <param name="targetUnit">unit targeted</param>
     public void UnitCombat(Unit initUnit, Unit targetUnit)
     {
+        //makes sure units are facing the right direction
+        //will likely need to change when engaged in combat is added
+        DirectionEnum[] initUnitPossibleDirection = DirectionManager.Instance.GetClosestDirection(initUnit.cell, targetUnit.cell);
+        if (!initUnitPossibleDirection.Contains(initUnit.unitDirection.currentFacing))
+        {
+            initUnit.unitDirection.currentFacing = initUnitPossibleDirection[0];
+        }
+
+        targetUnit.unitDirection.currentFacing = DirectionManager.Instance.GetOppositeDirection(initUnit.unitDirection.currentFacing);
+
         initUnit.unitActionEconomy.UseAction();
 
         UnitStats attackingStats = initUnit.unitStats;

@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://2b0edy02ekfi"]
+
+[ext_resource type="Script" uid="uid://bj18yrbftoqn" path="res://Scripts/Menu/TurnMenu.cs" id="1_i4gxg"]
+
+[node name="TurnMenu" type="CanvasLayer" node_paths=PackedStringArray("_cursorDefaultStartButton")]
+script = ExtResource("1_i4gxg")
+_cursorDefaultStartButton = NodePath("VBoxContainer/UpButton")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UpButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Up"
+
+[node name="DownButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Down"
+
+[node name="LeftButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Left"
+
+[node name="RightButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Right"
+
+[node name="CancelButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="pressed" from="VBoxContainer/UpButton" to="." method="OnUpPressed"]
+[connection signal="pressed" from="VBoxContainer/DownButton" to="." method="OnDownPressed"]
+[connection signal="pressed" from="VBoxContainer/LeftButton" to="." method="OnLeftPressed"]
+[connection signal="pressed" from="VBoxContainer/RightButton" to="." method="OnRightPressed"]
+[connection signal="pressed" from="VBoxContainer/CancelButton" to="." method="OnCancelPressed"]

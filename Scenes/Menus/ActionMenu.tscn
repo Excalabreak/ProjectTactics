@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bsjvashhk428s" path="res://Scripts/Menu/ActionMenu.cs" id="1_yp5m8"]
 
-[node name="ActionMenu" type="CanvasLayer" node_paths=PackedStringArray("_cursorDefaultStartButton", "_actionButtons")]
+[node name="ActionMenu" type="CanvasLayer" node_paths=PackedStringArray("_actionButtons", "_cursorDefaultStartButton")]
 script = ExtResource("1_yp5m8")
-_cursorDefaultStartButton = NodePath("VBoxContainer/CancelButton")
 _actionButtons = [NodePath("VBoxContainer/AttackButton")]
+_cursorDefaultStartButton = NodePath("VBoxContainer/AttackButton")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 8
@@ -42,12 +42,13 @@ text = "Talk
 [node name="MoveButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../AttackButton")
-focus_neighbor_bottom = NodePath("../CancelButton")
+focus_neighbor_bottom = NodePath("../TurnButton")
 text = "Move"
 
 [node name="TurnButton" type="Button" parent="VBoxContainer"]
-visible = false
 layout_mode = 2
+focus_neighbor_top = NodePath("../MoveButton")
+focus_neighbor_bottom = NodePath("../CancelButton")
 text = "Turn"
 
 [node name="ItemButton" type="Button" parent="VBoxContainer"]
@@ -62,7 +63,7 @@ text = "Trade"
 
 [node name="CancelButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-focus_neighbor_top = NodePath("../MoveButton")
+focus_neighbor_top = NodePath("../TurnButton")
 focus_neighbor_bottom = NodePath("../AttackButton")
 text = "Cancel"
 
