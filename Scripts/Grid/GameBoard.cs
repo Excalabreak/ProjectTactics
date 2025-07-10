@@ -624,7 +624,7 @@ public partial class GameBoard : Node2D
     /// <param name="targetPos">position of targeted unit</param>
     public void UnitCombat(Vector2 initPos, Vector2 targetPos)
     {
-        if (!_units.ContainsKey(initPos) && !_units.ContainsKey(targetPos))
+        if (!_units.ContainsKey(initPos) || !_units.ContainsKey(targetPos))
         {
             return;
         }
@@ -646,6 +646,16 @@ public partial class GameBoard : Node2D
     /// <param name="targetUnit">unit targeted</param>
     public void UnitCombat(Unit initUnit, Unit targetUnit)
     {
+        //makes sure units are facing the right direction
+        //will likely need to change when engaged in combat is added
+        DirectionEnum[] initUnitPossibleDirection = DirectionManager.Instance.GetClosestDirection(initUnit.cell, targetUnit.cell);
+        if (!initUnitPossibleDirection.Contains(initUnit.unitDirection.currentFacing))
+        {
+            initUnit.unitDirection.currentFacing = initUnitPossibleDirection[0];
+        }
+
+        targetUnit.unitDirection.currentFacing = DirectionManager.Instance.GetOppositeDirection(initUnit.unitDirection.currentFacing);
+
         initUnit.unitActionEconomy.UseAction();
 
         UnitStats attackingStats = initUnit.unitStats;
