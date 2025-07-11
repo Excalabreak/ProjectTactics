@@ -15,11 +15,15 @@ public partial class UnitActionEconomy : Node
     [Export] private UnitStats _unitStats;
     private int _maxActions = 1;
     private int _actionsLeft = 1;
+
+
+    private float _maxMove = 6;
     private float _currentMove = 6;
 
     public override void _Ready()
     {
         _unit.CurrentGameBoard += SetGameBoard;
+        _maxMove = (float)_unitStats.GetBaseStat(UnitStatEnum.MOVE);
 
         ResetActions();
     }
@@ -61,7 +65,7 @@ public partial class UnitActionEconomy : Node
     /// </summary>
     public void ResetActions()
     {
-        _currentMove = (float)_unitStats.GetBaseStat(UnitStatEnum.MOVE);
+        _currentMove = _maxMove;
         _actionsLeft = _maxActions;
     }
 
@@ -115,5 +119,10 @@ public partial class UnitActionEconomy : Node
     public float currentMove
     {
         get { return _currentMove; }
+    }
+
+    public float maxMove
+    {
+        get { return _maxMove; }
     }
 }

@@ -31,6 +31,7 @@ public partial class GameBoard : Node2D
     [Export] private Map _map;
     [Export] private FogOfWar _fogOfWar;
     [Export] private BlockedOverlay _blockedOverlay;
+    [Export] private UIStats _uiStats;
 
     [ExportGroup("Menu")]
     [Export] private MenuStateMachine _menuStateMachine;
@@ -206,11 +207,12 @@ public partial class GameBoard : Node2D
 
         if (!_units.ContainsKey(cell))
         {
-            //could add options here
             return;
         }
 
         Unit curUnit = _units[cell];
+
+        _uiStats.ShowUnitStats(curUnit);
 
         _walkableCells = GetWalkableCells(curUnit);
         _attackableCells = GetAttackableCells(curUnit);
@@ -228,6 +230,7 @@ public partial class GameBoard : Node2D
         {
             _selectedUnit.isSelected = false;
         }
+        _uiStats.HideStatsPanel();
         _unitWalkHighlights.Clear();
         _unitPath.Stop();
     }
@@ -416,6 +419,10 @@ public partial class GameBoard : Node2D
         if (_units.ContainsKey(newCell) && _selectedUnit == null)
         {
             HoverDisplay(newCell);
+        }
+        else
+        {
+            _uiStats.HideStatsPanel();
         }
     }
 

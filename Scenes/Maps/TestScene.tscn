@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=44 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -29,6 +29,7 @@
 [ext_resource type="Script" uid="uid://c7dh1mhyvoxy3" path="res://Scripts/Menu/MenuStateMachine/States/MoveState.cs" id="26_onxey"]
 [ext_resource type="Script" uid="uid://cum60gpotm147" path="res://Scripts/Menu/MenuStateMachine/States/AttackState.cs" id="27_tl10l"]
 [ext_resource type="Script" uid="uid://do6ttbkj61oci" path="res://Scripts/Menu/MenuStateMachine/States/BlankState.cs" id="28_a4mff"]
+[ext_resource type="Script" uid="uid://dwo3objlyjeiq" path="res://Scripts/UI/UIStats.cs" id="30_0ccgp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
 texture = ExtResource("5_jsdi5")
@@ -166,7 +167,7 @@ sources/0 = SubResource("TileSetAtlasSource_t2vuu")
 
 [node name="TestScene" type="Node2D"]
 
-[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_menuStateMachine")]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_uiStats", "_menuStateMachine")]
 script = ExtResource("1_lo7rv")
 _grid = ExtResource("2_668gq")
 _unitWalkHighlights = NodePath("MapTiles/UnitWalkHighlights")
@@ -176,6 +177,7 @@ _gridCursor = NodePath("Cursor")
 _map = NodePath("MapTiles/Map")
 _fogOfWar = NodePath("MapTiles/FogOfWar")
 _blockedOverlay = NodePath("MapTiles/BlockedOverlay")
+_uiStats = NodePath("StatUI")
 _menuStateMachine = NodePath("MenuStateMachine")
 _actionMenu = ExtResource("3_0ccgp")
 _pauseMenu = ExtResource("4_r77ll")
@@ -284,7 +286,14 @@ script = ExtResource("27_tl10l")
 [node name="BlankState" type="Node" parent="GameBoard/MenuStateMachine"]
 script = ExtResource("28_a4mff")
 
-[node name="StatUI" type="CanvasLayer" parent="GameBoard"]
+[node name="StatUI" type="CanvasLayer" parent="GameBoard" node_paths=PackedStringArray("_statsPanel", "_HPLable", "_MOVLable", "_ATKLable", "_DEFLable", "_RNGLable")]
+script = ExtResource("30_0ccgp")
+_statsPanel = NodePath("Panel")
+_HPLable = NodePath("Panel/VBoxContainer/HPLabel")
+_MOVLable = NodePath("Panel/VBoxContainer/MOVLable")
+_ATKLable = NodePath("Panel/VBoxContainer/ATKLable")
+_DEFLable = NodePath("Panel/VBoxContainer/DEFLable")
+_RNGLable = NodePath("Panel/VBoxContainer/RNGLable")
 
 [node name="Panel" type="Panel" parent="GameBoard/StatUI"]
 offset_left = 16.0
