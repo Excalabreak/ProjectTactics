@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [07/09/2025]
+ * Last Updated: [07/13/2025]
  * [game board manages everything on the map]
  */
 
@@ -194,31 +194,12 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
-    /// displays information when the cursor is hovering a unit
+    /// calls state machine to display information
     /// </summary>
     /// <param name="cell">cell to display info</param>
     public void HoverDisplay(Vector2 cell)
     {
-        //add condition for hidden enemy unit
-        if (!_knownUnitLocations.Contains(cell))
-        {
-            return;
-        }
-
-        if (!_units.ContainsKey(cell))
-        {
-            return;
-        }
-
-        Unit curUnit = _units[cell];
-
-        _uiStats.ShowUnitStats(curUnit);
-
-        _walkableCells = GetWalkableCells(curUnit);
-        _attackableCells = GetAttackableCells(curUnit);
-
-        _unitWalkHighlights.DrawAttackHighlights(_attackableCells);
-        _unitWalkHighlights.DrawWalkHighlights(_walkableCells);
+        _menuStateMachine.currentState.OnHover(cell);
     }
 
     /// <summary>
@@ -502,6 +483,37 @@ public partial class GameBoard : Node2D
 
         ResetMovePath();
         _unitPath.ResetCurrentPath();
+    }
+
+    //---------- HOVER DISPLAY ----------
+
+    /// <summary>
+    /// base hover display that displays unit:
+    /// walk range and max attack ranges
+    /// </summary>
+    /// <param name="cell"></param>
+    public void BaseHoverDisplay(Vector2 cell)
+    {
+        //add condition for hidden enemy unit
+        if (!_knownUnitLocations.Contains(cell))
+        {
+            return;
+        }
+
+        if (!_units.ContainsKey(cell))
+        {
+            return;
+        }
+
+        Unit curUnit = _units[cell];
+
+        _uiStats.ShowUnitStats(curUnit);
+
+        _walkableCells = GetWalkableCells(curUnit);
+        _attackableCells = GetAttackableCells(curUnit);
+
+        _unitWalkHighlights.DrawAttackHighlights(_attackableCells);
+        _unitWalkHighlights.DrawWalkHighlights(_walkableCells);
     }
 
     //---------- OTHER MENU ----------
