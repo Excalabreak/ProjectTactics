@@ -60,6 +60,7 @@ public partial class Map : TileMapLayer
 
         foreach (Vector2 tile in path)
         {
+            GD.Print(tile);
             Vector2I iTile = new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.X));
             output += (float)GetCellTileData(iTile).GetCustomData("MoveCost");
         }
