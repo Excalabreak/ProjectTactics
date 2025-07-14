@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=49 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -13,7 +13,9 @@
 [ext_resource type="Script" uid="uid://chp31frw6wmws" path="res://Scripts/Grid/BlockedOverlay.cs" id="10_gt7qa"]
 [ext_resource type="Texture2D" uid="uid://cehbm80elwn7v" path="res://Sprites/Test/GridTile.png" id="11_dl0r8"]
 [ext_resource type="Script" uid="uid://spl5bc7vxqdc" path="res://Scripts/Grid/GridOutline.cs" id="12_j6x6y"]
+[ext_resource type="Texture2D" uid="uid://eeoqhp4yc142" path="res://Sprites/Test/knownLocIndicator.png" id="12_jsdi5"]
 [ext_resource type="Texture2D" uid="uid://c77lwl1g215vn" path="res://Sprites/Test/TileHighlight.png" id="13_he1t7"]
+[ext_resource type="Script" uid="uid://c6vpnu1qxwc0r" path="res://Scripts/Grid/KnownUnitLocations.cs" id="13_ns1vp"]
 [ext_resource type="Texture2D" uid="uid://b2e6fnaytryuk" path="res://Sprites/Test/attackRange.png" id="14_wn863"]
 [ext_resource type="Script" uid="uid://ccvhstia04m7b" path="res://Scripts/Grid/UnitWalkHighlight.cs" id="15_8bl2x"]
 [ext_resource type="Texture2D" uid="uid://b7bouj3wqmjsd" path="res://Sprites/Test/arrows.svg" id="16_l2v6i"]
@@ -80,6 +82,15 @@ texture_region_size = Vector2i(64, 64)
 [sub_resource type="TileSet" id="TileSet_1vcy8"]
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_dwn5r")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ns1vp"]
+texture = ExtResource("12_jsdi5")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_maqlv"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_ns1vp")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5rbs6"]
 texture = ExtResource("11_dl0r8")
@@ -168,7 +179,7 @@ sources/0 = SubResource("TileSetAtlasSource_t2vuu")
 
 [node name="TestScene" type="Node2D"]
 
-[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_uiStats", "_uiBattle", "_menuStateMachine")]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_uiStats", "_uiBattle", "_menuStateMachine")]
 script = ExtResource("1_lo7rv")
 _grid = ExtResource("2_668gq")
 _unitWalkHighlights = NodePath("MapTiles/UnitWalkHighlights")
@@ -178,6 +189,7 @@ _gridCursor = NodePath("Cursor")
 _map = NodePath("MapTiles/Map")
 _fogOfWar = NodePath("MapTiles/FogOfWar")
 _blockedOverlay = NodePath("MapTiles/BlockedOverlay")
+_knownUnitLocationsTileMap = NodePath("MapTiles/KnownUnitLocations")
 _uiStats = NodePath("UI/StatsPanel")
 _uiBattle = NodePath("UI/BattlePredPanel")
 _menuStateMachine = NodePath("MenuStateMachine")
@@ -204,6 +216,11 @@ modulate = Color(1, 1, 1, 0.431373)
 z_index = 16
 tile_set = SubResource("TileSet_1vcy8")
 script = ExtResource("10_gt7qa")
+
+[node name="KnownUnitLocations" type="TileMapLayer" parent="GameBoard/MapTiles"]
+z_index = 17
+tile_set = SubResource("TileSet_maqlv")
+script = ExtResource("13_ns1vp")
 
 [node name="Grid" type="TileMapLayer" parent="GameBoard/MapTiles" node_paths=PackedStringArray("_gameboard")]
 z_index = 60

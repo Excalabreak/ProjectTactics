@@ -57,7 +57,6 @@ public partial class Map : TileMapLayer
         }
 
         float output = 0;
-
         foreach (Vector2 tile in path)
         {
             Vector2I iTile = new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.X));

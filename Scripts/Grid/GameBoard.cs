@@ -31,6 +31,7 @@ public partial class GameBoard : Node2D
     [Export] private Map _map;
     [Export] private FogOfWar _fogOfWar;
     [Export] private BlockedOverlay _blockedOverlay;
+    [Export] private KnownUnitLocations _knownUnitLocationsTileMap;
 
     [ExportGroup("UI")]
     [Export] private UIStats _uiStats;
@@ -86,9 +87,6 @@ public partial class GameBoard : Node2D
         _gridCursor.Decline += OnCursorDecline;
 
         Reinitialize();
-
-        GD.Print("NOTE: _knownUnitLocation needs to be reset on every turn " +
-            "(atleast clear all location that doesn't have a unit in vision)");
     }
 
     /// <summary>
@@ -456,7 +454,8 @@ public partial class GameBoard : Node2D
     {
         if (!_walkableCells.Contains(newCell))
         {
-            _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
+            //_unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
+            _unitPath.Clear();
             return;
         }
         if (!_unitPath.CoordConnects(newCell))
@@ -636,6 +635,8 @@ public partial class GameBoard : Node2D
         }
     }
 
+    //---------- END TURN ----------
+
     /// <summary>
     /// changes the turn
     /// </summary>
@@ -675,6 +676,7 @@ public partial class GameBoard : Node2D
     {
         _knownUnitLocations = new List<Vector2>();
         Unit[] currentGroup = _unitManager.GetGroupUnits(turnGroup);
+        _knownUnitLocationsTileMap.Clear();
 
         foreach (Unit unit in currentGroup)
         {
@@ -1748,14 +1750,20 @@ public partial class GameBoard : Node2D
             case TileVisibilityState.UNSEEN:
                 _fogOfWar.HideMapCell(tileCoord);
                 _blockedOverlay.RemoveBlockCell(tileCoord);
+                if (IsKnownOccupied(tileCoord))
+                {
+                    _knownUnitLocationsTileMap.MarkKnownUnit(tileCoord);
+                }
                 break;
             case TileVisibilityState.BLOCKING:
                 _fogOfWar.RevealMapCell(tileCoord);
                 _blockedOverlay.BlockCell(tileCoord);
+                _knownUnitLocationsTileMap.RemoveMarkedUnit(tileCoord);
                 break;
             case TileVisibilityState.VISIBLE:
                 _fogOfWar.RevealMapCell(tileCoord);
                 _blockedOverlay.RemoveBlockCell(tileCoord);
+                _knownUnitLocationsTileMap.RemoveMarkedUnit(tileCoord);
                 break;
         }
     }
