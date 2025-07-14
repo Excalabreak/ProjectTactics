@@ -397,7 +397,7 @@ public partial class GameBoard : Node2D
     public void MenuUnSelectedStateCursorMove(Vector2 newCell)
     {
         _unitWalkHighlights.Clear();
-        if (_units.ContainsKey(newCell) && _selectedUnit == null)
+        if (_units.ContainsKey(newCell))
         {
             HoverDisplay(newCell);
         }
@@ -473,6 +473,10 @@ public partial class GameBoard : Node2D
         ResetMenu();
     }
 
+    /// <summary>
+    /// allows players to start over when drawing the unit's
+    /// walk path
+    /// </summary>
     public void MoveStateCursorDecline()
     {
         if (_gridCursor.cell == _selectedUnit.cell)
@@ -494,7 +498,11 @@ public partial class GameBoard : Node2D
     /// <param name="cell"></param>
     public void BaseHoverDisplay(Vector2 cell)
     {
-        //add condition for hidden enemy unit
+        if (_selectedUnit != null)
+        {
+            return;
+        }
+
         if (!_knownUnitLocations.Contains(cell))
         {
             return;
@@ -514,6 +522,38 @@ public partial class GameBoard : Node2D
 
         _unitWalkHighlights.DrawAttackHighlights(_attackableCells);
         _unitWalkHighlights.DrawWalkHighlights(_walkableCells);
+    }
+
+    /// <summary>
+    /// shows the combat predictions if fights unit in cell
+    /// 
+    /// NOTE: will likely need to add combat confirmation
+    /// when adding equiptment
+    /// </summary>
+    /// <param name="cell">cell</param>
+    public void CombatHover(Vector2 cell)
+    {
+        if (_selectedUnit != null)
+        {
+            return;
+        }
+
+        if (!_knownUnitLocations.Contains(cell))
+        {
+            return;
+        }
+
+        if (!_units.ContainsKey(cell))
+        {
+            return;
+        }
+
+        if (!FloodFill(_selectedUnit.cell, _selectedUnit.attackRange).Contains(cell))
+        {
+            return;
+        }
+
+
     }
 
     //---------- OTHER MENU ----------
@@ -795,12 +835,12 @@ public partial class GameBoard : Node2D
     //---------- DISPLAY HIGHLIGHTS ----------
 
     /// <summary>
-    /// shows the attack range of the current selected unit
+    /// shows the attack range of unit
     /// </summary>
-    public void ShowCurrentAttackRange()
+    public void ShowCurrentAttackRange(Unit unit)
     {
         _unitWalkHighlights.Clear();
-        _unitWalkHighlights.DrawAttackHighlights(FloodFill(_selectedUnit.cell, _selectedUnit.attackRange));
+        _unitWalkHighlights.DrawAttackHighlights(FloodFill(unit.cell, unit.attackRange));
     }
 
     /// <summary>

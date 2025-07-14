@@ -333,5 +333,107 @@ text = "DEF: 5"
 layout_mode = 2
 text = "RANGE: 1"
 
+[node name="BattleUI" type="CanvasLayer" parent="GameBoard"]
+
+[node name="Panel" type="Panel" parent="GameBoard/BattleUI"]
+offset_left = 16.0
+offset_top = 178.0
+offset_right = 318.0
+offset_bottom = 331.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/BattleUI/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 7.0
+offset_right = -7.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer"]
+layout_mode = 2
+text = "COMBAT PREDICTIONS"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameBoard/BattleUI/Panel/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayerSide" type="VBoxContainer" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PHPLable" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer/PlayerSide"]
+layout_mode = 2
+text = "10 -> 5"
+horizontal_alignment = 1
+
+[node name="PDMGLable" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer/PlayerSide"]
+layout_mode = 2
+text = "5"
+horizontal_alignment = 1
+
+[node name="PACCLable" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer/PlayerSide"]
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+
+[node name="PCRTLable" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer/PlayerSide"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="StatsLables" type="VBoxContainer" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="HPLable" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer/StatsLables"]
+layout_mode = 2
+text = "HP"
+horizontal_alignment = 1
+
+[node name="DMGLable" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer/StatsLables"]
+layout_mode = 2
+text = "DMG"
+horizontal_alignment = 1
+
+[node name="ACCLable" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer/StatsLables"]
+layout_mode = 2
+text = "ACC"
+horizontal_alignment = 1
+
+[node name="CRTLable" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer/StatsLables"]
+layout_mode = 2
+text = "CRIT"
+horizontal_alignment = 1
+
+[node name="EnemySide" type="VBoxContainer" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="EHPLable" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer/EnemySide"]
+layout_mode = 2
+text = "10 -> 5"
+horizontal_alignment = 1
+
+[node name="EDMGLable" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer/EnemySide"]
+layout_mode = 2
+text = "5"
+horizontal_alignment = 1
+
+[node name="EACCLable" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer/EnemySide"]
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+
+[node name="ECRTLable" type="Label" parent="GameBoard/BattleUI/Panel/VBoxContainer/HBoxContainer/EnemySide"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
 [editable path="GameBoard/Units/PlayerUnits/Unit2"]
 [editable path="GameBoard/Units/EnemyUnits/AiUnit"]

@@ -11,7 +11,7 @@ public partial class AttackState : MenuState
 {
     public override void Enter()
     {
-        stateMachine.gameBoard.ShowCurrentAttackRange();
+        stateMachine.gameBoard.ShowCurrentAttackRange(stateMachine.gameBoard.selectedUnit);
     }
 
     public override void OnCursorAccept(Vector2 cell)
