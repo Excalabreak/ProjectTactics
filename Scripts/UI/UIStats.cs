@@ -3,14 +3,12 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/11/2025]
+ * Last Updated: [07/14/2025]
  * [displays stats for the player]
  */
 
-public partial class UIStats : Node
+public partial class UIStats : Control
 {
-    [Export] private Panel _statsPanel;
-
     [Export] private Label _HPLable;
     [Export] private Label _MOVLable;
     [Export] private Label _ATKLable;
@@ -29,7 +27,7 @@ public partial class UIStats : Node
         _DEFLable.Text = "DEF: " + unit.unitStats.GetBaseStat(UnitStatEnum.DEFENSE);
         _RNGLable.Text = "RANGE: " + unit.attackRange;
 
-        _statsPanel.Visible = true;
+        this.Visible = true;
     }
 
     /// <summary>
@@ -37,8 +35,6 @@ public partial class UIStats : Node
     /// </summary>
     public void HideStatsPanel()
     {
-        _statsPanel.Visible = false;
+        this.Visible = false;
     }
-
-
 }

@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/13/2025]
+ * Last Updated: [07/14/2025]
  * [State when no unit is selected]
  */
 
@@ -27,5 +27,10 @@ public partial class UnSelectedState : MenuState
     public override void OnHover(Vector2 cell)
     {
         stateMachine.gameBoard.BaseHoverDisplay(cell);
+    }
+
+    public override void Exit()
+    {
+        stateMachine.gameBoard.HideStatsUI();
     }
 }

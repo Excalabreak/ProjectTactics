@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [07/13/2025]
+ * Last Updated: [07/14/2025]
  * [game board manages everything on the map]
  */
 
@@ -31,7 +31,10 @@ public partial class GameBoard : Node2D
     [Export] private Map _map;
     [Export] private FogOfWar _fogOfWar;
     [Export] private BlockedOverlay _blockedOverlay;
+
+    [ExportGroup("UI")]
     [Export] private UIStats _uiStats;
+    [Export] private UIBattle _uiBattle;
 
     [ExportGroup("Menu")]
     [Export] private MenuStateMachine _menuStateMachine;
@@ -380,6 +383,7 @@ public partial class GameBoard : Node2D
 
         //very basic combat for now
         _unitWalkHighlights.Clear();
+        _uiBattle.HideBattlePredictions();
 
         UnitCombat(_selectedUnit, opposingUnit);
 
@@ -397,13 +401,50 @@ public partial class GameBoard : Node2D
     public void MenuUnSelectedStateCursorMove(Vector2 newCell)
     {
         _unitWalkHighlights.Clear();
-        if (_units.ContainsKey(newCell))
+        if (IsKnownOccupied(newCell))
         {
             HoverDisplay(newCell);
         }
         else
         {
             _uiStats.HideStatsPanel();
+        }
+    }
+
+    /// <summary>
+    /// shows hover display when checking combat
+    /// </summary>
+    /// <param name="newCell"></param>
+    public void MenuAttackStateCursorMove(Vector2 newCell)
+    {
+        //_unitWalkHighlights.Clear();
+        if (_selectedUnit == null)
+        {
+            _uiBattle.HideBattlePredictions();
+            return;
+        }
+        if (_selectedUnit.cell == newCell)
+        {
+            _uiBattle.HideBattlePredictions();
+            return;
+        }
+        if (!_units.ContainsKey(newCell))
+        {
+            _uiBattle.HideBattlePredictions();
+            return;
+        }
+        if (!IsKnownOccupied(newCell))
+        {
+            _uiBattle.HideBattlePredictions();
+            return;
+        }
+        if (FloodFill(_selectedUnit.cell, _selectedUnit.attackRange).Contains(newCell))
+        {
+            HoverDisplay(newCell);
+        }
+        else
+        {
+            _uiBattle.HideBattlePredictions();
         }
     }
 
@@ -503,7 +544,7 @@ public partial class GameBoard : Node2D
             return;
         }
 
-        if (!_knownUnitLocations.Contains(cell))
+        if (!IsKnownOccupied(cell))
         {
             return;
         }
@@ -533,27 +574,22 @@ public partial class GameBoard : Node2D
     /// <param name="cell">cell</param>
     public void CombatHover(Vector2 cell)
     {
-        if (_selectedUnit != null)
+        UnitStats playerStats = _selectedUnit.unitStats;
+        UnitStats enemyStats = _units[cell].unitStats;
+
+        int playerDamage = playerStats.GetBaseStat(UnitStatEnum.STRENGTH) - enemyStats.GetBaseStat(UnitStatEnum.DEFENSE);
+        int enemyDamage = 0;
+
+        if (FloodFill(cell, _units[cell].attackRange).Contains(_selectedUnit.cell))
         {
-            return;
+            enemyDamage = enemyStats.GetBaseStat(UnitStatEnum.STRENGTH) - playerStats.GetBaseStat(UnitStatEnum.DEFENSE);
         }
 
-        if (!_knownUnitLocations.Contains(cell))
-        {
-            return;
-        }
-
-        if (!_units.ContainsKey(cell))
-        {
-            return;
-        }
-
-        if (!FloodFill(_selectedUnit.cell, _selectedUnit.attackRange).Contains(cell))
-        {
-            return;
-        }
-
-
+        //basic combat
+        //logic for magic numbers don't exist yet
+        //100 for acc, 0 for crit
+        _uiBattle.ShowBattlePredictions(playerStats.currentHP, enemyStats.currentHP,
+            playerDamage, enemyDamage, 100, 100, 0, 0);
     }
 
     //---------- OTHER MENU ----------
@@ -578,6 +614,22 @@ public partial class GameBoard : Node2D
     {
         _turnMenuInstance = _turnMenu.Instantiate() as TurnMenu;
         AddChild(_turnMenuInstance);
+    }
+
+    /// <summary>
+    /// calls to hide battleUI for state machine
+    /// </summary>
+    public void HideBattleUI()
+    {
+        _uiBattle.HideBattlePredictions();
+    }
+
+    /// <summary>
+    /// calls to hide stats ui for state machine
+    /// </summary>
+    public void HideStatsUI()
+    {
+        _uiStats.HideStatsPanel();
     }
 
     /// <summary>
