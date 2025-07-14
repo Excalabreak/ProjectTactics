@@ -31,7 +31,7 @@ public partial class AttackState : MenuState
 
     public override void OnHover(Vector2 cell)
     {
-        stateMachine.gameBoard.CombatHover(cell);
+        stateMachine.gameBoard.CombatHoverDisplay(cell);
     }
 
     public override void Exit()

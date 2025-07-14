@@ -454,10 +454,6 @@ public partial class GameBoard : Node2D
     /// <param name="newCell"></param>
     public void MenuMoveStateCursorMove(Vector2 newCell)
     {
-        //things to check for auto path:
-        //is a walkable cell (WISH: maybe path find around if not walkable)
-        //if coords even connects
-        //path move cost
         if (!_walkableCells.Contains(newCell))
         {
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
@@ -539,21 +535,14 @@ public partial class GameBoard : Node2D
     /// <param name="cell"></param>
     public void BaseHoverDisplay(Vector2 cell)
     {
-        if (_selectedUnit != null)
-        {
-            return;
-        }
-
         if (!IsKnownOccupied(cell))
         {
             return;
         }
-
         if (!_units.ContainsKey(cell))
         {
             return;
         }
-
         Unit curUnit = _units[cell];
 
         _uiStats.ShowUnitStats(curUnit);
@@ -572,7 +561,7 @@ public partial class GameBoard : Node2D
     /// when adding equiptment
     /// </summary>
     /// <param name="cell">cell</param>
-    public void CombatHover(Vector2 cell)
+    public void CombatHoverDisplay(Vector2 cell)
     {
         UnitStats playerStats = _selectedUnit.unitStats;
         UnitStats enemyStats = _units[cell].unitStats;
