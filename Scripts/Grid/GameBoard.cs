@@ -454,7 +454,8 @@ public partial class GameBoard : Node2D
     {
         if (!_walkableCells.Contains(newCell))
         {
-            _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
+            //_unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
+            _unitPath.Clear();
             return;
         }
         if (!_unitPath.CoordConnects(newCell))
