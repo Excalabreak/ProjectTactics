@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [07/09/2025]
+ * Last Updated: [07/14/2025]
  * [game board manages everything on the map]
  */
 
@@ -31,6 +31,10 @@ public partial class GameBoard : Node2D
     [Export] private Map _map;
     [Export] private FogOfWar _fogOfWar;
     [Export] private BlockedOverlay _blockedOverlay;
+
+    [ExportGroup("UI")]
+    [Export] private UIStats _uiStats;
+    [Export] private UIBattle _uiBattle;
 
     [ExportGroup("Menu")]
     [Export] private MenuStateMachine _menuStateMachine;
@@ -193,30 +197,12 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
-    /// displays information when the cursor is hovering a unit
+    /// calls state machine to display information
     /// </summary>
     /// <param name="cell">cell to display info</param>
     public void HoverDisplay(Vector2 cell)
     {
-        //add condition for hidden enemy unit
-        if (!_knownUnitLocations.Contains(cell))
-        {
-            return;
-        }
-
-        if (!_units.ContainsKey(cell))
-        {
-            //could add options here
-            return;
-        }
-
-        Unit curUnit = _units[cell];
-
-        _walkableCells = GetWalkableCells(curUnit);
-        _attackableCells = GetAttackableCells(curUnit);
-
-        _unitWalkHighlights.DrawAttackHighlights(_attackableCells);
-        _unitWalkHighlights.DrawWalkHighlights(_walkableCells);
+        _menuStateMachine.currentState.OnHover(cell);
     }
 
     /// <summary>
@@ -228,6 +214,7 @@ public partial class GameBoard : Node2D
         {
             _selectedUnit.isSelected = false;
         }
+        _uiStats.HideStatsPanel();
         _unitWalkHighlights.Clear();
         _unitPath.Stop();
     }
@@ -396,6 +383,7 @@ public partial class GameBoard : Node2D
 
         //very basic combat for now
         _unitWalkHighlights.Clear();
+        _uiBattle.HideBattlePredictions();
 
         UnitCombat(_selectedUnit, opposingUnit);
 
@@ -413,9 +401,50 @@ public partial class GameBoard : Node2D
     public void MenuUnSelectedStateCursorMove(Vector2 newCell)
     {
         _unitWalkHighlights.Clear();
-        if (_units.ContainsKey(newCell) && _selectedUnit == null)
+        if (IsKnownOccupied(newCell))
         {
             HoverDisplay(newCell);
+        }
+        else
+        {
+            _uiStats.HideStatsPanel();
+        }
+    }
+
+    /// <summary>
+    /// shows hover display when checking combat
+    /// </summary>
+    /// <param name="newCell"></param>
+    public void MenuAttackStateCursorMove(Vector2 newCell)
+    {
+        //_unitWalkHighlights.Clear();
+        if (_selectedUnit == null)
+        {
+            _uiBattle.HideBattlePredictions();
+            return;
+        }
+        if (_selectedUnit.cell == newCell)
+        {
+            _uiBattle.HideBattlePredictions();
+            return;
+        }
+        if (!_units.ContainsKey(newCell))
+        {
+            _uiBattle.HideBattlePredictions();
+            return;
+        }
+        if (!IsKnownOccupied(newCell))
+        {
+            _uiBattle.HideBattlePredictions();
+            return;
+        }
+        if (FloodFill(_selectedUnit.cell, _selectedUnit.attackRange).Contains(newCell))
+        {
+            HoverDisplay(newCell);
+        }
+        else
+        {
+            _uiBattle.HideBattlePredictions();
         }
     }
 
@@ -425,10 +454,6 @@ public partial class GameBoard : Node2D
     /// <param name="newCell"></param>
     public void MenuMoveStateCursorMove(Vector2 newCell)
     {
-        //things to check for auto path:
-        //is a walkable cell (WISH: maybe path find around if not walkable)
-        //if coords even connects
-        //path move cost
         if (!_walkableCells.Contains(newCell))
         {
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
@@ -485,6 +510,10 @@ public partial class GameBoard : Node2D
         ResetMenu();
     }
 
+    /// <summary>
+    /// allows players to start over when drawing the unit's
+    /// walk path
+    /// </summary>
     public void MoveStateCursorDecline()
     {
         if (_gridCursor.cell == _selectedUnit.cell)
@@ -495,6 +524,61 @@ public partial class GameBoard : Node2D
 
         ResetMovePath();
         _unitPath.ResetCurrentPath();
+    }
+
+    //---------- HOVER DISPLAY ----------
+
+    /// <summary>
+    /// base hover display that displays unit:
+    /// walk range and max attack ranges
+    /// </summary>
+    /// <param name="cell"></param>
+    public void BaseHoverDisplay(Vector2 cell)
+    {
+        if (!IsKnownOccupied(cell))
+        {
+            return;
+        }
+        if (!_units.ContainsKey(cell))
+        {
+            return;
+        }
+        Unit curUnit = _units[cell];
+
+        _uiStats.ShowUnitStats(curUnit);
+
+        _walkableCells = GetWalkableCells(curUnit);
+        _attackableCells = GetAttackableCells(curUnit);
+
+        _unitWalkHighlights.DrawAttackHighlights(_attackableCells);
+        _unitWalkHighlights.DrawWalkHighlights(_walkableCells);
+    }
+
+    /// <summary>
+    /// shows the combat predictions if fights unit in cell
+    /// 
+    /// NOTE: will likely need to add combat confirmation
+    /// when adding equiptment
+    /// </summary>
+    /// <param name="cell">cell</param>
+    public void CombatHoverDisplay(Vector2 cell)
+    {
+        UnitStats playerStats = _selectedUnit.unitStats;
+        UnitStats enemyStats = _units[cell].unitStats;
+
+        int playerDamage = playerStats.GetBaseStat(UnitStatEnum.STRENGTH) - enemyStats.GetBaseStat(UnitStatEnum.DEFENSE);
+        int enemyDamage = 0;
+
+        if (FloodFill(cell, _units[cell].attackRange).Contains(_selectedUnit.cell))
+        {
+            enemyDamage = enemyStats.GetBaseStat(UnitStatEnum.STRENGTH) - playerStats.GetBaseStat(UnitStatEnum.DEFENSE);
+        }
+
+        //basic combat
+        //logic for magic numbers don't exist yet
+        //100 for acc, 0 for crit
+        _uiBattle.ShowBattlePredictions(playerStats.currentHP, enemyStats.currentHP,
+            playerDamage, enemyDamage, 100, 100, 0, 0);
     }
 
     //---------- OTHER MENU ----------
@@ -519,6 +603,22 @@ public partial class GameBoard : Node2D
     {
         _turnMenuInstance = _turnMenu.Instantiate() as TurnMenu;
         AddChild(_turnMenuInstance);
+    }
+
+    /// <summary>
+    /// calls to hide battleUI for state machine
+    /// </summary>
+    public void HideBattleUI()
+    {
+        _uiBattle.HideBattlePredictions();
+    }
+
+    /// <summary>
+    /// calls to hide stats ui for state machine
+    /// </summary>
+    public void HideStatsUI()
+    {
+        _uiStats.HideStatsPanel();
     }
 
     /// <summary>
@@ -776,12 +876,12 @@ public partial class GameBoard : Node2D
     //---------- DISPLAY HIGHLIGHTS ----------
 
     /// <summary>
-    /// shows the attack range of the current selected unit
+    /// shows the attack range of unit
     /// </summary>
-    public void ShowCurrentAttackRange()
+    public void ShowCurrentAttackRange(Unit unit)
     {
         _unitWalkHighlights.Clear();
-        _unitWalkHighlights.DrawAttackHighlights(FloodFill(_selectedUnit.cell, _selectedUnit.attackRange));
+        _unitWalkHighlights.DrawAttackHighlights(FloodFill(unit.cell, unit.attackRange));
     }
 
     /// <summary>

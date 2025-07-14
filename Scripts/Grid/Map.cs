@@ -51,7 +51,13 @@ public partial class Map : TileMapLayer
     /// <returns>move cost of path</returns>
     public float GetPathMoveCost(Vector2[] path)
     {
+        if (path == null)
+        {
+            return 0;
+        }
+
         float output = 0;
+
         foreach (Vector2 tile in path)
         {
             Vector2I iTile = new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.X));

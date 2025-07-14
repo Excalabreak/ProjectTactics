@@ -81,4 +81,14 @@ public partial class UnitStats : Node
     {
         _baseStats[stat] = _baseStats[stat] + amount;
     }
+
+    public int maxHP
+    {
+        get { return _maxHP; }
+    }
+
+    public int currentHP
+    {
+        get { return _currentHP; }
+    }
 }

@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/12/2025]
+ * Last Updated: [07/14/2025]
  * [State when move is selected]
  */
 
@@ -30,5 +30,15 @@ public partial class MoveState : MenuState
     public override void OnCursorDecline()
     {
         stateMachine.gameBoard.MoveStateCursorDecline();
+    }
+
+    public override void OnHover(Vector2 cell)
+    {
+        stateMachine.gameBoard.BaseHoverDisplay(cell);
+    }
+
+    public override void Exit()
+    {
+        stateMachine.gameBoard.HideStatsUI();
     }
 }
