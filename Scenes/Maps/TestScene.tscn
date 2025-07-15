@@ -1,0 +1,494 @@
+[gd_scene load_steps=49 format=4 uid="uid://cbymeb2u0whko"]
+
+[ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
+[ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
+[ext_resource type="PackedScene" uid="uid://c24kesd8eggv4" path="res://Scenes/Menus/ActionMenu.tscn" id="3_0ccgp"]
+[ext_resource type="PackedScene" uid="uid://cthmnrjp6uu61" path="res://Scenes/Menus/PauseScreen.tscn" id="4_r77ll"]
+[ext_resource type="PackedScene" uid="uid://2b0edy02ekfi" path="res://Scenes/Menus/TurnMenu.tscn" id="5_668gq"]
+[ext_resource type="Texture2D" uid="uid://dxok463ymyabj" path="res://Sprites/Test/TestTileMap2.png" id="5_jsdi5"]
+[ext_resource type="Script" uid="uid://cw1cq5bive7vy" path="res://Scripts/Grid/Map.cs" id="6_ns1vp"]
+[ext_resource type="Texture2D" uid="uid://dvp5cs678jp83" path="res://Sprites/Test/TempFogOfWarTileMap.png" id="7_maqlv"]
+[ext_resource type="Script" uid="uid://b2aqh3nmf5lbc" path="res://Scripts/Grid/FogOfWar.cs" id="8_sb4gi"]
+[ext_resource type="Texture2D" uid="uid://d0b36idsyuh7p" path="res://Sprites/Test/BlockedOverlay.png" id="9_ixcl0"]
+[ext_resource type="Script" uid="uid://chp31frw6wmws" path="res://Scripts/Grid/BlockedOverlay.cs" id="10_gt7qa"]
+[ext_resource type="Texture2D" uid="uid://cehbm80elwn7v" path="res://Sprites/Test/GridTile.png" id="11_dl0r8"]
+[ext_resource type="Script" uid="uid://spl5bc7vxqdc" path="res://Scripts/Grid/GridOutline.cs" id="12_j6x6y"]
+[ext_resource type="Texture2D" uid="uid://eeoqhp4yc142" path="res://Sprites/Test/knownLocIndicator.png" id="12_jsdi5"]
+[ext_resource type="Texture2D" uid="uid://c77lwl1g215vn" path="res://Sprites/Test/TileHighlight.png" id="13_he1t7"]
+[ext_resource type="Script" uid="uid://c6vpnu1qxwc0r" path="res://Scripts/Grid/KnownUnitLocations.cs" id="13_ns1vp"]
+[ext_resource type="Texture2D" uid="uid://b2e6fnaytryuk" path="res://Sprites/Test/attackRange.png" id="14_wn863"]
+[ext_resource type="Script" uid="uid://ccvhstia04m7b" path="res://Scripts/Grid/UnitWalkHighlight.cs" id="15_8bl2x"]
+[ext_resource type="Texture2D" uid="uid://b7bouj3wqmjsd" path="res://Sprites/Test/arrows.svg" id="16_l2v6i"]
+[ext_resource type="Script" uid="uid://c8guc1dvccpxf" path="res://Scripts/Misc/UnitPath.cs" id="17_kjk7w"]
+[ext_resource type="Script" uid="uid://dm3c41p3wxfqg" path="res://Scripts/Unit/UnitManager.cs" id="18_7r5ow"]
+[ext_resource type="Script" uid="uid://dwoq515u7ummm" path="res://Scripts/Unit/UnitGroup.cs" id="19_vgme0"]
+[ext_resource type="PackedScene" uid="uid://cp44coe2c50e7" path="res://Scenes/Units/Unit.tscn" id="20_b77nk"]
+[ext_resource type="PackedScene" uid="uid://dffwt6w7o7q8w" path="res://Scenes/Units/AiUnit.tscn" id="21_qm5w0"]
+[ext_resource type="Script" uid="uid://b8k2oamcad7ba" path="res://Scripts/Misc/GridCursor.cs" id="22_iwnah"]
+[ext_resource type="Texture2D" uid="uid://suvveuruoly4" path="res://Sprites/Test/GridCursor.png" id="23_fhuv3"]
+[ext_resource type="Script" uid="uid://do8g05v3r4qn8" path="res://Scripts/Menu/MenuStateMachine/MenuStateMachine.cs" id="24_bleph"]
+[ext_resource type="Script" uid="uid://8rtvmkb53l3a" path="res://Scripts/Menu/MenuStateMachine/States/UnSelectedState.cs" id="25_wn5g2"]
+[ext_resource type="Script" uid="uid://c7dh1mhyvoxy3" path="res://Scripts/Menu/MenuStateMachine/States/MoveState.cs" id="26_onxey"]
+[ext_resource type="Script" uid="uid://cum60gpotm147" path="res://Scripts/Menu/MenuStateMachine/States/AttackState.cs" id="27_tl10l"]
+[ext_resource type="Script" uid="uid://do6ttbkj61oci" path="res://Scripts/Menu/MenuStateMachine/States/BlankState.cs" id="28_a4mff"]
+[ext_resource type="Script" uid="uid://dwo3objlyjeiq" path="res://Scripts/UI/UIStats.cs" id="30_0ccgp"]
+[ext_resource type="Script" uid="uid://bwxpec5gmpou1" path="res://Scripts/UI/UIBattle.cs" id="31_r77ll"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
+texture = ExtResource("5_jsdi5")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/custom_data_0 = 1.0
+0:0/0/custom_data_1 = 1.0
+1:0/0 = 0
+1:0/0/custom_data_0 = 3.0
+1:0/0/custom_data_1 = 2.0
+2:0/0 = 0
+2:0/0/custom_data_0 = 999.0
+2:0/0/custom_data_1 = 999.0
+3:0/0 = 0
+3:0/0/custom_data_0 = 2.0
+3:0/0/custom_data_1 = 1.0
+4:0/0 = 0
+4:0/0/custom_data_0 = 999.0
+4:0/0/custom_data_1 = 1.0
+
+[sub_resource type="TileSet" id="TileSet_8c81w"]
+tile_size = Vector2i(64, 64)
+custom_data_layer_0/name = "MoveCost"
+custom_data_layer_0/type = 3
+custom_data_layer_1/name = "VisionCost"
+custom_data_layer_1/type = 3
+sources/0 = SubResource("TileSetAtlasSource_p30di")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8c81w"]
+texture = ExtResource("7_maqlv")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_dwn5r"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_8c81w")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dwn5r"]
+texture = ExtResource("9_ixcl0")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_1vcy8"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_dwn5r")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ns1vp"]
+texture = ExtResource("12_jsdi5")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_maqlv"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_ns1vp")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5rbs6"]
+texture = ExtResource("11_dl0r8")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_201fe"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_5rbs6")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4v62a"]
+texture = ExtResource("13_he1t7")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1vcy8"]
+texture = ExtResource("14_wn863")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_c2lnq"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_4v62a")
+sources/1 = SubResource("TileSetAtlasSource_1vcy8")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t2vuu"]
+texture = ExtResource("16_l2v6i")
+texture_region_size = Vector2i(80, 80)
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/terrain = 0
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrain = 0
+1:0/0/terrains_peering_bit/right_side = 0
+1:0/0/terrains_peering_bit/left_side = 0
+2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/terrain = 0
+2:0/0/terrains_peering_bit/bottom_side = 0
+2:0/0/terrains_peering_bit/top_side = 0
+3:0/0 = 0
+3:1/0 = 0
+3:1/0/terrain_set = 0
+3:1/0/terrain = 0
+3:1/0/terrains_peering_bit/left_side = 0
+2:1/0 = 0
+2:1/0/terrain_set = 0
+2:1/0/terrain = 0
+2:1/0/terrains_peering_bit/bottom_side = 0
+1:1/0 = 0
+1:1/0/terrain_set = 0
+1:1/0/terrain = 0
+1:1/0/terrains_peering_bit/bottom_side = 0
+1:1/0/terrains_peering_bit/left_side = 0
+0:1/0 = 0
+0:1/0/terrain_set = 0
+0:1/0/terrain = 0
+0:1/0/terrains_peering_bit/right_side = 0
+0:1/0/terrains_peering_bit/bottom_side = 0
+0:2/0 = 0
+0:2/0/terrain_set = 0
+0:2/0/terrain = 0
+0:2/0/terrains_peering_bit/right_side = 0
+0:2/0/terrains_peering_bit/top_side = 0
+1:2/0 = 0
+1:2/0/terrain_set = 0
+1:2/0/terrain = 0
+1:2/0/terrains_peering_bit/left_side = 0
+1:2/0/terrains_peering_bit/top_side = 0
+2:2/0 = 0
+2:2/0/terrain_set = 0
+2:2/0/terrain = 0
+2:2/0/terrains_peering_bit/top_side = 0
+3:2/0 = 0
+3:2/0/terrain_set = 0
+3:2/0/terrain = 0
+3:2/0/terrains_peering_bit/right_side = 0
+
+[sub_resource type="TileSet" id="TileSet_lp1f3"]
+tile_size = Vector2i(64, 64)
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Path"
+terrain_set_0/terrain_0/color = Color(1, 0, 0, 1)
+sources/0 = SubResource("TileSetAtlasSource_t2vuu")
+
+[node name="TestScene" type="Node2D"]
+
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_uiStats", "_uiBattle", "_menuStateMachine")]
+script = ExtResource("1_lo7rv")
+_grid = ExtResource("2_668gq")
+_unitWalkHighlights = NodePath("MapTiles/UnitWalkHighlights")
+_unitPath = NodePath("MapTiles/UnitPath")
+_unitManager = NodePath("Units")
+_gridCursor = NodePath("Cursor")
+_map = NodePath("MapTiles/Map")
+_fogOfWar = NodePath("MapTiles/FogOfWar")
+_blockedOverlay = NodePath("MapTiles/BlockedOverlay")
+_knownUnitLocationsTileMap = NodePath("MapTiles/KnownUnitLocations")
+_uiStats = NodePath("UI/StatsPanel")
+_uiBattle = NodePath("UI/BattlePredPanel")
+_menuStateMachine = NodePath("MenuStateMachine")
+_actionMenu = ExtResource("3_0ccgp")
+_pauseMenu = ExtResource("4_r77ll")
+_turnMenu = ExtResource("5_668gq")
+
+[node name="MapTiles" type="Node2D" parent="GameBoard"]
+
+[node name="Map" type="TileMapLayer" parent="GameBoard/MapTiles"]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAADAAMAAAAAAAAAAAACAAMAAAAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAAAAAQAAAAAAAAAAAABAAQAAAAAAAAAAAACAAQAAAAAAAAAAAADAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAEAAUAAAAAAAAAAAAFAAUAAAAAAAAAAAAGAAUAAAAAAAAAAAAGAAQAAAAAAAAAAAAFAAQAAAAAAAAAAAAHAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAABAAUAAAAAAAAAAAACAAUAAAAAAAAAAAADAAUAAAAAAAAAAAAHAAUAAAAAAAAAAAAHAAAAAAAAAAAAAAAHAAEAAAAAAAAAAAAHAAIAAAAAAAAAAAAHAAMAAAAAAAAAAAAIAAAAAAAAAAAAAAAIAAEAAAAAAAAAAAAIAAIAAAAAAAAAAAAIAAMAAAAAAAAAAAAIAAQAAAAAAAAAAAAIAAUAAAAAAAAAAAAJAAAAAAAAAAAAAAAJAAEAAAAAAAAAAAAJAAIAAAAAAAAAAAAJAAMAAAAAAAAAAAAJAAQAAAAAAAAAAAAJAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAABAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAHAAYAAAAAAAAAAAAIAAYAAAAAAAAAAAAJAAYAAAAAAAAAAAAKAAYAAAAAAAAAAAAKAAUAAAAAAAAAAAAKAAQAAAAAAAAAAAAKAAMAAAAAAAAAAAAKAAIAAAAAAAAAAAAKAAEAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAALAAEAAAAAAAAAAAALAAIAAAAAAAAAAAALAAMAAAAAAAAAAAALAAQAAAAAAAAAAAALAAUAAAAAAAAAAAALAAYAAAAAAAAAAAALAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAADAAcAAAAAAAAAAAACAAcAAAAAAAAAAAABAAcAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAACAAAAAAADAAgAAAAAAAAAAAAEAAgAAAACAAAAAAAFAAgAAAACAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAAMAAcAAAAAAAAAAAAMAAYAAAAAAAAAAAAMAAUAAAAAAAAAAAAMAAQAAAAAAAAAAAAMAAMAAAAAAAAAAAAMAAIAAAAAAAAAAAAMAAEAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAANAAEAAAAAAAAAAAANAAIAAAAAAAAAAAANAAMAAAAAAAAAAAANAAQAAAAAAAAAAAANAAUAAAAAAAAAAAANAAYAAAAAAAAAAAANAAcAAAAAAAAAAAANAAgAAAAAAAAAAAANAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAFAAkAAAACAAAAAAAEAAkAAAACAAAAAAADAAkAAAACAAAAAAACAAkAAAACAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAAOAAAAAAAAAAAAAAAOAAEAAAAAAAAAAAAOAAIAAAAAAAAAAAAOAAMAAAAAAAAAAAAOAAQAAAAAAAAAAAAOAAUAAAAAAAAAAAAOAAYAAAAAAAAAAAAOAAcAAAAAAAAAAAAOAAgAAAAAAAAAAAAOAAkAAAAAAAAAAAAOAAoAAAAAAAAAAAAOAAsAAAAAAAAAAAAOAAwAAAAAAAAAAAAOAA0AAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAAPAAoAAAAAAAAAAAAPAAsAAAAAAAAAAAAPAAwAAAAAAAAAAAAPAA0AAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAEAAAAAAAAAAAAQAAIAAAAAAAAAAAAQAAMAAAAAAAAAAAAQAAQAAAAAAAAAAAAQAAUAAAAAAAAAAAAQAAYAAAAAAAAAAAAQAAcAAAAAAAAAAAAQAAgAAAAAAAAAAAAQAAkAAAAAAAAAAAAQAAoAAAAAAAAAAAAQAAsAAAAAAAAAAAAQAAwAAAAAAAAAAAAQAA0AAAAAAAAAAAARAAAAAAAAAAAAAAARAAEAAAAAAAAAAAARAAIAAAAAAAAAAAARAAMAAAAAAAAAAAARAAQAAAAAAAAAAAARAAUAAAAAAAAAAAARAAYAAAAAAAAAAAARAAcAAAAAAAAAAAARAAgAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAARAAsAAAAAAAAAAAARAAwAAAAAAAAAAAARAA0AAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA4AAAAAAAAAAAABAAoAAAAAAAAAAAABAAsAAAAAAAAAAAABAAwAAAAAAAAAAAABAA0AAAAAAAAAAAABAA4AAAAAAAAAAAACAAoAAAACAAAAAAACAAsAAAAAAAAAAAACAAwAAAAAAAAAAAACAA0AAAAAAAAAAAACAA4AAAAAAAAAAAADAAoAAAACAAAAAAADAAsAAAAAAAAAAAADAAwAAAAAAAAAAAADAA0AAAAAAAAAAAADAA4AAAAAAAAAAAAEAAoAAAACAAAAAAAEAAsAAAAAAAAAAAAEAAwAAAAAAAAAAAAEAA0AAAAAAAAAAAAEAA4AAAAAAAAAAAAFAAoAAAAAAAAAAAAFAAsAAAAAAAAAAAAFAAwAAAAAAAAAAAAFAA0AAAAAAAAAAAAFAA4AAAAAAAAAAAAGAAoAAAAAAAAAAAAGAAsAAAABAAAAAAAGAAwAAAAAAAAAAAAGAA0AAAAAAAAAAAAGAA4AAAAAAAAAAAAHAAoAAAAAAAAAAAAHAAsAAAABAAAAAAAHAA0AAAAAAAAAAAAHAA4AAAAAAAAAAAAIAAoAAAAAAAAAAAAIAAsAAAAAAAAAAAAIAA0AAAAAAAAAAAAIAA4AAAAAAAAAAAAJAAoAAAAAAAAAAAAJAAsAAAAAAAAAAAAJAAwAAAAAAAAAAAAJAA0AAAAAAAAAAAAJAA4AAAAAAAAAAAAKAAoAAAAAAAAAAAAKAAsAAAAAAAAAAAAKAAwAAAAAAAAAAAAKAA0AAAAAAAAAAAAKAA4AAAAAAAAAAAALAAoAAAAAAAAAAAALAAsAAAAAAAAAAAALAAwAAAAAAAAAAAALAA0AAAAAAAAAAAALAA4AAAAAAAAAAAAMAAoAAAAAAAAAAAAMAAsAAAAAAAAAAAAMAAwAAAAAAAAAAAAMAA0AAAAAAAAAAAAMAA4AAAAAAAAAAAANAAoAAAAAAAAAAAANAAsAAAAAAAAAAAANAAwAAAAAAAAAAAANAA0AAAAAAAAAAAANAA4AAAAAAAAAAAAAAA8AAAAAAAAAAAAAABAAAAAAAAAAAAAAABEAAAAAAAAAAAABAA8AAAAAAAAAAAABABAAAAAAAAAAAAABABEAAAAAAAAAAAACAA8AAAAAAAAAAAACABAAAAAAAAAAAAACABEAAAAAAAAAAAADAA8AAAAAAAAAAAADABAAAAAAAAAAAAADABEAAAAAAAAAAAAEAA8AAAAAAAAAAAAEABAAAAAAAAAAAAAEABEAAAAAAAAAAAAFAA8AAAAAAAAAAAAFABAAAAAAAAAAAAAFABEAAAAAAAAAAAAGAA8AAAAAAAAAAAAGABAAAAAAAAAAAAAGABEAAAAAAAAAAAAHAA8AAAAAAAAAAAAHABAAAAAAAAAAAAAHABEAAAAAAAAAAAAIAA8AAAAAAAAAAAAIABAAAAAAAAAAAAAIABEAAAAAAAAAAAAJAA8AAAAAAAAAAAAJABAAAAAAAAAAAAAJABEAAAAAAAAAAAAKAA8AAAAAAAAAAAAKABAAAAAAAAAAAAAKABEAAAAAAAAAAAALAA8AAAAAAAAAAAALABAAAAAAAAAAAAALABEAAAAAAAAAAAAMAA8AAAAAAAAAAAAMABAAAAAAAAAAAAAMABEAAAAAAAAAAAANAA8AAAAAAAAAAAANABAAAAAAAAAAAAANABEAAAAAAAAAAAAOAA4AAAAAAAAAAAAOAA8AAAAAAAAAAAAOABAAAAAAAAAAAAAOABEAAAAAAAAAAAAPAA4AAAAAAAAAAAAPAA8AAAAAAAAAAAAPABAAAAAAAAAAAAAPABEAAAAAAAAAAAAQAA4AAAAAAAAAAAAQAA8AAAAAAAAAAAAQABAAAAAAAAAAAAAQABEAAAAAAAAAAAARAA4AAAAAAAAAAAARAA8AAAAAAAAAAAARABAAAAAAAAAAAAARABEAAAAAAAAAAAASAAAAAAAAAAAAAAASAAEAAAAAAAAAAAASAAIAAAAAAAAAAAASAAMAAAAAAAAAAAASAAQAAAAAAAAAAAASAAUAAAAAAAAAAAASAAYAAAAAAAAAAAASAAcAAAAAAAAAAAASAAgAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAASAAsAAAAAAAAAAAASAAwAAAAAAAAAAAASAA0AAAAAAAAAAAASAA4AAAAAAAAAAAASAA8AAAAAAAAAAAASABAAAAAAAAAAAAASABEAAAAAAAAAAAATAAAAAAAAAAAAAAATAAEAAAAAAAAAAAATAAIAAAAAAAAAAAATAAMAAAAAAAAAAAATAAQAAAAAAAAAAAATAAUAAAAAAAAAAAATAAYAAAAAAAAAAAATAAcAAAAAAAAAAAATAAgAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAATAAsAAAAAAAAAAAATAAwAAAAAAAAAAAATAA0AAAAAAAAAAAATAA4AAAAAAAAAAAATAA8AAAAAAAAAAAATABAAAAAAAAAAAAATABEAAAAAAAAAAAAUAAAAAAAAAAAAAAAUAAEAAAAAAAAAAAAUAAIAAAAAAAAAAAAUAAMAAAAAAAAAAAAUAAQAAAAAAAAAAAAUAAUAAAAAAAAAAAAUAAYAAAAAAAAAAAAUAAcAAAAAAAAAAAAUAAgAAAAAAAAAAAAUAAkAAAAAAAAAAAAUAAoAAAAAAAAAAAAUAAsAAAAAAAAAAAAUAAwAAAAAAAAAAAAUAA0AAAAAAAAAAAAUAA4AAAAAAAAAAAAUAA8AAAAAAAAAAAAUABAAAAAAAAAAAAAUABEAAAAAAAAAAAAVAAAAAAAAAAAAAAAVAAEAAAAAAAAAAAAVAAIAAAAAAAAAAAAVAAMAAAAAAAAAAAAVAAQAAAAAAAAAAAAVAAUAAAAAAAAAAAAVAAYAAAAAAAAAAAAVAAcAAAAAAAAAAAAVAAgAAAAAAAAAAAAVAAkAAAAAAAAAAAAVAAoAAAAAAAAAAAAVAAsAAAAAAAAAAAAVAAwAAAAAAAAAAAAVAA0AAAAAAAAAAAAVAA4AAAAAAAAAAAAVAA8AAAAAAAAAAAAVABAAAAAAAAAAAAAVABEAAAAAAAAAAAAWAAAAAAAAAAAAAAAWAAEAAAAAAAAAAAAWAAIAAAAAAAAAAAAWAAMAAAAAAAAAAAAWAAQAAAAAAAAAAAAWAAUAAAAAAAAAAAAWAAYAAAAAAAAAAAAWAAcAAAAAAAAAAAAWAAgAAAAAAAAAAAAWAAkAAAAAAAAAAAAWAAoAAAAAAAAAAAAWAAsAAAAAAAAAAAAWAAwAAAAAAAAAAAAWAA0AAAAAAAAAAAAWAA4AAAAAAAAAAAAWAA8AAAAAAAAAAAAWABAAAAAAAAAAAAAWABEAAAAAAAAAAAAXAAAAAAAAAAAAAAAXAAEAAAAAAAAAAAAXAAIAAAAAAAAAAAAXAAMAAAAAAAAAAAAXAAQAAAAAAAAAAAAXAAUAAAAAAAAAAAAXAAYAAAAAAAAAAAAXAAcAAAAAAAAAAAAXAAgAAAAAAAAAAAAXAAkAAAAAAAAAAAAXAAoAAAAAAAAAAAAXAAsAAAAAAAAAAAAXAAwAAAAAAAAAAAAXAA0AAAAAAAAAAAAXAA4AAAAAAAAAAAAXAA8AAAAAAAAAAAAXABAAAAAAAAAAAAAXABEAAAAAAAAAAAAYAAAAAAAAAAAAAAAYAAEAAAAAAAAAAAAYAAIAAAAAAAAAAAAYAAMAAAAAAAAAAAAYAAQAAAAAAAAAAAAYAAUAAAAAAAAAAAAYAAYAAAAAAAAAAAAYAAcAAAAAAAAAAAAYAAgAAAAAAAAAAAAYAAkAAAAAAAAAAAAYAAoAAAAAAAAAAAAYAAsAAAAAAAAAAAAYAAwAAAAAAAAAAAAYAA0AAAAAAAAAAAAYAA4AAAAAAAAAAAAYAA8AAAAAAAAAAAAYABAAAAAAAAAAAAAYABEAAAAAAAAAAAAZAAAAAAAAAAAAAAAZAAEAAAAAAAAAAAAZAAIAAAAAAAAAAAAZAAMAAAAAAAAAAAAZAAQAAAAAAAAAAAAZAAUAAAAAAAAAAAAZAAYAAAAAAAAAAAAZAAcAAAAAAAAAAAAZAAgAAAAAAAAAAAAZAAkAAAAAAAAAAAAZAAoAAAAAAAAAAAAZAAsAAAAAAAAAAAAZAAwAAAAAAAAAAAAZAA0AAAAAAAAAAAAZAA4AAAAAAAAAAAAZAA8AAAAAAAAAAAAZABAAAAAAAAAAAAAZABEAAAAAAAAAAAAaAAAAAAAAAAAAAAAaAAEAAAAAAAAAAAAaAAIAAAAAAAAAAAAaAAMAAAAAAAAAAAAaAAQAAAAAAAAAAAAaAAUAAAAAAAAAAAAaAAYAAAAAAAAAAAAaAAcAAAAAAAAAAAAaAAgAAAAAAAAAAAAaAAkAAAAAAAAAAAAaAAoAAAAAAAAAAAAaAAsAAAAAAAAAAAAaAAwAAAAAAAAAAAAaAA0AAAAAAAAAAAAaAA4AAAAAAAAAAAAaAA8AAAAAAAAAAAAaABAAAAAAAAAAAAAaABEAAAAAAAAAAAAIAAwAAAAAAAAAAAAHAAwAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_8c81w")
+script = ExtResource("6_ns1vp")
+
+[node name="FogOfWar" type="TileMapLayer" parent="GameBoard/MapTiles" node_paths=PackedStringArray("_gameboard", "_map")]
+z_index = 15
+tile_set = SubResource("TileSet_dwn5r")
+script = ExtResource("8_sb4gi")
+_gameboard = NodePath("../..")
+_map = NodePath("../Map")
+
+[node name="BlockedOverlay" type="TileMapLayer" parent="GameBoard/MapTiles"]
+modulate = Color(1, 1, 1, 0.431373)
+z_index = 16
+tile_set = SubResource("TileSet_1vcy8")
+script = ExtResource("10_gt7qa")
+
+[node name="KnownUnitLocations" type="TileMapLayer" parent="GameBoard/MapTiles"]
+z_index = 17
+tile_set = SubResource("TileSet_maqlv")
+script = ExtResource("13_ns1vp")
+
+[node name="Grid" type="TileMapLayer" parent="GameBoard/MapTiles" node_paths=PackedStringArray("_gameboard")]
+z_index = 60
+tile_set = SubResource("TileSet_201fe")
+script = ExtResource("12_j6x6y")
+_gameboard = NodePath("../..")
+
+[node name="UnitWalkHighlights" type="TileMapLayer" parent="GameBoard/MapTiles"]
+modulate = Color(1, 1, 1, 0.356863)
+z_index = 30
+tile_set = SubResource("TileSet_c2lnq")
+script = ExtResource("15_8bl2x")
+
+[node name="UnitPath" type="TileMapLayer" parent="GameBoard/MapTiles" node_paths=PackedStringArray("_gameBoard")]
+z_index = 17
+tile_set = SubResource("TileSet_lp1f3")
+script = ExtResource("17_kjk7w")
+_gameBoard = NodePath("../..")
+
+[node name="Units" type="Node2D" parent="GameBoard"]
+script = ExtResource("18_7r5ow")
+
+[node name="PlayerUnits" type="Node2D" parent="GameBoard/Units"]
+script = ExtResource("19_vgme0")
+_passingGroup = Array[int]([0, 1])
+_attackingGroup = Array[int]([2])
+
+[node name="Unit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+position = Vector2(353, 731)
+_gameBoard = NodePath("../../..")
+_attackRange = 2
+
+[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/Unit2" index="1"]
+_baseStats = Dictionary[int, int]({
+0: 10,
+1: 10,
+2: 100,
+3: 5,
+4: 5,
+5: 5,
+6: 3,
+7: 3,
+8: 6,
+9: 8
+})
+
+[node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
+script = ExtResource("19_vgme0")
+_group = 2
+_passingGroup = Array[int]([2])
+_attackingGroup = Array[int]([0, 1])
+
+[node name="AiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
+position = Vector2(416, 408)
+_gameBoard = NodePath("../../..")
+
+[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/AiUnit" index="1"]
+_baseStats = Dictionary[int, int]({
+0: 10,
+1: 10,
+2: 3,
+3: 5,
+4: 5,
+5: 5,
+6: 3,
+7: 3,
+8: 6,
+9: 8
+})
+
+[node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer")]
+z_index = 100
+position = Vector2(350, 474)
+script = ExtResource("22_iwnah")
+_gameBoard = NodePath("..")
+_timer = NodePath("Timer")
+
+[node name="Sprite2D" type="Sprite2D" parent="GameBoard/Cursor"]
+texture = ExtResource("23_fhuv3")
+
+[node name="Timer" type="Timer" parent="GameBoard/Cursor"]
+wait_time = 0.1
+one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="GameBoard/Cursor"]
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.8
+drag_top_margin = 0.65
+drag_right_margin = 0.8
+drag_bottom_margin = 0.65
+editor_draw_drag_margin = true
+
+[node name="MenuStateMachine" type="Node" parent="GameBoard" node_paths=PackedStringArray("_gameBoard")]
+script = ExtResource("24_bleph")
+initialState = NodePath("UnSelectedState")
+_gameBoard = NodePath("..")
+
+[node name="UnSelectedState" type="Node" parent="GameBoard/MenuStateMachine"]
+script = ExtResource("25_wn5g2")
+
+[node name="MoveState" type="Node" parent="GameBoard/MenuStateMachine"]
+script = ExtResource("26_onxey")
+
+[node name="AttackState" type="Node" parent="GameBoard/MenuStateMachine"]
+script = ExtResource("27_tl10l")
+
+[node name="BlankState" type="Node" parent="GameBoard/MenuStateMachine"]
+script = ExtResource("28_a4mff")
+
+[node name="UI" type="CanvasLayer" parent="GameBoard"]
+
+[node name="StatsPanel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_HPLable", "_MOVLable", "_ATKLable", "_DEFLable", "_RNGLable")]
+visible = false
+offset_left = 16.0
+offset_top = 14.0
+offset_right = 315.0
+offset_bottom = 172.0
+script = ExtResource("30_0ccgp")
+_HPLable = NodePath("VBoxContainer/HPLabel")
+_MOVLable = NodePath("VBoxContainer/MOVLable")
+_ATKLable = NodePath("VBoxContainer/ATKLable")
+_DEFLable = NodePath("VBoxContainer/DEFLable")
+_RNGLable = NodePath("VBoxContainer/RNGLable")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UI/StatsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HPLabel" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "HP: 10/10"
+
+[node name="MOVLable" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "MOV: 6/6"
+
+[node name="ATKLable" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "ATK: 5"
+
+[node name="DEFLable" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "DEF: 5"
+
+[node name="RNGLable" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "RANGE: 1"
+
+[node name="BattlePredPanel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_playerHPLable", "_playerDMGLable", "_playerACCLable", "_playerCRTLable", "_enemyHPLable", "_enemyDMGLable", "_enemyACCLable", "_enemyCRTLable")]
+visible = false
+offset_left = 16.0
+offset_top = 178.0
+offset_right = 318.0
+offset_bottom = 331.0
+script = ExtResource("31_r77ll")
+_playerHPLable = NodePath("VBoxContainer/HBoxContainer/PlayerSide/PHPLable")
+_playerDMGLable = NodePath("VBoxContainer/HBoxContainer/PlayerSide/PDMGLable")
+_playerACCLable = NodePath("VBoxContainer/HBoxContainer/PlayerSide/PACCLable")
+_playerCRTLable = NodePath("VBoxContainer/HBoxContainer/PlayerSide/PCRTLable")
+_enemyHPLable = NodePath("VBoxContainer/HBoxContainer/EnemySide/EHPLable")
+_enemyDMGLable = NodePath("VBoxContainer/HBoxContainer/EnemySide/EDMGLable")
+_enemyACCLable = NodePath("VBoxContainer/HBoxContainer/EnemySide/EACCLable")
+_enemyCRTLable = NodePath("VBoxContainer/HBoxContainer/EnemySide/ECRTLable")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UI/BattlePredPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 7.0
+offset_right = -7.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer"]
+layout_mode = 2
+text = "COMBAT PREDICTIONS"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameBoard/UI/BattlePredPanel/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayerSide" type="VBoxContainer" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PHPLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
+layout_mode = 2
+text = "10 -> 5"
+horizontal_alignment = 1
+
+[node name="PDMGLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
+layout_mode = 2
+text = "5"
+horizontal_alignment = 1
+
+[node name="PACCLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+
+[node name="PCRTLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="StatsLables" type="VBoxContainer" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="HPLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
+layout_mode = 2
+text = "HP"
+horizontal_alignment = 1
+
+[node name="DMGLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
+layout_mode = 2
+text = "DMG"
+horizontal_alignment = 1
+
+[node name="ACCLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
+layout_mode = 2
+text = "ACC"
+horizontal_alignment = 1
+
+[node name="CRTLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
+layout_mode = 2
+text = "CRIT"
+horizontal_alignment = 1
+
+[node name="EnemySide" type="VBoxContainer" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="EHPLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
+layout_mode = 2
+text = "10 -> 5"
+horizontal_alignment = 1
+
+[node name="EDMGLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
+layout_mode = 2
+text = "5"
+horizontal_alignment = 1
+
+[node name="EACCLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+
+[node name="ECRTLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[editable path="GameBoard/Units/PlayerUnits/Unit2"]
+[editable path="GameBoard/Units/EnemyUnits/AiUnit"]

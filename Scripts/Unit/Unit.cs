@@ -4,11 +4,8 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [04/28/2025]
- * [Unit Main Script
- * NOTE: all of this is one script for now,
- * but will likely need to be split up into different
- * scripts. comments of node type will likely be where they split]
+ * Last Updated: [05/20/2025]
+ * [Unit Main Script]
  */
 
 public partial class Unit : Node2D
@@ -19,36 +16,47 @@ public partial class Unit : Node2D
 
     [Export] private UnitPathMovement _unitPathMovement;
     private bool _unitCanWalk = false;
+    private Vector2 _targetCell = Vector2.Zero;
 
     [Export] private UnitSprite _unitSprite;
 
     [Export] private UnitStats _unitStats;
 
+    [Export] private UnitDirection _unitDirection;
+
+    [Export] private UnitActionEconomy _unitActionEconomy;
+
+    [Export] private NPCAiStateMachine _aiStateMachine;
+
     //animation player, but i might need to make a state machine
     //will keep in here for now to see how is selected works
-    [Export] private AnimationPlayer _animPlayer; 
+    [Export] private AnimationPlayer _animPlayer;
 
-    //map
-    [Export] private GridResource _grid;
+    [Export] private GameBoard _gameBoard;
+    public Action<GameBoard> CurrentGameBoard;
+
+    //might take out since im going to lean twoards dnd action econome\y
+    [Export] private bool _isWait = false;
+    //temp, move to equiptment
+    [Export] private int _attackRange = 1;
+
+    private UnitGroupEnum _unitGroup;
 
     /// <summary>
     /// sets unit's positon
     /// </summary>
     public override void _Ready()
     {
-        this.cell = _grid.CalculateGridCoordinates(Position);
-        Position = _grid.CalculateMapPosition(cell);
-
-        /*
-        //test
-        Vector2[] test = new Vector2[4];
-        test[0] = new Vector2(1, 1);
-        test[1] = new Vector2(1, 2);
-        test[2] = new Vector2(2, 3);
-        test[3] = new Vector2(3, 0);
-
-        _unitPath.SetWalkPath(test, _grid);
-        */
+        if (_gameBoard != null)
+        {
+            CurrentGameBoard?.Invoke(_gameBoard);
+        }
+        else
+        {
+            GD.Print("WARNING: NO GAMEBOARD ON UNIT AT READY");
+        }
+        this.cell = _gameBoard.grid.CalculateGridCoordinates(Position);
+        Position = _gameBoard.grid.CalculateMapPosition(cell);
     }
 
     /// <summary>
@@ -61,8 +69,19 @@ public partial class Unit : Node2D
 
         if (_unitPathMovement != null && _unitCanWalk)
         {
-            _unitPathMovement.WalkUnit(fDelta, _grid, cell);
+            _unitPathMovement.WalkUnit(fDelta, _targetCell);
         }
+    }
+
+    public void ChangeGameBoard(GameBoard gameBoard)
+    {
+        _gameBoard = gameBoard;
+        CurrentGameBoard?.Invoke(_gameBoard);
+    }
+
+    public bool IsAi()
+    {
+        return _aiStateMachine != null;
     }
 
     //--- PROPERTIES ---
@@ -70,12 +89,23 @@ public partial class Unit : Node2D
     {
         set
         {
-            if (_grid != null)
+            if (_gameBoard.grid != null)
             {
-                _cell = _grid.Clamp(value);
+                _cell = _gameBoard.grid.Clamp(value);
             }
         }
         get { return _cell; }
+    }
+
+    public Vector2 targetCell
+    {
+        set
+        {
+            if (_gameBoard.grid != null)
+            {
+                _targetCell = _gameBoard.grid.Clamp(value);
+            }
+        }
     }
 
     /// <summary>
@@ -121,5 +151,36 @@ public partial class Unit : Node2D
     public UnitPathMovement unitPathMovement
     {
         get { return _unitPathMovement; }
+    }
+
+    public UnitGroupEnum unitGroup
+    {
+        get { return _unitGroup; }
+        set { _unitGroup = value; }
+    }
+
+    public UnitDirection unitDirection
+    {
+        get { return _unitDirection; }
+    }
+
+    public UnitActionEconomy unitActionEconomy
+    {
+        get { return _unitActionEconomy; }
+    }
+
+    public NPCAiStateMachine aiStateMachine
+    {
+        get { return _aiStateMachine; }
+    }
+
+    public bool isWait
+    {
+        get { return _isWait; }
+    }
+
+    public int attackRange
+    {
+        get { return _attackRange; }
     }
 }

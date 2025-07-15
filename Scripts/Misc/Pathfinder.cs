@@ -79,9 +79,9 @@ public partial class Pathfinder : RefCounted
     {
         List<int> neighborList = new List<int>();
 
-        foreach (Direction dir in Enum.GetValues(typeof(Direction)))
+        foreach (DirectionEnum dir in Enum.GetValues(typeof(DirectionEnum)))
         {
-            Vector2 neighbor = cell + VectorDirections.Instance.GetDirection(dir);
+            Vector2 neighbor = cell + DirectionManager.Instance.GetVectorDirection(dir);
 
             if (!cellMapping.ContainsKey(neighbor))
             {
