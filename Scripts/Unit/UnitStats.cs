@@ -4,12 +4,13 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/08/2025]
+ * Last Updated: [07/15/2025]
  * [class for unit stats]
  */
 
 public partial class UnitStats : Node
 {
+    [Export] private Unit _unit;
     [Export] private Dictionary<UnitStatEnum, int> _baseStats = new Dictionary<UnitStatEnum, int>();
     //temp, make pretty later
 
@@ -47,8 +48,8 @@ public partial class UnitStats : Node
         _currentHP -= damage;
         if (_currentHP <= 0)
         {
-            GD.Print("unit dead");
-            //unit dies
+            UnitEventManager.OnUnitDeathEvent(_unit);
+            _unit.QueueFree();
         }
         UpdateHealthUI();
     }

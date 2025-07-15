@@ -86,6 +86,8 @@ public partial class GameBoard : Node2D
         _gridCursor.Moved += OnCursorMoved;
         _gridCursor.Decline += OnCursorDecline;
 
+        UnitEventManager.UnitDeathEvent += RemoveUnit;
+
         Reinitialize();
     }
 
@@ -130,6 +132,8 @@ public partial class GameBoard : Node2D
         _gridCursor.AcceptPress -= OnCursorAcceptPress;
         _gridCursor.Moved -= OnCursorMoved;
         _gridCursor.Decline -= OnCursorDecline;
+
+        UnitEventManager.UnitDeathEvent -= RemoveUnit;
     }
 
     //------------ INPUT ----------
@@ -767,6 +771,10 @@ public partial class GameBoard : Node2D
         //counter attack
         //temp, there is a faster way of doing this
         //figure out later
+        if (!_units.ContainsValue(targetUnit))
+        {
+            return;
+        }
         Vector2[] opposingAttackableCells = FloodFill(targetUnit.cell, targetUnit.attackRange);
         if (opposingAttackableCells.Contains(initUnit.cell))
         {
@@ -787,6 +795,28 @@ public partial class GameBoard : Node2D
             GD.Print("uses base stat for battle");
         }
         defendingUnit.DamageUnit(attackingUnit.GetBaseStat(UnitStatEnum.STRENGTH) - defendingUnit.GetBaseStat(UnitStatEnum.DEFENSE));
+    }
+
+    /// <summary>
+    /// removes unit from game
+    /// </summary>
+    /// <param name="unit">unit</param>
+    private void RemoveUnit(Unit unit)
+    {
+        Vector2 cell = unit.cell;
+        if (_units.ContainsKey(cell))
+        {
+            _units.Remove(cell);
+        }
+        if (_knownUnitLocations.Contains(cell))
+        {
+            _knownUnitLocations.Remove(cell);
+        }
+        if (_unitVision.ContainsKey(unit) || _unitVisionBlocked.ContainsKey(unit))
+        {
+            HideVision(unit);
+        }
+        MovingUnitVisionUpdate(unit, cell);
     }
 
     //---------- BASIC AI ----------
@@ -1565,7 +1595,7 @@ public partial class GameBoard : Node2D
     /// Hides vision of unit
     /// </summary>
     /// <param name="unit">unit being updated</param>
-    public void HideVision(Unit unit, bool keepUnitKey)
+    public void HideVision(Unit unit, bool keepUnitKey = false)
     {
         //hides unit's old vision
         if (_unitVision.ContainsKey(unit))
@@ -1680,8 +1710,8 @@ public partial class GameBoard : Node2D
     /// updates any unit vision from an enemy unit
     /// moving into fog of war
     /// </summary>
-    /// <param name="unit"></param>
-    /// <param name="cell"></param>
+    /// <param name="unit">unit</param>
+    /// <param name="cell">cell unit is on</param>
     public void MovingUnitVisionUpdate(Unit unit, Vector2 cell)
     {
         if (!_cellBlockedBy.ContainsKey(cell) && !_cellRevealedBy.ContainsKey(cell))

@@ -93,8 +93,9 @@ offset_right = 21.0
 offset_bottom = 31.0
 text = "10/10"
 
-[node name="UnitStats" type="Node" parent="." node_paths=PackedStringArray("_healthLable")]
+[node name="UnitStats" type="Node" parent="." node_paths=PackedStringArray("_unit", "_healthLable")]
 script = ExtResource("5_e33bx")
+_unit = NodePath("..")
 _baseStats = Dictionary[int, int]({
 0: 10,
 1: 10,

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [06/25/2025]
+ * Last Updated: [07/15/2025]
  * [holds information about the units in a group]
  */
 
@@ -22,7 +22,12 @@ public partial class UnitGroup : Node2D
     /// </summary>
     public override void _Ready()
     {
+        UnitEventManager.UnitDeathEvent += RemoveUnit;
         SetUnitList();
+    }
+    public override void _ExitTree()
+    {
+        UnitEventManager.UnitDeathEvent -= RemoveUnit;
     }
 
     /// <summary>
@@ -70,6 +75,20 @@ public partial class UnitGroup : Node2D
     public bool CanAttack(UnitGroupEnum group)
     {
         return (group != _group && _attackingGroup.Contains(group));
+    }
+
+    /// <summary>
+    /// removes unit
+    /// </summary>
+    /// <param name="unit">unit to remove</param>
+    private void RemoveUnit(Unit unit)
+    {
+        if (!_units.Contains(unit))
+        {
+            return;
+        }
+
+        _units.Remove(unit);
     }
 
     // properties
