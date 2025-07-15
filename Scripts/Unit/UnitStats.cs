@@ -49,6 +49,7 @@ public partial class UnitStats : Node
         if (_currentHP <= 0)
         {
             UnitEventManager.OnUnitDeathEvent(_unit);
+            _unit.QueueFree();
         }
         UpdateHealthUI();
     }

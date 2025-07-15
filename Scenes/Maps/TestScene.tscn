@@ -257,7 +257,7 @@ _attackRange = 2
 _baseStats = Dictionary[int, int]({
 0: 10,
 1: 10,
-2: 3,
+2: 100,
 3: 5,
 4: 5,
 5: 5,
@@ -281,7 +281,7 @@ _gameBoard = NodePath("../../..")
 _baseStats = Dictionary[int, int]({
 0: 10,
 1: 10,
-2: 999,
+2: 3,
 3: 5,
 4: 5,
 5: 5,
