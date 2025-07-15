@@ -7,16 +7,28 @@
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\menustatemachine\\states\\attackstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\menustatemachine\\states\\attackstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\ui\\uistats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\ui\\uistats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\menustatemachine\\states\\unselectedstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\menustatemachine\\states\\unselectedstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\menustatemachine\\states\\movestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\menustatemachine\\states\\movestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\menustatemachine\\states\\unselectedstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\menustatemachine\\states\\unselectedstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\menustatemachine\\states\\attackstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\menustatemachine\\states\\attackstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\grid\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\ui\\uibattle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\ui\\uibattle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\menustatemachine\\menustate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -40,7 +52,7 @@
               "RelativeDocumentMoniker": "Scripts\\Grid\\GameBoard.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GameBoard.cs",
               "RelativeToolTip": "Scripts\\Grid\\GameBoard.cs",
-              "ViewState": "AgIAAPIBAAAAAAAAAAA0wP8BAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAJABAAAAAAAAAAAAALMBAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-11T22:30:34.308Z",
               "IsPinned": true,
@@ -48,46 +60,85 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
+              "Title": "Map.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\Map.cs",
+              "RelativeDocumentMoniker": "Scripts\\Grid\\Map.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\Map.cs",
+              "RelativeToolTip": "Scripts\\Grid\\Map.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T19:19:39.362Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UIBattle.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\UI\\UIBattle.cs",
+              "RelativeDocumentMoniker": "Scripts\\UI\\UIBattle.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\UI\\UIBattle.cs",
+              "RelativeToolTip": "Scripts\\UI\\UIBattle.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T18:19:53.919Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UIStats.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\UI\\UIStats.cs",
+              "RelativeDocumentMoniker": "Scripts\\UI\\UIStats.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\UI\\UIStats.cs",
+              "RelativeToolTip": "Scripts\\UI\\UIStats.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T18:09:54.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "UnSelectedState.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MenuStateMachine\\States\\UnSelectedState.cs",
               "RelativeDocumentMoniker": "Scripts\\Menu\\MenuStateMachine\\States\\UnSelectedState.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MenuStateMachine\\States\\UnSelectedState.cs",
               "RelativeToolTip": "Scripts\\Menu\\MenuStateMachine\\States\\UnSelectedState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-13T20:20:17.874Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MoveState.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MenuStateMachine\\States\\MoveState.cs",
               "RelativeDocumentMoniker": "Scripts\\Menu\\MenuStateMachine\\States\\MoveState.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MenuStateMachine\\States\\MoveState.cs",
               "RelativeToolTip": "Scripts\\Menu\\MenuStateMachine\\States\\MoveState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-13T20:20:17.119Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "AttackState.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MenuStateMachine\\States\\AttackState.cs",
               "RelativeDocumentMoniker": "Scripts\\Menu\\MenuStateMachine\\States\\AttackState.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MenuStateMachine\\States\\AttackState.cs",
               "RelativeToolTip": "Scripts\\Menu\\MenuStateMachine\\States\\AttackState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABZAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-13T20:20:15.773Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "MenuState.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MenuStateMachine\\MenuState.cs",
               "RelativeDocumentMoniker": "Scripts\\Menu\\MenuStateMachine\\MenuState.cs",
