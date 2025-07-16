@@ -241,7 +241,6 @@ public partial class GameBoard : Node2D
     {
         if (!IsValidMoveLoc(newCell))
         {
-            GD.Print("buh");
             DeselectSelectedUnit();
             ClearSelectedUnit();
             EmitSignal("SelectedMoved");
@@ -458,12 +457,13 @@ public partial class GameBoard : Node2D
     {
         if (!_walkableCells.Contains(newCell))
         {
-            //_unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
-            _unitPath.Clear();
+            _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
+            //_unitPath.Clear();
             return;
         }
         if (!_unitPath.CoordConnects(newCell))
         {
+            GD.Print("buh");
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
             return;
         }
@@ -1202,9 +1202,15 @@ public partial class GameBoard : Node2D
         }
         path.Reverse();
 
+
         if (maxDistance > -1)
         {
-            if (_map.GetPathMoveCost(path.ToArray()) > maxDistance)
+            List<Vector2> check = new List<Vector2>();
+            check.AddRange(path);
+            check.RemoveAt(0);
+
+            GD.Print(_map.GetPathMoveCost(check.ToArray()) > maxDistance);
+            if (_map.GetPathMoveCost(check.ToArray()) > maxDistance)
             {
                 path = new List<Vector2>();
             }

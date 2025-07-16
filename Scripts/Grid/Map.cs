@@ -59,7 +59,7 @@ public partial class Map : TileMapLayer
         float output = 0;
         foreach (Vector2 tile in path)
         {
-            Vector2I iTile = new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.X));
+            Vector2I iTile = new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.Y));
             output += (float)GetCellTileData(iTile).GetCustomData("MoveCost");
         }
         return output;
