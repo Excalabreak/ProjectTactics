@@ -3,13 +3,14 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/09/2025]
+ * Last Updated: [07/16/2025]
  * [Manages any change in direction]
  */
 
 public partial class UnitDirection : Node2D
 {
     [Export] private Unit _unit;
+    [Export] private DirectionEnum _startingDirection = DirectionEnum.UP;
     private GameBoard _gameBoard;
 
     private DirectionEnum _currentFacing = DirectionEnum.UP;
@@ -19,8 +20,7 @@ public partial class UnitDirection : Node2D
     {
         _unit.CurrentGameBoard += SetGameBoard;
 
-        //this seems like it can be a problem later
-        UpdateCurrentFacing?.Invoke(_currentFacing);
+        currentFacing = _startingDirection;
     }
 
     /// <summary>
@@ -46,7 +46,11 @@ public partial class UnitDirection : Node2D
         set
         {
             _currentFacing = value;
-            _gameBoard.UpdateUnitVision(_unit);
+            //temp fix, need to fix gameboard bug
+            if (_gameBoard != null)
+            {
+                _gameBoard.UpdateUnitVision(_unit);
+            }
             UpdateCurrentFacing?.Invoke(_currentFacing);
         }
     }
