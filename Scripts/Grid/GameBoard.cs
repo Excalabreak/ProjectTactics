@@ -463,7 +463,6 @@ public partial class GameBoard : Node2D
         }
         if (!_unitPath.CoordConnects(newCell))
         {
-            GD.Print("buh");
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
             return;
         }
@@ -1209,7 +1208,6 @@ public partial class GameBoard : Node2D
             check.AddRange(path);
             check.RemoveAt(0);
 
-            GD.Print(_map.GetPathMoveCost(check.ToArray()) > maxDistance);
             if (_map.GetPathMoveCost(check.ToArray()) > maxDistance)
             {
                 path = new List<Vector2>();
