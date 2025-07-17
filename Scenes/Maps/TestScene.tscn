@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=50 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -33,32 +33,40 @@
 [ext_resource type="Script" uid="uid://do6ttbkj61oci" path="res://Scripts/Menu/MenuStateMachine/States/BlankState.cs" id="28_a4mff"]
 [ext_resource type="Script" uid="uid://dwo3objlyjeiq" path="res://Scripts/UI/UIStats.cs" id="30_0ccgp"]
 [ext_resource type="Script" uid="uid://bwxpec5gmpou1" path="res://Scripts/UI/UIBattle.cs" id="31_r77ll"]
+[ext_resource type="Script" uid="uid://bntiwp1wcdsxf" path="res://Scripts/UI/UITerrain.cs" id="34_maqlv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
 texture = ExtResource("5_jsdi5")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
-0:0/0/custom_data_0 = 1.0
+0:0/0/custom_data_0 = "Planes"
 0:0/0/custom_data_1 = 1.0
+0:0/0/custom_data_2 = 1.0
 1:0/0 = 0
-1:0/0/custom_data_0 = 2.0
+1:0/0/custom_data_0 = "Forest"
 1:0/0/custom_data_1 = 2.0
+1:0/0/custom_data_2 = 2.0
 2:0/0 = 0
-2:0/0/custom_data_0 = 999.0
+2:0/0/custom_data_0 = "Mountian"
 2:0/0/custom_data_1 = 999.0
+2:0/0/custom_data_2 = 999.0
 3:0/0 = 0
-3:0/0/custom_data_0 = 3.0
-3:0/0/custom_data_1 = 1.0
+3:0/0/custom_data_0 = "Sand"
+3:0/0/custom_data_1 = 3.0
+3:0/0/custom_data_2 = 1.0
 4:0/0 = 0
-4:0/0/custom_data_0 = 999.0
-4:0/0/custom_data_1 = 1.0
+4:0/0/custom_data_0 = "Water"
+4:0/0/custom_data_1 = 999.0
+4:0/0/custom_data_2 = 1.0
 
 [sub_resource type="TileSet" id="TileSet_8c81w"]
 tile_size = Vector2i(64, 64)
-custom_data_layer_0/name = "MoveCost"
-custom_data_layer_0/type = 3
-custom_data_layer_1/name = "VisionCost"
+custom_data_layer_0/name = "Name"
+custom_data_layer_0/type = 4
+custom_data_layer_1/name = "MoveCost"
 custom_data_layer_1/type = 3
+custom_data_layer_2/name = "VisionCost"
+custom_data_layer_2/type = 3
 sources/0 = SubResource("TileSetAtlasSource_p30di")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8c81w"]
@@ -179,7 +187,7 @@ sources/0 = SubResource("TileSetAtlasSource_t2vuu")
 
 [node name="TestScene" type="Node2D"]
 
-[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_uiStats", "_uiBattle", "_menuStateMachine")]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_uiStats", "_uiBattle", "_uiTerrain", "_menuStateMachine")]
 script = ExtResource("1_lo7rv")
 _grid = ExtResource("2_668gq")
 _unitWalkHighlights = NodePath("MapTiles/UnitWalkHighlights")
@@ -192,6 +200,7 @@ _blockedOverlay = NodePath("MapTiles/BlockedOverlay")
 _knownUnitLocationsTileMap = NodePath("MapTiles/KnownUnitLocations")
 _uiStats = NodePath("UI/StatsPanel")
 _uiBattle = NodePath("UI/BattlePredPanel")
+_uiTerrain = NodePath("UI/Terrain Panel")
 _menuStateMachine = NodePath("MenuStateMachine")
 _actionMenu = ExtResource("3_0ccgp")
 _pauseMenu = ExtResource("4_r77ll")
@@ -745,7 +754,6 @@ script = ExtResource("28_a4mff")
 [node name="UI" type="CanvasLayer" parent="GameBoard"]
 
 [node name="StatsPanel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_HPLable", "_MOVLable", "_ATKLable", "_DEFLable", "_RNGLable")]
-visible = false
 offset_left = 16.0
 offset_top = 14.0
 offset_right = 315.0
@@ -790,7 +798,6 @@ layout_mode = 2
 text = "RANGE: 1"
 
 [node name="BattlePredPanel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_playerHPLable", "_playerDMGLable", "_playerACCLable", "_playerCRTLable", "_enemyHPLable", "_enemyDMGLable", "_enemyACCLable", "_enemyCRTLable")]
-visible = false
 offset_left = 16.0
 offset_top = 178.0
 offset_right = 318.0
@@ -898,6 +905,45 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
+
+[node name="Terrain Panel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_nameLabel", "_moveLabel", "_visionLabel")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -250.54
+offset_top = 14.405
+offset_right = -15.54
+offset_bottom = 161.405
+grow_horizontal = 0
+script = ExtResource("34_maqlv")
+_nameLabel = NodePath("VBoxContainer/NameLabel")
+_moveLabel = NodePath("VBoxContainer/MoveLabel")
+_visionLabel = NodePath("VBoxContainer/VisionLabel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UI/Terrain Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 11.0
+offset_right = -10.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameLabel" type="Label" parent="GameBoard/UI/Terrain Panel/VBoxContainer"]
+layout_mode = 2
+text = "Planes"
+horizontal_alignment = 1
+
+[node name="MoveLabel" type="Label" parent="GameBoard/UI/Terrain Panel/VBoxContainer"]
+layout_mode = 2
+text = "Move Cost: "
+
+[node name="VisionLabel" type="Label" parent="GameBoard/UI/Terrain Panel/VBoxContainer"]
+layout_mode = 2
+text = "Vision Cost: "
 
 [editable path="GameBoard/Units/PlayerUnits/Unit2"]
 [editable path="GameBoard/Units/PlayerUnits/Unit3"]

@@ -36,6 +36,7 @@ public partial class GameBoard : Node2D
     [ExportGroup("UI")]
     [Export] private UIStats _uiStats;
     [Export] private UIBattle _uiBattle;
+    [Export] private UITerrain _uiTerrain;
 
     [ExportGroup("Menu")]
     [Export] private MenuStateMachine _menuStateMachine;
@@ -145,6 +146,19 @@ public partial class GameBoard : Node2D
     /// <param name="newCell">cell cursor is moving to</param>
     private void OnCursorMoved(Vector2 newCell)
     {
+        //terrain info only here for prototype
+        if (_grid.IsWithinBounds(newCell))
+        {
+            string terrainName = _map.GetTileTerrainName(newCell);
+            float moveCost = _map.GetTileMoveCost(newCell);
+            float visionCost = _map.GetTileVisionCost(newCell);
+            _uiTerrain.ShowTerrainPanel(terrainName, moveCost, visionCost);
+        }
+        else
+        {
+            _uiTerrain.HideTerrainPanel();
+        }
+
         _menuStateMachine.currentState.OnCursorMove(newCell);
     }
 
