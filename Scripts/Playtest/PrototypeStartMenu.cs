@@ -17,6 +17,7 @@ public partial class PrototypeStartMenu : CanvasLayer
     /// </summary>
     public override void _Ready()
     {
+        //this.Visible = true;
         _cursorDefaultStartButton.GrabFocus();
 
         //disables cursor
