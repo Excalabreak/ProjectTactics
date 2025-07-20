@@ -472,7 +472,6 @@ public partial class GameBoard : Node2D
         if (!_walkableCells.Contains(newCell))
         {
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
-            //_unitPath.Clear();
             return;
         }
         if (!_unitPath.CoordConnects(newCell))
@@ -496,7 +495,6 @@ public partial class GameBoard : Node2D
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
             return;
         }
-
         _unitPath.AddTileToCurrentPath(newCell);
     }
 
@@ -1251,7 +1249,7 @@ public partial class GameBoard : Node2D
     /// </summary>
     /// <param name="cell">coordinates on grid</param>
     /// <returns>true if the player should know 100% that a unit is occupying the cell</returns>
-    private bool IsKnownOccupied(Vector2 cell)
+    public bool IsKnownOccupied(Vector2 cell)
     {
         return _knownUnitLocations.Contains(cell);
     }

@@ -40,7 +40,11 @@ public partial class UnitPath : TileMapLayer
     {
         Clear();
         _currentPath.Clear();
-        _currentPath.AddRange(_gameBoard.DijkstraPathFinding(cellStart, cellEnd, _gameBoard.selectedUnit.unitActionEconomy.currentMove));
+
+        if (!_gameBoard.IsKnownOccupied(cellEnd))
+        {
+            _currentPath.AddRange(_gameBoard.DijkstraPathFinding(cellStart, cellEnd, _gameBoard.selectedUnit.unitActionEconomy.currentMove));
+        }
         
         DrawPathLine(_currentPath.ToArray());
     }
