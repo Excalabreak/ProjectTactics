@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0b36idsyuh7p"
-path="res://.godot/imported/BlockedOverlay.png-c6f0d1850ef62ce3bb7031f8eb869c8b.ctex"
+uid="uid://c77lwl1g215vn"
+path="res://.godot/imported/TileHighlight.png-a4d7ca69f9897871348e8fd3275ea281.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Test/BlockedOverlay.png"
-dest_files=["res://.godot/imported/BlockedOverlay.png-c6f0d1850ef62ce3bb7031f8eb869c8b.ctex"]
+source_file="res://Sprites/Test/TileHighlights/TileHighlight.png"
+dest_files=["res://.godot/imported/TileHighlight.png-a4d7ca69f9897871348e8fd3275ea281.ctex"]
 
 [params]
 

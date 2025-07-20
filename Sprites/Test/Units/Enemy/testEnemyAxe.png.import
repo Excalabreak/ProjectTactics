@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2e6fnaytryuk"
-path="res://.godot/imported/attackRange.png-0d4b1d74eff7f3ccc2250e231f16e1ed.ctex"
+uid="uid://cc7t1ceh770xj"
+path="res://.godot/imported/testEnemyAxe.png-b3ee0d5f407d6b20147b4574bcb80e3a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Test/attackRange.png"
-dest_files=["res://.godot/imported/attackRange.png-0d4b1d74eff7f3ccc2250e231f16e1ed.ctex"]
+source_file="res://Sprites/Test/Units/Enemy/testEnemyAxe.png"
+dest_files=["res://.godot/imported/testEnemyAxe.png-b3ee0d5f407d6b20147b4574bcb80e3a.ctex"]
 
 [params]
 

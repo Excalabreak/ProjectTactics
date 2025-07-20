@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c77lwl1g215vn"
-path="res://.godot/imported/TileHighlight.png-167a31aa68c9fef59c46956eabfb1ad0.ctex"
+uid="uid://b2e6fnaytryuk"
+path="res://.godot/imported/attackRange.png-6d2d3632b7405b38b416f2fa8b562b26.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Test/TileHighlight.png"
-dest_files=["res://.godot/imported/TileHighlight.png-167a31aa68c9fef59c46956eabfb1ad0.ctex"]
+source_file="res://Sprites/Test/TileHighlights/attackRange.png"
+dest_files=["res://.godot/imported/attackRange.png-6d2d3632b7405b38b416f2fa8b562b26.ctex"]
 
 [params]
 
