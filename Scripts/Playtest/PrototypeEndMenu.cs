@@ -8,6 +8,26 @@ public partial class PrototypeEndMenu : CanvasLayer
     [Export] private GridCursor _gridCursor;
     [Export] private Button _cursorDefaultStartButton;
 
+    public override void _Ready()
+    {
+        UnitEventManager.UnitDeathEvent += IsCommanderDead;
+    }
+
+    public override void _ExitTree()
+    {
+        UnitEventManager.UnitDeathEvent -= IsCommanderDead;
+    }
+
+    public void IsCommanderDead(Unit unit)
+    {
+        if (!unit.isCommander)
+        {
+            return;
+        }
+
+        OnEndScreen(unit.unitGroup != UnitGroupEnum.PLAYER);
+    }
+
     public void OnEndScreen(bool win)
     {
         if (win)
@@ -29,7 +49,7 @@ public partial class PrototypeEndMenu : CanvasLayer
 
     public void OnQuit()
     {
-        OS.ShellOpen("https://youtu.be/dQw4w9WgXcQ?si=eOyFSowUIdmKRR_1");
+        //OS.ShellOpen("https://youtu.be/dQw4w9WgXcQ?si=eOyFSowUIdmKRR_1");
         GetTree().Quit();
     }
 }
