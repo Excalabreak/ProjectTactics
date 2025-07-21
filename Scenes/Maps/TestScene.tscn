@@ -443,6 +443,7 @@ _endMenu = NodePath("../../../PrototypeNodes/PrototypeEndMenu")
 [node name="AiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(354, 796)
 _gameBoard = NodePath("../../..")
+_isCommander = true
 
 [node name="UnitStats" parent="GameBoard/Units/EnemyUnits/AiUnit" index="1"]
 _baseStats = Dictionary[int, int]({
@@ -461,7 +462,6 @@ _baseStats = Dictionary[int, int]({
 [node name="AiUnit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(731, 353)
 _gameBoard = NodePath("../../..")
-_isCommander = true
 
 [node name="UnitStats" parent="GameBoard/Units/EnemyUnits/AiUnit2" index="1"]
 _baseStats = Dictionary[int, int]({
