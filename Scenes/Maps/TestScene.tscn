@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=58 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Script" uid="uid://vxqdmei6f2d4" path="res://Scripts/Playtest/PrototypeStartMenu.cs" id="1_sb4gi"]
@@ -30,9 +30,12 @@
 [ext_resource type="Texture2D" uid="uid://suvveuruoly4" path="res://Sprites/Test/GridCursor.png" id="23_fhuv3"]
 [ext_resource type="Script" uid="uid://do8g05v3r4qn8" path="res://Scripts/Menu/MenuStateMachine/MenuStateMachine.cs" id="24_bleph"]
 [ext_resource type="Script" uid="uid://8rtvmkb53l3a" path="res://Scripts/Menu/MenuStateMachine/States/UnSelectedState.cs" id="25_wn5g2"]
+[ext_resource type="Texture2D" uid="uid://c4x3rae14n1v3" path="res://Sprites/Test/Units/Player/testPlayerAxe.png" id="26_j6x6y"]
 [ext_resource type="Script" uid="uid://c7dh1mhyvoxy3" path="res://Scripts/Menu/MenuStateMachine/States/MoveState.cs" id="26_onxey"]
+[ext_resource type="Texture2D" uid="uid://pp7o52sefur8" path="res://Sprites/Test/Units/Player/testPlayerLance.png" id="27_he1t7"]
 [ext_resource type="Script" uid="uid://cum60gpotm147" path="res://Scripts/Menu/MenuStateMachine/States/AttackState.cs" id="27_tl10l"]
 [ext_resource type="Script" uid="uid://do6ttbkj61oci" path="res://Scripts/Menu/MenuStateMachine/States/BlankState.cs" id="28_a4mff"]
+[ext_resource type="Texture2D" uid="uid://bpncogxb8oeqi" path="res://Sprites/Test/Units/Player/testPlayerSword.png" id="28_wn863"]
 [ext_resource type="Script" uid="uid://dwo3objlyjeiq" path="res://Scripts/UI/UIStats.cs" id="30_0ccgp"]
 [ext_resource type="Script" uid="uid://bwxpec5gmpou1" path="res://Scripts/UI/UIBattle.cs" id="31_r77ll"]
 [ext_resource type="Script" uid="uid://bntiwp1wcdsxf" path="res://Scripts/UI/UITerrain.cs" id="34_maqlv"]
@@ -363,20 +366,68 @@ _passingGroup = Array[int]([0, 1])
 _attackingGroup = Array[int]([2])
 _endMenu = NodePath("../../../PrototypeNodes/PrototypeEndMenu")
 
-[node name="Unit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+[node name="AxeUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(279, 945)
 _gameBoard = NodePath("../../..")
-_attackRange = 2
 
-[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/Unit2" index="1"]
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/AxeUnit/Sprites" index="0"]
+texture = ExtResource("26_j6x6y")
+_skin = ExtResource("26_j6x6y")
+
+[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/AxeUnit" index="1"]
 _baseStats = Dictionary[int, int]({
-0: 10,
-1: 10,
-2: 100,
+0: 15,
+1: 18,
+2: 10,
 3: 5,
 4: 5,
 5: 5,
-6: 3,
+6: 2,
+7: 3,
+8: 6,
+9: 8
+})
+
+[node name="LanceUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+position = Vector2(223, 937)
+_gameBoard = NodePath("../../..")
+_attackRange = 2
+
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/LanceUnit/Sprites" index="0"]
+texture = ExtResource("27_he1t7")
+_skin = ExtResource("27_he1t7")
+
+[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/LanceUnit" index="1"]
+_baseStats = Dictionary[int, int]({
+0: 10,
+1: 15,
+2: 7,
+3: 5,
+4: 5,
+5: 5,
+6: 1,
+7: 3,
+8: 6,
+9: 8
+})
+
+[node name="SwordUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+position = Vector2(163, 931)
+_gameBoard = NodePath("../../..")
+
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit/Sprites" index="0"]
+texture = ExtResource("28_wn863")
+_skin = ExtResource("28_wn863")
+
+[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/SwordUnit" index="1"]
+_baseStats = Dictionary[int, int]({
+0: 20,
+1: 10,
+2: 5,
+3: 5,
+4: 5,
+5: 5,
+6: 4,
 7: 3,
 8: 6,
 9: 8
@@ -471,7 +522,6 @@ script = ExtResource("28_a4mff")
 [node name="UI" type="CanvasLayer" parent="GameBoard"]
 
 [node name="StatsPanel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_HPLable", "_MOVLable", "_ATKLable", "_DEFLable", "_RNGLable")]
-visible = false
 offset_left = 16.0
 offset_top = 14.0
 offset_right = 315.0
@@ -668,6 +718,8 @@ text = "Vision Cost: "
 [connection signal="pressed" from="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer/StartButton" to="PrototypeNodes/PrototypeStartMenu" method="HideMenu"]
 [connection signal="pressed" from="PrototypeNodes/PrototypeEndMenu/Panel/VBoxContainer/QuitButton" to="PrototypeNodes/PrototypeEndMenu" method="OnQuit"]
 
-[editable path="GameBoard/Units/PlayerUnits/Unit2"]
+[editable path="GameBoard/Units/PlayerUnits/AxeUnit"]
+[editable path="GameBoard/Units/PlayerUnits/LanceUnit"]
+[editable path="GameBoard/Units/PlayerUnits/SwordUnit"]
 [editable path="GameBoard/Units/EnemyUnits/AiUnit"]
 [editable path="GameBoard/Units/EnemyUnits/AiUnit2"]
