@@ -5,7 +5,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/08/2025]
+ * Last Updated: [07/22/2025]
  * [attack state for enemy ai
  * NOTE: very basic for now]
  */
@@ -28,6 +28,7 @@ public partial class EnemyAttackState : NPCAiState
 
         if (path.Count > 0)
         {
+            stateMachine.LogicNeedsAwait();
             MoveLogic(path.ToArray(), stateMachine.unit.unitActionEconomy.currentMove);
         }
         if (isWalking)

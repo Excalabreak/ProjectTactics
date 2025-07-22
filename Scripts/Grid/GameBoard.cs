@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [07/14/2025]
+ * Last Updated: [07/22/2025]
  * [game board manages everything on the map]
  */
 
@@ -849,7 +849,11 @@ public partial class GameBoard : Node2D
             if (IsInstanceValid(unit) && unit.IsAi())
             {
                 unit.aiStateMachine.DoLogic();
-                await ToSignal(unit.aiStateMachine, "UnitFinished");
+                if (unit.aiStateMachine.needsAwait)
+                {
+                    await ToSignal(unit.aiStateMachine, "UnitFinished");
+                    unit.aiStateMachine.ResetNeedsAwait();
+                }
             }
         }
         EndTurn();
