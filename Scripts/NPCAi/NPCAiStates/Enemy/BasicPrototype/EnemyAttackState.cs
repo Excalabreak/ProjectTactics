@@ -5,7 +5,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/22/2025]
+ * Last Updated: [07/23/2025]
  * [attack state for enemy ai
  * NOTE: very basic for now]
  */
@@ -24,7 +24,11 @@ public partial class EnemyAttackState : NPCAiState
         List<Vector2> path = new List<Vector2>();
         path.AddRange(stateMachine.gameBoard.DijkstraPathFinding(stateMachine.unit.cell, target));
         path.RemoveAt(0);
-        path.RemoveAt(path.Count - 1);
+
+        for (int i = 0; i < stateMachine.unit.attackRange; i++)
+        {
+            path.RemoveAt(path.Count - 1);
+        }
 
         if (path.Count > 0)
         {

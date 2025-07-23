@@ -523,7 +523,6 @@ _endMenu = NodePath("../../../PrototypeNodes/PrototypeEndMenu")
 [node name="AxeAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(348, 425)
 _gameBoard = NodePath("../../..")
-_isCommander = true
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
@@ -547,7 +546,6 @@ _baseStats = Dictionary[int, int]({
 position = Vector2(401, 677)
 _gameBoard = NodePath("../../..")
 _attackRange = 2
-_isCommander = true
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit/Sprites" index="0"]
 texture = ExtResource("31_kjk7w")
@@ -570,7 +568,6 @@ _baseStats = Dictionary[int, int]({
 [node name="SwordAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(450, 428)
 _gameBoard = NodePath("../../..")
-_isCommander = true
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
