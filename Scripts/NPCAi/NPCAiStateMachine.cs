@@ -51,7 +51,7 @@ public partial class NPCAiStateMachine : Node
     /// </summary>
     public void DoLogic()
     {
-        GD.Print(_currentState.Name);
+        GD.Print(_unit.Name + " in " +_currentState.Name);
         _currentState.TurnLogic();
     }
 
@@ -60,6 +60,7 @@ public partial class NPCAiStateMachine : Node
     /// </summary>
     public void UnitFinsh()
     {
+        GD.Print(_unit.Name + " done");
         EmitSignal("UnitFinished");
     }
 

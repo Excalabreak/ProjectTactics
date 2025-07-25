@@ -25,7 +25,7 @@ public partial class GameBoard : Node2D
     [ExportGroup("Components")]
     [Export] private GridResource _grid;
     [Export] private UnitWalkHighlight _unitWalkHighlights;
-    [Export] private UnitPath _unitPath;
+    [Export] public UnitPath _unitPath;
     [Export] private UnitManager _unitManager;
     [Export] private GridCursor _gridCursor;
     [Export] private Map _map;
@@ -355,7 +355,6 @@ public partial class GameBoard : Node2D
     {
         if (!IsValidMoveLoc(cell))
         {
-            //does not clear selection
             DeselectSelectedUnit();
             ClearSelectedUnit();
             _walkableCells = new Vector2[0];
@@ -480,8 +479,6 @@ public partial class GameBoard : Node2D
             return;
         }
 
-        //something weird about this logic calls true
-        //at max distance
         Vector2I intNewCell = new Vector2I(Mathf.RoundToInt(newCell.X), Mathf.RoundToInt(newCell.Y));
         List<Vector2I> path = new List<Vector2I>();
         if (_unitPath.GetIntCurrentPath().Length > 0)
@@ -496,6 +493,12 @@ public partial class GameBoard : Node2D
             return;
         }
         _unitPath.AddTileToCurrentPath(newCell);
+
+        GD.Print("new move");
+        foreach (var item in _unitPath.currentPath)
+        {
+            GD.Print(item);
+        }
     }
 
     //---------- MENU CURSOR DECLINE ----------
@@ -642,7 +645,7 @@ public partial class GameBoard : Node2D
     {
         if (_gridCursor.isMouse)
         {
-            _gridCursor.WarpMouseWithoutSignal(_selectedUnit.GetGlobalTransformWithCanvas().Origin);
+            _gridCursor.WarpMouseToUnitWithoutSignal(_selectedUnit);
         }
         else
         {

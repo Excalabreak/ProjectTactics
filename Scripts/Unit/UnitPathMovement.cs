@@ -136,6 +136,11 @@ public partial class UnitPathMovement : Path2D
     /// <param name="path">array of grid coordinates</param>
     public void SetWalkPath(Vector2[] path)
     {
+        foreach (var item in path)
+        {
+            GD.Print(item);
+        }
+
         if (path.Length <= 1)
         {
             StopWalk(_unit.cell);
@@ -145,6 +150,7 @@ public partial class UnitPathMovement : Path2D
         {
             Curve = new Curve2D();
         }
+        
 
         //check path here
         List<Vector2> walkablePath = new List<Vector2>();
