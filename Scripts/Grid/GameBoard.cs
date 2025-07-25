@@ -273,28 +273,58 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
-    /// changes where the gameboard is tracking the location of units
-    /// 
-    /// NOTE: DOES NOT CHANGE UNIT.CELL
+    /// removes unit for _units
     /// </summary>
-    /// <param name="unit">unit to move</param>
-    /// <param name="newLoc">new location</param>
-    public void ChangeUnitLocationData(Unit unit, Vector2 newLoc)
+    /// <param name="unit"></param>
+    public void RemoveUnitLocation(Unit unit)
     {
         if (!_units.ContainsKey(unit.cell))
         {
             return;
         }
-        if (_units.ContainsKey(newLoc))
+        if (_units[unit.cell] != unit)
         {
             return;
         }
 
         _units.Remove(unit.cell);
-        _units[newLoc] = unit;
+    }
 
+    public void AddUnitLocation(Unit unit)
+    {
+        if (_units.ContainsKey(unit.cell))
+        {
+            return;
+        }
+
+        _units.Add(unit.cell, unit);
+    }
+
+    /// <summary>
+    /// removes from knownUnitLocation
+    /// </summary>
+    /// <param name="unit"></param>
+    public void RemoveKnownUnitLocation(Unit unit)
+    {
+        if (!_knownUnitLocations.Contains(unit.cell))
+        {
+            return;
+        }
         _knownUnitLocations.Remove(unit.cell);
-        _knownUnitLocations.Add(newLoc);
+    }
+
+    /// <summary>
+    /// adds a unit to known unit location
+    /// </summary>
+    /// <param name="unit"></param>
+    public void AddKnownUnitLocation(Unit unit)
+    {
+        if (_knownUnitLocations.Contains(unit.cell))
+        {
+            return;
+        }
+
+        _knownUnitLocations.Add(unit.cell);
     }
 
     /// <summary>

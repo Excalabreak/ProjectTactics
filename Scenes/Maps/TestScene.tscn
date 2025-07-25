@@ -392,9 +392,6 @@ _baseStats = Dictionary[int, int]({
 9: 7
 })
 
-[node name="UnitDirection" parent="GameBoard/Units/PlayerUnits/AxeUnit" index="4"]
-_startingDirection = 3
-
 [node name="LanceUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(221, 1106)
 _gameBoard = NodePath("../../..")
@@ -417,9 +414,6 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
-
-[node name="UnitDirection" parent="GameBoard/Units/PlayerUnits/LanceUnit" index="4"]
-_startingDirection = 3
 
 [node name="SwordUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(284, 932)
@@ -509,9 +503,6 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
-
-[node name="UnitDirection" parent="GameBoard/Units/PlayerUnits/SwordUnit2" index="4"]
-_startingDirection = 3
 
 [node name="EnemyUnits" type="Node2D" parent="GameBoard/Units" node_paths=PackedStringArray("_endMenu")]
 script = ExtResource("19_vgme0")
