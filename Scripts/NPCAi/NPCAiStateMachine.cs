@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/22/2025]
+ * Last Updated: [07/25/2025]
  * [state machine for npc AI]
  */
 
@@ -51,7 +51,6 @@ public partial class NPCAiStateMachine : Node
     /// </summary>
     public void DoLogic()
     {
-        GD.Print(_unit.Name + " in " +_currentState.Name);
         _currentState.TurnLogic();
     }
 
@@ -60,7 +59,6 @@ public partial class NPCAiStateMachine : Node
     /// </summary>
     public void UnitFinsh()
     {
-        GD.Print(_unit.Name + " done");
         EmitSignal("UnitFinished");
     }
 

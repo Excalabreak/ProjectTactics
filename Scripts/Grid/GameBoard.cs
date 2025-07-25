@@ -285,6 +285,10 @@ public partial class GameBoard : Node2D
         {
             return;
         }
+        if (_units.ContainsKey(newLoc))
+        {
+            return;
+        }
 
         _units.Remove(unit.cell);
         _units[newLoc] = unit;
@@ -813,6 +817,7 @@ public partial class GameBoard : Node2D
         Vector2 cell = unit.cell;
         if (_units.ContainsKey(cell))
         {
+            GD.Print("buh");
             _units.Remove(cell);
         }
         if (_knownUnitLocations.Contains(cell))

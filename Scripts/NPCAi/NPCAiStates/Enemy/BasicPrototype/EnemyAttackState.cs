@@ -5,7 +5,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/23/2025]
+ * Last Updated: [07/25/2025]
  * [attack state for enemy ai
  * NOTE: very basic for now]
  */
@@ -28,10 +28,6 @@ public partial class EnemyAttackState : NPCAiState
         for (int i = 0; i < stateMachine.unit.attackRange; i++)
         {
             path.RemoveAt(path.Count - 1);
-        }
-        foreach (var item in path)
-        {
-            GD.Print(item);
         }
 
         if (path.Count > 0)
