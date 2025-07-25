@@ -29,10 +29,14 @@ public partial class EnemyAttackState : NPCAiState
         {
             path.RemoveAt(path.Count - 1);
         }
+        foreach (var item in path)
+        {
+            GD.Print(item);
+        }
 
         if (path.Count > 0)
         {
-            stateMachine.LogicNeedsAwait();
+            
             MoveLogic(path.ToArray(), stateMachine.unit.unitActionEconomy.currentMove);
         }
         if (isWalking)
@@ -51,6 +55,11 @@ public partial class EnemyAttackState : NPCAiState
         stateMachine.UnitFinsh();
     }
 
+    /// <summary>
+    /// the move logic for the state
+    /// </summary>
+    /// <param name="path">path that unit will take</param>
+    /// <param name="moveLimit">move of unit</param>
     private void MoveLogic(Vector2[] path, float moveLimit)
     {
         float currentMoveCost = 0;
@@ -58,7 +67,7 @@ public partial class EnemyAttackState : NPCAiState
 
         for (int i = 0; i < path.Length; i++)
         {
-            if (stateMachine.gameBoard.IsOccupied(path[i]))
+            if (!stateMachine.gameBoard.CheckCanPass(stateMachine.unit, path[i]))
             {
                 break;
             }
@@ -67,12 +76,17 @@ public partial class EnemyAttackState : NPCAiState
             {
                 break;
             }
+            if (stateMachine.gameBoard.IsOccupied(path[i]))
+            {
+                continue;
+            }
 
             validIndex = i;
         }
 
         if (validIndex != -1)
         {
+            stateMachine.LogicNeedsAwait();
             isWalking = true;
             stateMachine.gameBoard.SelectUnit(stateMachine.unit.cell);
             stateMachine.gameBoard.DrawAutoPathForAi(stateMachine.unit.cell, path[validIndex]);
