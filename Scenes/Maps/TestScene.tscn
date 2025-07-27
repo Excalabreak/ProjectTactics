@@ -482,6 +482,29 @@ _baseStats = Dictionary[int, int]({
 9: 7
 })
 
+[node name="LanceUnit3" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+position = Vector2(138, 995)
+_gameBoard = NodePath("../../..")
+_attackRange = 2
+
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/LanceUnit3/Sprites" index="0"]
+texture = ExtResource("27_he1t7")
+_skin = ExtResource("27_he1t7")
+
+[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/LanceUnit3" index="1"]
+_baseStats = Dictionary[int, int]({
+0: 10,
+1: 15,
+2: 7,
+3: 5,
+4: 5,
+5: 5,
+6: 1,
+7: 3,
+8: 5,
+9: 7
+})
+
 [node name="SwordUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(358, 1048)
 _gameBoard = NodePath("../../..")
@@ -491,6 +514,28 @@ texture = ExtResource("28_wn863")
 _skin = ExtResource("28_wn863")
 
 [node name="UnitStats" parent="GameBoard/Units/PlayerUnits/SwordUnit2" index="1"]
+_baseStats = Dictionary[int, int]({
+0: 20,
+1: 10,
+2: 5,
+3: 5,
+4: 5,
+5: 5,
+6: 4,
+7: 3,
+8: 5,
+9: 7
+})
+
+[node name="SwordUnit3" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+position = Vector2(350, 989)
+_gameBoard = NodePath("../../..")
+
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit3/Sprites" index="0"]
+texture = ExtResource("28_wn863")
+_skin = ExtResource("28_wn863")
+
+[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/SwordUnit3" index="1"]
 _baseStats = Dictionary[int, int]({
 0: 20,
 1: 10,
@@ -1004,6 +1049,7 @@ _baseStats = Dictionary[int, int]({
 position = Vector2(1316, 347)
 _gameBoard = NodePath("../../..")
 _attackRange = 2
+_isCommander = true
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit/Sprites" index="0"]
 texture = ExtResource("33_vgme0")
@@ -1269,7 +1315,9 @@ text = "Vision Cost: "
 [editable path="GameBoard/Units/PlayerUnits/SwordUnit"]
 [editable path="GameBoard/Units/PlayerUnits/AxeUnit2"]
 [editable path="GameBoard/Units/PlayerUnits/LanceUnit2"]
+[editable path="GameBoard/Units/PlayerUnits/LanceUnit3"]
 [editable path="GameBoard/Units/PlayerUnits/SwordUnit2"]
+[editable path="GameBoard/Units/PlayerUnits/SwordUnit3"]
 [editable path="GameBoard/Units/EnemyUnits/AxeAiUnit"]
 [editable path="GameBoard/Units/EnemyUnits/AxeAiUnit2"]
 [editable path="GameBoard/Units/EnemyUnits/AxeAiUnit3"]

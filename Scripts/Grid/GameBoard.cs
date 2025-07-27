@@ -847,7 +847,6 @@ public partial class GameBoard : Node2D
         Vector2 cell = unit.cell;
         if (_units.ContainsKey(cell))
         {
-            GD.Print("buh");
             _units.Remove(cell);
         }
         if (_knownUnitLocations.Contains(cell))
@@ -1340,6 +1339,25 @@ public partial class GameBoard : Node2D
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// gets a unit of a specific from area
+    /// </summary>
+    /// <param name="attackingGroup">group of attacking unit</param>
+    /// <param name="area">coords to search</param>
+    /// <returns></returns>
+    public Unit GetAttackableUnitFromArea(UnitGroupEnum attackingGroup, Vector2[] area)
+    {
+        foreach (Vector2 coord in area)
+        {
+            if (_units.ContainsKey(coord) && _unitManager.CanAttack(attackingGroup, _units[coord].unitGroup))
+            {
+                return _units[coord];
+            }
+        }
+
+        return null;
     }
 
     /// <summary>
