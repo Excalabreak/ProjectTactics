@@ -40,6 +40,8 @@ public partial class Unit : Node2D
     //temp, move to equiptment
     [Export] private int _attackRange = 1;
 
+    [Export] private bool _isCommander = false;
+
     private UnitGroupEnum _unitGroup;
 
     /// <summary>
@@ -182,5 +184,10 @@ public partial class Unit : Node2D
     public int attackRange
     {
         get { return _attackRange; }
+    }
+
+    public bool isCommander
+    {
+        get { return _isCommander; }
     }
 }

@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [06/11/2025]
+ * Last Updated: [07/24/2025]
  * [script for the cursor]
  */
 
@@ -122,16 +122,16 @@ public partial class GridCursor : Node2D
         }
     }
 
-    /// <summary>
-    /// warps the mouse w/o emiting a move signal
-    /// </summary>
-    /// <param name="screenPos">position of the screen for the mouse</param>
-    public void WarpMouseWithoutSignal(Vector2 screenPos)
+    public void WarpMouseToUnitWithoutSignal(Unit unit)
     {
-        _dontEmitMoveSignal = true;
-        Input.WarpMouse(screenPos);
+        Vector2 mouseCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
+        if (!mouseCoords.IsEqualApprox(unit.cell))
+        {
+            _dontEmitMoveSignal = true;
+            Input.WarpMouse(unit.GetGlobalTransformWithCanvas().Origin);
+        }
     }
-
+    
     /// <summary>
     /// property for cell
     /// when setting:
@@ -157,7 +157,7 @@ public partial class GridCursor : Node2D
                 Input.WarpMouse(this.GetGlobalTransformWithCanvas().Origin);
                 _isMouse = false;
             }
-
+            
             if (!_dontEmitMoveSignal)
             {
                 EmitSignal("Moved", _cell);

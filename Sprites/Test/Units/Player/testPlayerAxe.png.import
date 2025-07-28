@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1so2e8lmu73j"
-path="res://.godot/imported/TestFriendly.png-b93ea5892af7974c9e1dba125c53a158.ctex"
+uid="uid://c4x3rae14n1v3"
+path="res://.godot/imported/testPlayerAxe.png-e05c47fda81845fc679d203e67a76aac.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Test/TestFriendly.png"
-dest_files=["res://.godot/imported/TestFriendly.png-b93ea5892af7974c9e1dba125c53a158.ctex"]
+source_file="res://Sprites/Test/Units/Player/testPlayerAxe.png"
+dest_files=["res://.godot/imported/testPlayerAxe.png-e05c47fda81845fc679d203e67a76aac.ctex"]
 
 [params]
 

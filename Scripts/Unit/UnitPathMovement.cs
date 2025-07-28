@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/08/2025]
+ * Last Updated: [07/25/2025]
  * [moves sprite through path]
  */
 
@@ -75,7 +75,6 @@ public partial class UnitPathMovement : Path2D
             _unitDirection.currentFacing = _pathDirections[_currentDirectionIndex];
 
             Vector2 newLoc = _gameBoard.grid.CalculateGridCoordinates(_walkingLocation.GlobalPosition);
-            _gameBoard.ChangeUnitLocationData(_unit, newLoc);
             _unit.cell = newLoc;
 
             _gameBoard.MovingUnitVisionUpdate(_unit, newLoc);
@@ -114,9 +113,10 @@ public partial class UnitPathMovement : Path2D
         this.isWalking = false;
         _pathFollow.Progress = 0f;
 
-        _gameBoard.ChangeUnitLocationData(_unit, cell);
         _unit.cell = cell;
         _unit.Position = _gameBoard.grid.CalculateMapPosition(cell);
+        _gameBoard.AddUnitLocation(_unit);
+        _gameBoard.AddKnownUnitLocation(_unit);
 
         _gameBoard.UpdateUnitVision(_unit);
 
@@ -145,6 +145,7 @@ public partial class UnitPathMovement : Path2D
         {
             Curve = new Curve2D();
         }
+        
 
         //check path here
         List<Vector2> walkablePath = new List<Vector2>();
@@ -202,6 +203,8 @@ public partial class UnitPathMovement : Path2D
         }
         _unit.targetCell = walkablePath[lastStandableIndex];
         isWalking = true;
+        _gameBoard.RemoveUnitLocation(_unit);
+        _gameBoard.RemoveKnownUnitLocation(_unit);
     }
 
     /// <summary>

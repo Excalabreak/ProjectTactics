@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [07/14/2025]
+ * Last Updated: [07/24/2025]
  * [game board manages everything on the map]
  */
 
@@ -25,7 +25,7 @@ public partial class GameBoard : Node2D
     [ExportGroup("Components")]
     [Export] private GridResource _grid;
     [Export] private UnitWalkHighlight _unitWalkHighlights;
-    [Export] private UnitPath _unitPath;
+    [Export] public UnitPath _unitPath;
     [Export] private UnitManager _unitManager;
     [Export] private GridCursor _gridCursor;
     [Export] private Map _map;
@@ -36,6 +36,7 @@ public partial class GameBoard : Node2D
     [ExportGroup("UI")]
     [Export] private UIStats _uiStats;
     [Export] private UIBattle _uiBattle;
+    [Export] private UITerrain _uiTerrain;
 
     [ExportGroup("Menu")]
     [Export] private MenuStateMachine _menuStateMachine;
@@ -145,6 +146,19 @@ public partial class GameBoard : Node2D
     /// <param name="newCell">cell cursor is moving to</param>
     private void OnCursorMoved(Vector2 newCell)
     {
+        //terrain info only here for prototype
+        if (_grid.IsWithinBounds(newCell))
+        {
+            string terrainName = _map.GetTileTerrainName(newCell);
+            float moveCost = _map.GetTileMoveCost(newCell);
+            float visionCost = _map.GetTileVisionCost(newCell);
+            _uiTerrain.ShowTerrainPanel(terrainName, moveCost, visionCost);
+        }
+        else
+        {
+            _uiTerrain.HideTerrainPanel();
+        }
+
         _menuStateMachine.currentState.OnCursorMove(newCell);
     }
 
@@ -241,7 +255,6 @@ public partial class GameBoard : Node2D
     {
         if (!IsValidMoveLoc(newCell))
         {
-            GD.Print("buh");
             DeselectSelectedUnit();
             ClearSelectedUnit();
             EmitSignal("SelectedMoved");
@@ -260,24 +273,58 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
-    /// changes where the gameboard is tracking the location of units
-    /// 
-    /// NOTE: DOES NOT CHANGE UNIT.CELL
+    /// removes unit for _units
     /// </summary>
-    /// <param name="unit">unit to move</param>
-    /// <param name="newLoc">new location</param>
-    public void ChangeUnitLocationData(Unit unit, Vector2 newLoc)
+    /// <param name="unit"></param>
+    public void RemoveUnitLocation(Unit unit)
     {
         if (!_units.ContainsKey(unit.cell))
         {
             return;
         }
+        if (_units[unit.cell] != unit)
+        {
+            return;
+        }
 
         _units.Remove(unit.cell);
-        _units[newLoc] = unit;
+    }
 
+    public void AddUnitLocation(Unit unit)
+    {
+        if (_units.ContainsKey(unit.cell))
+        {
+            return;
+        }
+
+        _units.Add(unit.cell, unit);
+    }
+
+    /// <summary>
+    /// removes from knownUnitLocation
+    /// </summary>
+    /// <param name="unit"></param>
+    public void RemoveKnownUnitLocation(Unit unit)
+    {
+        if (!_knownUnitLocations.Contains(unit.cell))
+        {
+            return;
+        }
         _knownUnitLocations.Remove(unit.cell);
-        _knownUnitLocations.Add(newLoc);
+    }
+
+    /// <summary>
+    /// adds a unit to known unit location
+    /// </summary>
+    /// <param name="unit"></param>
+    public void AddKnownUnitLocation(Unit unit)
+    {
+        if (_knownUnitLocations.Contains(unit.cell))
+        {
+            return;
+        }
+
+        _knownUnitLocations.Add(unit.cell);
     }
 
     /// <summary>
@@ -342,7 +389,6 @@ public partial class GameBoard : Node2D
     {
         if (!IsValidMoveLoc(cell))
         {
-            //does not clear selection
             DeselectSelectedUnit();
             ClearSelectedUnit();
             _walkableCells = new Vector2[0];
@@ -458,8 +504,7 @@ public partial class GameBoard : Node2D
     {
         if (!_walkableCells.Contains(newCell))
         {
-            //_unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
-            _unitPath.Clear();
+            _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
             return;
         }
         if (!_unitPath.CoordConnects(newCell))
@@ -468,8 +513,6 @@ public partial class GameBoard : Node2D
             return;
         }
 
-        //something weird about this logic calls true
-        //at max distance
         Vector2I intNewCell = new Vector2I(Mathf.RoundToInt(newCell.X), Mathf.RoundToInt(newCell.Y));
         List<Vector2I> path = new List<Vector2I>();
         if (_unitPath.GetIntCurrentPath().Length > 0)
@@ -483,7 +526,6 @@ public partial class GameBoard : Node2D
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
             return;
         }
-
         _unitPath.AddTileToCurrentPath(newCell);
     }
 
@@ -631,7 +673,7 @@ public partial class GameBoard : Node2D
     {
         if (_gridCursor.isMouse)
         {
-            _gridCursor.WarpMouseWithoutSignal(_selectedUnit.GetGlobalTransformWithCanvas().Origin);
+            _gridCursor.WarpMouseToUnitWithoutSignal(_selectedUnit);
         }
         else
         {
@@ -653,7 +695,6 @@ public partial class GameBoard : Node2D
         }
 
         ResetKnownOccupied(currentTurn);
-        GD.Print(currentTurn);
 
         foreach (Unit unit in _unitManager.GetGroupUnits(currentTurn))
         {
@@ -838,7 +879,11 @@ public partial class GameBoard : Node2D
             if (IsInstanceValid(unit) && unit.IsAi())
             {
                 unit.aiStateMachine.DoLogic();
-                await ToSignal(unit.aiStateMachine, "UnitFinished");
+                if (unit.aiStateMachine.needsAwait)
+                {
+                    await ToSignal(unit.aiStateMachine, "UnitFinished");
+                    unit.aiStateMachine.ResetNeedsAwait();
+                }
             }
         }
         EndTurn();
@@ -1202,9 +1247,14 @@ public partial class GameBoard : Node2D
         }
         path.Reverse();
 
+
         if (maxDistance > -1)
         {
-            if (_map.GetPathMoveCost(path.ToArray()) > maxDistance)
+            List<Vector2> check = new List<Vector2>();
+            check.AddRange(path);
+            check.RemoveAt(0);
+
+            if (_map.GetPathMoveCost(check.ToArray()) > maxDistance)
             {
                 path = new List<Vector2>();
             }
@@ -1233,7 +1283,7 @@ public partial class GameBoard : Node2D
     /// </summary>
     /// <param name="cell">coordinates on grid</param>
     /// <returns>true if the player should know 100% that a unit is occupying the cell</returns>
-    private bool IsKnownOccupied(Vector2 cell)
+    public bool IsKnownOccupied(Vector2 cell)
     {
         return _knownUnitLocations.Contains(cell);
     }
@@ -1289,6 +1339,25 @@ public partial class GameBoard : Node2D
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// gets a unit of a specific from area
+    /// </summary>
+    /// <param name="attackingGroup">group of attacking unit</param>
+    /// <param name="area">coords to search</param>
+    /// <returns></returns>
+    public Unit GetAttackableUnitFromArea(UnitGroupEnum attackingGroup, Vector2[] area)
+    {
+        foreach (Vector2 coord in area)
+        {
+            if (_units.ContainsKey(coord) && _unitManager.CanAttack(attackingGroup, _units[coord].unitGroup))
+            {
+                return _units[coord];
+            }
+        }
+
+        return null;
     }
 
     /// <summary>
