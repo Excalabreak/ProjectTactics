@@ -3,14 +3,13 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/16/2025]
+ * Last Updated: [07/29/2025]
  * [Manages any change in direction]
  */
 
 public partial class UnitDirection : Node2D
 {
     [Export] private Unit _unit;
-    [Export] private DirectionEnum _startingDirection = DirectionEnum.UP;
     private GameBoard _gameBoard;
 
     private DirectionEnum _currentFacing = DirectionEnum.UP;
@@ -20,7 +19,7 @@ public partial class UnitDirection : Node2D
     {
         _unit.CurrentGameBoard += SetGameBoard;
 
-        currentFacing = _startingDirection;
+        currentFacing = _unit.unitResource.startingDirection;
     }
 
     /// <summary>

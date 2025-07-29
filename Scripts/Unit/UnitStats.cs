@@ -1,17 +1,18 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/15/2025]
+ * Last Updated: [07/29/2025]
  * [class for unit stats]
  */
 
 public partial class UnitStats : Node
 {
     [Export] private Unit _unit;
-    [Export] private Dictionary<UnitStatEnum, int> _baseStats = new Dictionary<UnitStatEnum, int>();
+    private Godot.Collections.Dictionary<UnitStatEnum, int> _baseStats = new Godot.Collections.Dictionary<UnitStatEnum, int>();
     //temp, make pretty later
 
     [Export] private Label _healthLable;
@@ -23,6 +24,8 @@ public partial class UnitStats : Node
     /// </summary>
     public override void _Ready()
     {
+        _baseStats = _unit.unitResource.baseStats;
+
         foreach (UnitStatEnum stat in Enum.GetValues(typeof(DirectionEnum)))
         {
             if (_baseStats.ContainsKey(stat))
@@ -30,7 +33,7 @@ public partial class UnitStats : Node
                 continue;
             }
 
-            _baseStats.Add(stat, 1);
+            _baseStats.Add(stat, 0);
         }
 
         _maxHP = _baseStats[UnitStatEnum.HEALTH];
@@ -69,6 +72,10 @@ public partial class UnitStats : Node
     /// <returns>base stat</returns>
     public int GetBaseStat(UnitStatEnum stat)
     {
+        if (!_baseStats.ContainsKey(stat))
+        {
+            GD.Print(_unit.Name + "causing issues");
+        }
         return _baseStats[stat];
     }
 
