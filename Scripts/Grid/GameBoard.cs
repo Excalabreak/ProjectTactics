@@ -966,7 +966,14 @@ public partial class GameBoard : Node2D
     /// <returns>array of coords that the unit can walk</returns>
     public Vector2[] GetWalkableCells(Unit unit)
     {
-        return DijkstaFill(unit.cell, (float)unit.unitActionEconomy.currentMove, false);
+        float maxDistance = unit.unitActionEconomy.currentMove;
+
+        if (currentTurn != unit.unitGroup)
+        {
+            maxDistance = unit.unitActionEconomy.maxMove;
+        }
+
+        return DijkstaFill(unit.cell, maxDistance, false);
     }
 
     /// <summary>
@@ -978,7 +985,15 @@ public partial class GameBoard : Node2D
     public Vector2[] GetAttackableCells(Unit unit)
     {
         List<Vector2> attackableCells = new List<Vector2>();
-        Vector2[] realWalkableCells = DijkstaFill(unit.cell, unit.unitActionEconomy.currentMove, true);
+
+        float maxDistance = unit.unitActionEconomy.currentMove;
+
+        if (currentTurn != unit.unitGroup)
+        {
+            maxDistance = unit.unitActionEconomy.maxMove;
+        }
+
+        Vector2[] realWalkableCells = DijkstaFill(unit.cell, maxDistance, true);
 
         foreach (Vector2 curCell in realWalkableCells)
         {
