@@ -906,8 +906,6 @@ public partial class GameBoard : Node2D
             return Vector2.Zero;
         }
 
-        Pathfinder pathfinder = new Pathfinder(_grid, _grid.GetAllCellCoords());
-
         Vector2 currentClosest = new Vector2(-1, -1);
 
         List<Vector2> path = new List<Vector2>();
@@ -916,7 +914,7 @@ public partial class GameBoard : Node2D
         {
             path.Clear();
 
-            path.AddRange(pathfinder.CalculatePointPath(cell, searchUnits[i].cell));
+            path.AddRange(DijkstraPathFinding(cell, searchUnits[i].cell));
             path.RemoveAt(0);
             path.RemoveAt(path.Count - 1);
             if (path.Count <= 0)
