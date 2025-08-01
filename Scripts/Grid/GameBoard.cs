@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [07/24/2025]
+ * Last Updated: [08/01/2025]
  * [game board manages everything on the map]
  */
 
@@ -33,11 +33,7 @@ public partial class GameBoard : Node2D
     [Export] private BlockedOverlay _blockedOverlay;
     [Export] private KnownUnitLocations _knownUnitLocationsTileMap;
     [Export] private TurnManager _turnManager;
-
-    [ExportGroup("UI")]
-    [Export] private UIStats _uiStats;
-    [Export] private UIBattle _uiBattle;
-    [Export] private UITerrain _uiTerrain;
+    [Export] private UIManager _uiManager;
 
     [ExportGroup("Menu")]
     [Export] private MenuStateMachine _menuStateMachine;
@@ -145,11 +141,11 @@ public partial class GameBoard : Node2D
             string terrainName = _map.GetTileTerrainName(newCell);
             float moveCost = _map.GetTileMoveCost(newCell);
             float visionCost = _map.GetTileVisionCost(newCell);
-            _uiTerrain.ShowTerrainPanel(terrainName, moveCost, visionCost);
+            _uiManager.ShowTerrainPanel(terrainName, moveCost, visionCost);
         }
         else
         {
-            _uiTerrain.HideTerrainPanel();
+            _uiManager.HideTerrainPanel();
         }
 
         _menuStateMachine.currentState.OnCursorMove(newCell);
@@ -223,7 +219,7 @@ public partial class GameBoard : Node2D
         {
             _selectedUnit.isSelected = false;
         }
-        _uiStats.HideStatsPanel();
+        _uiManager.HideStatsPanel();
         _unitWalkHighlights.Clear();
         _unitPath.Stop();
     }
@@ -424,7 +420,7 @@ public partial class GameBoard : Node2D
 
         //very basic combat for now
         _unitWalkHighlights.Clear();
-        _uiBattle.HideBattlePredictions();
+        _uiManager.HideBattlePredictions();
 
         UnitCombat(_selectedUnit, opposingUnit);
 
@@ -448,7 +444,7 @@ public partial class GameBoard : Node2D
         }
         else
         {
-            _uiStats.HideStatsPanel();
+            _uiManager.HideStatsPanel();
         }
     }
 
@@ -461,22 +457,22 @@ public partial class GameBoard : Node2D
         //_unitWalkHighlights.Clear();
         if (_selectedUnit == null)
         {
-            _uiBattle.HideBattlePredictions();
+            _uiManager.HideBattlePredictions();
             return;
         }
         if (_selectedUnit.cell == newCell)
         {
-            _uiBattle.HideBattlePredictions();
+            _uiManager.HideBattlePredictions();
             return;
         }
         if (!_units.ContainsKey(newCell))
         {
-            _uiBattle.HideBattlePredictions();
+            _uiManager.HideBattlePredictions();
             return;
         }
         if (!IsKnownOccupied(newCell))
         {
-            _uiBattle.HideBattlePredictions();
+            _uiManager.HideBattlePredictions();
             return;
         }
         if (FloodFill(_selectedUnit.cell, _selectedUnit.attackRange).Contains(newCell))
@@ -485,7 +481,7 @@ public partial class GameBoard : Node2D
         }
         else
         {
-            _uiBattle.HideBattlePredictions();
+            _uiManager.HideBattlePredictions();
         }
     }
 
@@ -583,7 +579,7 @@ public partial class GameBoard : Node2D
         }
         Unit curUnit = _units[cell];
 
-        _uiStats.ShowUnitStats(curUnit);
+        _uiManager.ShowUnitStats(curUnit);
 
         _walkableCells = GetWalkableCells(curUnit);
         _attackableCells = GetAttackableCells(curUnit);
@@ -615,7 +611,7 @@ public partial class GameBoard : Node2D
         //basic combat
         //logic for magic numbers don't exist yet
         //100 for acc, 0 for crit
-        _uiBattle.ShowBattlePredictions(playerStats.currentHP, enemyStats.currentHP,
+        _uiManager.ShowBattlePredictions(playerStats.currentHP, enemyStats.currentHP,
             playerDamage, enemyDamage, 100, 100, 0, 0);
     }
 
@@ -648,7 +644,7 @@ public partial class GameBoard : Node2D
     /// </summary>
     public void HideBattleUI()
     {
-        _uiBattle.HideBattlePredictions();
+        _uiManager.HideBattlePredictions();
     }
 
     /// <summary>
@@ -656,7 +652,7 @@ public partial class GameBoard : Node2D
     /// </summary>
     public void HideStatsUI()
     {
-        _uiStats.HideStatsPanel();
+        _uiManager.HideStatsPanel();
     }
 
     /// <summary>

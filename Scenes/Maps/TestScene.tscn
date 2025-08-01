@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=71 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -49,6 +49,7 @@
 [ext_resource type="Resource" uid="uid://be3bhidwe7mjb" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemyLanceResource.tres" id="36_onxey"]
 [ext_resource type="Resource" uid="uid://ndlg3h1jwcnl" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemySwordResource.tres" id="38_tl10l"]
 [ext_resource type="Resource" uid="uid://det1ut0vo1wpe" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemyCommanderResource.tres" id="40_a4mff"]
+[ext_resource type="Script" uid="uid://bcl8hy7m3ybux" path="res://Scripts/UI/UIManager.cs" id="48_bleph"]
 [ext_resource type="Script" uid="uid://ewwqdcxfpysl" path="res://Scripts/Misc/TurnManager.cs" id="50_fhuv3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
@@ -287,7 +288,7 @@ metadata/_custom_type_script = "uid://cb8xehtora3p"
 
 [node name="TestScene" type="Node2D"]
 
-[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_turnManager", "_uiStats", "_uiBattle", "_uiTerrain", "_menuStateMachine")]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_turnManager", "_uiManager", "_menuStateMachine")]
 script = ExtResource("1_lo7rv")
 _grid = ExtResource("2_668gq")
 _unitWalkHighlights = NodePath("MapTiles/UnitWalkHighlights")
@@ -299,9 +300,7 @@ _fogOfWar = NodePath("MapTiles/FogOfWar")
 _blockedOverlay = NodePath("MapTiles/BlockedOverlay")
 _knownUnitLocationsTileMap = NodePath("MapTiles/KnownUnitLocations")
 _turnManager = NodePath("TurnManager")
-_uiStats = NodePath("UI/StatsPanel")
-_uiBattle = NodePath("UI/BattlePredPanel")
-_uiTerrain = NodePath("UI/Terrain Panel")
+_uiManager = NodePath("UIManager")
 _menuStateMachine = NodePath("MenuStateMachine")
 _actionMenu = ExtResource("3_0ccgp")
 _pauseMenu = ExtResource("4_r77ll")
@@ -658,9 +657,13 @@ script = ExtResource("28_a4mff")
 script = ExtResource("50_fhuv3")
 _unitManager = NodePath("../Units")
 
-[node name="UI" type="CanvasLayer" parent="GameBoard"]
+[node name="UIManager" type="CanvasLayer" parent="GameBoard" node_paths=PackedStringArray("_uiStats", "_uiBattle", "_uiTerrain")]
+script = ExtResource("48_bleph")
+_uiStats = NodePath("StatsPanel")
+_uiBattle = NodePath("BattlePredPanel")
+_uiTerrain = NodePath("Terrain Panel")
 
-[node name="StatsPanel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_HPLable", "_MOVLable", "_ATKLable", "_DEFLable", "_RNGLable")]
+[node name="StatsPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_HPLable", "_MOVLable", "_ATKLable", "_DEFLable", "_RNGLable")]
 offset_left = 16.0
 offset_top = 14.0
 offset_right = 315.0
@@ -672,7 +675,7 @@ _ATKLable = NodePath("VBoxContainer/ATKLable")
 _DEFLable = NodePath("VBoxContainer/DEFLable")
 _RNGLable = NodePath("VBoxContainer/RNGLable")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UI/StatsPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UIManager/StatsPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -684,27 +687,27 @@ offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HPLabel" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+[node name="HPLabel" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
 layout_mode = 2
 text = "HP: 10/10"
 
-[node name="MOVLable" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+[node name="MOVLable" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
 layout_mode = 2
 text = "MOV: 6/6"
 
-[node name="ATKLable" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+[node name="ATKLable" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
 layout_mode = 2
 text = "ATK: 5"
 
-[node name="DEFLable" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+[node name="DEFLable" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
 layout_mode = 2
 text = "DEF: 5"
 
-[node name="RNGLable" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+[node name="RNGLable" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
 layout_mode = 2
 text = "RANGE: 1"
 
-[node name="BattlePredPanel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_playerHPLable", "_playerDMGLable", "_playerACCLable", "_playerCRTLable", "_enemyHPLable", "_enemyDMGLable", "_enemyACCLable", "_enemyCRTLable")]
+[node name="BattlePredPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_playerHPLable", "_playerDMGLable", "_playerACCLable", "_playerCRTLable", "_enemyHPLable", "_enemyDMGLable", "_enemyACCLable", "_enemyCRTLable")]
 visible = false
 offset_left = 16.0
 offset_top = 178.0
@@ -720,7 +723,7 @@ _enemyDMGLable = NodePath("VBoxContainer/HBoxContainer/EnemySide/EDMGLable")
 _enemyACCLable = NodePath("VBoxContainer/HBoxContainer/EnemySide/EACCLable")
 _enemyCRTLable = NodePath("VBoxContainer/HBoxContainer/EnemySide/ECRTLable")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UI/BattlePredPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UIManager/BattlePredPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -732,89 +735,89 @@ offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer"]
+[node name="Label" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer"]
 layout_mode = 2
 text = "COMBAT PREDICTIONS"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GameBoard/UI/BattlePredPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="PlayerSide" type="VBoxContainer" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer"]
+[node name="PlayerSide" type="VBoxContainer" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="PHPLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
+[node name="PHPLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
 layout_mode = 2
 text = "10 -> 5"
 horizontal_alignment = 1
 
-[node name="PDMGLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
+[node name="PDMGLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
 layout_mode = 2
 text = "5"
 horizontal_alignment = 1
 
-[node name="PACCLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
+[node name="PACCLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
 layout_mode = 2
 text = "100"
 horizontal_alignment = 1
 
-[node name="PCRTLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
+[node name="PCRTLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="StatsLables" type="VBoxContainer" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer"]
+[node name="StatsLables" type="VBoxContainer" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 alignment = 1
 
-[node name="HPLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
+[node name="HPLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
 layout_mode = 2
 text = "HP"
 horizontal_alignment = 1
 
-[node name="DMGLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
+[node name="DMGLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
 layout_mode = 2
 text = "DMG"
 horizontal_alignment = 1
 
-[node name="ACCLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
+[node name="ACCLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
 layout_mode = 2
 text = "ACC"
 horizontal_alignment = 1
 
-[node name="CRTLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
+[node name="CRTLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
 layout_mode = 2
 text = "CRIT"
 horizontal_alignment = 1
 
-[node name="EnemySide" type="VBoxContainer" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer"]
+[node name="EnemySide" type="VBoxContainer" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="EHPLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
+[node name="EHPLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
 layout_mode = 2
 text = "10 -> 5"
 horizontal_alignment = 1
 
-[node name="EDMGLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
+[node name="EDMGLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
 layout_mode = 2
 text = "5"
 horizontal_alignment = 1
 
-[node name="EACCLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
+[node name="EACCLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
 layout_mode = 2
 text = "100"
 horizontal_alignment = 1
 
-[node name="ECRTLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
+[node name="ECRTLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="Terrain Panel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_nameLabel", "_moveLabel", "_visionLabel")]
+[node name="Terrain Panel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_nameLabel", "_moveLabel", "_visionLabel")]
 visible = false
 anchors_preset = 1
 anchor_left = 1.0
@@ -829,7 +832,7 @@ _nameLabel = NodePath("VBoxContainer/NameLabel")
 _moveLabel = NodePath("VBoxContainer/MoveLabel")
 _visionLabel = NodePath("VBoxContainer/VisionLabel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UI/Terrain Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UIManager/Terrain Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -841,16 +844,16 @@ offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NameLabel" type="Label" parent="GameBoard/UI/Terrain Panel/VBoxContainer"]
+[node name="NameLabel" type="Label" parent="GameBoard/UIManager/Terrain Panel/VBoxContainer"]
 layout_mode = 2
 text = "Planes"
 horizontal_alignment = 1
 
-[node name="MoveLabel" type="Label" parent="GameBoard/UI/Terrain Panel/VBoxContainer"]
+[node name="MoveLabel" type="Label" parent="GameBoard/UIManager/Terrain Panel/VBoxContainer"]
 layout_mode = 2
 text = "Move Cost: "
 
-[node name="VisionLabel" type="Label" parent="GameBoard/UI/Terrain Panel/VBoxContainer"]
+[node name="VisionLabel" type="Label" parent="GameBoard/UIManager/Terrain Panel/VBoxContainer"]
 layout_mode = 2
 text = "Vision Cost: "
 
