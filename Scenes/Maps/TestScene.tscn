@@ -1,9 +1,7 @@
-[gd_scene load_steps=74 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=70 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
-[ext_resource type="Script" uid="uid://vxqdmei6f2d4" path="res://Scripts/Playtest/PrototypeStartMenu.cs" id="1_sb4gi"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
-[ext_resource type="Script" uid="uid://b85c740frt4hn" path="res://Scripts/Playtest/PrototypeEndMenu.cs" id="2_ixcl0"]
 [ext_resource type="PackedScene" uid="uid://c24kesd8eggv4" path="res://Scenes/Menus/ActionMenu.tscn" id="3_0ccgp"]
 [ext_resource type="PackedScene" uid="uid://cthmnrjp6uu61" path="res://Scenes/Menus/PauseScreen.tscn" id="4_r77ll"]
 [ext_resource type="PackedScene" uid="uid://2b0edy02ekfi" path="res://Scenes/Menus/TurnMenu.tscn" id="5_668gq"]
@@ -51,15 +49,7 @@
 [ext_resource type="Resource" uid="uid://be3bhidwe7mjb" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemyLanceResource.tres" id="36_onxey"]
 [ext_resource type="Resource" uid="uid://ndlg3h1jwcnl" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemySwordResource.tres" id="38_tl10l"]
 [ext_resource type="Resource" uid="uid://det1ut0vo1wpe" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemyCommanderResource.tres" id="40_a4mff"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_maqlv"]
-font_size = 121
-
-[sub_resource type="LabelSettings" id="LabelSettings_sb4gi"]
-font_size = 71
-
-[sub_resource type="LabelSettings" id="LabelSettings_ixcl0"]
-font_size = 41
+[ext_resource type="Script" uid="uid://ewwqdcxfpysl" path="res://Scripts/Misc/TurnManager.cs" id="50_fhuv3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
 texture = ExtResource("5_jsdi5")
@@ -297,101 +287,7 @@ metadata/_custom_type_script = "uid://cb8xehtora3p"
 
 [node name="TestScene" type="Node2D"]
 
-[node name="PrototypeNodes" type="Node2D" parent="."]
-
-[node name="PrototypeStartMenu" type="CanvasLayer" parent="PrototypeNodes" node_paths=PackedStringArray("_gridCursor", "_cursorDefaultStartButton")]
-visible = false
-script = ExtResource("1_sb4gi")
-_gridCursor = NodePath("../../GameBoard/Cursor")
-_cursorDefaultStartButton = NodePath("Panel/VBoxContainer/StartButton")
-
-[node name="Panel" type="Panel" parent="PrototypeNodes/PrototypeStartMenu"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PrototypeNodes/PrototypeStartMenu/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="Title" type="Label" parent="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Project Tactics Playtest 1"
-label_settings = SubResource("LabelSettings_maqlv")
-horizontal_alignment = 1
-
-[node name="Objective" type="Label" parent="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Objective: Find and Kill the Commander/Survive
-(you don't have any healers)"
-label_settings = SubResource("LabelSettings_sb4gi")
-horizontal_alignment = 1
-
-[node name="Note" type="Label" parent="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Note: Alt + F4 to close game mid game"
-label_settings = SubResource("LabelSettings_ixcl0")
-horizontal_alignment = 1
-
-[node name="StartButton" type="Button" parent="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(145.95, 43.4)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 36
-text = "Start"
-icon_alignment = 1
-
-[node name="PrototypeEndMenu" type="CanvasLayer" parent="PrototypeNodes" node_paths=PackedStringArray("_titleLable", "_gridCursor", "_cursorDefaultStartButton")]
-visible = false
-script = ExtResource("2_ixcl0")
-_titleLable = NodePath("Panel/VBoxContainer/Title")
-_gridCursor = NodePath("../../GameBoard/Cursor")
-_cursorDefaultStartButton = NodePath("Panel/VBoxContainer/QuitButton")
-
-[node name="Panel" type="Panel" parent="PrototypeNodes/PrototypeEndMenu"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PrototypeNodes/PrototypeEndMenu/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="Title" type="Label" parent="PrototypeNodes/PrototypeEndMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "You Win/Lose"
-label_settings = SubResource("LabelSettings_maqlv")
-horizontal_alignment = 1
-
-[node name="Objective2" type="Label" parent="PrototypeNodes/PrototypeEndMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "(if you want to try again, launch the game again)"
-label_settings = SubResource("LabelSettings_ixcl0")
-horizontal_alignment = 1
-
-[node name="QuitButton" type="Button" parent="PrototypeNodes/PrototypeEndMenu/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(145.95, 43.4)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 36
-text = "Quit"
-icon_alignment = 1
-
-[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_uiStats", "_uiBattle", "_uiTerrain", "_menuStateMachine")]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_turnManager", "_uiStats", "_uiBattle", "_uiTerrain", "_menuStateMachine")]
 script = ExtResource("1_lo7rv")
 _grid = ExtResource("2_668gq")
 _unitWalkHighlights = NodePath("MapTiles/UnitWalkHighlights")
@@ -402,6 +298,7 @@ _map = NodePath("MapTiles/Map")
 _fogOfWar = NodePath("MapTiles/FogOfWar")
 _blockedOverlay = NodePath("MapTiles/BlockedOverlay")
 _knownUnitLocationsTileMap = NodePath("MapTiles/KnownUnitLocations")
+_turnManager = NodePath("TurnManager")
 _uiStats = NodePath("UI/StatsPanel")
 _uiBattle = NodePath("UI/BattlePredPanel")
 _uiTerrain = NodePath("UI/Terrain Panel")
@@ -456,11 +353,10 @@ _gameBoard = NodePath("../..")
 [node name="Units" type="Node2D" parent="GameBoard"]
 script = ExtResource("18_7r5ow")
 
-[node name="PlayerUnits" type="Node2D" parent="GameBoard/Units" node_paths=PackedStringArray("_endMenu")]
+[node name="PlayerUnits" type="Node2D" parent="GameBoard/Units"]
 script = ExtResource("19_vgme0")
 _passingGroup = Array[int]([0, 1])
 _attackingGroup = Array[int]([2])
-_endMenu = NodePath("../../../PrototypeNodes/PrototypeEndMenu")
 
 [node name="AxeUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(264, 1003)
@@ -526,12 +422,11 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit3/Sprites" index="0"]
 texture = ExtResource("28_wn863")
 
-[node name="EnemyUnits" type="Node2D" parent="GameBoard/Units" node_paths=PackedStringArray("_endMenu")]
+[node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
 script = ExtResource("19_vgme0")
 _group = 2
 _passingGroup = Array[int]([2])
 _attackingGroup = Array[int]([0, 1])
-_endMenu = NodePath("../../../PrototypeNodes/PrototypeEndMenu")
 
 [node name="AxeAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(337, 778)
@@ -759,6 +654,10 @@ script = ExtResource("27_tl10l")
 [node name="BlankState" type="Node" parent="GameBoard/MenuStateMachine"]
 script = ExtResource("28_a4mff")
 
+[node name="TurnManager" type="Node" parent="GameBoard" node_paths=PackedStringArray("_unitManager")]
+script = ExtResource("50_fhuv3")
+_unitManager = NodePath("../Units")
+
 [node name="UI" type="CanvasLayer" parent="GameBoard"]
 
 [node name="StatsPanel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_HPLable", "_MOVLable", "_ATKLable", "_DEFLable", "_RNGLable")]
@@ -954,9 +853,6 @@ text = "Move Cost: "
 [node name="VisionLabel" type="Label" parent="GameBoard/UI/Terrain Panel/VBoxContainer"]
 layout_mode = 2
 text = "Vision Cost: "
-
-[connection signal="pressed" from="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer/StartButton" to="PrototypeNodes/PrototypeStartMenu" method="HideMenu"]
-[connection signal="pressed" from="PrototypeNodes/PrototypeEndMenu/Panel/VBoxContainer/QuitButton" to="PrototypeNodes/PrototypeEndMenu" method="OnQuit"]
 
 [editable path="GameBoard/Units/PlayerUnits/AxeUnit"]
 [editable path="GameBoard/Units/PlayerUnits/LanceUnit"]

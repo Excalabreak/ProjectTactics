@@ -32,6 +32,7 @@ public partial class GameBoard : Node2D
     [Export] private FogOfWar _fogOfWar;
     [Export] private BlockedOverlay _blockedOverlay;
     [Export] private KnownUnitLocations _knownUnitLocationsTileMap;
+    [Export] private TurnManager _turnManager;
 
     [ExportGroup("UI")]
     [Export] private UIStats _uiStats;
@@ -71,11 +72,6 @@ public partial class GameBoard : Node2D
     private bool _visionWarning = true;
     private bool _battleWarning = true;
 
-    [ExportGroup("Turns")]
-    [Export] private UnitGroupEnum _startingGroup = UnitGroupEnum.PLAYER;
-    private UnitGroupEnum[] _unitGroupTurns;
-    private int _turnIndex;
-
     //---------- SET UP -----------
 
     /// <summary>
@@ -111,16 +107,13 @@ public partial class GameBoard : Node2D
             }
         }
 
-        _unitGroupTurns = _unitManager.GetAllUnitGroupEnums();
-        _turnIndex = (int)_startingGroup;
-
         //this makes sure all units are in _units before updating the unit vision
         foreach (KeyValuePair<Vector2, Unit> unit in _units)
         {
             UpdateUnitVision(unit.Value);
         }
 
-        ResetKnownOccupied(currentTurn);
+        ResetKnownOccupied(_turnManager.currentTurn);
 
         _movementCosts = _map.GetMovementCosts(_grid);
     }
@@ -192,7 +185,7 @@ public partial class GameBoard : Node2D
             return;
         }
 
-        if (currentTurn != _units[cell].unitGroup)
+        if (_turnManager.currentTurn != _units[cell].unitGroup)
         {
             return;
         }
@@ -688,27 +681,23 @@ public partial class GameBoard : Node2D
     /// </summary>
     public void EndTurn()
     {
-        _turnIndex++;
-        if (_turnIndex == _unitGroupTurns.Length)
-        {
-            _turnIndex = 0;
-        }
+        _turnManager.NextTurn();
 
-        ResetKnownOccupied(currentTurn);
+        ResetKnownOccupied(_turnManager.currentTurn);
 
-        foreach (Unit unit in _unitManager.GetGroupUnits(currentTurn))
+        foreach (Unit unit in _unitManager.GetGroupUnits(_turnManager.currentTurn))
         {
             unit.unitActionEconomy.ResetActions();
         }
 
-        if (currentTurn == UnitGroupEnum.PLAYER)
+        if (_turnManager.currentTurn == UnitGroupEnum.PLAYER)
         {
             _menuStateMachine.TransitionTo("UnSelectedState");
         }
         else
         {
             _menuStateMachine.TransitionTo("BlankState");
-            AiTurn(currentTurn);
+            AiTurn(_turnManager.currentTurn);
         }
     }
 
@@ -968,7 +957,7 @@ public partial class GameBoard : Node2D
     {
         float maxDistance = unit.unitActionEconomy.currentMove;
 
-        if (currentTurn != unit.unitGroup)
+        if (_turnManager.currentTurn != unit.unitGroup)
         {
             maxDistance = unit.unitActionEconomy.maxMove;
         }
@@ -988,7 +977,7 @@ public partial class GameBoard : Node2D
 
         float maxDistance = unit.unitActionEconomy.currentMove;
 
-        if (currentTurn != unit.unitGroup)
+        if (_turnManager.currentTurn != unit.unitGroup)
         {
             maxDistance = unit.unitActionEconomy.maxMove;
         }
@@ -1887,7 +1876,7 @@ public partial class GameBoard : Node2D
     /// <param name="state">state to transition to</param>
     private void OnlyPlayerTurnMenuStateTransition(string state)
     {
-        if (currentTurn == UnitGroupEnum.PLAYER)
+        if (_turnManager.currentTurn == UnitGroupEnum.PLAYER)
         {
             menuStateMachine.TransitionTo(state);
         }
@@ -1926,10 +1915,5 @@ public partial class GameBoard : Node2D
     public UnitManager unitManager
     {
         get { return _unitManager; }
-    }
-
-    private UnitGroupEnum currentTurn
-    {
-        get { return _unitGroupTurns[_turnIndex]; }
     }
 }
