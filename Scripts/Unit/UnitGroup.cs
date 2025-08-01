@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/19/2025]
+ * Last Updated: [08/01/2025]
  * [holds information about the units in a group]
  */
 
@@ -17,23 +17,25 @@ public partial class UnitGroup : Node2D
 
     private List<Unit> _units = new List<Unit>();
 
-    //this is dogshit, take out later
-    [Export] private PrototypeEndMenu _endMenu;
-
     /// <summary>
     /// adds all the children as units
     /// </summary>
     public override void _Ready()
     {
-        GD.Print("remember to take out end menu in unit groups");
-
         UnitEventManager.UnitDeathEvent += RemoveUnit;
+
+
         SetUnitList();
     }
+
+    /// <summary>
+    /// unsubs to static event
+    /// </summary>
     public override void _ExitTree()
     {
         UnitEventManager.UnitDeathEvent -= RemoveUnit;
     }
+
 
     /// <summary>
     /// sets up unit list
@@ -94,11 +96,6 @@ public partial class UnitGroup : Node2D
         }
 
         _units.Remove(unit);
-        //absolute dogshit, take out after prototype
-        if (_units.Count <= 0)
-        {
-            _endMenu.OnEndScreen(_group != UnitGroupEnum.PLAYER);
-        }
     }
 
     // properties

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UnitResource" load_steps=3 format=3 uid="uid://det1ut0vo1wpe"]
+
+[ext_resource type="Texture2D" uid="uid://bvx0070epyviq" path="res://Sprites/Test/Units/Enemy/testEnemyCommander.png" id="1_t7c5h"]
+[ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="2_ockoi"]
+
+[resource]
+script = ExtResource("2_ockoi")
+_sprite = ExtResource("1_t7c5h")
+_spriteOffset = Vector2(0, 0)
+_baseStats = Dictionary[int, int]({
+0: 8,
+1: 0,
+2: 4,
+3: 0,
+4: 0,
+5: 0,
+6: 1,
+7: 0,
+8: 5,
+9: 7
+})
+_attackRange = 2
+_startingDirection = 0
+_isCommander = false
+metadata/_custom_type_script = "uid://cb8xehtora3p"

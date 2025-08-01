@@ -49,7 +49,7 @@ public partial class UnitManager : Node2D
     }
 
     /// <summary>
-    /// gets the enums of the groups
+    /// gets the enums of the groups sorted
     /// </summary>
     /// <returns>array of UnitGroupEnum sorted</returns>
     public UnitGroupEnum[] GetAllUnitGroupEnums()

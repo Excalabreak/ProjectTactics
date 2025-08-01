@@ -4,13 +4,14 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [05/20/2025]
+ * Last Updated: [07/29/2025]
  * [Unit Main Script]
  */
 
 public partial class Unit : Node2D
 {
-    //maybe somewhere else, but will likely leave in this script
+    [Export] private UnitResource _unitResource;
+
     private Vector2 _cell = Vector2.Zero;
     private bool _isSelected = false;
 
@@ -35,12 +36,13 @@ public partial class Unit : Node2D
     [Export] private GameBoard _gameBoard;
     public Action<GameBoard> CurrentGameBoard;
 
-    //might take out since im going to lean twoards dnd action econome\y
+    //might take out since im going to lean twoards dnd action economey
     [Export] private bool _isWait = false;
-    //temp, move to equiptment
-    [Export] private int _attackRange = 1;
 
-    [Export] private bool _isCommander = false;
+    //temp, move to equiptment
+    private int _attackRange = 1;
+
+    private bool _isCommander = false;
 
     private UnitGroupEnum _unitGroup;
 
@@ -49,6 +51,7 @@ public partial class Unit : Node2D
     /// </summary>
     public override void _Ready()
     {
+
         if (_gameBoard != null)
         {
             CurrentGameBoard?.Invoke(_gameBoard);
@@ -57,6 +60,16 @@ public partial class Unit : Node2D
         {
             GD.Print("WARNING: NO GAMEBOARD ON UNIT AT READY");
         }
+        if (_unitResource != null)
+        {
+            _attackRange = _unitResource.attackRange;
+            _isCommander = _unitResource.isCommander;
+        }
+        else
+        {
+            GD.Print("WARNING: NO UNIT RESOURCE ON UNIT AT READY");
+        }
+
         this.cell = _gameBoard.grid.CalculateGridCoordinates(Position);
         Position = _gameBoard.grid.CalculateMapPosition(cell);
     }
@@ -97,6 +110,11 @@ public partial class Unit : Node2D
             }
         }
         get { return _cell; }
+    }
+
+    public UnitResource unitResource
+    {
+        get { return _unitResource; }
     }
 
     public Vector2 targetCell

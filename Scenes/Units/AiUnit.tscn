@@ -11,7 +11,6 @@ _aiStateMachine = NodePath("AiStateMachine")
 
 [node name="UnitSprite" parent="Sprites" index="0"]
 texture = ExtResource("2_vr8b2")
-_skin = ExtResource("2_vr8b2")
 
 [node name="AiStateMachine" type="Node" parent="." index="3" node_paths=PackedStringArray("_unit")]
 script = ExtResource("3_ckoml")

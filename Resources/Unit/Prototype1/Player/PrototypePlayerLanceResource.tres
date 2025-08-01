@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UnitResource" load_steps=3 format=3 uid="uid://cg7txlxy6nmm1"]
+
+[ext_resource type="Texture2D" uid="uid://pp7o52sefur8" path="res://Sprites/Test/Units/Player/testPlayerLance.png" id="1_xtyq6"]
+[ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="2_lf1cx"]
+
+[resource]
+script = ExtResource("2_lf1cx")
+_sprite = ExtResource("1_xtyq6")
+_spriteOffset = Vector2(0, 0)
+_baseStats = Dictionary[int, int]({
+0: 10,
+1: 0,
+2: 7,
+3: 0,
+4: 0,
+5: 0,
+6: 1,
+7: 0,
+8: 5,
+9: 7
+})
+_attackRange = 2
+_startingDirection = 0
+_isCommander = false
+metadata/_custom_type_script = "uid://cb8xehtora3p"

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UnitResource" load_steps=3 format=3 uid="uid://cfg72vbyh5t2y"]
+
+[ext_resource type="Texture2D" uid="uid://cc7t1ceh770xj" path="res://Sprites/Test/Units/Enemy/testEnemyAxe.png" id="1_tguvv"]
+[ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="2_b71j5"]
+
+[resource]
+script = ExtResource("2_b71j5")
+_sprite = ExtResource("1_tguvv")
+_spriteOffset = Vector2(0, 0)
+_baseStats = Dictionary[int, int]({
+0: 15,
+1: 0,
+2: 10,
+3: 0,
+4: 0,
+5: 0,
+6: 2,
+7: 0,
+8: 5,
+9: 7
+})
+_attackRange = 1
+_startingDirection = 0
+_isCommander = false
+metadata/_custom_type_script = "uid://cb8xehtora3p"

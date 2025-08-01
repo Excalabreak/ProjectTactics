@@ -13,6 +13,12 @@ public partial class UITerrain : Control
     [Export] private Label _moveLabel;
     [Export] private Label _visionLabel;
 
+    /// <summary>
+    /// shows terrain info
+    /// </summary>
+    /// <param name="name">name of terrain</param>
+    /// <param name="move">move cost of terrain</param>
+    /// <param name="vision">vision cost of terrain</param>
     public void ShowTerrainPanel(string name, float move, float vision)
     {
         _nameLabel.Text = name;

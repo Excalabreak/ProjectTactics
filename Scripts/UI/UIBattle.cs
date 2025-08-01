@@ -19,7 +19,17 @@ public partial class UIBattle : Control
     [Export] private Label _enemyACCLable;
     [Export] private Label _enemyCRTLable;
 
-
+    /// <summary>
+    /// shows the battle prediction for the battle
+    /// </summary>
+    /// <param name="playerHP">player hp</param>
+    /// <param name="enemyHP">enemy hp</param>
+    /// <param name="playerDMG">damage player deals</param>
+    /// <param name="enemyDMG">damage enemy deals</param>
+    /// <param name="playerACC">player accurecy</param>
+    /// <param name="enemyACC">enemy accurecy</param>
+    /// <param name="playerCRT">player crit chance</param>
+    /// <param name="enemyCRT">enemy crit chance</param>
     public void ShowBattlePredictions(int playerHP, int enemyHP, int playerDMG, int enemyDMG, 
         int playerACC, int enemyACC, int playerCRT, int enemyCRT)
     {
@@ -36,6 +46,9 @@ public partial class UIBattle : Control
         this.Visible = true;
     }
 
+    /// <summary>
+    /// hides battle predictions
+    /// </summary>
     public void HideBattlePredictions()
     {
         this.Visible = false;

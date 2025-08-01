@@ -1,15 +1,14 @@
-[gd_scene load_steps=62 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=72 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
-[ext_resource type="Script" uid="uid://vxqdmei6f2d4" path="res://Scripts/Playtest/PrototypeStartMenu.cs" id="1_sb4gi"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
-[ext_resource type="Script" uid="uid://b85c740frt4hn" path="res://Scripts/Playtest/PrototypeEndMenu.cs" id="2_ixcl0"]
 [ext_resource type="PackedScene" uid="uid://c24kesd8eggv4" path="res://Scenes/Menus/ActionMenu.tscn" id="3_0ccgp"]
 [ext_resource type="PackedScene" uid="uid://cthmnrjp6uu61" path="res://Scenes/Menus/PauseScreen.tscn" id="4_r77ll"]
 [ext_resource type="PackedScene" uid="uid://2b0edy02ekfi" path="res://Scenes/Menus/TurnMenu.tscn" id="5_668gq"]
 [ext_resource type="Texture2D" uid="uid://dxok463ymyabj" path="res://Sprites/Test/TestTileMap2.png" id="5_jsdi5"]
 [ext_resource type="Script" uid="uid://cw1cq5bive7vy" path="res://Scripts/Grid/Map.cs" id="6_ns1vp"]
 [ext_resource type="Texture2D" uid="uid://dvp5cs678jp83" path="res://Sprites/Test/TempFogOfWarTileMap.png" id="7_maqlv"]
+[ext_resource type="Script" uid="uid://cbmsjn0oeh1ln" path="res://Scripts/Grid/GameBoardManagers/CombatManager.cs" id="7_wn5g2"]
 [ext_resource type="Script" uid="uid://b2aqh3nmf5lbc" path="res://Scripts/Grid/FogOfWar.cs" id="8_sb4gi"]
 [ext_resource type="Texture2D" uid="uid://d0b36idsyuh7p" path="res://Sprites/Test/TileHighlights/BlockedOverlay.png" id="9_ixcl0"]
 [ext_resource type="Script" uid="uid://chp31frw6wmws" path="res://Scripts/Grid/BlockedOverlay.cs" id="10_gt7qa"]
@@ -32,26 +31,27 @@
 [ext_resource type="Script" uid="uid://8rtvmkb53l3a" path="res://Scripts/Menu/MenuStateMachine/States/UnSelectedState.cs" id="25_wn5g2"]
 [ext_resource type="Texture2D" uid="uid://c4x3rae14n1v3" path="res://Sprites/Test/Units/Player/testPlayerAxe.png" id="26_j6x6y"]
 [ext_resource type="Script" uid="uid://c7dh1mhyvoxy3" path="res://Scripts/Menu/MenuStateMachine/States/MoveState.cs" id="26_onxey"]
+[ext_resource type="Resource" uid="uid://bt88eerwj5e1w" path="res://Resources/Unit/Prototype1/Player/PrototypePlayerAxeResource.tres" id="26_vgme0"]
+[ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="27_bleph"]
 [ext_resource type="Texture2D" uid="uid://pp7o52sefur8" path="res://Sprites/Test/Units/Player/testPlayerLance.png" id="27_he1t7"]
 [ext_resource type="Script" uid="uid://cum60gpotm147" path="res://Scripts/Menu/MenuStateMachine/States/AttackState.cs" id="27_tl10l"]
 [ext_resource type="Script" uid="uid://do6ttbkj61oci" path="res://Scripts/Menu/MenuStateMachine/States/BlankState.cs" id="28_a4mff"]
+[ext_resource type="Resource" uid="uid://cg7txlxy6nmm1" path="res://Resources/Unit/Prototype1/Player/PrototypePlayerLanceResource.tres" id="28_b77nk"]
 [ext_resource type="Texture2D" uid="uid://bpncogxb8oeqi" path="res://Sprites/Test/Units/Player/testPlayerSword.png" id="28_wn863"]
 [ext_resource type="Script" uid="uid://dwo3objlyjeiq" path="res://Scripts/UI/UIStats.cs" id="30_0ccgp"]
 [ext_resource type="Texture2D" uid="uid://cc7t1ceh770xj" path="res://Sprites/Test/Units/Enemy/testEnemyAxe.png" id="30_l2v6i"]
+[ext_resource type="Resource" uid="uid://g1m5g4f7hp4b" path="res://Resources/Unit/Prototype1/Player/PrototypePlayerSwordResource.tres" id="30_qm5w0"]
 [ext_resource type="Texture2D" uid="uid://c5p222eb3u6tf" path="res://Sprites/Test/Units/Enemy/testEnemyLance.png" id="31_kjk7w"]
 [ext_resource type="Script" uid="uid://bwxpec5gmpou1" path="res://Scripts/UI/UIBattle.cs" id="31_r77ll"]
 [ext_resource type="Texture2D" uid="uid://dd2aixpvr2sju" path="res://Sprites/Test/Units/Enemy/testEnemySword.png" id="32_7r5ow"]
 [ext_resource type="Texture2D" uid="uid://bvx0070epyviq" path="res://Sprites/Test/Units/Enemy/testEnemyCommander.png" id="33_vgme0"]
 [ext_resource type="Script" uid="uid://bntiwp1wcdsxf" path="res://Scripts/UI/UITerrain.cs" id="34_maqlv"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_maqlv"]
-font_size = 121
-
-[sub_resource type="LabelSettings" id="LabelSettings_sb4gi"]
-font_size = 71
-
-[sub_resource type="LabelSettings" id="LabelSettings_ixcl0"]
-font_size = 41
+[ext_resource type="Resource" uid="uid://cfg72vbyh5t2y" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemyAxeResource.tres" id="34_wn5g2"]
+[ext_resource type="Resource" uid="uid://be3bhidwe7mjb" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemyLanceResource.tres" id="36_onxey"]
+[ext_resource type="Resource" uid="uid://ndlg3h1jwcnl" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemySwordResource.tres" id="38_tl10l"]
+[ext_resource type="Resource" uid="uid://det1ut0vo1wpe" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemyCommanderResource.tres" id="40_a4mff"]
+[ext_resource type="Script" uid="uid://bcl8hy7m3ybux" path="res://Scripts/UI/UIManager.cs" id="48_bleph"]
+[ext_resource type="Script" uid="uid://ewwqdcxfpysl" path="res://Scripts/Grid/GameBoardManagers/TurnManager.cs" id="50_fhuv3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
 texture = ExtResource("5_jsdi5")
@@ -203,103 +203,93 @@ terrain_set_0/terrain_0/name = "Path"
 terrain_set_0/terrain_0/color = Color(1, 0, 0, 1)
 sources/0 = SubResource("TileSetAtlasSource_t2vuu")
 
+[sub_resource type="Resource" id="Resource_bleph"]
+script = ExtResource("27_bleph")
+_sprite = ExtResource("26_j6x6y")
+_spriteOffset = Vector2(0, 0)
+_baseStats = Dictionary[int, int]({
+0: 15,
+1: 0,
+2: 10,
+3: 0,
+4: 0,
+5: 0,
+6: 2,
+7: 0,
+8: 5,
+9: 7
+})
+_attackRange = 1
+_startingDirection = 3
+_isCommander = false
+metadata/_custom_type_script = "uid://cb8xehtora3p"
+
+[sub_resource type="Resource" id="Resource_wmdct"]
+script = ExtResource("27_bleph")
+_sprite = ExtResource("27_he1t7")
+_spriteOffset = Vector2(0, 0)
+_baseStats = Dictionary[int, int]({
+0: 10,
+1: 0,
+2: 7,
+3: 0,
+4: 0,
+5: 0,
+6: 1,
+7: 0,
+8: 5,
+9: 7
+})
+_attackRange = 2
+_startingDirection = 3
+_isCommander = false
+metadata/_custom_type_script = "uid://cb8xehtora3p"
+
+[sub_resource type="Resource" id="Resource_ry365"]
+script = ExtResource("27_bleph")
+_sprite = ExtResource("28_wn863")
+_spriteOffset = Vector2(0, 0)
+_baseStats = Dictionary[int, int]({
+0: 20,
+1: 0,
+2: 5,
+3: 0,
+4: 0,
+5: 0,
+6: 4,
+7: 0,
+8: 5,
+9: 7
+})
+_attackRange = 1
+_startingDirection = 3
+_isCommander = false
+metadata/_custom_type_script = "uid://cb8xehtora3p"
+
+[sub_resource type="Resource" id="Resource_kmj3t"]
+script = ExtResource("27_bleph")
+_sprite = ExtResource("28_wn863")
+_spriteOffset = Vector2(0, 0)
+_baseStats = Dictionary[int, int]({
+0: 20,
+1: 0,
+2: 5,
+3: 0,
+4: 0,
+5: 0,
+6: 4,
+7: 0,
+8: 5,
+9: 7
+})
+_attackRange = 1
+_startingDirection = 3
+_isCommander = false
+metadata/_custom_type_script = "uid://cb8xehtora3p"
+
 [node name="TestScene" type="Node2D"]
 
-[node name="PrototypeNodes" type="Node2D" parent="."]
-
-[node name="PrototypeStartMenu" type="CanvasLayer" parent="PrototypeNodes" node_paths=PackedStringArray("_gridCursor", "_cursorDefaultStartButton")]
-visible = false
-script = ExtResource("1_sb4gi")
-_gridCursor = NodePath("../../GameBoard/Cursor")
-_cursorDefaultStartButton = NodePath("Panel/VBoxContainer/StartButton")
-
-[node name="Panel" type="Panel" parent="PrototypeNodes/PrototypeStartMenu"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PrototypeNodes/PrototypeStartMenu/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="Title" type="Label" parent="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Project Tactics Playtest 1"
-label_settings = SubResource("LabelSettings_maqlv")
-horizontal_alignment = 1
-
-[node name="Objective" type="Label" parent="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Objective: Find and Kill the Commander/Survive
-(you don't have any healers)"
-label_settings = SubResource("LabelSettings_sb4gi")
-horizontal_alignment = 1
-
-[node name="Note" type="Label" parent="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Note: Alt + F4 to close game mid game"
-label_settings = SubResource("LabelSettings_ixcl0")
-horizontal_alignment = 1
-
-[node name="StartButton" type="Button" parent="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(145.95, 43.4)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 36
-text = "Start"
-icon_alignment = 1
-
-[node name="PrototypeEndMenu" type="CanvasLayer" parent="PrototypeNodes" node_paths=PackedStringArray("_titleLable", "_gridCursor", "_cursorDefaultStartButton")]
-visible = false
-script = ExtResource("2_ixcl0")
-_titleLable = NodePath("Panel/VBoxContainer/Title")
-_gridCursor = NodePath("../../GameBoard/Cursor")
-_cursorDefaultStartButton = NodePath("Panel/VBoxContainer/QuitButton")
-
-[node name="Panel" type="Panel" parent="PrototypeNodes/PrototypeEndMenu"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PrototypeNodes/PrototypeEndMenu/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="Title" type="Label" parent="PrototypeNodes/PrototypeEndMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "You Win/Lose"
-label_settings = SubResource("LabelSettings_maqlv")
-horizontal_alignment = 1
-
-[node name="Objective2" type="Label" parent="PrototypeNodes/PrototypeEndMenu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "(if you want to try again, launch the game again)"
-label_settings = SubResource("LabelSettings_ixcl0")
-horizontal_alignment = 1
-
-[node name="QuitButton" type="Button" parent="PrototypeNodes/PrototypeEndMenu/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(145.95, 43.4)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 36
-text = "Quit"
-icon_alignment = 1
-
-[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_uiStats", "_uiBattle", "_uiTerrain", "_menuStateMachine")]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_turnManager", "_uiManager", "_combatManager", "_menuStateMachine")]
 script = ExtResource("1_lo7rv")
 _grid = ExtResource("2_668gq")
 _unitWalkHighlights = NodePath("MapTiles/UnitWalkHighlights")
@@ -310,9 +300,9 @@ _map = NodePath("MapTiles/Map")
 _fogOfWar = NodePath("MapTiles/FogOfWar")
 _blockedOverlay = NodePath("MapTiles/BlockedOverlay")
 _knownUnitLocationsTileMap = NodePath("MapTiles/KnownUnitLocations")
-_uiStats = NodePath("UI/StatsPanel")
-_uiBattle = NodePath("UI/BattlePredPanel")
-_uiTerrain = NodePath("UI/Terrain Panel")
+_turnManager = NodePath("GameBoardManagers/TurnManager")
+_uiManager = NodePath("UIManager")
+_combatManager = NodePath("GameBoardManagers/CombatManager")
 _menuStateMachine = NodePath("MenuStateMachine")
 _actionMenu = ExtResource("3_0ccgp")
 _pauseMenu = ExtResource("4_r77ll")
@@ -364,710 +354,264 @@ _gameBoard = NodePath("../..")
 [node name="Units" type="Node2D" parent="GameBoard"]
 script = ExtResource("18_7r5ow")
 
-[node name="PlayerUnits" type="Node2D" parent="GameBoard/Units" node_paths=PackedStringArray("_endMenu")]
+[node name="PlayerUnits" type="Node2D" parent="GameBoard/Units"]
 script = ExtResource("19_vgme0")
 _passingGroup = Array[int]([0, 1])
 _attackingGroup = Array[int]([2])
-_endMenu = NodePath("../../../PrototypeNodes/PrototypeEndMenu")
 
 [node name="AxeUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(264, 1003)
+_unitResource = SubResource("Resource_bleph")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/AxeUnit/Sprites" index="0"]
 texture = ExtResource("26_j6x6y")
-_skin = ExtResource("26_j6x6y")
-
-[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/AxeUnit" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 15,
-1: 18,
-2: 10,
-3: 5,
-4: 5,
-5: 5,
-6: 2,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="LanceUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(221, 1106)
+_unitResource = SubResource("Resource_wmdct")
 _gameBoard = NodePath("../../..")
-_attackRange = 2
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/LanceUnit/Sprites" index="0"]
 texture = ExtResource("27_he1t7")
-_skin = ExtResource("27_he1t7")
-
-[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/LanceUnit" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 10,
-1: 15,
-2: 7,
-3: 5,
-4: 5,
-5: 5,
-6: 1,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="SwordUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(284, 932)
+_unitResource = ExtResource("30_qm5w0")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit/Sprites" index="0"]
 texture = ExtResource("28_wn863")
-_skin = ExtResource("28_wn863")
-
-[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/SwordUnit" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 20,
-1: 10,
-2: 5,
-3: 5,
-4: 5,
-5: 5,
-6: 4,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="AxeUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(196, 991)
+_unitResource = ExtResource("26_vgme0")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/AxeUnit2/Sprites" index="0"]
 texture = ExtResource("26_j6x6y")
-_skin = ExtResource("26_j6x6y")
-
-[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/AxeUnit2" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 15,
-1: 18,
-2: 10,
-3: 5,
-4: 5,
-5: 5,
-6: 2,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="LanceUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(140, 934)
+_unitResource = ExtResource("28_b77nk")
 _gameBoard = NodePath("../../..")
-_attackRange = 2
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/LanceUnit2/Sprites" index="0"]
 texture = ExtResource("27_he1t7")
-_skin = ExtResource("27_he1t7")
-
-[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/LanceUnit2" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 10,
-1: 15,
-2: 7,
-3: 5,
-4: 5,
-5: 5,
-6: 1,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="LanceUnit3" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(138, 995)
+_unitResource = ExtResource("28_b77nk")
 _gameBoard = NodePath("../../..")
-_attackRange = 2
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/LanceUnit3/Sprites" index="0"]
 texture = ExtResource("27_he1t7")
-_skin = ExtResource("27_he1t7")
-
-[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/LanceUnit3" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 10,
-1: 15,
-2: 7,
-3: 5,
-4: 5,
-5: 5,
-6: 1,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="SwordUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(358, 1048)
+_unitResource = SubResource("Resource_ry365")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit2/Sprites" index="0"]
 texture = ExtResource("28_wn863")
-_skin = ExtResource("28_wn863")
-
-[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/SwordUnit2" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 20,
-1: 10,
-2: 5,
-3: 5,
-4: 5,
-5: 5,
-6: 4,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="SwordUnit3" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(350, 989)
+_unitResource = SubResource("Resource_kmj3t")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit3/Sprites" index="0"]
 texture = ExtResource("28_wn863")
-_skin = ExtResource("28_wn863")
 
-[node name="UnitStats" parent="GameBoard/Units/PlayerUnits/SwordUnit3" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 20,
-1: 10,
-2: 5,
-3: 5,
-4: 5,
-5: 5,
-6: 4,
-7: 3,
-8: 5,
-9: 7
-})
-
-[node name="EnemyUnits" type="Node2D" parent="GameBoard/Units" node_paths=PackedStringArray("_endMenu")]
+[node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
 script = ExtResource("19_vgme0")
 _group = 2
 _passingGroup = Array[int]([2])
 _attackingGroup = Array[int]([0, 1])
-_endMenu = NodePath("../../../PrototypeNodes/PrototypeEndMenu")
 
 [node name="AxeAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(337, 778)
+_unitResource = ExtResource("34_wn5g2")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
-_skin = ExtResource("30_l2v6i")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/AxeAiUnit" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 12,
-1: 10,
-2: 8,
-3: 5,
-4: 5,
-5: 5,
-6: 2,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="AxeAiUnit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(166, 607)
+_unitResource = ExtResource("34_wn5g2")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit2/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
-_skin = ExtResource("30_l2v6i")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/AxeAiUnit2" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 12,
-1: 10,
-2: 8,
-3: 5,
-4: 5,
-5: 5,
-6: 2,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="AxeAiUnit3" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(216, 541)
+_unitResource = ExtResource("34_wn5g2")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit3/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
-_skin = ExtResource("30_l2v6i")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/AxeAiUnit3" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 12,
-1: 10,
-2: 8,
-3: 5,
-4: 5,
-5: 5,
-6: 2,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="AxeAiUnit4" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1117, 854)
+_unitResource = ExtResource("34_wn5g2")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit4/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
-_skin = ExtResource("30_l2v6i")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/AxeAiUnit4" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 12,
-1: 10,
-2: 8,
-3: 5,
-4: 5,
-5: 5,
-6: 2,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="AxeAiUnit5" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1446, 725)
+_unitResource = ExtResource("34_wn5g2")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit5/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
-_skin = ExtResource("30_l2v6i")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/AxeAiUnit5" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 12,
-1: 10,
-2: 8,
-3: 5,
-4: 5,
-5: 5,
-6: 2,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="AxeAiUnit7" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(859, 604)
+_unitResource = ExtResource("34_wn5g2")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit7/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
-_skin = ExtResource("30_l2v6i")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/AxeAiUnit7" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 12,
-1: 10,
-2: 8,
-3: 5,
-4: 5,
-5: 5,
-6: 2,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="AxeAiUnit8" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(802, 298)
+_unitResource = ExtResource("34_wn5g2")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit8/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
-_skin = ExtResource("30_l2v6i")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/AxeAiUnit8" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 12,
-1: 10,
-2: 8,
-3: 5,
-4: 5,
-5: 5,
-6: 2,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="AxeAiUnit6" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1637, 990)
+_unitResource = ExtResource("34_wn5g2")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit6/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
-_skin = ExtResource("30_l2v6i")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/AxeAiUnit6" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 12,
-1: 10,
-2: 8,
-3: 5,
-4: 5,
-5: 5,
-6: 2,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="LanceAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(477, 795)
+_unitResource = ExtResource("36_onxey")
 _gameBoard = NodePath("../../..")
-_attackRange = 2
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit/Sprites" index="0"]
 texture = ExtResource("31_kjk7w")
-_skin = ExtResource("31_kjk7w")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/LanceAiUnit" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 8,
-1: 10,
-2: 4,
-3: 5,
-4: 5,
-5: 5,
-6: 1,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="LanceAiUnit5" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1574, 725)
+_unitResource = ExtResource("36_onxey")
 _gameBoard = NodePath("../../..")
-_attackRange = 2
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit5/Sprites" index="0"]
 texture = ExtResource("31_kjk7w")
-_skin = ExtResource("31_kjk7w")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/LanceAiUnit5" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 8,
-1: 10,
-2: 4,
-3: 5,
-4: 5,
-5: 5,
-6: 1,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="LanceAiUnit4" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(980, 738)
+_unitResource = ExtResource("36_onxey")
 _gameBoard = NodePath("../../..")
-_attackRange = 2
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit4/Sprites" index="0"]
 texture = ExtResource("31_kjk7w")
-_skin = ExtResource("31_kjk7w")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/LanceAiUnit4" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 8,
-1: 10,
-2: 4,
-3: 5,
-4: 5,
-5: 5,
-6: 1,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="LanceAiUnit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(604, 603)
+_unitResource = ExtResource("36_onxey")
 _gameBoard = NodePath("../../..")
-_attackRange = 2
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit2/Sprites" index="0"]
 texture = ExtResource("31_kjk7w")
-_skin = ExtResource("31_kjk7w")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/LanceAiUnit2" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 8,
-1: 10,
-2: 4,
-3: 5,
-4: 5,
-5: 5,
-6: 1,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="LanceAiUnit7" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(983, 287)
+_unitResource = ExtResource("36_onxey")
 _gameBoard = NodePath("../../..")
-_attackRange = 2
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit7/Sprites" index="0"]
 texture = ExtResource("31_kjk7w")
-_skin = ExtResource("31_kjk7w")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/LanceAiUnit7" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 8,
-1: 10,
-2: 4,
-3: 5,
-4: 5,
-5: 5,
-6: 1,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="SwordAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(390, 928)
+_unitResource = ExtResource("38_tl10l")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
-_skin = ExtResource("32_7r5ow")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/SwordAiUnit" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 16,
-1: 10,
-2: 6,
-3: 5,
-4: 5,
-5: 5,
-6: 3,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="SwordAiUnit9" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(799, 439)
+_unitResource = ExtResource("38_tl10l")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit9/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
-_skin = ExtResource("32_7r5ow")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/SwordAiUnit9" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 16,
-1: 10,
-2: 6,
-3: 5,
-4: 5,
-5: 5,
-6: 3,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="SwordAiUnit5" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1321, 866)
+_unitResource = ExtResource("38_tl10l")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit5/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
-_skin = ExtResource("32_7r5ow")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/SwordAiUnit5" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 16,
-1: 10,
-2: 6,
-3: 5,
-4: 5,
-5: 5,
-6: 3,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="SwordAiUnit7" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1206, 474)
+_unitResource = ExtResource("38_tl10l")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit7/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
-_skin = ExtResource("32_7r5ow")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/SwordAiUnit7" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 16,
-1: 10,
-2: 6,
-3: 5,
-4: 5,
-5: 5,
-6: 3,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="SwordAiUnit8" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1124, 363)
+_unitResource = ExtResource("38_tl10l")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit8/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
-_skin = ExtResource("32_7r5ow")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/SwordAiUnit8" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 16,
-1: 10,
-2: 6,
-3: 5,
-4: 5,
-5: 5,
-6: 3,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="SwordAiUnit10" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(480, 413)
+_unitResource = ExtResource("38_tl10l")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit10/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
-_skin = ExtResource("32_7r5ow")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/SwordAiUnit10" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 16,
-1: 10,
-2: 6,
-3: 5,
-4: 5,
-5: 5,
-6: 3,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="SwordAiUnit4" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(403, 604)
+_unitResource = ExtResource("38_tl10l")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit4/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
-_skin = ExtResource("32_7r5ow")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/SwordAiUnit4" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 16,
-1: 10,
-2: 6,
-3: 5,
-4: 5,
-5: 5,
-6: 3,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="SwordAiUnit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(797, 928)
+_unitResource = ExtResource("38_tl10l")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit2/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
-_skin = ExtResource("32_7r5ow")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/SwordAiUnit2" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 16,
-1: 10,
-2: 6,
-3: 5,
-4: 5,
-5: 5,
-6: 3,
-7: 3,
-8: 5,
-9: 7
-})
 
 [node name="SwordAiUnit3" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(929, 864)
+_unitResource = ExtResource("38_tl10l")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit3/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
-_skin = ExtResource("32_7r5ow")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/SwordAiUnit3" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 16,
-1: 10,
-2: 6,
-3: 5,
-4: 5,
-5: 5,
-6: 3,
-7: 3,
-8: 5,
-9: 8
-})
 
 [node name="CommanderAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1316, 347)
+_unitResource = ExtResource("40_a4mff")
 _gameBoard = NodePath("../../..")
-_attackRange = 2
-_isCommander = true
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit/Sprites" index="0"]
 texture = ExtResource("33_vgme0")
-_skin = ExtResource("33_vgme0")
-
-[node name="UnitStats" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit" index="1"]
-_baseStats = Dictionary[int, int]({
-0: 17,
-1: 10,
-2: 8,
-3: 5,
-4: 5,
-5: 5,
-6: 4,
-7: 3,
-8: 5,
-9: 8
-})
 
 [node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer")]
 z_index = 100
@@ -1094,6 +638,16 @@ drag_right_margin = 0.8
 drag_bottom_margin = 0.65
 editor_draw_drag_margin = true
 
+[node name="GameBoardManagers" type="Node" parent="GameBoard"]
+
+[node name="TurnManager" type="Node" parent="GameBoard/GameBoardManagers" node_paths=PackedStringArray("_unitManager")]
+script = ExtResource("50_fhuv3")
+_unitManager = NodePath("../../Units")
+
+[node name="CombatManager" type="Node" parent="GameBoard/GameBoardManagers" node_paths=PackedStringArray("_gameBoard")]
+script = ExtResource("7_wn5g2")
+_gameBoard = NodePath("../..")
+
 [node name="MenuStateMachine" type="Node" parent="GameBoard" node_paths=PackedStringArray("_gameBoard")]
 script = ExtResource("24_bleph")
 initialState = NodePath("UnSelectedState")
@@ -1111,9 +665,14 @@ script = ExtResource("27_tl10l")
 [node name="BlankState" type="Node" parent="GameBoard/MenuStateMachine"]
 script = ExtResource("28_a4mff")
 
-[node name="UI" type="CanvasLayer" parent="GameBoard"]
+[node name="UIManager" type="CanvasLayer" parent="GameBoard" node_paths=PackedStringArray("_uiStats", "_uiBattle", "_uiTerrain")]
+script = ExtResource("48_bleph")
+_uiStats = NodePath("StatsPanel")
+_uiBattle = NodePath("BattlePredPanel")
+_uiTerrain = NodePath("Terrain Panel")
 
-[node name="StatsPanel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_HPLable", "_MOVLable", "_ATKLable", "_DEFLable", "_RNGLable")]
+[node name="StatsPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_HPLable", "_MOVLable", "_ATKLable", "_DEFLable", "_RNGLable")]
+visible = false
 offset_left = 16.0
 offset_top = 14.0
 offset_right = 315.0
@@ -1125,7 +684,7 @@ _ATKLable = NodePath("VBoxContainer/ATKLable")
 _DEFLable = NodePath("VBoxContainer/DEFLable")
 _RNGLable = NodePath("VBoxContainer/RNGLable")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UI/StatsPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UIManager/StatsPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1137,27 +696,27 @@ offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HPLabel" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+[node name="HPLabel" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
 layout_mode = 2
 text = "HP: 10/10"
 
-[node name="MOVLable" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+[node name="MOVLable" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
 layout_mode = 2
 text = "MOV: 6/6"
 
-[node name="ATKLable" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+[node name="ATKLable" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
 layout_mode = 2
 text = "ATK: 5"
 
-[node name="DEFLable" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+[node name="DEFLable" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
 layout_mode = 2
 text = "DEF: 5"
 
-[node name="RNGLable" type="Label" parent="GameBoard/UI/StatsPanel/VBoxContainer"]
+[node name="RNGLable" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
 layout_mode = 2
 text = "RANGE: 1"
 
-[node name="BattlePredPanel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_playerHPLable", "_playerDMGLable", "_playerACCLable", "_playerCRTLable", "_enemyHPLable", "_enemyDMGLable", "_enemyACCLable", "_enemyCRTLable")]
+[node name="BattlePredPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_playerHPLable", "_playerDMGLable", "_playerACCLable", "_playerCRTLable", "_enemyHPLable", "_enemyDMGLable", "_enemyACCLable", "_enemyCRTLable")]
 visible = false
 offset_left = 16.0
 offset_top = 178.0
@@ -1173,7 +732,7 @@ _enemyDMGLable = NodePath("VBoxContainer/HBoxContainer/EnemySide/EDMGLable")
 _enemyACCLable = NodePath("VBoxContainer/HBoxContainer/EnemySide/EACCLable")
 _enemyCRTLable = NodePath("VBoxContainer/HBoxContainer/EnemySide/ECRTLable")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UI/BattlePredPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UIManager/BattlePredPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1185,89 +744,89 @@ offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer"]
+[node name="Label" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer"]
 layout_mode = 2
 text = "COMBAT PREDICTIONS"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GameBoard/UI/BattlePredPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="PlayerSide" type="VBoxContainer" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer"]
+[node name="PlayerSide" type="VBoxContainer" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="PHPLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
+[node name="PHPLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
 layout_mode = 2
 text = "10 -> 5"
 horizontal_alignment = 1
 
-[node name="PDMGLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
+[node name="PDMGLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
 layout_mode = 2
 text = "5"
 horizontal_alignment = 1
 
-[node name="PACCLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
+[node name="PACCLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
 layout_mode = 2
 text = "100"
 horizontal_alignment = 1
 
-[node name="PCRTLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
+[node name="PCRTLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/PlayerSide"]
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="StatsLables" type="VBoxContainer" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer"]
+[node name="StatsLables" type="VBoxContainer" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 alignment = 1
 
-[node name="HPLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
+[node name="HPLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
 layout_mode = 2
 text = "HP"
 horizontal_alignment = 1
 
-[node name="DMGLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
+[node name="DMGLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
 layout_mode = 2
 text = "DMG"
 horizontal_alignment = 1
 
-[node name="ACCLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
+[node name="ACCLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
 layout_mode = 2
 text = "ACC"
 horizontal_alignment = 1
 
-[node name="CRTLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
+[node name="CRTLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/StatsLables"]
 layout_mode = 2
 text = "CRIT"
 horizontal_alignment = 1
 
-[node name="EnemySide" type="VBoxContainer" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer"]
+[node name="EnemySide" type="VBoxContainer" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="EHPLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
+[node name="EHPLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
 layout_mode = 2
 text = "10 -> 5"
 horizontal_alignment = 1
 
-[node name="EDMGLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
+[node name="EDMGLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
 layout_mode = 2
 text = "5"
 horizontal_alignment = 1
 
-[node name="EACCLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
+[node name="EACCLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
 layout_mode = 2
 text = "100"
 horizontal_alignment = 1
 
-[node name="ECRTLable" type="Label" parent="GameBoard/UI/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
+[node name="ECRTLable" type="Label" parent="GameBoard/UIManager/BattlePredPanel/VBoxContainer/HBoxContainer/EnemySide"]
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="Terrain Panel" type="Panel" parent="GameBoard/UI" node_paths=PackedStringArray("_nameLabel", "_moveLabel", "_visionLabel")]
+[node name="Terrain Panel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_nameLabel", "_moveLabel", "_visionLabel")]
 visible = false
 anchors_preset = 1
 anchor_left = 1.0
@@ -1282,7 +841,7 @@ _nameLabel = NodePath("VBoxContainer/NameLabel")
 _moveLabel = NodePath("VBoxContainer/MoveLabel")
 _visionLabel = NodePath("VBoxContainer/VisionLabel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UI/Terrain Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UIManager/Terrain Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1294,21 +853,18 @@ offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NameLabel" type="Label" parent="GameBoard/UI/Terrain Panel/VBoxContainer"]
+[node name="NameLabel" type="Label" parent="GameBoard/UIManager/Terrain Panel/VBoxContainer"]
 layout_mode = 2
 text = "Planes"
 horizontal_alignment = 1
 
-[node name="MoveLabel" type="Label" parent="GameBoard/UI/Terrain Panel/VBoxContainer"]
+[node name="MoveLabel" type="Label" parent="GameBoard/UIManager/Terrain Panel/VBoxContainer"]
 layout_mode = 2
 text = "Move Cost: "
 
-[node name="VisionLabel" type="Label" parent="GameBoard/UI/Terrain Panel/VBoxContainer"]
+[node name="VisionLabel" type="Label" parent="GameBoard/UIManager/Terrain Panel/VBoxContainer"]
 layout_mode = 2
 text = "Vision Cost: "
-
-[connection signal="pressed" from="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer/StartButton" to="PrototypeNodes/PrototypeStartMenu" method="HideMenu"]
-[connection signal="pressed" from="PrototypeNodes/PrototypeEndMenu/Panel/VBoxContainer/QuitButton" to="PrototypeNodes/PrototypeEndMenu" method="OnQuit"]
 
 [editable path="GameBoard/Units/PlayerUnits/AxeUnit"]
 [editable path="GameBoard/Units/PlayerUnits/LanceUnit"]
