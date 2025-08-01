@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=72 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dxok463ymyabj" path="res://Sprites/Test/TestTileMap2.png" id="5_jsdi5"]
 [ext_resource type="Script" uid="uid://cw1cq5bive7vy" path="res://Scripts/Grid/Map.cs" id="6_ns1vp"]
 [ext_resource type="Texture2D" uid="uid://dvp5cs678jp83" path="res://Sprites/Test/TempFogOfWarTileMap.png" id="7_maqlv"]
+[ext_resource type="Script" uid="uid://cbmsjn0oeh1ln" path="res://Scripts/Grid/GameBoardManagers/CombatManager.cs" id="7_wn5g2"]
 [ext_resource type="Script" uid="uid://b2aqh3nmf5lbc" path="res://Scripts/Grid/FogOfWar.cs" id="8_sb4gi"]
 [ext_resource type="Texture2D" uid="uid://d0b36idsyuh7p" path="res://Sprites/Test/TileHighlights/BlockedOverlay.png" id="9_ixcl0"]
 [ext_resource type="Script" uid="uid://chp31frw6wmws" path="res://Scripts/Grid/BlockedOverlay.cs" id="10_gt7qa"]
@@ -50,7 +51,7 @@
 [ext_resource type="Resource" uid="uid://ndlg3h1jwcnl" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemySwordResource.tres" id="38_tl10l"]
 [ext_resource type="Resource" uid="uid://det1ut0vo1wpe" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemyCommanderResource.tres" id="40_a4mff"]
 [ext_resource type="Script" uid="uid://bcl8hy7m3ybux" path="res://Scripts/UI/UIManager.cs" id="48_bleph"]
-[ext_resource type="Script" uid="uid://ewwqdcxfpysl" path="res://Scripts/Misc/TurnManager.cs" id="50_fhuv3"]
+[ext_resource type="Script" uid="uid://ewwqdcxfpysl" path="res://Scripts/Grid/GameBoardManagers/TurnManager.cs" id="50_fhuv3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
 texture = ExtResource("5_jsdi5")
@@ -288,7 +289,7 @@ metadata/_custom_type_script = "uid://cb8xehtora3p"
 
 [node name="TestScene" type="Node2D"]
 
-[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_turnManager", "_uiManager", "_menuStateMachine")]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_turnManager", "_uiManager", "_combatManager", "_menuStateMachine")]
 script = ExtResource("1_lo7rv")
 _grid = ExtResource("2_668gq")
 _unitWalkHighlights = NodePath("MapTiles/UnitWalkHighlights")
@@ -299,8 +300,9 @@ _map = NodePath("MapTiles/Map")
 _fogOfWar = NodePath("MapTiles/FogOfWar")
 _blockedOverlay = NodePath("MapTiles/BlockedOverlay")
 _knownUnitLocationsTileMap = NodePath("MapTiles/KnownUnitLocations")
-_turnManager = NodePath("TurnManager")
+_turnManager = NodePath("GameBoardManagers/TurnManager")
 _uiManager = NodePath("UIManager")
+_combatManager = NodePath("GameBoardManagers/CombatManager")
 _menuStateMachine = NodePath("MenuStateMachine")
 _actionMenu = ExtResource("3_0ccgp")
 _pauseMenu = ExtResource("4_r77ll")
@@ -636,6 +638,16 @@ drag_right_margin = 0.8
 drag_bottom_margin = 0.65
 editor_draw_drag_margin = true
 
+[node name="GameBoardManagers" type="Node" parent="GameBoard"]
+
+[node name="TurnManager" type="Node" parent="GameBoard/GameBoardManagers" node_paths=PackedStringArray("_unitManager")]
+script = ExtResource("50_fhuv3")
+_unitManager = NodePath("../../Units")
+
+[node name="CombatManager" type="Node" parent="GameBoard/GameBoardManagers" node_paths=PackedStringArray("_gameBoard")]
+script = ExtResource("7_wn5g2")
+_gameBoard = NodePath("../..")
+
 [node name="MenuStateMachine" type="Node" parent="GameBoard" node_paths=PackedStringArray("_gameBoard")]
 script = ExtResource("24_bleph")
 initialState = NodePath("UnSelectedState")
@@ -653,10 +665,6 @@ script = ExtResource("27_tl10l")
 [node name="BlankState" type="Node" parent="GameBoard/MenuStateMachine"]
 script = ExtResource("28_a4mff")
 
-[node name="TurnManager" type="Node" parent="GameBoard" node_paths=PackedStringArray("_unitManager")]
-script = ExtResource("50_fhuv3")
-_unitManager = NodePath("../Units")
-
 [node name="UIManager" type="CanvasLayer" parent="GameBoard" node_paths=PackedStringArray("_uiStats", "_uiBattle", "_uiTerrain")]
 script = ExtResource("48_bleph")
 _uiStats = NodePath("StatsPanel")
@@ -664,6 +672,7 @@ _uiBattle = NodePath("BattlePredPanel")
 _uiTerrain = NodePath("Terrain Panel")
 
 [node name="StatsPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_HPLable", "_MOVLable", "_ATKLable", "_DEFLable", "_RNGLable")]
+visible = false
 offset_left = 16.0
 offset_top = 14.0
 offset_right = 315.0

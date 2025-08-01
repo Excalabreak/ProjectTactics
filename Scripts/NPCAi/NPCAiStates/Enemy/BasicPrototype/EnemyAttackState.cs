@@ -5,7 +5,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/27/2025]
+ * Last Updated: [08/01/2025]
  * [attack state for enemy ai
  * NOTE: very basic for now]
  */
@@ -46,13 +46,11 @@ public partial class EnemyAttackState : NPCAiState
         }
 
         Vector2[] attackableArea = stateMachine.gameBoard.FloodFill(stateMachine.unit.cell, stateMachine.unit.attackRange);
-        if (stateMachine.gameBoard.CheckAreaForAttackableGroup(
-            stateMachine.unit.unitGroup, attackableArea))
-        {
-            //might not be necessary and just need to check if the unit is null, but thats for later
-            Unit targetUnit = stateMachine.gameBoard.GetAttackableUnitFromArea(stateMachine.unit.unitGroup, attackableArea);
+        Unit targetUnit = stateMachine.gameBoard.GetAttackableUnitFromArea(stateMachine.unit.unitGroup, attackableArea);
 
-            stateMachine.gameBoard.UnitCombat(stateMachine.unit.cell, targetUnit.cell);
+        if (targetUnit != null)
+        {
+            stateMachine.gameBoard.combatManager.UnitCombat(stateMachine.unit, targetUnit);
         }
 
         stateMachine.UnitFinsh();

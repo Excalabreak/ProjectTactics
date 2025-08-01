@@ -22,8 +22,20 @@ public partial class UnitGroup : Node2D
     /// </summary>
     public override void _Ready()
     {
+        UnitEventManager.UnitDeathEvent += RemoveUnit;
+
+
         SetUnitList();
     }
+
+    /// <summary>
+    /// unsubs to static event
+    /// </summary>
+    public override void _ExitTree()
+    {
+        UnitEventManager.UnitDeathEvent -= RemoveUnit;
+    }
+
 
     /// <summary>
     /// sets up unit list

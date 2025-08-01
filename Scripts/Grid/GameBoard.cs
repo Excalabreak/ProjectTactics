@@ -34,6 +34,7 @@ public partial class GameBoard : Node2D
     [Export] private KnownUnitLocations _knownUnitLocationsTileMap;
     [Export] private TurnManager _turnManager;
     [Export] private UIManager _uiManager;
+    [Export] private CombatManager _combatManager;
 
     [ExportGroup("Menu")]
     [Export] private MenuStateMachine _menuStateMachine;
@@ -66,7 +67,6 @@ public partial class GameBoard : Node2D
     private const float MAX_VALUE = 9999999;
 
     private bool _visionWarning = true;
-    private bool _battleWarning = true;
 
     //---------- SET UP -----------
 
@@ -422,7 +422,7 @@ public partial class GameBoard : Node2D
         _unitWalkHighlights.Clear();
         _uiManager.HideBattlePredictions();
 
-        UnitCombat(_selectedUnit, opposingUnit);
+        _combatManager.UnitCombat(_selectedUnit, opposingUnit);
 
         DeselectSelectedUnit();
         ClearSelectedUnit();
@@ -745,82 +745,6 @@ public partial class GameBoard : Node2D
                 }
             }
         }
-    }
-
-    //---------- COMBAT ----------
-
-    /// <summary>
-    /// UnitCombat, but uses position
-    /// </summary>
-    /// <param name="initPos">position of initiating unit</param>
-    /// <param name="targetPos">position of targeted unit</param>
-    public void UnitCombat(Vector2 initPos, Vector2 targetPos)
-    {
-        if (!_units.ContainsKey(initPos) || !_units.ContainsKey(targetPos))
-        {
-            return;
-        }
-
-        Unit initUnit = _units[initPos];
-        Unit targetUnit = _units[targetPos];
-        if (!_unitManager.CanAttack(initUnit.unitGroup, targetUnit.unitGroup))
-        {
-            return;
-        }
-
-        UnitCombat(initUnit, targetUnit);
-    }
-
-    /// <summary>
-    /// calls to calculate unit combat
-    /// </summary>
-    /// <param name="initUnit">unit initiating comabat</param>
-    /// <param name="targetUnit">unit targeted</param>
-    public void UnitCombat(Unit initUnit, Unit targetUnit)
-    {
-        //makes sure units are facing the right direction
-        //will likely need to change when engaged in combat is added
-        DirectionEnum[] initUnitPossibleDirection = DirectionManager.Instance.GetClosestDirection(initUnit.cell, targetUnit.cell);
-        if (!initUnitPossibleDirection.Contains(initUnit.unitDirection.currentFacing))
-        {
-            initUnit.unitDirection.currentFacing = initUnitPossibleDirection[0];
-        }
-
-        targetUnit.unitDirection.currentFacing = DirectionManager.Instance.GetOppositeDirection(initUnit.unitDirection.currentFacing);
-
-        initUnit.unitActionEconomy.UseAction();
-
-        UnitStats attackingStats = initUnit.unitStats;
-        UnitStats defendingStats = targetUnit.unitStats;
-        Battle(attackingStats, defendingStats);
-
-        //counter attack
-        //temp, there is a faster way of doing this
-        //figure out later
-        if (!_units.ContainsValue(targetUnit))
-        {
-            return;
-        }
-        Vector2[] opposingAttackableCells = FloodFill(targetUnit.cell, targetUnit.attackRange);
-        if (opposingAttackableCells.Contains(initUnit.cell))
-        {
-            Battle(defendingStats, attackingStats);
-        }
-    }
-
-    /// <summary>
-    /// calls to damage unit
-    /// </summary>
-    /// <param name="attackingUnit">unit that is attacking</param>
-    /// <param name="defendingUnit">unit that is defending </param>
-    private void Battle(UnitStats attackingUnit, UnitStats defendingUnit)
-    {
-        if (_battleWarning)
-        {
-            _battleWarning = false;
-            GD.Print("uses base stat for battle");
-        }
-        defendingUnit.DamageUnit(attackingUnit.GetBaseStat(UnitStatEnum.STRENGTH) - defendingUnit.GetBaseStat(UnitStatEnum.DEFENSE));
     }
 
     /// <summary>
@@ -1587,6 +1511,7 @@ public partial class GameBoard : Node2D
                     }
                 }
             }
+
             //check for visible tiles
             tileLine.RemoveAt(0);
 
@@ -1878,9 +1803,22 @@ public partial class GameBoard : Node2D
         }
     }
 
-    //---------- PROPERTIES ----------
+    /// <summary>
+    /// gets Unit from cell
+    /// </summary>
+    /// <param name="cell">cell to get unit</param>
+    /// <returns>unit</returns>
+    public Unit GetUnitFromCell(Vector2 cell)
+    {
+        if (!_units.ContainsKey(cell))
+        {
+            return null;
+        }
 
-    //note, make export if need to test outside of game board
+        return _units[cell];
+    }
+
+    //---------- PROPERTIES ----------
 
     public GridResource grid
     {
@@ -1907,9 +1845,13 @@ public partial class GameBoard : Node2D
         get { return _map; }
     }
 
-    //maybe temp get gameboard
     public UnitManager unitManager
     {
         get { return _unitManager; }
+    }
+
+    public CombatManager combatManager
+    {
+        get { return _combatManager; }
     }
 }
