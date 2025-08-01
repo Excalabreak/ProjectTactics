@@ -43,16 +43,16 @@ public partial class GameBoard : Node2D
     [Export] private PackedScene _turnMenu;
     [Signal] public delegate void SelectedMovedEventHandler();
 
+    private ActionMenu _actionMenuInstance;
+    private PauseScreen _pauseScreenInstance;
+    private TurnMenu _turnMenuInstance;
+
     [ExportGroup("MoveCost")]
     private Unit _selectedUnit;
     private Vector2[] _walkableCells;
     private Vector2[] _attackableCells;
     private float[,] _movementCosts;
     [Export] private float _unitPassCost = 2f;
-
-    private ActionMenu _actionMenuInstance;
-    private PauseScreen _pauseScreenInstance;
-    private TurnMenu _turnMenuInstance;
 
     //all units, might want to split this up
     private System.Collections.Generic.Dictionary<Vector2, Unit> _units = new System.Collections.Generic.Dictionary<Vector2, Unit>();
@@ -1196,12 +1196,8 @@ public partial class GameBoard : Node2D
     }
 
     /// <summary>
-    /// like IsOccupied, but will return true if the player doesn't know
+    /// like IsOccupied, but will return false if the player doesn't know
     /// a unit is in the fog of war
-    /// 
-    /// NOTE:
-    /// -will have to update move
-    /// -stops unit if moves into other unit
     /// </summary>
     /// <param name="cell">coordinates on grid</param>
     /// <returns>true if the player should know 100% that a unit is occupying the cell</returns>
