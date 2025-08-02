@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [07/24/2025]
+ * Last Updated: [08/02/2025]
  * [script for the cursor]
  */
 
@@ -28,6 +28,8 @@ public partial class GridCursor : Node2D
     private bool _isMouse = false;
     private bool _dontEmitMoveSignal = false;
 
+    private bool _isPrecision = false;
+
     /// <summary>
     /// sets timer and first position
     /// </summary>
@@ -40,6 +42,7 @@ public partial class GridCursor : Node2D
 
     public override void _Process(double delta)
     {
+        GD.Print(isPrecision);
         if (_isMouse)
         {
             Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
@@ -63,7 +66,7 @@ public partial class GridCursor : Node2D
         {
             _isMouse = true;
         }
-        else if (@event.IsActionPressed("ui_accept"))
+        else if (@event.IsActionPressed("Accept"))
         {
             EmitSignal("AcceptPress", cell);
             GetViewport().SetInputAsHandled();
@@ -72,6 +75,18 @@ public partial class GridCursor : Node2D
         if (@event.IsActionPressed("Decline"))
         {
             EmitSignal("Decline");
+            GetViewport().SetInputAsHandled();
+        }
+
+        //there definatly is a better way of doing this
+        if (@event.IsActionPressed("Precision"))
+        {
+            _isPrecision = true;
+            GetViewport().SetInputAsHandled();
+        }
+        else if (@event.IsActionReleased("Precision"))
+        {
+            _isPrecision = false;
             GetViewport().SetInputAsHandled();
         }
 
@@ -88,22 +103,22 @@ public partial class GridCursor : Node2D
             return;
         }
 
-        if (@event.IsAction("ui_up"))
+        if (@event.IsAction("Up"))
         {
             _isMouse = false;
             this.cell += Vector2.Up;
         }
-        else if (@event.IsAction("ui_down"))
+        else if (@event.IsAction("Down"))
         {
             _isMouse = false;
             this.cell += Vector2.Down;
         }
-        else if (@event.IsAction("ui_left"))
+        else if (@event.IsAction("Left"))
         {
             _isMouse = false;
             this.cell += Vector2.Left;
         }
-        else if (@event.IsAction("ui_right"))
+        else if (@event.IsAction("Right"))
         {
             _isMouse = false;
             this.cell += Vector2.Right;
@@ -174,5 +189,10 @@ public partial class GridCursor : Node2D
     public bool isMouse
     {
         get { return _isMouse; }
+    }
+
+    public bool isPrecision
+    {
+        get { return _isPrecision; }
     }
 }

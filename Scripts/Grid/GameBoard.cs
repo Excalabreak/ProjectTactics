@@ -491,6 +491,12 @@ public partial class GameBoard : Node2D
     /// <param name="newCell"></param>
     public void MenuMoveStateCursorMove(Vector2 newCell)
     {
+        if (!_gridCursor.isPrecision)
+        {
+            _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
+            return;
+        }
+
         if (!_walkableCells.Contains(newCell))
         {
             _unitPath.DrawAutoPath(_selectedUnit.cell, newCell);
