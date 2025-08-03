@@ -42,7 +42,6 @@ public partial class GridCursor : Node2D
 
     public override void _Process(double delta)
     {
-        GD.Print(isPrecision);
         if (_isMouse)
         {
             Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
