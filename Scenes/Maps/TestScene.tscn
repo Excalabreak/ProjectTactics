@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=76 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -50,6 +50,10 @@
 [ext_resource type="Resource" uid="uid://be3bhidwe7mjb" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemyLanceResource.tres" id="36_onxey"]
 [ext_resource type="Resource" uid="uid://ndlg3h1jwcnl" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemySwordResource.tres" id="38_tl10l"]
 [ext_resource type="Resource" uid="uid://det1ut0vo1wpe" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemyCommanderResource.tres" id="40_a4mff"]
+[ext_resource type="Script" uid="uid://r2755nxr7upk" path="res://Scripts/Camera/GameBoardCamera.cs" id="42_l8276"]
+[ext_resource type="Script" uid="uid://braats48iwxp4" path="res://Scripts/Camera/CameraStateMachine.cs" id="43_wmdct"]
+[ext_resource type="Script" uid="uid://2iiw8nextk8k" path="res://Scripts/Camera/CameraStates/CameraFollowCursorState.cs" id="44_ry365"]
+[ext_resource type="Script" uid="uid://dsiorwkyjr2ka" path="res://Scripts/Camera/CameraStates/CameraClickDragState.cs" id="45_kmj3t"]
 [ext_resource type="Script" uid="uid://bcl8hy7m3ybux" path="res://Scripts/UI/UIManager.cs" id="48_bleph"]
 [ext_resource type="Script" uid="uid://ewwqdcxfpysl" path="res://Scripts/Grid/GameBoardManagers/TurnManager.cs" id="50_fhuv3"]
 
@@ -613,12 +617,13 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit/Sprites" index="0"]
 texture = ExtResource("33_vgme0")
 
-[node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer")]
+[node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer", "_camera")]
 z_index = 100
 position = Vector2(266, 1001)
 script = ExtResource("22_iwnah")
 _gameBoard = NodePath("..")
 _timer = NodePath("Timer")
+_camera = NodePath("GameBoardCamera")
 
 [node name="Sprite2D" type="Sprite2D" parent="GameBoard/Cursor"]
 texture = ExtResource("23_fhuv3")
@@ -627,7 +632,7 @@ texture = ExtResource("23_fhuv3")
 wait_time = 0.1
 one_shot = true
 
-[node name="Camera2D" type="Camera2D" parent="GameBoard/Cursor"]
+[node name="GameBoardCamera" type="Camera2D" parent="GameBoard/Cursor" node_paths=PackedStringArray("_cameraStateMachine")]
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 drag_horizontal_enabled = true
@@ -637,6 +642,19 @@ drag_top_margin = 0.65
 drag_right_margin = 0.8
 drag_bottom_margin = 0.65
 editor_draw_drag_margin = true
+script = ExtResource("42_l8276")
+_cameraStateMachine = NodePath("CameraStateMachine")
+
+[node name="CameraStateMachine" type="Node" parent="GameBoard/Cursor/GameBoardCamera" node_paths=PackedStringArray("_camera")]
+script = ExtResource("43_wmdct")
+_camera = NodePath("..")
+initialState = NodePath("CameraFollowCursorState")
+
+[node name="CameraFollowCursorState" type="Node" parent="GameBoard/Cursor/GameBoardCamera/CameraStateMachine"]
+script = ExtResource("44_ry365")
+
+[node name="CameraClickDragState" type="Node" parent="GameBoard/Cursor/GameBoardCamera/CameraStateMachine"]
+script = ExtResource("45_kmj3t")
 
 [node name="GameBoardManagers" type="Node" parent="GameBoard"]
 

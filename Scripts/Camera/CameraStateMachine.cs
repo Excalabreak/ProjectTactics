@@ -10,6 +10,7 @@ using System;
 
 public partial class CameraStateMachine : Node
 {
+    [Export] private GameBoardCamera _camera;
     [Export] public NodePath initialState;
 
     private Dictionary<string, CameraState> _states;
@@ -52,8 +53,15 @@ public partial class CameraStateMachine : Node
         _currentState.Enter();
     }
 
+    //properties
+
     public CameraState currentState
     {
         get { return _currentState; }
+    }
+
+    public GameBoardCamera camera
+    {
+        get { return _camera; }
     }
 }

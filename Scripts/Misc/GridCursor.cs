@@ -22,6 +22,8 @@ public partial class GridCursor : Node2D
     [Export] private Timer _timer;
     [Export] private float _uiCooldown = .1f;
 
+    [Export] private GameBoardCamera _camera;
+
     private Vector2 _cell = Vector2.Zero; //setget
 
     //dont know if i will have an input manager, so it's here for now
@@ -64,7 +66,7 @@ public partial class GridCursor : Node2D
         //inputs for accept
         if (@event is InputEventMouseMotion input)
         {
-            _isMouse = true;
+            ChangeIsMouse(true);
         }
         else if (@event.IsActionPressed("Accept"))
         {
@@ -105,22 +107,22 @@ public partial class GridCursor : Node2D
 
         if (@event.IsAction("Up"))
         {
-            _isMouse = false;
+            ChangeIsMouse(false);
             this.cell += Vector2.Up;
         }
         else if (@event.IsAction("Down"))
         {
-            _isMouse = false;
+            ChangeIsMouse(false);
             this.cell += Vector2.Down;
         }
         else if (@event.IsAction("Left"))
         {
-            _isMouse = false;
+            ChangeIsMouse(false);
             this.cell += Vector2.Left;
         }
         else if (@event.IsAction("Right"))
         {
-            _isMouse = false;
+            ChangeIsMouse(false);
             this.cell += Vector2.Right;
         }
     }
@@ -149,6 +151,19 @@ public partial class GridCursor : Node2D
         {
             _dontEmitMoveSignal = true;
             Input.WarpMouse(unit.GetGlobalTransformWithCanvas().Origin);
+        }
+    }
+
+    private void ChangeIsMouse(bool isMouse)
+    {
+        _isMouse = isMouse;
+        if (_isMouse)
+        {
+            _camera.cameraStateMachine.TransitionTo("CameraClickDragState");
+        }
+        else
+        {
+            _camera.cameraStateMachine.TransitionTo("CameraFollowCursorState");
         }
     }
     
