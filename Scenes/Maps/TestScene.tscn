@@ -623,7 +623,7 @@ position = Vector2(266, 1001)
 script = ExtResource("22_iwnah")
 _gameBoard = NodePath("..")
 _timer = NodePath("Timer")
-_camera = NodePath("GameBoardCamera")
+_camera = NodePath("../GameBoardCamera")
 
 [node name="Sprite2D" type="Sprite2D" parent="GameBoard/Cursor"]
 texture = ExtResource("23_fhuv3")
@@ -632,7 +632,11 @@ texture = ExtResource("23_fhuv3")
 wait_time = 0.1
 one_shot = true
 
-[node name="GameBoardCamera" type="Camera2D" parent="GameBoard/Cursor" node_paths=PackedStringArray("_cameraStateMachine")]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameBoard/Cursor"]
+remote_path = NodePath("../../GameBoardCamera")
+
+[node name="GameBoardCamera" type="Camera2D" parent="GameBoard" node_paths=PackedStringArray("_cameraStateMachine", "_remoteTransform")]
+position = Vector2(266, 1001)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 drag_horizontal_enabled = true
@@ -644,16 +648,17 @@ drag_bottom_margin = 0.65
 editor_draw_drag_margin = true
 script = ExtResource("42_l8276")
 _cameraStateMachine = NodePath("CameraStateMachine")
+_remoteTransform = NodePath("../Cursor/RemoteTransform2D")
 
-[node name="CameraStateMachine" type="Node" parent="GameBoard/Cursor/GameBoardCamera" node_paths=PackedStringArray("_camera")]
+[node name="CameraStateMachine" type="Node" parent="GameBoard/GameBoardCamera" node_paths=PackedStringArray("_camera")]
 script = ExtResource("43_wmdct")
 _camera = NodePath("..")
 initialState = NodePath("CameraFollowCursorState")
 
-[node name="CameraFollowCursorState" type="Node" parent="GameBoard/Cursor/GameBoardCamera/CameraStateMachine"]
+[node name="CameraFollowCursorState" type="Node" parent="GameBoard/GameBoardCamera/CameraStateMachine"]
 script = ExtResource("44_ry365")
 
-[node name="CameraClickDragState" type="Node" parent="GameBoard/Cursor/GameBoardCamera/CameraStateMachine"]
+[node name="CameraClickDragState" type="Node" parent="GameBoard/GameBoardCamera/CameraStateMachine"]
 script = ExtResource("45_kmj3t")
 
 [node name="GameBoardManagers" type="Node" parent="GameBoard"]

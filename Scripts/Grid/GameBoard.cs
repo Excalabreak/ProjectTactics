@@ -454,7 +454,6 @@ public partial class GameBoard : Node2D
     /// <param name="newCell"></param>
     public void MenuAttackStateCursorMove(Vector2 newCell)
     {
-        //_unitWalkHighlights.Clear();
         if (_selectedUnit == null)
         {
             _uiManager.HideBattlePredictions();

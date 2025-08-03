@@ -3,28 +3,24 @@
   "WorkspaceRootPath": "E:\\Projects\\ProjectTactics\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\camera\\camerastates\\cameraclickdragstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\camera\\camerastates\\cameraclickdragstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\camera\\camerastates\\camerafollowcursorstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\camera\\camerastates\\camerafollowcursorstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\camera\\gameboardcamera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\camera\\gameboardcamera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\ProjectTactics\\Scripts\\Camera\\CameraStates\\CameraClickDragState.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Scripts\\Camera\\CameraStates\\CameraClickDragState.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\ProjectTactics\\Scripts\\Camera\\CameraStates\\CameraFollowCursorState.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Scripts\\Camera\\CameraStates\\CameraFollowCursorState.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\camera\\camerastatemachine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\camera\\camerastatemachine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\camera\\camerastate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\camera\\camerastate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\misc\\gridcursor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\misc\\gridcursor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\camera\\camerastate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\camera\\camerastate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\grid\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,11 +34,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "GameBoard.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GameBoard.cs",
               "RelativeDocumentMoniker": "Scripts\\Grid\\GameBoard.cs",
@@ -51,44 +47,43 @@
               "ViewState": "AgIAAMIBAAAAAAAAAAAswPABAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-29T19:37:27.722Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "CameraFollowCursorState.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Camera\\CameraStates\\CameraFollowCursorState.cs",
               "RelativeDocumentMoniker": "Scripts\\Camera\\CameraStates\\CameraFollowCursorState.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Camera\\CameraStates\\CameraFollowCursorState.cs",
               "RelativeToolTip": "Scripts\\Camera\\CameraStates\\CameraFollowCursorState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T03:33:34.549Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CameraClickDragState.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Camera\\CameraStates\\CameraClickDragState.cs",
-              "RelativeDocumentMoniker": "Scripts\\Camera\\CameraStates\\CameraClickDragState.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Camera\\CameraStates\\CameraClickDragState.cs",
-              "RelativeToolTip": "Scripts\\Camera\\CameraStates\\CameraClickDragState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T03:32:30.656Z",
+              "WhenOpened": "2025-08-03T04:01:49.712Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "CameraClickDragState.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Camera\\CameraStates\\CameraClickDragState.cs",
+              "RelativeDocumentMoniker": "Scripts\\Camera\\CameraStates\\CameraClickDragState.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Camera\\CameraStates\\CameraClickDragState.cs",
+              "RelativeToolTip": "Scripts\\Camera\\CameraStates\\CameraClickDragState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-03T04:01:16.008Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "GameBoardCamera.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Camera\\GameBoardCamera.cs",
               "RelativeDocumentMoniker": "Scripts\\Camera\\GameBoardCamera.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Camera\\GameBoardCamera.cs",
               "RelativeToolTip": "Scripts\\Camera\\GameBoardCamera.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-03T03:28:09.767Z",
               "EditorCaption": ""
@@ -96,19 +91,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "CameraStateMachine.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Camera\\CameraStateMachine.cs",
-              "RelativeDocumentMoniker": "Scripts\\Camera\\CameraStateMachine.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Camera\\CameraStateMachine.cs",
-              "RelativeToolTip": "Scripts\\Camera\\CameraStateMachine.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T03:26:59.239Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
               "Title": "CameraState.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Camera\\CameraState.cs",
               "RelativeDocumentMoniker": "Scripts\\Camera\\CameraState.cs",
@@ -129,8 +111,7 @@
               "RelativeToolTip": "Scripts\\Misc\\GridCursor.cs",
               "ViewState": "AgIAAG4AAAAAAAAAAAAwwKEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-02T19:15:46.513Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-02T19:15:46.513Z"
             }
           ]
         }
