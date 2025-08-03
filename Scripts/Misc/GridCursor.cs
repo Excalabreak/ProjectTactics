@@ -42,13 +42,14 @@ public partial class GridCursor : Node2D
 
     public override void _Process(double delta)
     {
-        if (_isMouse)
+        if (!_isMouse)
         {
-            Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
-            if (cell != gridCoords)
-            {
-                cell = gridCoords;
-            }
+            return;
+        }
+        Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
+        if (cell != gridCoords)
+        {
+            cell = gridCoords;
         }
     }
 
@@ -129,15 +130,20 @@ public partial class GridCursor : Node2D
     /// </summary>
     public void ResetCursor()
     {
-        if (_isMouse)
+        if (!_isMouse)
         {
-            Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
-            cell = gridCoords;
+            return;
         }
+        Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
+        cell = gridCoords;
     }
 
     public void WarpMouseToUnitWithoutSignal(Unit unit)
     {
+        if (!_isMouse)
+        {
+            return;
+        }
         Vector2 mouseCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
         if (!mouseCoords.IsEqualApprox(unit.cell))
         {
@@ -166,12 +172,16 @@ public partial class GridCursor : Node2D
 
             Position = _gameBoard.grid.CalculateMapPosition(_cell);
 
+            //was causing issues
+            //check here if other wonky shit happens
+            /*
             if (GetWindow().HasFocus() && !_isMouse)
             {
                 Input.WarpMouse(this.GetGlobalTransformWithCanvas().Origin);
                 _isMouse = false;
             }
-            
+            */
+
             if (!_dontEmitMoveSignal)
             {
                 EmitSignal("Moved", _cell);
