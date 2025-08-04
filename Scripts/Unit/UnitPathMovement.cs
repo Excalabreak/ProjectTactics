@@ -124,6 +124,8 @@ public partial class UnitPathMovement : Path2D
         _pathDirections = new List<DirectionEnum>();
         _currentDirectionIndex = 0;
 
+        _unit.unitActionEconomy.CheckMoveAction();
+
         EmitSignal("WalkFinished");
     }
 
