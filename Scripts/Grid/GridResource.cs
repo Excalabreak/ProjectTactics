@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [06/30/2025]
+ * Last Updated: [08/03/2025]
  * [holds information about a map]
  */
 
@@ -98,8 +98,33 @@ public partial class GridResource : Resource
         return coords;
     }
 
+    /// <summary>
+    /// returns the center x pos of grid
+    /// </summary>
+    /// <returns>center position of grid</returns>
+    public float CenterXPos()
+    {
+        return _gridSize.X * _cellSize.X / 2;
+    }
+
+    /// <summary>
+    /// returns the center Y pos of grid
+    /// </summary>
+    /// <returns>center position of grid</returns>
+    public float CenterYPos()
+    {
+        return _gridSize.Y * _cellSize.Y / 2;
+    }
+
+    //properties
+
     public Vector2 gridSize
     {
         get { return _gridSize; }
+    }
+
+    public Vector2 cellSize
+    {
+        get { return _cellSize; }
     }
 }

@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/02/2025]
+ * Last Updated: [08/03/2025]
  * [state machine for camera]
  */
 
@@ -15,6 +15,8 @@ public partial class CameraStateMachine : Node
 
     private Dictionary<string, CameraState> _states;
     private CameraState _currentState;
+
+    private bool _ignoredReady = false;
 
     /// <summary>
     /// sets up state machine
@@ -53,6 +55,14 @@ public partial class CameraStateMachine : Node
         _currentState.Enter();
     }
 
+    /// <summary>
+    /// indicates it has ignored ready
+    /// </summary>
+    public void HasIgnoredReady()
+    {
+        _ignoredReady = true;
+    }
+
     //properties
 
     public CameraState currentState
@@ -63,5 +73,10 @@ public partial class CameraStateMachine : Node
     public GameBoardCamera camera
     {
         get { return _camera; }
+    }
+
+    public bool ignoredReady
+    {
+        get { return _ignoredReady; }
     }
 }

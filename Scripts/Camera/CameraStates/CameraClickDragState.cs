@@ -14,7 +14,15 @@ public partial class CameraClickDragState : CameraState
     /// </
     public override void Enter()
     {
-        stateMachine.camera.remoteTransform.UpdatePosition = false;
+        if (!stateMachine.ignoredReady)
+        {
+            stateMachine.HasIgnoredReady();
+        }
+        else
+        {
+            stateMachine.camera.DetachFromCursor();
+        }
+
         stateMachine.camera.DragHorizontalEnabled = false;
         stateMachine.camera.DragVerticalEnabled = false;
     }

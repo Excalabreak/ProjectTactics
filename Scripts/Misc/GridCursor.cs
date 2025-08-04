@@ -63,8 +63,7 @@ public partial class GridCursor : Node2D
     /// <param name="event"></param>
     public override void _UnhandledInput(InputEvent @event)
     {
-        //inputs for accept
-        if (@event is InputEventMouseMotion input)
+        if (@event is InputEventMouseMotion || @event is InputEventMouseButton)
         {
             ChangeIsMouse(true);
         }

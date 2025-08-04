@@ -14,8 +14,15 @@ public partial class CameraFollowCursorState : CameraState
     /// </summary>
     public override void Enter()
     {
-        stateMachine.camera.Position = stateMachine.camera.remoteTransform.Position;
-        stateMachine.camera.remoteTransform.UpdatePosition = true;
+        if (!stateMachine.ignoredReady)
+        {
+            stateMachine.HasIgnoredReady();
+        }
+        else
+        {
+            stateMachine.camera.AttachToCursor();
+        }
+
         stateMachine.camera.DragHorizontalEnabled = true;
         stateMachine.camera.DragVerticalEnabled = true;
     }

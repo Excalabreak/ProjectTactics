@@ -13,9 +13,13 @@ using System;
 
 public partial class GameBoardCamera : Camera2D
 {
+    [Export] private GameBoard _gameBoard;
     [Export] private CameraStateMachine _cameraStateMachine;
-    [Export] private RemoteTransform2D _remoteTransform;
+    [Export] private GridCursor _gridCursor;
 
+    [Export] private int _numOfCellToExtendCamLimits = 3;
+
+    private Vector2 _viewportSize;
     private bool _dragCamera = false;
 
     private CameraZoomEnum _currentZoom = CameraZoomEnum.MED_ZOOM;
@@ -24,6 +28,28 @@ public partial class GameBoardCamera : Camera2D
     private const float MED_ZOOM = 1.0f;
     private const float MAX_ZOOM = 2.0f;
     private const float ZOOM_RATE = 8.0f;
+    private bool _needZoom = false;
+
+    private float _limitLeft = -10000000;
+    private float _limitTop = -10000000;
+    private float _limitRight = 10000000;
+    private float _limitBottom = 10000000;
+
+    /// <summary>
+    /// sets the limits of the camera
+    /// </summary>
+    public override void _Ready()
+    {
+        _viewportSize = GetViewport().GetVisibleRect().Size;
+
+        int extendLimitsX = _numOfCellToExtendCamLimits * Mathf.RoundToInt(_gameBoard.grid.cellSize.X);
+        int extendLimitsY = _numOfCellToExtendCamLimits * Mathf.RoundToInt(_gameBoard.grid.cellSize.X);
+
+        _limitLeft = -extendLimitsX;
+        _limitTop = -extendLimitsY;
+        _limitRight = Mathf.RoundToInt(_gameBoard.grid.cellSize.X) * Mathf.RoundToInt(_gameBoard.grid.gridSize.X) + extendLimitsX;
+        _limitBottom = Mathf.RoundToInt(_gameBoard.grid.cellSize.Y) * Mathf.RoundToInt(_gameBoard.grid.gridSize.Y) + extendLimitsY;
+    }
 
     /// <summary>
     /// zooms in to the target zoom
@@ -31,8 +57,15 @@ public partial class GameBoardCamera : Camera2D
     /// <param name="delta"></param>
     public override void _PhysicsProcess(double delta)
     {
-        Zoom = Lerp(Zoom, _targetZoom * Vector2.One, ZOOM_RATE * ((float)delta));
-        SetPhysicsProcess(!Mathf.IsEqualApprox(Zoom.X, _targetZoom));
+        if (_needZoom)
+        {
+            ZoomToTarget((float)delta);
+        }
+
+        if (_cameraStateMachine.currentState.Name == "CameraClickDragState")
+        {
+            MakeSureCameraIsWithinLimits();
+        }
     }
 
     /// <summary>
@@ -52,13 +85,32 @@ public partial class GameBoardCamera : Camera2D
             GetViewport().SetInputAsHandled();
         }
 
-        if (@event is InputEventMouseMotion)
+        if (@event is InputEventMouseMotion mouseMotion)
         {
-            InputEventMouseMotion mouseMotion = @event as InputEventMouseMotion;
-
             if (_dragCamera)
             {
-                Position -= mouseMotion.Relative / Zoom;
+                Vector2 moveCamera = Position - mouseMotion.Relative / Zoom;
+                float x = _viewportSize.X / Zoom.X / 2;
+                float y = _viewportSize.Y / Zoom.Y / 2;
+
+                if (CanHorizontallyMove())
+                {
+                    moveCamera.X = Mathf.Clamp(moveCamera.X, _limitLeft + x, _limitRight - x);
+                }
+                else
+                {
+                    moveCamera.X = _gameBoard.grid.CenterXPos();
+                }
+
+                if (CanVerticallyMove())
+                {
+                    moveCamera.Y = Mathf.Clamp(moveCamera.Y, _limitTop + y, _limitBottom - y);
+                }
+                else
+                {
+                    moveCamera.Y = _gameBoard.grid.CenterYPos();
+                }
+                Position = moveCamera;
             }
         }
 
@@ -80,6 +132,46 @@ public partial class GameBoardCamera : Camera2D
     }
 
     /// <summary>
+    /// makes sure camera is within limits
+    /// </summary>
+    public void MakeSureCameraIsWithinLimits()
+    {
+        bool handledX = false;
+        bool handledY = false;
+
+        if (!CanHorizontallyMove())
+        {
+            Position = new Vector2(_gameBoard.grid.CenterXPos(), Position.Y);
+            handledX = true;
+        }
+        if (!CanVerticallyMove())
+        {
+            Position = new Vector2(Position.X, _gameBoard.grid.CenterYPos());
+            handledY = true;
+        }
+
+        if (!handledX)
+        {
+            MakeSureCamIsWithinXLimit();
+        }
+
+        if (!handledY)
+        {
+            MakeSureCamIsWithinYLimit();
+        }
+    }
+
+    /// <summary>
+    /// zooms camera using lerp
+    /// </summary>
+    /// <param name="delta"></param>
+    private void ZoomToTarget(float delta)
+    {
+        Zoom = Lerp(Zoom, _targetZoom * Vector2.One, ZOOM_RATE * delta);
+        _needZoom = !Mathf.IsEqualApprox(Zoom.X, _targetZoom);
+    }
+
+    /// <summary>
     /// zooms in camera
     /// </summary>
     private void ZoomIn()
@@ -92,7 +184,7 @@ public partial class GameBoardCamera : Camera2D
 
         _currentZoom = (CameraZoomEnum)target;
         
-        ZoomToCurrent();
+        StartCurrentZoom();
     }
 
     /// <summary>
@@ -108,7 +200,7 @@ public partial class GameBoardCamera : Camera2D
 
         _currentZoom = (CameraZoomEnum)target;
 
-        ZoomToCurrent();
+        StartCurrentZoom();
     }
 
     /// <summary>
@@ -125,16 +217,16 @@ public partial class GameBoardCamera : Camera2D
 
         _currentZoom = (CameraZoomEnum)target;
 
-        ZoomToCurrent();
+        StartCurrentZoom();
     }
 
     /// <summary>
     /// sets the target zoom to the current zoom and starts zooming camera
     /// </summary>
-    private void ZoomToCurrent()
+    private void StartCurrentZoom()
     {
         _targetZoom = GetZoom(_currentZoom);
-        SetPhysicsProcess(true);
+        _needZoom = true;
     }
 
     /// <summary>
@@ -156,6 +248,60 @@ public partial class GameBoardCamera : Camera2D
                 break;
         }
         return MED_ZOOM;
+    }
+
+    /// <summary>
+    /// checks if camera can move vertically
+    /// </summary>
+    /// <returns>true if camera can move vertically</returns>
+    private bool CanVerticallyMove()
+    {
+        float y = _viewportSize.Y / Zoom.Y / 2;
+        return _limitTop + y < _limitBottom - y;
+    }
+
+    /// <summary>
+    /// checks if camera can move horizontally
+    /// </summary>
+    /// <returns>true if camera can move horizontally</returns>
+    private bool CanHorizontallyMove()
+    {
+        float x = _viewportSize.X / Zoom.X / 2;
+        return _limitLeft + x < _limitRight - x;
+    }
+
+    /// <summary>
+    /// checks if camera is within the X limits
+    /// </summary>
+    private void MakeSureCamIsWithinXLimit()
+    {
+        float x = _viewportSize.X / Zoom.X / 2;
+
+        if (Position.X < _limitLeft + x)
+        {
+            Position = new Vector2(_limitLeft + x, Position.Y);
+        }
+        else if (Position.X > _limitRight - x)
+        {
+            Position = new Vector2(_limitRight - x, Position.Y);
+        }
+    }
+
+    /// <summary>
+    /// checks if camera is within the Y limits
+    /// </summary>
+    private void MakeSureCamIsWithinYLimit()
+    {
+        float y = _viewportSize.Y / Zoom.Y / 2;
+
+        if (Position.Y < _limitTop + y)
+        {
+            Position = new Vector2(Position.X, _limitTop + y);
+        }
+        else if (Position.Y > _limitBottom - y)
+        {
+            Position = new Vector2(Position.X, _limitBottom - y);
+        }
     }
 
     /// <summary>
@@ -184,6 +330,29 @@ public partial class GameBoardCamera : Camera2D
         return new Vector2(retX, retY);
     }
 
+    /// <summary>
+    /// attaches this camera to the cursor
+    /// </summary>
+    public void AttachToCursor()
+    {
+        ResetSmoothing();
+        GD.Print(GlobalPosition);
+        GD.Print(GetScreenCenterPosition());
+        Reparent(_gridCursor, true);
+
+        Position = Vector2.Zero;
+    }
+
+    /// <summary>
+    /// detaches this camera from cursor
+    /// </summary>
+    public void DetachFromCursor()
+    {
+        ResetSmoothing();
+        GD.Print(GlobalPosition);
+        GD.Print(GetScreenCenterPosition());
+        Reparent(_gameBoard, true);
+    }
 
     //properties
 
@@ -192,8 +361,8 @@ public partial class GameBoardCamera : Camera2D
         get { return _cameraStateMachine; }
     }
 
-    public RemoteTransform2D remoteTransform
+    public GridCursor gridCursor
     {
-        get { return _remoteTransform; }
+        get { return _gridCursor; }
     }
 }

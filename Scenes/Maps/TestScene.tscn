@@ -632,10 +632,7 @@ texture = ExtResource("23_fhuv3")
 wait_time = 0.1
 one_shot = true
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameBoard/Cursor"]
-remote_path = NodePath("../../GameBoardCamera")
-
-[node name="GameBoardCamera" type="Camera2D" parent="GameBoard" node_paths=PackedStringArray("_cameraStateMachine", "_remoteTransform")]
+[node name="GameBoardCamera" type="Camera2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_cameraStateMachine", "_gridCursor")]
 position = Vector2(266, 1001)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
@@ -647,8 +644,9 @@ drag_right_margin = 0.8
 drag_bottom_margin = 0.65
 editor_draw_drag_margin = true
 script = ExtResource("42_l8276")
+_gameBoard = NodePath("..")
 _cameraStateMachine = NodePath("CameraStateMachine")
-_remoteTransform = NodePath("../Cursor/RemoteTransform2D")
+_gridCursor = NodePath("../Cursor")
 
 [node name="CameraStateMachine" type="Node" parent="GameBoard/GameBoardCamera" node_paths=PackedStringArray("_camera")]
 script = ExtResource("43_wmdct")
