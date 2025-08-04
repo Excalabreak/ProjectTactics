@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/03/2025]
+ * Last Updated: [08/04/2025]
  * [state for click and drag]
  */
 
@@ -14,16 +14,6 @@ public partial class CameraClickDragState : CameraState
     /// </
     public override void Enter()
     {
-        if (!stateMachine.ignoredReady)
-        {
-            stateMachine.HasIgnoredReady();
-        }
-        else
-        {
-            stateMachine.camera.DetachFromCursor();
-        }
-
-        stateMachine.camera.DragHorizontalEnabled = false;
-        stateMachine.camera.DragVerticalEnabled = false;
+        stateMachine.camera.isPlayerControllingCamera = true;
     }
 }

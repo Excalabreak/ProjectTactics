@@ -139,6 +139,11 @@ public partial class GridCursor : Node2D
         cell = gridCoords;
     }
 
+    /// <summary>
+    /// warps mosuse to unit without 
+    /// calling to signal a move
+    /// </summary>
+    /// <param name="unit"></param>
     public void WarpMouseToUnitWithoutSignal(Unit unit)
     {
         if (!_isMouse)
