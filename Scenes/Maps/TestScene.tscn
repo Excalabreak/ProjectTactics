@@ -441,6 +441,12 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
 
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit/Sprites" index="4"]
+visible = true
+
 [node name="AxeAiUnit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(166, 607)
 _unitResource = ExtResource("34_wn5g2")
@@ -448,6 +454,12 @@ _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit2/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit2/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit2/Sprites" index="4"]
+visible = true
 
 [node name="AxeAiUnit3" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(216, 541)
@@ -457,6 +469,12 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit3/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
 
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit3/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit3/Sprites" index="4"]
+visible = true
+
 [node name="AxeAiUnit4" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1117, 854)
 _unitResource = ExtResource("34_wn5g2")
@@ -464,6 +482,12 @@ _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit4/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit4/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit4/Sprites" index="4"]
+visible = true
 
 [node name="AxeAiUnit5" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1446, 725)
@@ -473,6 +497,12 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit5/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
 
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit5/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit5/Sprites" index="4"]
+visible = true
+
 [node name="AxeAiUnit7" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(859, 604)
 _unitResource = ExtResource("34_wn5g2")
@@ -480,6 +510,12 @@ _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit7/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit7/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit7/Sprites" index="4"]
+visible = true
 
 [node name="AxeAiUnit8" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(802, 298)
@@ -489,6 +525,12 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit8/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
 
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit8/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit8/Sprites" index="4"]
+visible = true
+
 [node name="AxeAiUnit6" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1637, 990)
 _unitResource = ExtResource("34_wn5g2")
@@ -496,6 +538,12 @@ _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit6/Sprites" index="0"]
 texture = ExtResource("30_l2v6i")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit6/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit6/Sprites" index="4"]
+visible = true
 
 [node name="LanceAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(477, 795)
@@ -505,6 +553,12 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit/Sprites" index="0"]
 texture = ExtResource("31_kjk7w")
 
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit/Sprites" index="4"]
+visible = true
+
 [node name="LanceAiUnit5" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1574, 725)
 _unitResource = ExtResource("36_onxey")
@@ -512,6 +566,12 @@ _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit5/Sprites" index="0"]
 texture = ExtResource("31_kjk7w")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit5/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit5/Sprites" index="4"]
+visible = true
 
 [node name="LanceAiUnit4" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(980, 738)
@@ -521,6 +581,12 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit4/Sprites" index="0"]
 texture = ExtResource("31_kjk7w")
 
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit4/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit4/Sprites" index="4"]
+visible = true
+
 [node name="LanceAiUnit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(604, 603)
 _unitResource = ExtResource("36_onxey")
@@ -528,6 +594,12 @@ _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit2/Sprites" index="0"]
 texture = ExtResource("31_kjk7w")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit2/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit2/Sprites" index="4"]
+visible = true
 
 [node name="LanceAiUnit7" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(983, 287)
@@ -537,6 +609,12 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit7/Sprites" index="0"]
 texture = ExtResource("31_kjk7w")
 
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit7/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit7/Sprites" index="4"]
+visible = true
+
 [node name="SwordAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(390, 928)
 _unitResource = ExtResource("38_tl10l")
@@ -544,6 +622,12 @@ _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit/Sprites" index="4"]
+visible = true
 
 [node name="SwordAiUnit9" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(799, 439)
@@ -553,6 +637,12 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit9/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
 
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit9/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit9/Sprites" index="4"]
+visible = true
+
 [node name="SwordAiUnit5" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1321, 866)
 _unitResource = ExtResource("38_tl10l")
@@ -560,6 +650,12 @@ _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit5/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit5/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit5/Sprites" index="4"]
+visible = true
 
 [node name="SwordAiUnit7" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1206, 474)
@@ -569,6 +665,12 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit7/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
 
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit7/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit7/Sprites" index="4"]
+visible = true
+
 [node name="SwordAiUnit8" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1124, 363)
 _unitResource = ExtResource("38_tl10l")
@@ -576,6 +678,12 @@ _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit8/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit8/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit8/Sprites" index="4"]
+visible = true
 
 [node name="SwordAiUnit10" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(480, 413)
@@ -585,6 +693,12 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit10/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
 
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit10/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit10/Sprites" index="4"]
+visible = true
+
 [node name="SwordAiUnit4" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(403, 604)
 _unitResource = ExtResource("38_tl10l")
@@ -592,6 +706,12 @@ _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit4/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit4/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit4/Sprites" index="4"]
+visible = true
 
 [node name="SwordAiUnit2" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(797, 928)
@@ -601,6 +721,12 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit2/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
 
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit2/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit2/Sprites" index="4"]
+visible = true
+
 [node name="SwordAiUnit3" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(929, 864)
 _unitResource = ExtResource("38_tl10l")
@@ -609,6 +735,12 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit3/Sprites" index="0"]
 texture = ExtResource("32_7r5ow")
 
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit3/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit3/Sprites" index="4"]
+visible = true
+
 [node name="CommanderAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1316, 347)
 _unitResource = ExtResource("40_a4mff")
@@ -616,6 +748,12 @@ _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit/Sprites" index="0"]
 texture = ExtResource("33_vgme0")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit/Sprites" index="4"]
+visible = true
 
 [node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer", "_camera")]
 z_index = 100
