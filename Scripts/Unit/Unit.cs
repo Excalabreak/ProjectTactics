@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [07/29/2025]
+ * Last Updated: [08/04/2025]
  * [Unit Main Script]
  */
 
@@ -35,9 +35,6 @@ public partial class Unit : Node2D
 
     [Export] private GameBoard _gameBoard;
     public Action<GameBoard> CurrentGameBoard;
-
-    //might take out since im going to lean twoards dnd action economey
-    [Export] private bool _isWait = false;
 
     //temp, move to equiptment
     private int _attackRange = 1;
@@ -192,11 +189,6 @@ public partial class Unit : Node2D
     public NPCAiStateMachine aiStateMachine
     {
         get { return _aiStateMachine; }
-    }
-
-    public bool isWait
-    {
-        get { return _isWait; }
     }
 
     public int attackRange

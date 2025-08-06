@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/08/2025]
+ * Last Updated: [08/05/2025]
  * [keeps track of actions unit can make]
  */
 
@@ -16,9 +16,13 @@ public partial class UnitActionEconomy : Node
     private int _maxActions = 1;
     private int _actionsLeft = 1;
 
-
     private float _maxMove = 6;
     private float _currentMove = 6;
+
+    private bool _moveAction = true;
+
+    [Export] private Sprite2D _actionExaustedSprite;
+    [Export] private Sprite2D _moveExaustedSprite;
 
     public override void _Ready()
     {
@@ -43,7 +47,7 @@ public partial class UnitActionEconomy : Node
             }
         }
 
-        if (_gameBoard.GetWalkableCells(_unit).Length > 1)
+        if (_moveAction)
         {
             return true;
         }
@@ -57,6 +61,13 @@ public partial class UnitActionEconomy : Node
     public void UseAction()
     {
         _actionsLeft--;
+
+        if (HasActions())
+        {
+            return;
+        }
+
+        ToggleActionExaustSprite(true);
     }
 
     /// <summary>
@@ -67,6 +78,10 @@ public partial class UnitActionEconomy : Node
     {
         _currentMove = _maxMove;
         _actionsLeft = _maxActions;
+        _moveAction = true;
+
+        ToggleMoveExaustSprite(false);
+        ToggleActionExaustSprite(false);
     }
 
     /// <summary>
@@ -100,6 +115,33 @@ public partial class UnitActionEconomy : Node
     }
 
     /// <summary>
+    /// sets _move action to true if the unit can move
+    /// </summary>
+    public void CheckMoveAction()
+    {
+        _moveAction = _gameBoard.GetWalkableCells(_unit).Length > 1;
+        ToggleMoveExaustSprite(!_moveAction);
+    }
+
+    /// <summary>
+    /// toggles if the action exausted sprite is visible
+    /// </summary>
+    /// <param name="visible">show sprite</param>
+    private void ToggleActionExaustSprite(bool visible)
+    {
+        _actionExaustedSprite.Visible = visible;
+    }
+
+    /// <summary>
+    /// toggles if the move exausted sprite is visible
+    /// </summary>
+    /// <param name="visible">show sprite</param>
+    private void ToggleMoveExaustSprite(bool visible)
+    {
+        _moveExaustedSprite.Visible = visible;
+    }
+
+    /// <summary>
     /// unsubs from event
     /// </summary>
     public override void _ExitTree()
@@ -124,5 +166,10 @@ public partial class UnitActionEconomy : Node
     public float maxMove
     {
         get { return _maxMove; }
+    }
+
+    public bool moveAction
+    {
+        get { return _moveAction; }
     }
 }

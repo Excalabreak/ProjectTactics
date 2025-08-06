@@ -1056,7 +1056,7 @@ public partial class GameBoard : Node2D
                     {
                         distanceToNode = currentPriority + MAX_VALUE;
                     }
-                    else if (_units[coords].isWait && attackableCheck)
+                    else if (!_units[coords].unitActionEconomy.moveAction && attackableCheck)
                     {
                         occupiedCells.Add(coords);
                     }
