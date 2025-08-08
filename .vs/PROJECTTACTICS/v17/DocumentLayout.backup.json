@@ -39,8 +39,7 @@
               "ViewState": "AgIAAO0DAAAAAAAAAAAgwCMEAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-29T19:37:27.722Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -63,7 +62,7 @@
               "RelativeDocumentMoniker": "Scripts\\Unit\\UnitActionEconomy.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Unit\\UnitActionEconomy.cs",
               "RelativeToolTip": "Scripts\\Unit\\UnitActionEconomy.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAwwG0AAABEAAAAAAAAAA==",
+              "ViewState": "AgIAABoAAAAAAAAAAAAQwEUAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-04T22:05:29.672Z",
               "EditorCaption": ""
@@ -78,8 +77,7 @@
               "RelativeToolTip": "Scripts\\Unit\\Unit.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T22:05:27.851Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-04T22:05:27.851Z"
             }
           ]
         }

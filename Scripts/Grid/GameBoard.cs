@@ -1314,14 +1314,12 @@ public partial class GameBoard : Node2D
     public void UpdateUnitVision(Unit unit)
     {
         //returns on non player units since only the player can see their units
-        if (unit.unitGroup != UnitGroupEnum.PLAYER)
+        if (unit.unitGroup == UnitGroupEnum.PLAYER)
         {
-            return;
-
+            //hides unit's old vision
+            //adds unit to vision dictionary if not there
+            HideVision(unit, true);
         }
-        //hides unit's old vision
-        //adds unit to vision dictionary if not there
-        HideVision(unit, true);
 
         //Vector2I for which tiles get checked
         Vector2I startingCell = new Vector2I(Mathf.RoundToInt(unit.cell.X), Mathf.RoundToInt(unit.cell.Y));

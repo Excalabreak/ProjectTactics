@@ -5,7 +5,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/01/2025]
+ * Last Updated: [08/08/2025]
  * [attack state for enemy ai
  * NOTE: very basic for now]
  */
@@ -20,33 +20,59 @@ public partial class EnemyAttackState : NPCAiState
     public override async void TurnLogic()
     {
         Vector2 targetLoc = stateMachine.gameBoard.ClosestUnitPosition(UnitGroupEnum.PLAYER, stateMachine.unit.cell);
-
-        List<Vector2> path = new List<Vector2>();
-        path.AddRange(stateMachine.gameBoard.DijkstraPathFinding(stateMachine.unit.cell, targetLoc));
-        path.RemoveAt(0);
-
-        for (int i = 0; i < stateMachine.unit.attackRange; i++)
-        {
-            if (path.Count <= 0)
-            {
-                break;
-            }
-            path.RemoveAt(path.Count - 1);
-        }
-
-        if (path.Count > 0)
-        {
-            
-            MoveLogic(path.ToArray(), stateMachine.unit.unitActionEconomy.currentMove);
-        }
-        if (isWalking)
-        {
-            isWalking = false;
-            await ToSignal(stateMachine.gameBoard, "SelectedMoved");
-        }
-
+        
         Vector2[] attackableArea = stateMachine.gameBoard.FloodFill(stateMachine.unit.cell, stateMachine.unit.attackRange);
         Unit targetUnit = stateMachine.gameBoard.GetAttackableUnitFromArea(stateMachine.unit.unitGroup, attackableArea);
+
+        bool needsToMove = (targetUnit == null);
+        if (needsToMove)
+        {
+            //expensive path finding, should find different way
+            List<Vector2> attackableSpots = new List<Vector2>();
+            attackableSpots.AddRange(stateMachine.gameBoard.FloodFill(targetLoc, stateMachine.unit.attackRange));
+            attackableSpots.Remove(targetLoc);
+
+            List<Vector2> path = new List<Vector2>();
+            Vector2[] currentPath;
+            if (attackableSpots.Count > 0)
+            {
+                foreach (Vector2 loc in attackableSpots)
+                {
+                    if (stateMachine.gameBoard.IsOccupied(loc))
+                    {
+                        continue;
+                    }
+                    if (stateMachine.gameBoard.map.GetTileMoveCost(loc) > 100)
+                    {
+                        continue;
+                    }
+
+                    currentPath = stateMachine.gameBoard.DijkstraPathFinding(stateMachine.unit.cell, loc);
+                    if (path.Count == 0 || currentPath.Length < path.Count)
+                    {
+                        path.Clear();
+                        path.AddRange(currentPath);
+                    }
+                }
+            }
+            path.RemoveAt(0);
+            if (path.Count > 0)
+            {
+
+                MoveLogic(path.ToArray(), stateMachine.unit.unitActionEconomy.currentMove);
+            }
+            if (isWalking)
+            {
+                isWalking = false;
+                await ToSignal(stateMachine.gameBoard, "SelectedMoved");
+            }
+        }
+
+        if (needsToMove)
+        {
+            attackableArea = stateMachine.gameBoard.FloodFill(stateMachine.unit.cell, stateMachine.unit.attackRange);
+            targetUnit = stateMachine.gameBoard.GetAttackableUnitFromArea(stateMachine.unit.unitGroup, attackableArea);
+        }
 
         if (targetUnit != null)
         {
