@@ -5,7 +5,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/08/2025]
+ * Last Updated: [08/08/2025]
  * [attack state for enemy ai
  * NOTE: very basic for now]
  */
@@ -19,33 +19,74 @@ public partial class EnemyAttackState : NPCAiState
     /// </summary>
     public override async void TurnLogic()
     {
-        Vector2 target = stateMachine.gameBoard.ClosestUnitPosition(UnitGroupEnum.PLAYER, stateMachine.unit.cell);
-
-        List<Vector2> path = new List<Vector2>();
-        path.AddRange(stateMachine.gameBoard.DijkstraPathFinding(stateMachine.unit.cell, target));
-        path.RemoveAt(0);
-        path.RemoveAt(path.Count - 1);
-
-        if (path.Count > 0)
-        {
-            MoveLogic(path.ToArray(), stateMachine.unit.unitActionEconomy.currentMove);
-        }
-        if (isWalking)
-        {
-            isWalking = false;
-            await ToSignal(stateMachine.gameBoard, "SelectedMoved");
-        }
+        Vector2 targetLoc = stateMachine.gameBoard.ClosestUnitPosition(UnitGroupEnum.PLAYER, stateMachine.unit.cell);
         
-        if (stateMachine.gameBoard.CheckAreaForAttackableGroup(
-            stateMachine.unit.unitGroup, stateMachine.gameBoard.FloodFill(
-                stateMachine.unit.cell, stateMachine.unit.attackRange)))
+        Vector2[] attackableArea = stateMachine.gameBoard.FloodFill(stateMachine.unit.cell, stateMachine.unit.attackRange);
+        Unit targetUnit = stateMachine.gameBoard.GetAttackableUnitFromArea(stateMachine.unit.unitGroup, attackableArea);
+
+        bool needsToMove = (targetUnit == null);
+        if (needsToMove)
         {
-            stateMachine.gameBoard.UnitCombat(stateMachine.unit.cell, target);
+            //expensive path finding, should find different way
+            List<Vector2> attackableSpots = new List<Vector2>();
+            attackableSpots.AddRange(stateMachine.gameBoard.FloodFill(targetLoc, stateMachine.unit.attackRange));
+            attackableSpots.Remove(targetLoc);
+
+            List<Vector2> path = new List<Vector2>();
+            Vector2[] currentPath;
+            if (attackableSpots.Count > 0)
+            {
+                foreach (Vector2 loc in attackableSpots)
+                {
+                    if (stateMachine.gameBoard.IsOccupied(loc))
+                    {
+                        continue;
+                    }
+                    if (stateMachine.gameBoard.map.GetTileMoveCost(loc) > 100)
+                    {
+                        continue;
+                    }
+
+                    currentPath = stateMachine.gameBoard.DijkstraPathFinding(stateMachine.unit.cell, loc);
+                    if (path.Count == 0 || currentPath.Length < path.Count)
+                    {
+                        path.Clear();
+                        path.AddRange(currentPath);
+                    }
+                }
+            }
+            path.RemoveAt(0);
+            if (path.Count > 0)
+            {
+
+                MoveLogic(path.ToArray(), stateMachine.unit.unitActionEconomy.currentMove);
+            }
+            if (isWalking)
+            {
+                isWalking = false;
+                await ToSignal(stateMachine.gameBoard, "SelectedMoved");
+            }
+        }
+
+        if (needsToMove)
+        {
+            attackableArea = stateMachine.gameBoard.FloodFill(stateMachine.unit.cell, stateMachine.unit.attackRange);
+            targetUnit = stateMachine.gameBoard.GetAttackableUnitFromArea(stateMachine.unit.unitGroup, attackableArea);
+        }
+
+        if (targetUnit != null)
+        {
+            stateMachine.gameBoard.combatManager.UnitCombat(stateMachine.unit, targetUnit);
         }
 
         stateMachine.UnitFinsh();
     }
 
+    /// <summary>
+    /// the move logic for the state
+    /// </summary>
+    /// <param name="path">path that unit will take</param>
+    /// <param name="moveLimit">move of unit</param>
     private void MoveLogic(Vector2[] path, float moveLimit)
     {
         float currentMoveCost = 0;
@@ -53,7 +94,7 @@ public partial class EnemyAttackState : NPCAiState
 
         for (int i = 0; i < path.Length; i++)
         {
-            if (stateMachine.gameBoard.IsOccupied(path[i]))
+            if (!stateMachine.gameBoard.CheckCanPass(stateMachine.unit, path[i]))
             {
                 break;
             }
@@ -62,12 +103,17 @@ public partial class EnemyAttackState : NPCAiState
             {
                 break;
             }
+            if (stateMachine.gameBoard.IsOccupied(path[i]))
+            {
+                continue;
+            }
 
             validIndex = i;
         }
 
         if (validIndex != -1)
         {
+            stateMachine.LogicNeedsAwait();
             isWalking = true;
             stateMachine.gameBoard.SelectUnit(stateMachine.unit.cell);
             stateMachine.gameBoard.DrawAutoPathForAi(stateMachine.unit.cell, path[validIndex]);

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [YT: Radical Oyster/Heal Moon]
- * Last Updated: [06/30/2025]
+ * Last Updated: [07/17/2025]
  * [gives data about tiles in the map]
  */
 
@@ -59,7 +59,7 @@ public partial class Map : TileMapLayer
         float output = 0;
         foreach (Vector2 tile in path)
         {
-            Vector2I iTile = new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.X));
+            Vector2I iTile = new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.Y));
             output += (float)GetCellTileData(iTile).GetCustomData("MoveCost");
         }
         return output;
@@ -73,6 +73,17 @@ public partial class Map : TileMapLayer
     public float GetTileVisionCost(Vector2I tile)
     {
         return (float)GetCellTileData(tile).GetCustomData("VisionCost");
+    }
+
+    /// <summary>
+    /// gets the vision cost of a singular tile
+    /// </summary>
+    /// <param name="tile">coordinates of tile</param>
+    /// <returns>vision cost of coordinates</returns>
+    public float GetTileVisionCost(Vector2 tile)
+    {
+        return (float)GetCellTileData(new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.Y)))
+            .GetCustomData("VisionCost");
     }
 
     /// <summary>
@@ -94,5 +105,16 @@ public partial class Map : TileMapLayer
     {
         return (float)GetCellTileData(new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.Y)))
             .GetCustomData("MoveCost");
+    }
+
+    /// <summary>
+    /// gets the name of the terrain tile
+    /// </summary>
+    /// <param name="tile">coordinates of tile</param>
+    /// <returns>name of terrain of tiles</returns>
+    public string GetTileTerrainName(Vector2 tile)
+    {
+        return (string)GetCellTileData(new Vector2I(Mathf.RoundToInt(tile.X), Mathf.RoundToInt(tile.Y)))
+            .GetCustomData("Name");
     }
 }

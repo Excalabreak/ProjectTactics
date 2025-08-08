@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/08/2025]
+ * Last Updated: [07/25/2025]
  * [state machine for npc AI]
  */
 
@@ -19,6 +19,8 @@ public partial class NPCAiStateMachine : Node
     private NPCAiState _currentState;
 
     private GameBoard _gameBoard;
+
+    private bool _needsAwait = false;
 
     /// <summary>
     /// sets up state machine
@@ -49,7 +51,6 @@ public partial class NPCAiStateMachine : Node
     /// </summary>
     public void DoLogic()
     {
-        GD.Print(_currentState.Name);
         _currentState.TurnLogic();
     }
 
@@ -78,6 +79,23 @@ public partial class NPCAiStateMachine : Node
     }
 
     /// <summary>
+    /// sets _needsAwait to false
+    /// </summary>
+    public void ResetNeedsAwait()
+    {
+        _needsAwait = false;
+    }
+
+    /// <summary>
+    /// changes bool to signal that the
+    /// logic needs await
+    /// </summary>
+    public void LogicNeedsAwait()
+    {
+        _needsAwait = true;
+    }
+
+    /// <summary>
     /// unsubs from event
     /// </summary>
     public override void _ExitTree()
@@ -92,6 +110,11 @@ public partial class NPCAiStateMachine : Node
     private void SetGameBoard(GameBoard gameBoard)
     {
         _gameBoard = gameBoard;
+    }
+
+    public bool needsAwait
+    {
+        get { return _needsAwait; }
     }
 
     public NPCAiState currentState

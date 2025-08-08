@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/15/2025]
+ * Last Updated: [08/01/2025]
  * [holds information about the units in a group]
  */
 
@@ -23,12 +23,19 @@ public partial class UnitGroup : Node2D
     public override void _Ready()
     {
         UnitEventManager.UnitDeathEvent += RemoveUnit;
+
+
         SetUnitList();
     }
+
+    /// <summary>
+    /// unsubs to static event
+    /// </summary>
     public override void _ExitTree()
     {
         UnitEventManager.UnitDeathEvent -= RemoveUnit;
     }
+
 
     /// <summary>
     /// sets up unit list

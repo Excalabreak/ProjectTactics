@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dffwt6w7o7q8w"]
 
 [ext_resource type="PackedScene" uid="uid://cp44coe2c50e7" path="res://Scenes/Units/Unit.tscn" id="1_u4pv5"]
-[ext_resource type="Texture2D" uid="uid://xdhxhuor3wo2" path="res://Sprites/Test/TestEnemy.png" id="2_vr8b2"]
+[ext_resource type="Texture2D" uid="uid://xdhxhuor3wo2" path="res://Sprites/Test/Units/Enemy/TestEnemy.png" id="2_vr8b2"]
 [ext_resource type="Script" uid="uid://bwp6grlwr5m4d" path="res://Scripts/NPCAi/NPCAiStateMachine.cs" id="3_ckoml"]
 [ext_resource type="Script" uid="uid://b7e8x3qb01jsp" path="res://Scripts/NPCAi/NPCAiStates/Enemy/BasicPrototype/EnemyIdleState.cs" id="4_ckoml"]
 [ext_resource type="Script" uid="uid://dnfra0njam3yc" path="res://Scripts/NPCAi/NPCAiStates/Enemy/BasicPrototype/EnemyAttackState.cs" id="5_utq4m"]
@@ -11,7 +11,6 @@ _aiStateMachine = NodePath("AiStateMachine")
 
 [node name="UnitSprite" parent="Sprites" index="0"]
 texture = ExtResource("2_vr8b2")
-_skin = ExtResource("2_vr8b2")
 
 [node name="AiStateMachine" type="Node" parent="." index="3" node_paths=PackedStringArray("_unit")]
 script = ExtResource("3_ckoml")

@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [06/11/2025]
+ * Last Updated: [08/02/2025]
  * [script for the cursor]
  */
 
@@ -22,11 +22,15 @@ public partial class GridCursor : Node2D
     [Export] private Timer _timer;
     [Export] private float _uiCooldown = .1f;
 
+    [Export] private GameBoardCamera _camera;
+
     private Vector2 _cell = Vector2.Zero; //setget
 
     //dont know if i will have an input manager, so it's here for now
     private bool _isMouse = false;
     private bool _dontEmitMoveSignal = false;
+
+    private bool _isPrecision = false;
 
     /// <summary>
     /// sets timer and first position
@@ -40,13 +44,14 @@ public partial class GridCursor : Node2D
 
     public override void _Process(double delta)
     {
-        if (_isMouse)
+        if (!_isMouse)
         {
-            Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
-            if (cell != gridCoords)
-            {
-                cell = gridCoords;
-            }
+            return;
+        }
+        Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
+        if (cell != gridCoords)
+        {
+            cell = gridCoords;
         }
     }
 
@@ -58,12 +63,11 @@ public partial class GridCursor : Node2D
     /// <param name="event"></param>
     public override void _UnhandledInput(InputEvent @event)
     {
-        //inputs for accept
-        if (@event is InputEventMouseMotion input)
+        if (@event is InputEventMouseMotion)
         {
-            _isMouse = true;
+            ChangeIsMouse(true);
         }
-        else if (@event.IsActionPressed("ui_accept"))
+        else if (@event.IsActionPressed("Accept"))
         {
             EmitSignal("AcceptPress", cell);
             GetViewport().SetInputAsHandled();
@@ -72,6 +76,18 @@ public partial class GridCursor : Node2D
         if (@event.IsActionPressed("Decline"))
         {
             EmitSignal("Decline");
+            GetViewport().SetInputAsHandled();
+        }
+
+        //there definatly is a better way of doing this
+        if (@event.IsActionPressed("Precision"))
+        {
+            _isPrecision = true;
+            GetViewport().SetInputAsHandled();
+        }
+        else if (@event.IsActionReleased("Precision"))
+        {
+            _isPrecision = false;
             GetViewport().SetInputAsHandled();
         }
 
@@ -88,24 +104,24 @@ public partial class GridCursor : Node2D
             return;
         }
 
-        if (@event.IsAction("ui_up"))
+        if (@event.IsAction("Up"))
         {
-            _isMouse = false;
+            ChangeIsMouse(false);
             this.cell += Vector2.Up;
         }
-        else if (@event.IsAction("ui_down"))
+        else if (@event.IsAction("Down"))
         {
-            _isMouse = false;
+            ChangeIsMouse(false);
             this.cell += Vector2.Down;
         }
-        else if (@event.IsAction("ui_left"))
+        else if (@event.IsAction("Left"))
         {
-            _isMouse = false;
+            ChangeIsMouse(false);
             this.cell += Vector2.Left;
         }
-        else if (@event.IsAction("ui_right"))
+        else if (@event.IsAction("Right"))
         {
-            _isMouse = false;
+            ChangeIsMouse(false);
             this.cell += Vector2.Right;
         }
     }
@@ -115,23 +131,46 @@ public partial class GridCursor : Node2D
     /// </summary>
     public void ResetCursor()
     {
-        if (_isMouse)
+        if (!_isMouse)
         {
-            Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
-            cell = gridCoords;
+            return;
         }
+        Vector2 gridCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
+        cell = gridCoords;
     }
 
     /// <summary>
-    /// warps the mouse w/o emiting a move signal
+    /// warps mosuse to unit without 
+    /// calling to signal a move
     /// </summary>
-    /// <param name="screenPos">position of the screen for the mouse</param>
-    public void WarpMouseWithoutSignal(Vector2 screenPos)
+    /// <param name="unit"></param>
+    public void WarpMouseToUnitWithoutSignal(Unit unit)
     {
-        _dontEmitMoveSignal = true;
-        Input.WarpMouse(screenPos);
+        if (!_isMouse)
+        {
+            return;
+        }
+        Vector2 mouseCoords = _gameBoard.grid.CalculateGridCoordinates(GetGlobalMousePosition());
+        if (!mouseCoords.IsEqualApprox(unit.cell))
+        {
+            _dontEmitMoveSignal = true;
+            Input.WarpMouse(unit.GetGlobalTransformWithCanvas().Origin);
+        }
     }
 
+    private void ChangeIsMouse(bool isMouse)
+    {
+        _isMouse = isMouse;
+        if (_isMouse)
+        {
+            _camera.cameraStateMachine.TransitionTo("CameraClickDragState");
+        }
+        else
+        {
+            _camera.cameraStateMachine.TransitionTo("CameraFollowCursorState");
+        }
+    }
+    
     /// <summary>
     /// property for cell
     /// when setting:
@@ -152,11 +191,15 @@ public partial class GridCursor : Node2D
 
             Position = _gameBoard.grid.CalculateMapPosition(_cell);
 
+            //was causing issues
+            //check here if other wonky shit happens
+            /*
             if (GetWindow().HasFocus() && !_isMouse)
             {
                 Input.WarpMouse(this.GetGlobalTransformWithCanvas().Origin);
                 _isMouse = false;
             }
+            */
 
             if (!_dontEmitMoveSignal)
             {
@@ -174,5 +217,10 @@ public partial class GridCursor : Node2D
     public bool isMouse
     {
         get { return _isMouse; }
+    }
+
+    public bool isPrecision
+    {
+        get { return _isPrecision; }
     }
 }

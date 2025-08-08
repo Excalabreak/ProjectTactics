@@ -1,0 +1,110 @@
+[gd_scene load_steps=6 format=3 uid="uid://cit5p50bewtv4"]
+
+[ext_resource type="Script" uid="uid://vxqdmei6f2d4" path="res://Scripts/Playtest/PrototypeStartMenu.cs" id="1_rsjwj"]
+[ext_resource type="Script" uid="uid://b85c740frt4hn" path="res://Scripts/Playtest/PrototypeEndMenu.cs" id="2_p7ij8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_maqlv"]
+font_size = 121
+
+[sub_resource type="LabelSettings" id="LabelSettings_sb4gi"]
+font_size = 71
+
+[sub_resource type="LabelSettings" id="LabelSettings_ixcl0"]
+font_size = 41
+
+[node name="PrototypeNodes" type="Node2D"]
+
+[node name="PrototypeStartMenu" type="CanvasLayer" parent="." node_paths=PackedStringArray("_gridCursor", "_cursorDefaultStartButton")]
+visible = false
+script = ExtResource("1_rsjwj")
+_gridCursor = NodePath("")
+_cursorDefaultStartButton = NodePath("Panel/VBoxContainer/StartButton")
+
+[node name="Panel" type="Panel" parent="PrototypeStartMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PrototypeStartMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="PrototypeStartMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Project Tactics Playtest 1"
+label_settings = SubResource("LabelSettings_maqlv")
+horizontal_alignment = 1
+
+[node name="Objective" type="Label" parent="PrototypeStartMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Objective: Find and Kill the Commander/Survive
+(you don't have any healers)"
+label_settings = SubResource("LabelSettings_sb4gi")
+horizontal_alignment = 1
+
+[node name="Note" type="Label" parent="PrototypeStartMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Note: Alt + F4 to close game mid game"
+label_settings = SubResource("LabelSettings_ixcl0")
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="PrototypeStartMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(145.95, 43.4)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 36
+text = "Start"
+icon_alignment = 1
+
+[node name="PrototypeEndMenu" type="CanvasLayer" parent="." node_paths=PackedStringArray("_titleLable", "_gridCursor", "_cursorDefaultStartButton")]
+visible = false
+script = ExtResource("2_p7ij8")
+_titleLable = NodePath("Panel/VBoxContainer/Title")
+_gridCursor = NodePath("")
+_cursorDefaultStartButton = NodePath("Panel/VBoxContainer/QuitButton")
+
+[node name="Panel" type="Panel" parent="PrototypeEndMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PrototypeEndMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="PrototypeEndMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "You Win/Lose"
+label_settings = SubResource("LabelSettings_maqlv")
+horizontal_alignment = 1
+
+[node name="Objective2" type="Label" parent="PrototypeEndMenu/Panel/VBoxContainer"]
+layout_mode = 2
+text = "(if you want to try again, launch the game again)"
+label_settings = SubResource("LabelSettings_ixcl0")
+horizontal_alignment = 1
+
+[node name="QuitButton" type="Button" parent="PrototypeEndMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(145.95, 43.4)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 36
+text = "Quit"
+icon_alignment = 1
+
+[connection signal="pressed" from="PrototypeStartMenu/Panel/VBoxContainer/StartButton" to="PrototypeStartMenu" method="HideMenu"]
+[connection signal="pressed" from="PrototypeEndMenu/Panel/VBoxContainer/QuitButton" to="PrototypeEndMenu" method="OnQuit"]
