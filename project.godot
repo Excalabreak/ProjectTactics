@@ -18,7 +18,8 @@ config/icon="uid://1so2e8lmu73j"
 
 [autoload]
 
-DirectionManager="*res://Scripts/Misc/DirectionManager.cs"
+DirectionManager="*res://Scripts/Singletons/Direction/DirectionManager.cs"
+StaticData="*res://Scripts/Singletons/StaticData/StaticData.cs"
 
 [display]
 
@@ -40,7 +41,8 @@ folder_colors={
 "res://Scenes/": "red",
 "res://Scripts/": "orange",
 "res://Shaders/": "teal",
-"res://Sprites/": "yellow"
+"res://Sprites/": "yellow",
+"res://StaticData/": "blue"
 }
 
 [input]
