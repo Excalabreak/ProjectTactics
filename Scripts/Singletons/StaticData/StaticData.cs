@@ -5,15 +5,15 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: Queble 
- * Last Updated: [08/12/2025]
+ * Last Updated: [08/13/2025]
  * [holds data from jsons]
  */
 
 public partial class StaticData : Node
 {
-    public Dictionary<string, Dictionary<string,Variant>> itemData;
+    protected Dictionary<string, Dictionary<string,Variant>> dataDictionary;
 
-    private string _dataFilePath = "res://StaticData/TestData.json";
+    [Export] protected string _dataFilePath;
 
     /// <summary>
     /// calls to load all data
@@ -22,10 +22,11 @@ public partial class StaticData : Node
     {
         LoadJsonFile(_dataFilePath);
 
-        foreach (var item in itemData)
+        
+        foreach (var item in dataDictionary)
         {
             GD.Print("KEY " + item.Key + ":");
-            foreach (var value in itemData[item.Key])
+            foreach (var value in dataDictionary[item.Key])
             {
                 GD.Print(value.Key + ": " + value.Value);
             }
@@ -36,7 +37,7 @@ public partial class StaticData : Node
     /// loads file json to item data (will change later)
     /// </summary>
     /// <param name="filePath">path to json file</param>
-    private void LoadJsonFile(string filePath)
+    protected void LoadJsonFile(string filePath)
     {
         if (!FileAccess.FileExists(filePath))
         {
@@ -55,6 +56,21 @@ public partial class StaticData : Node
             GD.Print("error when parsing: " + filePath);
             return;
         }
-        itemData = JSON.Data.AsGodotDictionary<string, Dictionary<string, Variant>>();
+        dataDictionary = JSON.Data.AsGodotDictionary<string, Dictionary<string, Variant>>();
+    }
+
+    /// <summary>
+    /// gets the data of key in the dictionary
+    /// </summary>
+    /// <param name="key">key of dictionary</param>
+    /// <returns>data of key</returns>
+    public Dictionary<string, Variant> GetData(string key)
+    {
+        if (!dataDictionary.ContainsKey(key))
+        {
+            GD.Print("key not found: " + key);
+            return null;
+        }
+        return dataDictionary[key];
     }
 }
