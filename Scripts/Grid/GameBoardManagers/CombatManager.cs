@@ -11,7 +11,6 @@ using System.Linq;
 public partial class CombatManager : Node
 {
     [Export] private GameBoard _gameBoard;
-    private bool _battleWarning = true;
 
     /// <summary>
     /// calls to calculate unit combat
@@ -59,11 +58,6 @@ public partial class CombatManager : Node
     /// <param name="defendingUnit">unit that is defending </param>
     private void BattleDamage(UnitStats attackingUnit, UnitStats defendingUnit)
     {
-        if (_battleWarning)
-        {
-            _battleWarning = false;
-            GD.Print("uses base stat for battle");
-        }
         defendingUnit.DamageUnit(attackingUnit.GetStat(UnitStatEnum.STRENGTH) - defendingUnit.GetStat(UnitStatEnum.DEFENSE));
     }
 }

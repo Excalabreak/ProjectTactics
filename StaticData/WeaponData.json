@@ -66,7 +66,10 @@
     "sharpDamage": 0,
     "bludgeonDamage": 4,
     "magicDamage": 2,
-    "magicType": "physical",
+    "magicType": [
+      "physical",
+      "fire"
+    ],
     "minRange": 1,
     "maxRange": 1,
     "handling": 70,
