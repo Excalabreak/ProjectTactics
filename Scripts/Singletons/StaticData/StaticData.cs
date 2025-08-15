@@ -21,16 +21,6 @@ public partial class StaticData : Node
     public override void _Ready()
     {
         LoadJsonFile(_dataFilePath);
-
-        
-        foreach (var item in dataDictionary)
-        {
-            GD.Print("KEY " + item.Key + ":");
-            foreach (var value in dataDictionary[item.Key])
-            {
-                GD.Print(value.Key + ": " + value.Value);
-            }
-        }
     }
 
     /// <summary>

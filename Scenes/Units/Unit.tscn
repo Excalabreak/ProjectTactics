@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cp44coe2c50e7"]
+[gd_scene load_steps=17 format=3 uid="uid://cp44coe2c50e7"]
 
 [ext_resource type="Script" uid="uid://doq6m3w0gkqei" path="res://Scripts/Unit/Unit.cs" id="1_x1v5g"]
 [ext_resource type="Script" uid="uid://dtp17f15wr4c4" path="res://Scripts/Unit/UnitPathMovement.cs" id="2_ppost"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://cqcue2k10fydi" path="res://Scripts/Unit/UnitActionEconomy.cs" id="7_oy5dr"]
 [ext_resource type="Texture2D" uid="uid://ewsri3450r4t" path="res://Sprites/Test/actionExhausted.png" id="8_86o2m"]
 [ext_resource type="Script" uid="uid://c77l0088jw6an" path="res://Scripts/Unit/DirectionSprite.cs" id="8_u1ivc"]
+[ext_resource type="Script" uid="uid://cpjwmjmoue2rv" path="res://Scripts/Unit/BaseStats.cs" id="9_dwhpk"]
 [ext_resource type="Texture2D" uid="uid://c55wqxgsg36qy" path="res://Sprites/Test/moveExhausted.png" id="9_rk8i6"]
 
 [sub_resource type="Animation" id="Animation_qsjrb"]
@@ -105,10 +106,15 @@ visible = false
 z_index = 100
 texture = ExtResource("9_rk8i6")
 
-[node name="UnitStats" type="Node" parent="." node_paths=PackedStringArray("_unit", "_healthLable")]
+[node name="UnitStats" type="Node" parent="." node_paths=PackedStringArray("_unit", "_baseStats", "_healthLable")]
 script = ExtResource("5_e33bx")
 _unit = NodePath("..")
+_baseStats = NodePath("BaseStats")
 _healthLable = NodePath("../Sprites/TempHealthLable")
+
+[node name="BaseStats" type="Node" parent="UnitStats" node_paths=PackedStringArray("_unit")]
+script = ExtResource("9_dwhpk")
+_unit = NodePath("../..")
 
 [node name="UnitActionEconomy" type="Node" parent="." node_paths=PackedStringArray("_unit", "_unitStats", "_actionExaustedSprite", "_moveExaustedSprite")]
 script = ExtResource("7_oy5dr")

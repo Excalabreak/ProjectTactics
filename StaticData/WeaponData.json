@@ -1,6 +1,8 @@
 {
   "unarmed": {
+    "weaponName": "Unarmed",
     "description": "fists",
+    "totalDamage": 1,
     "sharpDamage": 0,
     "bludgeonDamage": 1,
     "magicDamage": 0,
@@ -12,8 +14,10 @@
     "weight": 0,
     "size": 1
   },
-  "sword": {
+  "testSword": {
+    "weaponName": "Sword",
     "description": "a slashing sword",
+    "totalDamage": 3,
     "sharpDamage": 3,
     "bludgeonDamage": 0,
     "magicDamage": 0,
@@ -25,15 +29,14 @@
     "weight": 1,
     "size": 1
   },
-  "axe": {
+  "testAxe": {
+    "weaponName": "Axe",
     "description": "a choppy axe",
-    "sharpDamage": 2,
+    "totalDamage": 4,
+    "sharpDamage": 1,
     "bludgeonDamage": 3,
     "magicDamage": 0,
-    "magicType": [
-      "physical",
-      "fire"
-    ],
+    "magicType": "physical",
     "minRange": 1,
     "maxRange": 1,
     "handling": 70,
@@ -41,8 +44,10 @@
     "weight": 5,
     "size": 1
   },
-  "lance": {
+  "testLance": {
+    "weaponName": "Lance",
     "description": "a pokey lance",
+    "totalDamage": 2,
     "sharpDamage": 1,
     "bludgeonDamage": 1,
     "magicDamage": 0,
@@ -54,17 +59,19 @@
     "weight": 3,
     "size": 2
   },
-  "": {
-    "description": null,
-    "sharpDamage": null,
-    "bludgeonDamage": null,
-    "magicDamage": null,
-    "magicType": null,
-    "minRange": null,
-    "maxRange": null,
-    "handling": null,
-    "critChance": null,
-    "weight": null,
-    "size": null
+  "testFireAxe": {
+    "weaponName": "Fire Axe",
+    "description": "a choppy axe",
+    "totalDamage": 6,
+    "sharpDamage": 0,
+    "bludgeonDamage": 4,
+    "magicDamage": 2,
+    "magicType": "physical",
+    "minRange": 1,
+    "maxRange": 1,
+    "handling": 70,
+    "critChance": 15,
+    "weight": 5,
+    "size": 1
   }
 }

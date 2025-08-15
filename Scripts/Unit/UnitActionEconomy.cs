@@ -27,7 +27,7 @@ public partial class UnitActionEconomy : Node
     public override void _Ready()
     {
         _unit.CurrentGameBoard += SetGameBoard;
-        _maxMove = (float)_unitStats.GetBaseStat(UnitStatEnum.MOVE);
+        _maxMove = (float)_unitStats.GetStat(UnitStatEnum.MOVE);
 
         ResetActions();
     }

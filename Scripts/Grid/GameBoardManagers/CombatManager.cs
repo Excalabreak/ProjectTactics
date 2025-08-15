@@ -64,6 +64,6 @@ public partial class CombatManager : Node
             _battleWarning = false;
             GD.Print("uses base stat for battle");
         }
-        defendingUnit.DamageUnit(attackingUnit.GetBaseStat(UnitStatEnum.STRENGTH) - defendingUnit.GetBaseStat(UnitStatEnum.DEFENSE));
+        defendingUnit.DamageUnit(attackingUnit.GetStat(UnitStatEnum.STRENGTH) - defendingUnit.GetStat(UnitStatEnum.DEFENSE));
     }
 }

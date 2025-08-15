@@ -23,8 +23,8 @@ public partial class UIStats : Control
     {
         _HPLable.Text = "HP: " + unit.unitStats.currentHP + "/" + unit.unitStats.maxHP;
         _MOVLable.Text = "MOV: " + unit.unitActionEconomy.currentMove + "/" + unit.unitActionEconomy.maxMove;
-        _ATKLable.Text = "ATK: " + unit.unitStats.GetBaseStat(UnitStatEnum.STRENGTH);
-        _DEFLable.Text = "DEF: " + unit.unitStats.GetBaseStat(UnitStatEnum.DEFENSE);
+        _ATKLable.Text = "ATK: " + unit.unitStats.GetStat(UnitStatEnum.STRENGTH);
+        _DEFLable.Text = "DEF: " + unit.unitStats.GetStat(UnitStatEnum.DEFENSE);
         _RNGLable.Text = "RANGE: " + unit.attackRange;
 
         this.Visible = true;

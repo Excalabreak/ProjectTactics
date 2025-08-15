@@ -66,7 +66,6 @@ public partial class GameBoard : Node2D
 
     private const float MAX_VALUE = 9999999;
 
-    private bool _visionWarning = true;
 
     //---------- SET UP -----------
 
@@ -605,12 +604,12 @@ public partial class GameBoard : Node2D
         UnitStats playerStats = _selectedUnit.unitStats;
         UnitStats enemyStats = _units[cell].unitStats;
 
-        int playerDamage = playerStats.GetBaseStat(UnitStatEnum.STRENGTH) - enemyStats.GetBaseStat(UnitStatEnum.DEFENSE);
+        int playerDamage = playerStats.GetStat(UnitStatEnum.STRENGTH) - enemyStats.GetStat(UnitStatEnum.DEFENSE);
         int enemyDamage = 0;
 
         if (FloodFill(cell, _units[cell].attackRange).Contains(_selectedUnit.cell))
         {
-            enemyDamage = enemyStats.GetBaseStat(UnitStatEnum.STRENGTH) - playerStats.GetBaseStat(UnitStatEnum.DEFENSE);
+            enemyDamage = enemyStats.GetStat(UnitStatEnum.STRENGTH) - playerStats.GetStat(UnitStatEnum.DEFENSE);
         }
 
         //basic combat
@@ -1331,8 +1330,7 @@ public partial class GameBoard : Node2D
 
         visibleTiles.Add(startingCell);
 
-        //GD.Print("uses base stat for vision");
-        int r = unit.unitStats.GetBaseStat(UnitStatEnum.VISION);
+        int r = unit.unitStats.GetStat(UnitStatEnum.VISION);
         
         //gets the furthest the unit can see
         int count = r/2;
@@ -1537,12 +1535,7 @@ public partial class GameBoard : Node2D
                     }
                 }
 
-                if (_visionWarning)
-                {
-                    _visionWarning = false;
-                    GD.Print("uses base stat for vision");
-                }
-                if ((float)unit.unitStats.GetBaseStat(UnitStatEnum.VISION) >= totalVisionCost)
+                if ((float)unit.unitStats.GetStat(UnitStatEnum.VISION) >= totalVisionCost)
                 {
                     visibleTiles.Add(tile);
                 }
