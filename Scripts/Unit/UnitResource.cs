@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/29/2025]
+ * Last Updated: [08/16/2025]
  * [a unit resource that holds unit data
  * for the unit to load onto their scripts
  * 
@@ -22,6 +22,9 @@ public partial class UnitResource : Resource
     [ExportGroup("Stats")]
     [Export] private Dictionary<UnitStatEnum, int> _baseStats = new Dictionary<UnitStatEnum, int>();
 
+    [ExportGroup("Inventory")]
+    [Export] private WeaponResource[] _equiptWeapons;
+
     [ExportGroup("AttackRange")]
     [Export] private int _attackRange = 1;
 
@@ -34,6 +37,11 @@ public partial class UnitResource : Resource
     public Texture2D sprite
     {
         get { return _sprite; }
+    }
+
+    public WeaponResource[] equiptWeapons
+    {
+        get { return _equiptWeapons; }
     }
 
     public Vector2 spriteOffset

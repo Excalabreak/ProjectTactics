@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/15/2025]
+ * Last Updated: [08/16/2025]
  * [resource for weapon]
  */
 

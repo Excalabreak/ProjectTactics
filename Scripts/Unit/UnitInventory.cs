@@ -1,18 +1,25 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/15/2025]
+ * Last Updated: [08/16/2025]
  * [handles inventory for units]
  */
 
 public partial class UnitInventory : Node
 {
-    [Export] private string _currentWeapon;
+    [Export] private Unit _unit;
+    private List<WeaponResource> _equiptWeapons;
 
-    public string currentWeapon
+    public override void _Ready()
     {
-        get { return _currentWeapon; }
+        _equiptWeapons.AddRange(_unit.unitResource.equiptWeapons);
+    }
+
+    public WeaponResource[] equiptWeapons
+    {
+        get { return _equiptWeapons.ToArray(); }
     }
 }

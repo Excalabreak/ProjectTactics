@@ -118,9 +118,9 @@ _healthLable = NodePath("../Sprites/TempHealthLable")
 script = ExtResource("9_dwhpk")
 _unit = NodePath("../..")
 
-[node name="UnitInventory" type="Node" parent="."]
+[node name="UnitInventory" type="Node" parent="." node_paths=PackedStringArray("_unit")]
 script = ExtResource("10_dwhpk")
-_currentWeapon = "unarmed"
+_unit = NodePath("..")
 
 [node name="UnitActionEconomy" type="Node" parent="." node_paths=PackedStringArray("_unit", "_unitStats", "_actionExaustedSprite", "_moveExaustedSprite")]
 script = ExtResource("7_oy5dr")
