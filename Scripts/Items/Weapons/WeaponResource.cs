@@ -12,10 +12,10 @@ using System;
 public partial class WeaponResource : Resource
 {
     [Export] private string _weaponName;
-    [Export] private string _description;
+    [Export(PropertyHint.MultilineText)] private string _description;
 
     //make enum for damage type
-    [Export] private Dictionary<string, int> _damage;
+    [Export] private Dictionary<DamageType, int> _damage;
 
     [Export] private int _minRange;
     [Export] private int _maxRange;

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=2 format=3 uid="uid://cqic6sw16xo8i"]
+
+[ext_resource type="Script" uid="uid://dnlv6li8v2vuq" path="res://Scripts/Items/Weapons/WeaponResource.cs" id="1_seqcc"]
+
+[resource]
+script = ExtResource("1_seqcc")
+_weaponName = "Sword"
+_description = "a slashing sword"
+_damage = Dictionary[int, int]({})
+_minRange = 1
+_maxRange = 1
+_handling = 100
+_critChance = 20
+_weight = 1
+_size = 1
+metadata/_custom_type_script = "uid://dnlv6li8v2vuq"
