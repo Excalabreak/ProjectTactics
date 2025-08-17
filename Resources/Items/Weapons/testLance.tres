@@ -6,10 +6,8 @@
 script = ExtResource("1_w2deb")
 _weaponName = "Lance"
 _description = "a pokey lance"
-_damage = Dictionary[int, int]({
-0: 1,
-1: 1
-})
+_damageType = 0
+_damage = 1
 _minRange = 1
 _maxRange = 2
 _handling = 80

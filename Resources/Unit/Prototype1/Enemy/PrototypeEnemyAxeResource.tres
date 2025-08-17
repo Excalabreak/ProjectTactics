@@ -20,7 +20,7 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
-_equiptWeapons = Array[Object]([ExtResource("1_1x7fd")])
+_equiptWeapon = ExtResource("1_1x7fd")
 _attackRange = 1
 _startingDirection = 0
 _isCommander = false

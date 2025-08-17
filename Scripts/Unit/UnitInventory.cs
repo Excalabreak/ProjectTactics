@@ -11,15 +11,15 @@ using System.Collections.Generic;
 public partial class UnitInventory : Node
 {
     [Export] private Unit _unit;
-    private List<WeaponResource> _equiptWeapons;
+    private WeaponResource _equiptWeapon;
 
     public override void _Ready()
     {
-        _equiptWeapons.AddRange(_unit.unitResource.equiptWeapons);
+        _equiptWeapon = _unit.unitResource.equiptWeapon;
     }
 
-    public WeaponResource[] equiptWeapons
+    public WeaponResource equiptWeapon
     {
-        get { return _equiptWeapons.ToArray(); }
+        get { return _equiptWeapon; }
     }
 }

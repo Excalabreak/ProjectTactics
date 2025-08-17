@@ -23,7 +23,7 @@ public partial class UnitResource : Resource
     [Export] private Dictionary<UnitStatEnum, int> _baseStats = new Dictionary<UnitStatEnum, int>();
 
     [ExportGroup("Inventory")]
-    [Export] private WeaponResource[] _equiptWeapons;
+    [Export] private WeaponResource _equiptWeapon;
 
     [ExportGroup("AttackRange")]
     [Export] private int _attackRange = 1;
@@ -39,9 +39,9 @@ public partial class UnitResource : Resource
         get { return _sprite; }
     }
 
-    public WeaponResource[] equiptWeapons
+    public WeaponResource equiptWeapon
     {
-        get { return _equiptWeapons; }
+        get { return _equiptWeapon; }
     }
 
     public Vector2 spriteOffset

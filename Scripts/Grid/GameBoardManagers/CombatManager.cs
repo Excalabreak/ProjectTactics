@@ -4,7 +4,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/16/2025]
+ * Last Updated: [08/17/2025]
  * [manages combat]
  */
 
@@ -68,6 +68,28 @@ public partial class CombatManager : Node
     /// <returns>damage</returns>
     public int CalculateDamage(Unit attackingUnit, Unit defendingUnit)
     {
-        return attackingUnit.unitStats.GetStat(UnitStatEnum.STRENGTH) - defendingUnit.unitStats.GetStat(UnitStatEnum.DEFENSE);
+        UnitStatEnum attackerStat = UnitStatEnum.STRENGTH;
+        UnitStatEnum defenderStat = UnitStatEnum.DEFENSE;
+
+        bool skipWeaponCheck = false;
+        int weaponDamage = 0;
+
+        if (attackingUnit.unitInventory.equiptWeapon == null)
+        {
+            skipWeaponCheck = true;
+        }
+        else
+        {
+            weaponDamage = attackingUnit.unitInventory.equiptWeapon.damage; 
+        }
+
+        if (!skipWeaponCheck && !attackingUnit.unitInventory.equiptWeapon.IsPhysical())
+        {
+            attackerStat = UnitStatEnum.MAGIC;
+            defenderStat = UnitStatEnum.RESISTANCE;
+        }
+
+        return (attackingUnit.unitStats.GetStat(attackerStat) + weaponDamage) 
+            - defendingUnit.unitStats.GetStat(defenderStat);
     }
 }

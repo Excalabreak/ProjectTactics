@@ -6,10 +6,8 @@
 script = ExtResource("1_1lbfs")
 _weaponName = "Axe"
 _description = "a choppy axe"
-_damage = Dictionary[int, int]({
-0: 1,
-1: 3
-})
+_damageType = 1
+_damage = 5
 _minRange = 1
 _maxRange = 1
 _handling = 70
