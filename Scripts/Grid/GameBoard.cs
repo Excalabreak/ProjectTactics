@@ -13,7 +13,7 @@ using System.Linq;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [08/16/2025]
+ * Last Updated: [08/17/2025]
  * [game board manages everything on the map]
  */
 
@@ -408,7 +408,7 @@ public partial class GameBoard : Node2D
             return;
         }
 
-        Vector2[] attackableCells = FloodFill(_selectedUnit.cell, _selectedUnit.attackRange);
+        Vector2[] attackableCells = RangeFloodFill(_selectedUnit.cell, _selectedUnit.unitInventory.equiptWeapon.minRange, _selectedUnit.unitInventory.equiptWeapon.maxRange);
         if (!attackableCells.Contains(cell))
         {
             return;
@@ -470,7 +470,7 @@ public partial class GameBoard : Node2D
             _uiManager.HideBattlePredictions();
             return;
         }
-        if (FloodFill(_selectedUnit.cell, _selectedUnit.attackRange).Contains(newCell))
+        if (RangeFloodFill(_selectedUnit.cell, _selectedUnit.unitInventory.equiptWeapon.minRange, _selectedUnit.unitInventory.equiptWeapon.maxRange).Contains(newCell))
         {
             HoverDisplay(newCell);
         }
@@ -607,7 +607,7 @@ public partial class GameBoard : Node2D
         int playerDamage = combatManager.CalculateDamage(initUnit, targetUnit);
         int enemyDamage = 0;
 
-        if (FloodFill(cell, _units[cell].attackRange).Contains(_selectedUnit.cell))
+        if (RangeFloodFill(cell, targetUnit.unitInventory.equiptWeapon.minRange, targetUnit.unitInventory.equiptWeapon.maxRange).Contains(_selectedUnit.cell))
         {
             enemyDamage = combatManager.CalculateDamage(targetUnit, initUnit);
         }
@@ -869,7 +869,7 @@ public partial class GameBoard : Node2D
     public void ShowCurrentAttackRange(Unit unit)
     {
         _unitWalkHighlights.Clear();
-        _unitWalkHighlights.DrawAttackHighlights(FloodFill(unit.cell, unit.attackRange));
+        _unitWalkHighlights.DrawAttackHighlights(RangeFloodFill(unit.cell, unit.unitInventory.equiptWeapon.minRange, unit.unitInventory.equiptWeapon.maxRange));
     }
 
     /// <summary>
@@ -910,10 +910,7 @@ public partial class GameBoard : Node2D
 
         foreach (Vector2 curCell in realWalkableCells)
         {
-            for (int i = 1; i <= unit.attackRange + 1; i++)
-            {
-                attackableCells.AddRange(FloodFill(curCell, unit.attackRange));
-            }
+            attackableCells.AddRange(RangeFloodFill(curCell, unit.unitInventory.equiptWeapon.minRange, unit.unitInventory.equiptWeapon.maxRange));
         }
 
         return attackableCells.Except(realWalkableCells).ToArray();
@@ -986,6 +983,24 @@ public partial class GameBoard : Node2D
 
 
         return output.Except(walls).ToArray();
+    }
+
+    /// <summary>
+    /// flood fills based on cell coordinates and max distance
+    /// then does a second flood fill to remove cells based on min cells
+    /// </summary>
+    /// <param name="cell">starting point</param>
+    /// <param name="minDistance">inclusive min distance</param>
+    /// <param name="maxDistance">inclusive max distance</param>
+    /// <returns>array of coords</returns>
+    public Vector2[] RangeFloodFill(Vector2 cell, int minDistance, int maxDistance)
+    {
+        if (minDistance <= 1)
+        {
+            return FloodFill(cell, maxDistance);
+        }
+
+        return FloodFill(cell, maxDistance).Except(FloodFill(cell, (minDistance-1))).ToArray();
     }
 
     /// <summary>

@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/14/2025]
+ * Last Updated: [08/17/2025]
  * [displays stats for the player]
  */
 
@@ -25,7 +25,15 @@ public partial class UIStats : Control
         _MOVLable.Text = "MOV: " + unit.unitActionEconomy.currentMove + "/" + unit.unitActionEconomy.maxMove;
         _ATKLable.Text = "ATK: " + unit.unitStats.GetStat(UnitStatEnum.STRENGTH);
         _DEFLable.Text = "DEF: " + unit.unitStats.GetStat(UnitStatEnum.DEFENSE);
-        _RNGLable.Text = "RANGE: " + unit.attackRange;
+
+        if (unit.unitInventory.equiptWeapon.minRange == unit.unitInventory.equiptWeapon.maxRange)
+        {
+            _RNGLable.Text = "RANGE: " + unit.unitInventory.equiptWeapon.maxRange;
+        }
+        else
+        {
+            _RNGLable.Text = "RANGE: " + unit.unitInventory.equiptWeapon.minRange + " - " + unit.unitInventory.equiptWeapon.maxRange;
+        }
 
         this.Visible = true;
     }

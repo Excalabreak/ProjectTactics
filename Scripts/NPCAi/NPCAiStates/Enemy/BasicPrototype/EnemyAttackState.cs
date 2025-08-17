@@ -5,7 +5,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/08/2025]
+ * Last Updated: [08/17/2025]
  * [attack state for enemy ai
  * NOTE: very basic for now]
  */
@@ -21,7 +21,7 @@ public partial class EnemyAttackState : NPCAiState
     {
         Vector2 targetLoc = stateMachine.gameBoard.ClosestUnitPosition(UnitGroupEnum.PLAYER, stateMachine.unit.cell);
         
-        Vector2[] attackableArea = stateMachine.gameBoard.FloodFill(stateMachine.unit.cell, stateMachine.unit.attackRange);
+        Vector2[] attackableArea = stateMachine.gameBoard.RangeFloodFill(stateMachine.unit.cell, stateMachine.unit.unitInventory.equiptWeapon.minRange, stateMachine.unit.unitInventory.equiptWeapon.maxRange);
         Unit targetUnit = stateMachine.gameBoard.GetAttackableUnitFromArea(stateMachine.unit.unitGroup, attackableArea);
 
         bool needsToMove = (targetUnit == null);
@@ -29,7 +29,7 @@ public partial class EnemyAttackState : NPCAiState
         {
             //expensive path finding, should find different way
             List<Vector2> attackableSpots = new List<Vector2>();
-            attackableSpots.AddRange(stateMachine.gameBoard.FloodFill(targetLoc, stateMachine.unit.attackRange));
+            attackableSpots.AddRange(stateMachine.gameBoard.RangeFloodFill(targetLoc, stateMachine.unit.unitInventory.equiptWeapon.minRange, stateMachine.unit.unitInventory.equiptWeapon.maxRange));
             attackableSpots.Remove(targetLoc);
 
             List<Vector2> path = new List<Vector2>();
@@ -70,7 +70,7 @@ public partial class EnemyAttackState : NPCAiState
 
         if (needsToMove)
         {
-            attackableArea = stateMachine.gameBoard.FloodFill(stateMachine.unit.cell, stateMachine.unit.attackRange);
+            attackableArea = stateMachine.gameBoard.RangeFloodFill(stateMachine.unit.cell, stateMachine.unit.unitInventory.equiptWeapon.minRange, stateMachine.unit.unitInventory.equiptWeapon.maxRange);
             targetUnit = stateMachine.gameBoard.GetAttackableUnitFromArea(stateMachine.unit.unitGroup, attackableArea);
         }
 

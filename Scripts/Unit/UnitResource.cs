@@ -25,9 +25,6 @@ public partial class UnitResource : Resource
     [ExportGroup("Inventory")]
     [Export] private WeaponResource _equiptWeapon;
 
-    [ExportGroup("AttackRange")]
-    [Export] private int _attackRange = 1;
-
     [ExportGroup("Direction")]
     [Export] private DirectionEnum _startingDirection = DirectionEnum.UP;
 
@@ -52,11 +49,6 @@ public partial class UnitResource : Resource
     public Dictionary<UnitStatEnum, int> baseStats
     {
         get { return _baseStats; }
-    }
-
-    public int attackRange
-    {
-        get { return _attackRange; }
     }
 
     public DirectionEnum startingDirection

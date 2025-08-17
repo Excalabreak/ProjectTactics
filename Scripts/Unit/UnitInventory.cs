@@ -11,6 +11,8 @@ using System.Collections.Generic;
 public partial class UnitInventory : Node
 {
     [Export] private Unit _unit;
+    [Export] private WeaponResource _unarmmedResource;
+
     private WeaponResource _equiptWeapon;
 
     public override void _Ready()
@@ -20,6 +22,13 @@ public partial class UnitInventory : Node
 
     public WeaponResource equiptWeapon
     {
-        get { return _equiptWeapon; }
+        get
+        {
+            if (_equiptWeapon == null)
+            {
+                return _unarmmedResource;
+            }
+            return _equiptWeapon;
+        }
     }
 }

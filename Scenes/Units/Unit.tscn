@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cp44coe2c50e7"]
+[gd_scene load_steps=19 format=3 uid="uid://cp44coe2c50e7"]
 
 [ext_resource type="Script" uid="uid://doq6m3w0gkqei" path="res://Scripts/Unit/Unit.cs" id="1_x1v5g"]
 [ext_resource type="Script" uid="uid://dtp17f15wr4c4" path="res://Scripts/Unit/UnitPathMovement.cs" id="2_ppost"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://cpjwmjmoue2rv" path="res://Scripts/Unit/BaseStats.cs" id="9_dwhpk"]
 [ext_resource type="Texture2D" uid="uid://c55wqxgsg36qy" path="res://Sprites/Test/moveExhausted.png" id="9_rk8i6"]
 [ext_resource type="Script" uid="uid://qocq0poq7kyc" path="res://Scripts/Unit/UnitInventory.cs" id="10_dwhpk"]
+[ext_resource type="Resource" uid="uid://cifqxwq138cgy" path="res://Resources/Items/Weapons/unarmmed.tres" id="11_b8scw"]
 
 [sub_resource type="Animation" id="Animation_qsjrb"]
 length = 0.001
@@ -121,6 +122,7 @@ _unit = NodePath("../..")
 [node name="UnitInventory" type="Node" parent="." node_paths=PackedStringArray("_unit")]
 script = ExtResource("10_dwhpk")
 _unit = NodePath("..")
+_unarmmedResource = ExtResource("11_b8scw")
 
 [node name="UnitActionEconomy" type="Node" parent="." node_paths=PackedStringArray("_unit", "_unitStats", "_actionExaustedSprite", "_moveExaustedSprite")]
 script = ExtResource("7_oy5dr")

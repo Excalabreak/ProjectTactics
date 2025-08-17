@@ -42,7 +42,7 @@ public partial class CombatManager : Node
         {
             return;
         }
-        Vector2[] opposingAttackableCells = _gameBoard.FloodFill(targetUnit.cell, targetUnit.attackRange);
+        Vector2[] opposingAttackableCells = _gameBoard.RangeFloodFill(targetUnit.cell, targetUnit.unitInventory.equiptWeapon.minRange, targetUnit.unitInventory.equiptWeapon.maxRange);
         if (opposingAttackableCells.Contains(initUnit.cell))
         {
             BattleDamage(targetUnit, initUnit);

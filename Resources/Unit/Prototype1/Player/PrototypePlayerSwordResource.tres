@@ -21,7 +21,6 @@ _baseStats = Dictionary[int, int]({
 9: 7
 })
 _equiptWeapon = ExtResource("1_do7om")
-_attackRange = 1
 _startingDirection = 0
 _isCommander = false
 metadata/_custom_type_script = "uid://cb8xehtora3p"

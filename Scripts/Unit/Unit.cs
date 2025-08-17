@@ -37,9 +37,6 @@ public partial class Unit : Node2D
     [Export] private GameBoard _gameBoard;
     public Action<GameBoard> CurrentGameBoard;
 
-    //temp, move to equiptment
-    private int _attackRange = 1;
-
     private bool _isCommander = false;
 
     private UnitGroupEnum _unitGroup;
@@ -60,7 +57,6 @@ public partial class Unit : Node2D
         }
         if (_unitResource != null)
         {
-            _attackRange = _unitResource.attackRange;
             _isCommander = _unitResource.isCommander;
         }
         else
@@ -195,11 +191,6 @@ public partial class Unit : Node2D
     public NPCAiStateMachine aiStateMachine
     {
         get { return _aiStateMachine; }
-    }
-
-    public int attackRange
-    {
-        get { return _attackRange; }
     }
 
     public bool isCommander
