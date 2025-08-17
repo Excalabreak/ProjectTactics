@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [08/01/2025]
+ * Last Updated: [08/16/2025]
  * [game board manages everything on the map]
  */
 
@@ -601,15 +601,18 @@ public partial class GameBoard : Node2D
     /// <param name="cell">cell</param>
     public void CombatHoverDisplay(Vector2 cell)
     {
-        UnitStats playerStats = _selectedUnit.unitStats;
-        UnitStats enemyStats = _units[cell].unitStats;
+        Unit initUnit = _selectedUnit;
+        Unit targetUnit = _units[cell];
 
-        int playerDamage = playerStats.GetStat(UnitStatEnum.STRENGTH) - enemyStats.GetStat(UnitStatEnum.DEFENSE);
+        UnitStats playerStats = initUnit.unitStats;
+        UnitStats enemyStats = targetUnit.unitStats;
+
+        int playerDamage = combatManager.CalculateDamage(initUnit, targetUnit);
         int enemyDamage = 0;
 
         if (FloodFill(cell, _units[cell].attackRange).Contains(_selectedUnit.cell))
         {
-            enemyDamage = enemyStats.GetStat(UnitStatEnum.STRENGTH) - playerStats.GetStat(UnitStatEnum.DEFENSE);
+            enemyDamage = combatManager.CalculateDamage(targetUnit, initUnit);
         }
 
         //basic combat

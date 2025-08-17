@@ -223,6 +223,7 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
+_equiptWeapons = null
 _attackRange = 1
 _startingDirection = 3
 _isCommander = false
@@ -244,6 +245,7 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
+_equiptWeapons = null
 _attackRange = 2
 _startingDirection = 3
 _isCommander = false
@@ -265,6 +267,7 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
+_equiptWeapons = null
 _attackRange = 1
 _startingDirection = 3
 _isCommander = false
@@ -286,6 +289,7 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
+_equiptWeapons = null
 _attackRange = 1
 _startingDirection = 3
 _isCommander = false

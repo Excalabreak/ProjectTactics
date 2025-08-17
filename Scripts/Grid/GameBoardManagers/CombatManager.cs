@@ -4,7 +4,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/01/2025]
+ * Last Updated: [08/16/2025]
  * [manages combat]
  */
 
@@ -31,11 +31,9 @@ public partial class CombatManager : Node
 
         initUnit.unitActionEconomy.UseAction();
 
-        UnitStats attackingStats = initUnit.unitStats;
-        UnitStats defendingStats = targetUnit.unitStats;
         Vector2 targetPos = targetUnit.cell;
 
-        BattleDamage(attackingStats, defendingStats);
+        BattleDamage(initUnit, targetUnit);
 
         //counter attack
         //temp, there is a faster way of doing this
@@ -47,7 +45,7 @@ public partial class CombatManager : Node
         Vector2[] opposingAttackableCells = _gameBoard.FloodFill(targetUnit.cell, targetUnit.attackRange);
         if (opposingAttackableCells.Contains(initUnit.cell))
         {
-            BattleDamage(defendingStats, attackingStats);
+            BattleDamage(targetUnit, initUnit);
         }
     }
 
@@ -56,8 +54,20 @@ public partial class CombatManager : Node
     /// </summary>
     /// <param name="attackingUnit">unit that is attacking</param>
     /// <param name="defendingUnit">unit that is defending </param>
-    private void BattleDamage(UnitStats attackingUnit, UnitStats defendingUnit)
+    private void BattleDamage(Unit attackingUnit, Unit defendingUnit)
     {
-        defendingUnit.DamageUnit(attackingUnit.GetStat(UnitStatEnum.STRENGTH) - defendingUnit.GetStat(UnitStatEnum.DEFENSE));
+        defendingUnit.unitStats.DamageUnit(CalculateDamage(attackingUnit, defendingUnit));
+    }
+
+    /// <summary>
+    /// calculates how much damage should be done if the attack goes through
+    /// passes units so that it can account for equiptment
+    /// </summary>
+    /// <param name="attackingUnit">attacking unit</param>
+    /// <param name="defendingUnit">defending unit</param>
+    /// <returns>damage</returns>
+    public int CalculateDamage(Unit attackingUnit, Unit defendingUnit)
+    {
+        return attackingUnit.unitStats.GetStat(UnitStatEnum.STRENGTH) - defendingUnit.unitStats.GetStat(UnitStatEnum.DEFENSE);
     }
 }
