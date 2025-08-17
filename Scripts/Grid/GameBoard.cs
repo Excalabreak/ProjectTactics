@@ -1,10 +1,7 @@
 using Godot;
-using Godot.Collections;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Threading.Tasks;
 
 /*
  * Author: [Lam, Justin]
@@ -59,10 +56,10 @@ public partial class GameBoard : Node2D
     private List<Vector2> _knownUnitLocations = new List<Vector2>();
 
     //Dictionary for the fog of war
-    private System.Collections.Generic.Dictionary<Unit, Vector2[]> _unitVision = new System.Collections.Generic.Dictionary<Unit, Vector2[]>();
-    private System.Collections.Generic.Dictionary<Vector2, List<Unit>> _cellRevealedBy = new System.Collections.Generic.Dictionary<Vector2, List<Unit>>();
-    private System.Collections.Generic.Dictionary<Unit, Vector2[]> _unitVisionBlocked = new System.Collections.Generic.Dictionary<Unit, Vector2[]>();
-    private System.Collections.Generic.Dictionary<Vector2, List<Unit>> _cellBlockedBy = new System.Collections.Generic.Dictionary<Vector2, List<Unit>>();
+    private Dictionary<Unit, Vector2[]> _unitVision = new Dictionary<Unit, Vector2[]>();
+    private Dictionary<Vector2, List<Unit>> _cellRevealedBy = new Dictionary<Vector2, List<Unit>>();
+    private Dictionary<Unit, Vector2[]> _unitVisionBlocked = new Dictionary<Unit, Vector2[]>();
+    private Dictionary<Vector2, List<Unit>> _cellBlockedBy = new Dictionary<Vector2, List<Unit>>();
 
     private const float MAX_VALUE = 9999999;
 
