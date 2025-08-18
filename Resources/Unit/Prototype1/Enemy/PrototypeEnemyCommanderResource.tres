@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="UnitResource" load_steps=3 format=3 uid="uid://det1ut0vo1wpe"]
+[gd_resource type="Resource" script_class="UnitResource" load_steps=4 format=3 uid="uid://det1ut0vo1wpe"]
 
+[ext_resource type="Resource" uid="uid://c3s84r1rtukc6" path="res://Resources/Items/Weapons/testLance.tres" id="1_ockoi"]
 [ext_resource type="Texture2D" uid="uid://bvx0070epyviq" path="res://Sprites/Test/Units/Enemy/testEnemyCommander.png" id="1_t7c5h"]
 [ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="2_ockoi"]
 
@@ -19,7 +20,7 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
-_attackRange = 2
+_equiptWeapon = ExtResource("1_ockoi")
 _startingDirection = 0
 _isCommander = false
 metadata/_custom_type_script = "uid://cb8xehtora3p"

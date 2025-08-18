@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/29/2025]
+ * Last Updated: [08/16/2025]
  * [a unit resource that holds unit data
  * for the unit to load onto their scripts
  * 
@@ -22,8 +22,8 @@ public partial class UnitResource : Resource
     [ExportGroup("Stats")]
     [Export] private Dictionary<UnitStatEnum, int> _baseStats = new Dictionary<UnitStatEnum, int>();
 
-    [ExportGroup("AttackRange")]
-    [Export] private int _attackRange = 1;
+    [ExportGroup("Inventory")]
+    [Export] private WeaponResource _equiptWeapon;
 
     [ExportGroup("Direction")]
     [Export] private DirectionEnum _startingDirection = DirectionEnum.UP;
@@ -36,6 +36,11 @@ public partial class UnitResource : Resource
         get { return _sprite; }
     }
 
+    public WeaponResource equiptWeapon
+    {
+        get { return _equiptWeapon; }
+    }
+
     public Vector2 spriteOffset
     {
         get { return _spriteOffset; }
@@ -44,11 +49,6 @@ public partial class UnitResource : Resource
     public Dictionary<UnitStatEnum, int> baseStats
     {
         get { return _baseStats; }
-    }
-
-    public int attackRange
-    {
-        get { return _attackRange; }
     }
 
     public DirectionEnum startingDirection

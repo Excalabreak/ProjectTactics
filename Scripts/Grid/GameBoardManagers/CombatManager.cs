@@ -4,14 +4,13 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/01/2025]
+ * Last Updated: [08/17/2025]
  * [manages combat]
  */
 
 public partial class CombatManager : Node
 {
     [Export] private GameBoard _gameBoard;
-    private bool _battleWarning = true;
 
     /// <summary>
     /// calls to calculate unit combat
@@ -32,11 +31,9 @@ public partial class CombatManager : Node
 
         initUnit.unitActionEconomy.UseAction();
 
-        UnitStats attackingStats = initUnit.unitStats;
-        UnitStats defendingStats = targetUnit.unitStats;
         Vector2 targetPos = targetUnit.cell;
 
-        BattleDamage(attackingStats, defendingStats);
+        BattleDamage(initUnit, targetUnit);
 
         //counter attack
         //temp, there is a faster way of doing this
@@ -45,10 +42,10 @@ public partial class CombatManager : Node
         {
             return;
         }
-        Vector2[] opposingAttackableCells = _gameBoard.FloodFill(targetUnit.cell, targetUnit.attackRange);
+        Vector2[] opposingAttackableCells = _gameBoard.RangeFloodFill(targetUnit.cell, targetUnit.unitInventory.equiptWeapon.minRange, targetUnit.unitInventory.equiptWeapon.maxRange);
         if (opposingAttackableCells.Contains(initUnit.cell))
         {
-            BattleDamage(defendingStats, attackingStats);
+            BattleDamage(targetUnit, initUnit);
         }
     }
 
@@ -57,13 +54,42 @@ public partial class CombatManager : Node
     /// </summary>
     /// <param name="attackingUnit">unit that is attacking</param>
     /// <param name="defendingUnit">unit that is defending </param>
-    private void BattleDamage(UnitStats attackingUnit, UnitStats defendingUnit)
+    private void BattleDamage(Unit attackingUnit, Unit defendingUnit)
     {
-        if (_battleWarning)
+        defendingUnit.unitStats.DamageUnit(CalculateDamage(attackingUnit, defendingUnit));
+    }
+
+    /// <summary>
+    /// calculates how much damage should be done if the attack goes through
+    /// passes units so that it can account for equiptment
+    /// </summary>
+    /// <param name="attackingUnit">attacking unit</param>
+    /// <param name="defendingUnit">defending unit</param>
+    /// <returns>damage</returns>
+    public int CalculateDamage(Unit attackingUnit, Unit defendingUnit)
+    {
+        UnitStatEnum attackerStat = UnitStatEnum.STRENGTH;
+        UnitStatEnum defenderStat = UnitStatEnum.DEFENSE;
+
+        bool skipWeaponCheck = false;
+        int weaponDamage = 0;
+
+        if (attackingUnit.unitInventory.equiptWeapon == null)
         {
-            _battleWarning = false;
-            GD.Print("uses base stat for battle");
+            skipWeaponCheck = true;
         }
-        defendingUnit.DamageUnit(attackingUnit.GetBaseStat(UnitStatEnum.STRENGTH) - defendingUnit.GetBaseStat(UnitStatEnum.DEFENSE));
+        else
+        {
+            weaponDamage = attackingUnit.unitInventory.equiptWeapon.damage; 
+        }
+
+        if (!skipWeaponCheck && !attackingUnit.unitInventory.equiptWeapon.IsPhysical())
+        {
+            attackerStat = UnitStatEnum.MAGIC;
+            defenderStat = UnitStatEnum.RESISTANCE;
+        }
+
+        return (attackingUnit.unitStats.GetStat(attackerStat) + weaponDamage) 
+            - defendingUnit.unitStats.GetStat(defenderStat);
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=79 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -20,18 +20,20 @@
 [ext_resource type="Texture2D" uid="uid://b2e6fnaytryuk" path="res://Sprites/Test/TileHighlights/attackRange.png" id="14_wn863"]
 [ext_resource type="Script" uid="uid://ccvhstia04m7b" path="res://Scripts/Grid/UnitWalkHighlight.cs" id="15_8bl2x"]
 [ext_resource type="Texture2D" uid="uid://b7bouj3wqmjsd" path="res://Sprites/Test/arrows.svg" id="16_l2v6i"]
-[ext_resource type="Script" uid="uid://c8guc1dvccpxf" path="res://Scripts/Misc/UnitPath.cs" id="17_kjk7w"]
+[ext_resource type="Script" uid="uid://c8guc1dvccpxf" path="res://Scripts/Grid/UnitPath.cs" id="17_kjk7w"]
 [ext_resource type="Script" uid="uid://dm3c41p3wxfqg" path="res://Scripts/Unit/UnitManager.cs" id="18_7r5ow"]
 [ext_resource type="Script" uid="uid://dwoq515u7ummm" path="res://Scripts/Unit/UnitGroup.cs" id="19_vgme0"]
 [ext_resource type="PackedScene" uid="uid://cp44coe2c50e7" path="res://Scenes/Units/Unit.tscn" id="20_b77nk"]
 [ext_resource type="PackedScene" uid="uid://dffwt6w7o7q8w" path="res://Scenes/Units/AiUnit.tscn" id="21_qm5w0"]
-[ext_resource type="Script" uid="uid://b8k2oamcad7ba" path="res://Scripts/Misc/GridCursor.cs" id="22_iwnah"]
+[ext_resource type="Script" uid="uid://b8k2oamcad7ba" path="res://Scripts/Grid/GridCursor.cs" id="22_iwnah"]
 [ext_resource type="Texture2D" uid="uid://suvveuruoly4" path="res://Sprites/Test/GridCursor.png" id="23_fhuv3"]
 [ext_resource type="Script" uid="uid://do8g05v3r4qn8" path="res://Scripts/Menu/MenuStateMachine/MenuStateMachine.cs" id="24_bleph"]
+[ext_resource type="Resource" uid="uid://i6dlc2er50ri" path="res://Resources/Items/Weapons/testAxe.tres" id="24_kmj3t"]
 [ext_resource type="Script" uid="uid://8rtvmkb53l3a" path="res://Scripts/Menu/MenuStateMachine/States/UnSelectedState.cs" id="25_wn5g2"]
 [ext_resource type="Texture2D" uid="uid://c4x3rae14n1v3" path="res://Sprites/Test/Units/Player/testPlayerAxe.png" id="26_j6x6y"]
 [ext_resource type="Script" uid="uid://c7dh1mhyvoxy3" path="res://Scripts/Menu/MenuStateMachine/States/MoveState.cs" id="26_onxey"]
 [ext_resource type="Resource" uid="uid://bt88eerwj5e1w" path="res://Resources/Unit/Prototype1/Player/PrototypePlayerAxeResource.tres" id="26_vgme0"]
+[ext_resource type="Resource" uid="uid://c3s84r1rtukc6" path="res://Resources/Items/Weapons/testLance.tres" id="27_biv88"]
 [ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="27_bleph"]
 [ext_resource type="Texture2D" uid="uid://pp7o52sefur8" path="res://Sprites/Test/Units/Player/testPlayerLance.png" id="27_he1t7"]
 [ext_resource type="Script" uid="uid://cum60gpotm147" path="res://Scripts/Menu/MenuStateMachine/States/AttackState.cs" id="27_tl10l"]
@@ -44,6 +46,7 @@
 [ext_resource type="Texture2D" uid="uid://c5p222eb3u6tf" path="res://Sprites/Test/Units/Enemy/testEnemyLance.png" id="31_kjk7w"]
 [ext_resource type="Script" uid="uid://bwxpec5gmpou1" path="res://Scripts/UI/UIBattle.cs" id="31_r77ll"]
 [ext_resource type="Texture2D" uid="uid://dd2aixpvr2sju" path="res://Sprites/Test/Units/Enemy/testEnemySword.png" id="32_7r5ow"]
+[ext_resource type="Resource" uid="uid://cqic6sw16xo8i" path="res://Resources/Items/Weapons/testSword.tres" id="33_slbve"]
 [ext_resource type="Texture2D" uid="uid://bvx0070epyviq" path="res://Sprites/Test/Units/Enemy/testEnemyCommander.png" id="33_vgme0"]
 [ext_resource type="Script" uid="uid://bntiwp1wcdsxf" path="res://Scripts/UI/UITerrain.cs" id="34_maqlv"]
 [ext_resource type="Resource" uid="uid://cfg72vbyh5t2y" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemyAxeResource.tres" id="34_wn5g2"]
@@ -223,7 +226,7 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
-_attackRange = 1
+_equiptWeapon = ExtResource("24_kmj3t")
 _startingDirection = 3
 _isCommander = false
 metadata/_custom_type_script = "uid://cb8xehtora3p"
@@ -244,7 +247,7 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
-_attackRange = 2
+_equiptWeapon = ExtResource("27_biv88")
 _startingDirection = 3
 _isCommander = false
 metadata/_custom_type_script = "uid://cb8xehtora3p"
@@ -265,7 +268,7 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
-_attackRange = 1
+_equiptWeapon = ExtResource("33_slbve")
 _startingDirection = 3
 _isCommander = false
 metadata/_custom_type_script = "uid://cb8xehtora3p"
@@ -286,7 +289,7 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
-_attackRange = 1
+_equiptWeapon = ExtResource("33_slbve")
 _startingDirection = 3
 _isCommander = false
 metadata/_custom_type_script = "uid://cb8xehtora3p"
@@ -447,6 +450,9 @@ visible = true
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit/Sprites" index="4"]
 visible = true
 
+[node name="UnitInventory" parent="GameBoard/Units/EnemyUnits/AxeAiUnit" index="2"]
+_unarmmedResource = null
+
 [node name="LanceAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(477, 795)
 _unitResource = ExtResource("36_onxey")
@@ -460,6 +466,9 @@ visible = true
 
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit/Sprites" index="4"]
 visible = true
+
+[node name="UnitInventory" parent="GameBoard/Units/EnemyUnits/LanceAiUnit" index="2"]
+_unarmmedResource = null
 
 [node name="SwordAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(390, 928)
@@ -475,6 +484,9 @@ visible = true
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit/Sprites" index="4"]
 visible = true
 
+[node name="UnitInventory" parent="GameBoard/Units/EnemyUnits/SwordAiUnit" index="2"]
+_unarmmedResource = null
+
 [node name="CommanderAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1316, 347)
 _unitResource = ExtResource("40_a4mff")
@@ -488,6 +500,9 @@ visible = true
 
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit/Sprites" index="4"]
 visible = true
+
+[node name="UnitInventory" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit" index="2"]
+_unarmmedResource = null
 
 [node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer", "_camera")]
 z_index = 100
