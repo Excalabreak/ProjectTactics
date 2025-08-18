@@ -68,28 +68,12 @@ public partial class CombatManager : Node
     /// <returns>damage</returns>
     public int CalculateDamage(Unit attackingUnit, Unit defendingUnit)
     {
-        UnitStatEnum attackerStat = UnitStatEnum.STRENGTH;
-        UnitStatEnum defenderStat = UnitStatEnum.DEFENSE;
-
-        bool skipWeaponCheck = false;
-        int weaponDamage = 0;
-
-        if (attackingUnit.unitInventory.equiptWeapon == null)
+        if (attackingUnit.unitInventory.equiptWeapon.IsPhysical())
         {
-            skipWeaponCheck = true;
+            return attackingUnit.unitStats.attack - defendingUnit.unitStats.protection;
         }
-        else
-        {
-            weaponDamage = attackingUnit.unitInventory.equiptWeapon.damage; 
-        }
+        
 
-        if (!skipWeaponCheck && !attackingUnit.unitInventory.equiptWeapon.IsPhysical())
-        {
-            attackerStat = UnitStatEnum.MAGIC;
-            defenderStat = UnitStatEnum.RESISTANCE;
-        }
-
-        return (attackingUnit.unitStats.GetStat(attackerStat) + weaponDamage) 
-            - defendingUnit.unitStats.GetStat(defenderStat);
+        return attackingUnit.unitStats.attack - defendingUnit.unitStats.resilience;
     }
 }

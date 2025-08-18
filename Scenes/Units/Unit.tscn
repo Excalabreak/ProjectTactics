@@ -109,10 +109,11 @@ visible = false
 z_index = 100
 texture = ExtResource("9_rk8i6")
 
-[node name="UnitStats" type="Node" parent="." node_paths=PackedStringArray("_unit", "_baseStats", "_healthLable")]
+[node name="UnitStats" type="Node" parent="." node_paths=PackedStringArray("_unit", "_baseStats", "_unitInventory", "_healthLable")]
 script = ExtResource("5_e33bx")
 _unit = NodePath("..")
 _baseStats = NodePath("BaseStats")
+_unitInventory = NodePath("../UnitInventory")
 _healthLable = NodePath("../Sprites/TempHealthLable")
 
 [node name="BaseStats" type="Node" parent="UnitStats" node_paths=PackedStringArray("_unit")]
