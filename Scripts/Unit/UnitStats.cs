@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/29/2025]
+ * Last Updated: [08/18/2025]
  * [class for unit's current stats]
  */
 
@@ -91,7 +91,7 @@ public partial class UnitStats : Node
     {
         get
         {
-            return _unitInventory.equiptWeapon.handling + (_baseStats.GetBaseStat(UnitStatEnum.STRENGTH) * 3 / 2);
+            return _unitInventory.equiptWeapon.handling + (_baseStats.GetBaseStat(UnitStatEnum.DEXTERITY) * 3 / 2);
         }
     }
 
@@ -102,7 +102,7 @@ public partial class UnitStats : Node
     {
         get
         {
-            return _unitInventory.equiptWeapon.handling + (_baseStats.GetBaseStat(UnitStatEnum.DEXTERITY) / 2);
+            return _unitInventory.equiptWeapon.critChance + (_baseStats.GetBaseStat(UnitStatEnum.DEXTERITY) / 2);
         }
     }
 
@@ -113,7 +113,7 @@ public partial class UnitStats : Node
     {
         get
         {
-            return _baseStats.GetBaseStat(UnitStatEnum.STRENGTH) * 3 / 2;
+            return _baseStats.GetBaseStat(UnitStatEnum.SPEED) * 3 / 2;
         }
     }
 

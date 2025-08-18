@@ -4,7 +4,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/17/2025]
+ * Last Updated: [08/18/2025]
  * [manages combat]
  */
 
@@ -42,8 +42,8 @@ public partial class CombatManager : Node
         {
             return;
         }
-        Vector2[] opposingAttackableCells = _gameBoard.RangeFloodFill(targetUnit.cell, targetUnit.unitInventory.equiptWeapon.minRange, targetUnit.unitInventory.equiptWeapon.maxRange);
-        if (opposingAttackableCells.Contains(initUnit.cell))
+
+        if (CanReach(targetUnit, initUnit))
         {
             BattleDamage(targetUnit, initUnit);
         }
@@ -56,7 +56,16 @@ public partial class CombatManager : Node
     /// <param name="defendingUnit">unit that is defending </param>
     private void BattleDamage(Unit attackingUnit, Unit defendingUnit)
     {
-        defendingUnit.unitStats.DamageUnit(CalculateDamage(attackingUnit, defendingUnit));
+        int hitChance = GD.RandRange(1,100);
+
+        if (CalculateHitRate(attackingUnit,defendingUnit) >= hitChance)
+        {
+            defendingUnit.unitStats.DamageUnit(CalculateDamage(attackingUnit, defendingUnit));
+        }
+        else
+        {
+            GD.Print(attackingUnit.Name + " MISS");
+        }
     }
 
     /// <summary>
@@ -75,5 +84,38 @@ public partial class CombatManager : Node
         
 
         return attackingUnit.unitStats.attack - defendingUnit.unitStats.resilience;
+    }
+
+    /// <summary>
+    /// calculates the chances of a unit's attack hitting
+    /// </summary>
+    /// <param name="attackingUnit">unit that is attacking</param>
+    /// <param name="defendingUnit">unit that is defending</param>
+    /// <returns>percent chance that a unit hits</returns>
+    public int CalculateHitRate(Unit attackingUnit, Unit defendingUnit)
+    {
+        if (!CanReach(attackingUnit, defendingUnit))
+        {
+            return 0;
+        }
+
+        return Mathf.Clamp(attackingUnit.unitStats.hitRate - defendingUnit.unitStats.avoid, 0, 100);
+    }
+
+    /// <summary>
+    /// returns true if unit can hit based on range
+    /// </summary>
+    /// <param name="attackingUnit">unit that is attacking</param>
+    /// <param name="defendingUnit">unit that is defending</param>
+    /// <returns>unit is in range of unit</returns>
+    public bool CanReach(Unit attackingUnit, Unit defendingUnit)
+    {
+        Vector2 attackCell = attackingUnit.cell;
+        Vector2 defendCell = defendingUnit.cell;
+
+        int dist = Mathf.RoundToInt(Mathf.Abs(defendCell.X - attackCell.X) + Mathf.Abs(defendCell.Y - attackCell.Y));
+
+        return (attackingUnit.unitInventory.equiptWeapon.minRange <= dist
+            && attackingUnit.unitInventory.equiptWeapon.maxRange >= dist);
     }
 }

@@ -608,16 +608,19 @@ public partial class GameBoard : Node2D
         int playerDamage = combatManager.CalculateDamage(initUnit, targetUnit);
         int enemyDamage = 0;
 
-        if (RangeFloodFill(cell, targetUnit.unitInventory.equiptWeapon.minRange, targetUnit.unitInventory.equiptWeapon.maxRange).Contains(_selectedUnit.cell))
+        if (_combatManager.CanReach(targetUnit, initUnit))
         {
             enemyDamage = combatManager.CalculateDamage(targetUnit, initUnit);
         }
+
+        int playerAcc = _combatManager.CalculateHitRate(initUnit, targetUnit);
+        int enemyAcc = _combatManager.CalculateHitRate(targetUnit, initUnit);
 
         //basic combat
         //logic for magic numbers don't exist yet
         //100 for acc, 0 for crit
         _uiManager.ShowBattlePredictions(playerStats.currentHP, enemyStats.currentHP,
-            playerDamage, enemyDamage, 100, 100, 0, 0);
+            playerDamage, enemyDamage, playerAcc, enemyAcc, 0, 0);
     }
 
     //---------- OTHER MENU ----------
