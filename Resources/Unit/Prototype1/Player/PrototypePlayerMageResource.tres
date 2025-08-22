@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="UnitResource" load_steps=3 format=3 uid="uid://clbcl34264jef"]
+
+[ext_resource type="Texture2D" uid="uid://bgyrkmq1tfijp" path="res://Sprites/Test/Units/Player/testPlayerHealer.png" id="1_0heps"]
+[ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="2_7u2d4"]
+
+[resource]
+script = ExtResource("2_7u2d4")
+_sprite = ExtResource("1_0heps")
+_spriteOffset = Vector2(0, 0)
+_baseStats = Dictionary[int, int]({
+0: 11,
+1: 0,
+2: 2,
+3: 12,
+4: 5,
+5: 4,
+6: 3,
+7: 8,
+8: 5,
+9: 7
+})
+_startingDirection = 0
+_isCommander = false
+metadata/_custom_type_script = "uid://cb8xehtora3p"

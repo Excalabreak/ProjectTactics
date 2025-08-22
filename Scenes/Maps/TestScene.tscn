@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=71 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -28,13 +28,10 @@
 [ext_resource type="Script" uid="uid://b8k2oamcad7ba" path="res://Scripts/Grid/GridCursor.cs" id="22_iwnah"]
 [ext_resource type="Texture2D" uid="uid://suvveuruoly4" path="res://Sprites/Test/GridCursor.png" id="23_fhuv3"]
 [ext_resource type="Script" uid="uid://do8g05v3r4qn8" path="res://Scripts/Menu/MenuStateMachine/MenuStateMachine.cs" id="24_bleph"]
-[ext_resource type="Resource" uid="uid://i6dlc2er50ri" path="res://Resources/Items/Weapons/testAxe.tres" id="24_kmj3t"]
 [ext_resource type="Script" uid="uid://8rtvmkb53l3a" path="res://Scripts/Menu/MenuStateMachine/States/UnSelectedState.cs" id="25_wn5g2"]
 [ext_resource type="Texture2D" uid="uid://c4x3rae14n1v3" path="res://Sprites/Test/Units/Player/testPlayerAxe.png" id="26_j6x6y"]
 [ext_resource type="Script" uid="uid://c7dh1mhyvoxy3" path="res://Scripts/Menu/MenuStateMachine/States/MoveState.cs" id="26_onxey"]
 [ext_resource type="Resource" uid="uid://bt88eerwj5e1w" path="res://Resources/Unit/Prototype1/Player/PrototypePlayerAxeResource.tres" id="26_vgme0"]
-[ext_resource type="Resource" uid="uid://c3s84r1rtukc6" path="res://Resources/Items/Weapons/testLance.tres" id="27_biv88"]
-[ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="27_bleph"]
 [ext_resource type="Texture2D" uid="uid://pp7o52sefur8" path="res://Sprites/Test/Units/Player/testPlayerLance.png" id="27_he1t7"]
 [ext_resource type="Script" uid="uid://cum60gpotm147" path="res://Scripts/Menu/MenuStateMachine/States/AttackState.cs" id="27_tl10l"]
 [ext_resource type="Script" uid="uid://do6ttbkj61oci" path="res://Scripts/Menu/MenuStateMachine/States/BlankState.cs" id="28_a4mff"]
@@ -46,7 +43,6 @@
 [ext_resource type="Texture2D" uid="uid://c5p222eb3u6tf" path="res://Sprites/Test/Units/Enemy/testEnemyLance.png" id="31_kjk7w"]
 [ext_resource type="Script" uid="uid://bwxpec5gmpou1" path="res://Scripts/UI/UIBattle.cs" id="31_r77ll"]
 [ext_resource type="Texture2D" uid="uid://dd2aixpvr2sju" path="res://Sprites/Test/Units/Enemy/testEnemySword.png" id="32_7r5ow"]
-[ext_resource type="Resource" uid="uid://cqic6sw16xo8i" path="res://Resources/Items/Weapons/testSword.tres" id="33_slbve"]
 [ext_resource type="Texture2D" uid="uid://bvx0070epyviq" path="res://Sprites/Test/Units/Enemy/testEnemyCommander.png" id="33_vgme0"]
 [ext_resource type="Script" uid="uid://bntiwp1wcdsxf" path="res://Scripts/UI/UITerrain.cs" id="34_maqlv"]
 [ext_resource type="Resource" uid="uid://cfg72vbyh5t2y" path="res://Resources/Unit/Prototype1/Enemy/PrototypeEnemyAxeResource.tres" id="34_wn5g2"]
@@ -210,90 +206,6 @@ terrain_set_0/terrain_0/name = "Path"
 terrain_set_0/terrain_0/color = Color(1, 0, 0, 1)
 sources/0 = SubResource("TileSetAtlasSource_t2vuu")
 
-[sub_resource type="Resource" id="Resource_bleph"]
-script = ExtResource("27_bleph")
-_sprite = ExtResource("26_j6x6y")
-_spriteOffset = Vector2(0, 0)
-_baseStats = Dictionary[int, int]({
-0: 15,
-1: 0,
-2: 10,
-3: 0,
-4: 0,
-5: 0,
-6: 2,
-7: 0,
-8: 5,
-9: 7
-})
-_equiptWeapon = ExtResource("24_kmj3t")
-_startingDirection = 3
-_isCommander = false
-metadata/_custom_type_script = "uid://cb8xehtora3p"
-
-[sub_resource type="Resource" id="Resource_wmdct"]
-script = ExtResource("27_bleph")
-_sprite = ExtResource("27_he1t7")
-_spriteOffset = Vector2(0, 0)
-_baseStats = Dictionary[int, int]({
-0: 10,
-1: 0,
-2: 7,
-3: 0,
-4: 0,
-5: 0,
-6: 1,
-7: 0,
-8: 5,
-9: 7
-})
-_equiptWeapon = ExtResource("27_biv88")
-_startingDirection = 3
-_isCommander = false
-metadata/_custom_type_script = "uid://cb8xehtora3p"
-
-[sub_resource type="Resource" id="Resource_ry365"]
-script = ExtResource("27_bleph")
-_sprite = ExtResource("28_wn863")
-_spriteOffset = Vector2(0, 0)
-_baseStats = Dictionary[int, int]({
-0: 20,
-1: 0,
-2: 5,
-3: 0,
-4: 0,
-5: 0,
-6: 4,
-7: 0,
-8: 5,
-9: 7
-})
-_equiptWeapon = ExtResource("33_slbve")
-_startingDirection = 3
-_isCommander = false
-metadata/_custom_type_script = "uid://cb8xehtora3p"
-
-[sub_resource type="Resource" id="Resource_kmj3t"]
-script = ExtResource("27_bleph")
-_sprite = ExtResource("28_wn863")
-_spriteOffset = Vector2(0, 0)
-_baseStats = Dictionary[int, int]({
-0: 20,
-1: 0,
-2: 5,
-3: 0,
-4: 0,
-5: 0,
-6: 4,
-7: 0,
-8: 5,
-9: 7
-})
-_equiptWeapon = ExtResource("33_slbve")
-_startingDirection = 3
-_isCommander = false
-metadata/_custom_type_script = "uid://cb8xehtora3p"
-
 [node name="TestScene" type="Node2D"]
 
 [node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_turnManager", "_uiManager", "_combatManager", "_menuStateMachine")]
@@ -368,7 +280,7 @@ _attackingGroup = Array[int]([2])
 
 [node name="AxeUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(264, 1003)
-_unitResource = SubResource("Resource_bleph")
+_unitResource = ExtResource("26_vgme0")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/AxeUnit/Sprites" index="0"]
@@ -376,7 +288,7 @@ texture = ExtResource("26_j6x6y")
 
 [node name="LanceUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(221, 1106)
-_unitResource = SubResource("Resource_wmdct")
+_unitResource = ExtResource("28_b77nk")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/LanceUnit/Sprites" index="0"]
@@ -416,7 +328,7 @@ texture = ExtResource("27_he1t7")
 
 [node name="SwordUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(358, 1048)
-_unitResource = SubResource("Resource_ry365")
+_unitResource = ExtResource("30_qm5w0")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit2/Sprites" index="0"]
@@ -424,7 +336,7 @@ texture = ExtResource("28_wn863")
 
 [node name="SwordUnit3" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(350, 989)
-_unitResource = SubResource("Resource_kmj3t")
+_unitResource = ExtResource("30_qm5w0")
 _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit3/Sprites" index="0"]

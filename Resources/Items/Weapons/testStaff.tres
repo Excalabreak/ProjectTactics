@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=2 format=3 uid="uid://chjv6cxodbhum"]
+
+[ext_resource type="Script" uid="uid://dnlv6li8v2vuq" path="res://Scripts/Items/Weapons/WeaponResource.cs" id="1_8a6mr"]
+
+[resource]
+script = ExtResource("1_8a6mr")
+_weaponName = ""
+_description = "a magical staff"
+_damageType = 2
+_canUseSpells = true
+_damage = 4
+_minRange = 1
+_maxRange = 2
+_handling = 85
+_critChance = 10
+_critModifyer = 1.2
+_weight = 1
+_size = 0
+metadata/_custom_type_script = "uid://dnlv6li8v2vuq"
