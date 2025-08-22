@@ -13,7 +13,7 @@ using System.Linq;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [08/18/2025]
+ * Last Updated: [08/22/2025]
  * [game board manages everything on the map]
  */
 
@@ -616,11 +616,14 @@ public partial class GameBoard : Node2D
         int playerAcc = _combatManager.CalculateHitRate(initUnit, targetUnit);
         int enemyAcc = _combatManager.CalculateHitRate(targetUnit, initUnit);
 
+        int playerCrit = _combatManager.CalculateCritRate(initUnit, targetUnit);
+        int enemyCrit = _combatManager.CalculateCritRate(targetUnit, initUnit);
+
         //basic combat
         //logic for magic numbers don't exist yet
-        //100 for acc, 0 for crit
+        //100 for acc, 0 for crits
         _uiManager.ShowBattlePredictions(playerStats.currentHP, enemyStats.currentHP,
-            playerDamage, enemyDamage, playerAcc, enemyAcc, 0, 0);
+            playerDamage, enemyDamage, playerAcc, enemyAcc, playerCrit, enemyCrit);
     }
 
     //---------- OTHER MENU ----------

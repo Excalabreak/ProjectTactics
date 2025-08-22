@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/18/2025]
+ * Last Updated: [08/22/2025]
  * [class for unit's current stats]
  */
 

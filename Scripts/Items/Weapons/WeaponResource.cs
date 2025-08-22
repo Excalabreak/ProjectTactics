@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/17/2025]
+ * Last Updated: [08/22/2025]
  * [resource for weapon]
  */
 
@@ -23,6 +23,7 @@ public partial class WeaponResource : Resource
 
     [Export] private int _handling;
     [Export] private int _critChance;
+    [Export] private float _critModifyer;
 
     [Export] private int _weight;
 
@@ -81,6 +82,11 @@ public partial class WeaponResource : Resource
     public int critChance
     {
         get { return _critChance; }
+    }
+
+    public float critModifyer
+    {
+        get { return _critModifyer; }
     }
 
     public int weight

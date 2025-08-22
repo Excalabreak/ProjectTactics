@@ -4,7 +4,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/18/2025]
+ * Last Updated: [08/22/2025]
  * [manages combat]
  */
 
@@ -33,7 +33,7 @@ public partial class CombatManager : Node
 
         Vector2 targetPos = targetUnit.cell;
 
-        BattleDamage(initUnit, targetUnit);
+        UnitAttack(initUnit, targetUnit);
 
         //counter attack
         //temp, there is a faster way of doing this
@@ -45,7 +45,7 @@ public partial class CombatManager : Node
 
         if (CanReach(targetUnit, initUnit))
         {
-            BattleDamage(targetUnit, initUnit);
+            UnitAttack(targetUnit, initUnit);
         }
     }
 
@@ -54,13 +54,23 @@ public partial class CombatManager : Node
     /// </summary>
     /// <param name="attackingUnit">unit that is attacking</param>
     /// <param name="defendingUnit">unit that is defending </param>
-    private void BattleDamage(Unit attackingUnit, Unit defendingUnit)
+    private void UnitAttack(Unit attackingUnit, Unit defendingUnit)
     {
         int hitChance = GD.RandRange(1,100);
+        float critMod = 1;
 
         if (CalculateHitRate(attackingUnit,defendingUnit) >= hitChance)
         {
-            defendingUnit.unitStats.DamageUnit(CalculateDamage(attackingUnit, defendingUnit));
+            hitChance = GD.RandRange(1, 100);
+
+            if (CalculateCritRate(attackingUnit, defendingUnit) >= hitChance)
+            {
+                critMod = attackingUnit.unitInventory.equiptWeapon.critModifyer;
+                GD.Print(attackingUnit.Name + " CRIT");
+            }
+            int damage = Mathf.RoundToInt((float)CalculateDamage(attackingUnit, defendingUnit) * critMod);
+
+            defendingUnit.unitStats.DamageUnit(damage);
         }
         else
         {
@@ -100,6 +110,22 @@ public partial class CombatManager : Node
         }
 
         return Mathf.Clamp(attackingUnit.unitStats.hitRate - defendingUnit.unitStats.avoid, 0, 100);
+    }
+
+    /// <summary>
+    /// calculates the chances of a unit critting
+    /// </summary>
+    /// <param name="attackingUnit">unit that is attacking</param>
+    /// <param name="defendingUnit">unit that is defending</param>
+    /// <returns>percent chance that a unit crits</returns>
+    public int CalculateCritRate(Unit attackingUnit, Unit defendingUnit)
+    {
+        if (!CanReach(attackingUnit, defendingUnit))
+        {
+            return 0;
+        }
+
+        return Mathf.Clamp(attackingUnit.unitStats.critRate - (defendingUnit.unitStats.critRate / 2), 0, 100);
     }
 
     /// <summary>
