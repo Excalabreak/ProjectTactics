@@ -24,6 +24,7 @@ public partial class UnitResource : Resource
 
     [ExportGroup("Inventory")]
     [Export] private WeaponResource _equiptWeapon;
+    [Export] private WeaponResource[] _inventoryItems;
 
     [ExportGroup("Direction")]
     [Export] private DirectionEnum _startingDirection = DirectionEnum.UP;
@@ -39,6 +40,15 @@ public partial class UnitResource : Resource
     public WeaponResource equiptWeapon
     {
         get { return _equiptWeapon; }
+    }
+
+    public WeaponResource[] inventoryItems
+    {
+        get 
+        {
+            GD.Print("interfaces can't be exported, using weapon resources for testing");
+            return _inventoryItems; 
+        }
     }
 
     public Vector2 spriteOffset

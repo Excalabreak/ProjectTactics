@@ -9,7 +9,7 @@ using System;
  */
 
 [GlobalClass]
-public partial class WeaponResource : Resource
+public partial class WeaponResource : Resource, IInventoryItem
 {
     [Export] private string _weaponName;
     [Export(PropertyHint.MultilineText)] private string _description;
@@ -98,5 +98,10 @@ public partial class WeaponResource : Resource
     public int size
     {
         get { return _size; }
+    }
+
+    public override string ToString()
+    {
+        return _weaponName;
     }
 }
