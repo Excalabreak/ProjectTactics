@@ -16,6 +16,7 @@ public partial class WeaponResource : Resource
 
     //make enum for damage type
     [Export] private DamageType _damageType;
+    [Export] private bool _canUseSpells;
     [Export] private int _damage;
 
     [Export] private int _minRange;
