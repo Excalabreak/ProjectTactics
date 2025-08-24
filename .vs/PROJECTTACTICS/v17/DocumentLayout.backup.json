@@ -43,8 +43,7 @@
               "ViewState": "AgIAAGAAAAAAAAAAAAAowA8AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-29T19:37:27.722Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -56,8 +55,7 @@
               "RelativeToolTip": "Scripts\\Unit\\UnitInventory.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-18T20:14:24.172Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-18T20:14:24.172Z"
             },
             {
               "$type": "Document",
@@ -69,8 +67,7 @@
               "RelativeToolTip": "Scripts\\Grid\\GameBoardManagers\\CombatManager.cs",
               "ViewState": "AgIAAB8AAAAAAAAAAAAgwAYAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-18T19:34:05.192Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-18T19:34:05.192Z"
             },
             {
               "$type": "Document",
@@ -82,8 +79,7 @@
               "RelativeToolTip": "Scripts\\Unit\\UnitStats.cs",
               "ViewState": "AgIAAE8AAAAAAAAAAAAcwGoAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-18T19:22:24.441Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-18T19:22:24.441Z"
             },
             {
               "$type": "Document",
@@ -93,7 +89,7 @@
               "RelativeDocumentMoniker": "Scripts\\Items\\Weapons\\WeaponResource.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Items\\Weapons\\WeaponResource.cs",
               "RelativeToolTip": "Scripts\\Items\\Weapons\\WeaponResource.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAADAAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-15T19:53:19.925Z",
               "EditorCaption": ""

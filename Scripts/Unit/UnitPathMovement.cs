@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/25/2025]
+ * Last Updated: [08/23/2025]
  * [moves sprite through path]
  */
 
@@ -22,6 +22,8 @@ public partial class UnitPathMovement : Path2D
     [Signal] public delegate void WalkFinishedEventHandler();
     [Export] private PathFollow2D _pathFollow;
     private bool _isWalking = false;
+
+    //just makes sure there is a single frame of delay so that await can properly happen
     private bool _delayStop = false;
     private bool _hasdelayStop = false;
 
@@ -74,8 +76,14 @@ public partial class UnitPathMovement : Path2D
         {
             _unitDirection.currentFacing = _pathDirections[_currentDirectionIndex];
 
+            _gameBoard.RemoveUnitLocation(_unit);
+            _gameBoard.RemoveKnownUnitLocation(_unit);
+
             Vector2 newLoc = _gameBoard.grid.CalculateGridCoordinates(_walkingLocation.GlobalPosition);
             _unit.cell = newLoc;
+
+            _gameBoard.AddUnitLocation(_unit);
+            _gameBoard.AddKnownUnitLocation(_unit);
 
             _gameBoard.MovingUnitVisionUpdate(_unit, newLoc);
             _gameBoard.UpdateUnitVision(_unit);
@@ -113,8 +121,12 @@ public partial class UnitPathMovement : Path2D
         this.isWalking = false;
         _pathFollow.Progress = 0f;
 
+        _gameBoard.RemoveUnitLocation(_unit);
+        _gameBoard.RemoveKnownUnitLocation(_unit);
+
         _unit.cell = cell;
         _unit.Position = _gameBoard.grid.CalculateMapPosition(cell);
+
         _gameBoard.AddUnitLocation(_unit);
         _gameBoard.AddKnownUnitLocation(_unit);
 
@@ -205,8 +217,6 @@ public partial class UnitPathMovement : Path2D
         }
         _unit.targetCell = walkablePath[lastStandableIndex];
         isWalking = true;
-        _gameBoard.RemoveUnitLocation(_unit);
-        _gameBoard.RemoveKnownUnitLocation(_unit);
     }
 
     /// <summary>
