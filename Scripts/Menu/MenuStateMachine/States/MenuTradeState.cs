@@ -9,4 +9,34 @@ using System;
 
 public partial class MenuTradeState : MenuState
 {
+    public override void Enter()
+    {
+        //shows trade range
+    }
+
+    public override void OnCursorAccept(Vector2 cell)
+    {
+        //checks if tradeable unit is on cell
+        //brings up trade menu
+    }
+
+    public override void OnCursorDecline()
+    {
+        stateMachine.gameBoard.StandardCursorDecline();
+    }
+
+    public override void OnCursorMove(Vector2 newCell)
+    {
+        //show items and trade options
+    }
+
+    public override void OnHover(Vector2 cell)
+    {
+        //shows cell items
+    }
+
+    public override void Exit()
+    {
+        //make sure trade menus are hidden
+    }
 }

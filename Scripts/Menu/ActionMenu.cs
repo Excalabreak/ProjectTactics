@@ -4,10 +4,8 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: YT:Heal Moon
- * Last Updated: [07/09/2025]
- * [menu for unit action
- * NOTE: can probably make this and pause menu the same script
- * will do after tutorial]
+ * Last Updated: [08/25/2025]
+ * [menu for unit action]
  */
 
 public partial class ActionMenu : BaseMenu
@@ -54,7 +52,8 @@ public partial class ActionMenu : BaseMenu
 
     private void OnTradeButtonPress()
     {
-
+        HideMenu();
+        _gameBoard.menuStateMachine.TransitionTo("MenuTradeState");
     }
 
     /// <summary>
