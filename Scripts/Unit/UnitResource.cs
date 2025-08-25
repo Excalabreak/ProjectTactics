@@ -46,7 +46,7 @@ public partial class UnitResource : Resource
     {
         get 
         {
-            GD.Print("interfaces can't be exported, using weapon resources for testing");
+            GD.Print("interfaces can't be exported, using weapon resources for testing (maybe make a db for items and store id)");
             return _inventoryItems; 
         }
     }

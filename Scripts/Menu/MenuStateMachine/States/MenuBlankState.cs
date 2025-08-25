@@ -7,6 +7,6 @@ using System;
  * [just a blank state so the player cant input anything while waiting]
  */
 
-public partial class BlankState : MenuState
+public partial class MenuBlankState : Node
 {
 }

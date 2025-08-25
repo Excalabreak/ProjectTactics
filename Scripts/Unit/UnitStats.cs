@@ -87,7 +87,7 @@ public partial class UnitStats : Node
     /// <summary>
     /// base hit rate of hitting unit
     /// </summary>
-    public int hitRate
+    public int accuracy
     {
         get
         {

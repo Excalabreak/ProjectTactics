@@ -247,7 +247,7 @@ public partial class GameBoard : Node2D
         }
 
         DeselectSelectedUnit();
-        OnlyPlayerTurnMenuStateTransition("BlankState");
+        OnlyPlayerTurnMenuStateTransition("MenuBlankState");
         _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
@@ -377,7 +377,7 @@ public partial class GameBoard : Node2D
             DeselectSelectedUnit();
             ClearSelectedUnit();
             _walkableCells = new Vector2[0];
-            OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+            OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
             return;
         }
 
@@ -385,7 +385,7 @@ public partial class GameBoard : Node2D
         _unitWalkHighlights.Clear();
         await ToSignal(this, "SelectedMoved");
 
-        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
         MenuUnSelectedStateAccept(cell);
     }
 
@@ -423,7 +423,7 @@ public partial class GameBoard : Node2D
 
         DeselectSelectedUnit();
         ClearSelectedUnit();
-        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
     }
 
     //---------- MENU CURSOR MOVE ----------
@@ -635,7 +635,7 @@ public partial class GameBoard : Node2D
     {
         DeselectSelectedUnit();
         ClearSelectedUnit();
-        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
     }
 
     /// <summary>
@@ -699,11 +699,11 @@ public partial class GameBoard : Node2D
 
         if (_turnManager.currentTurn == UnitGroupEnum.PLAYER)
         {
-            _menuStateMachine.TransitionTo("UnSelectedState");
+            _menuStateMachine.TransitionTo("MenuUnSelectedState");
         }
         else
         {
-            _menuStateMachine.TransitionTo("BlankState");
+            _menuStateMachine.TransitionTo("MenuBlankState");
             AiTurn(_turnManager.currentTurn);
         }
     }

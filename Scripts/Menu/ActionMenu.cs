@@ -23,7 +23,7 @@ public partial class ActionMenu : BaseMenu
     private void OnAttackButtonPress()
     {
         HideMenu();
-        _gameBoard.menuStateMachine.TransitionTo("AttackState");
+        _gameBoard.menuStateMachine.TransitionTo("MenuAttackState");
     }
 
     private void OnSkillButtonPress()
@@ -38,7 +38,7 @@ public partial class ActionMenu : BaseMenu
     private void OnMoveButtonPress()
     {
         HideMenu();
-        _gameBoard.menuStateMachine.TransitionTo("MoveState");
+        _gameBoard.menuStateMachine.TransitionTo("MenuMoveState");
     }
 
     private void OnTurnButtonPress()

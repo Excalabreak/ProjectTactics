@@ -7,7 +7,7 @@ using System;
  * [State when no unit is selected]
  */
 
-public partial class UnSelectedState : MenuState
+public partial class MenuUnSelectedState : MenuState
 {
     public override void OnCursorAccept(Vector2 cell)
     {

@@ -7,7 +7,7 @@ using System;
  * [State when move is selected]
  */
 
-public partial class MoveState : MenuState
+public partial class MenuMoveState : MenuState
 {
     public override void Enter()
     {

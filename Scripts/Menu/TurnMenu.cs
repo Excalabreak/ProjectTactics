@@ -15,12 +15,12 @@ public partial class TurnMenu : BaseMenu
         {
             //might need to expand if menus are made ontop of eachother
             OnCancelPressed();
-            _gameBoard.menuStateMachine.TransitionTo("UnSelectedState");
+            _gameBoard.menuStateMachine.TransitionTo("MenuUnSelectedState");
             return;
         }
 
         _gameBoard.selectedUnit.unitDirection.currentFacing = direction;
-        _gameBoard.menuStateMachine.TransitionTo("UnSelectedState");
+        _gameBoard.menuStateMachine.TransitionTo("MenuUnSelectedState");
         OnCancelPressed();
     }
 

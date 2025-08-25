@@ -28,13 +28,9 @@
 [ext_resource type="Script" uid="uid://b8k2oamcad7ba" path="res://Scripts/Grid/GridCursor.cs" id="22_iwnah"]
 [ext_resource type="Texture2D" uid="uid://suvveuruoly4" path="res://Sprites/Test/GridCursor.png" id="23_fhuv3"]
 [ext_resource type="Script" uid="uid://do8g05v3r4qn8" path="res://Scripts/Menu/MenuStateMachine/MenuStateMachine.cs" id="24_bleph"]
-[ext_resource type="Script" uid="uid://8rtvmkb53l3a" path="res://Scripts/Menu/MenuStateMachine/States/UnSelectedState.cs" id="25_wn5g2"]
 [ext_resource type="Texture2D" uid="uid://c4x3rae14n1v3" path="res://Sprites/Test/Units/Player/testPlayerAxe.png" id="26_j6x6y"]
-[ext_resource type="Script" uid="uid://c7dh1mhyvoxy3" path="res://Scripts/Menu/MenuStateMachine/States/MoveState.cs" id="26_onxey"]
 [ext_resource type="Resource" uid="uid://bt88eerwj5e1w" path="res://Resources/Unit/Prototype1/Player/PrototypePlayerAxeResource.tres" id="26_vgme0"]
 [ext_resource type="Texture2D" uid="uid://pp7o52sefur8" path="res://Sprites/Test/Units/Player/testPlayerLance.png" id="27_he1t7"]
-[ext_resource type="Script" uid="uid://cum60gpotm147" path="res://Scripts/Menu/MenuStateMachine/States/AttackState.cs" id="27_tl10l"]
-[ext_resource type="Script" uid="uid://do6ttbkj61oci" path="res://Scripts/Menu/MenuStateMachine/States/BlankState.cs" id="28_a4mff"]
 [ext_resource type="Resource" uid="uid://cg7txlxy6nmm1" path="res://Resources/Unit/Prototype1/Player/PrototypePlayerLanceResource.tres" id="28_b77nk"]
 [ext_resource type="Texture2D" uid="uid://bpncogxb8oeqi" path="res://Sprites/Test/Units/Player/testPlayerSword.png" id="28_wn863"]
 [ext_resource type="Script" uid="uid://dwo3objlyjeiq" path="res://Scripts/UI/UIStats.cs" id="30_0ccgp"]
@@ -53,8 +49,12 @@
 [ext_resource type="Script" uid="uid://braats48iwxp4" path="res://Scripts/Camera/CameraStateMachine.cs" id="43_wmdct"]
 [ext_resource type="Script" uid="uid://2iiw8nextk8k" path="res://Scripts/Camera/CameraStates/CameraFollowCursorState.cs" id="44_ry365"]
 [ext_resource type="Script" uid="uid://dsiorwkyjr2ka" path="res://Scripts/Camera/CameraStates/CameraClickDragState.cs" id="45_kmj3t"]
+[ext_resource type="Script" uid="uid://drcxnoxm0d5xc" path="res://Scripts/Menu/MenuStateMachine/States/MenuUnSelectedState.cs" id="48_a4mff"]
 [ext_resource type="Script" uid="uid://bcl8hy7m3ybux" path="res://Scripts/UI/UIManager.cs" id="48_bleph"]
+[ext_resource type="Script" uid="uid://e8qkg48qtpjf" path="res://Scripts/Menu/MenuStateMachine/States/MenuMoveState.cs" id="49_a4mff"]
+[ext_resource type="Script" uid="uid://cim42nmhn4plw" path="res://Scripts/Menu/MenuStateMachine/States/MenuAttackScript.cs" id="50_a4mff"]
 [ext_resource type="Script" uid="uid://ewwqdcxfpysl" path="res://Scripts/Grid/GameBoardManagers/TurnManager.cs" id="50_fhuv3"]
+[ext_resource type="Script" uid="uid://fj1645g86g1m" path="res://Scripts/Menu/MenuStateMachine/States/MenuBlankState.cs" id="51_a4mff"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
 texture = ExtResource("5_jsdi5")
@@ -468,20 +468,20 @@ _gameBoard = NodePath("../..")
 
 [node name="MenuStateMachine" type="Node" parent="GameBoard" node_paths=PackedStringArray("_gameBoard")]
 script = ExtResource("24_bleph")
-initialState = NodePath("UnSelectedState")
+initialState = NodePath("MenuUnSelectedState")
 _gameBoard = NodePath("..")
 
-[node name="UnSelectedState" type="Node" parent="GameBoard/MenuStateMachine"]
-script = ExtResource("25_wn5g2")
+[node name="MenuUnSelectedState" type="Node" parent="GameBoard/MenuStateMachine"]
+script = ExtResource("48_a4mff")
 
-[node name="MoveState" type="Node" parent="GameBoard/MenuStateMachine"]
-script = ExtResource("26_onxey")
+[node name="MenuMoveState" type="Node" parent="GameBoard/MenuStateMachine"]
+script = ExtResource("49_a4mff")
 
-[node name="AttackState" type="Node" parent="GameBoard/MenuStateMachine"]
-script = ExtResource("27_tl10l")
+[node name="MenuAttackState" type="Node" parent="GameBoard/MenuStateMachine"]
+script = ExtResource("50_a4mff")
 
-[node name="BlankState" type="Node" parent="GameBoard/MenuStateMachine"]
-script = ExtResource("28_a4mff")
+[node name="MenuBlankState" type="Node" parent="GameBoard/MenuStateMachine"]
+script = ExtResource("51_a4mff")
 
 [node name="UIManager" type="CanvasLayer" parent="GameBoard" node_paths=PackedStringArray("_uiStats", "_uiBattle", "_uiTerrain")]
 script = ExtResource("48_bleph")
