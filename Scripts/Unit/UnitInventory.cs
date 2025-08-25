@@ -28,17 +28,17 @@ public partial class UnitInventory : Node
             return;
         }
 
-        GD.Print(_unit.Name);
-
         foreach (IInventoryItem item in _unit.unitResource.inventoryItems)
         {
             AddInventoryItem(item);
         }
+        /*
+        GD.Print(_unit.Name);
 
         foreach (IInventoryItem item in _inventoryItems)
         {
             GD.Print(item);
-        }
+        }*/
     }
     
     /// <summary>

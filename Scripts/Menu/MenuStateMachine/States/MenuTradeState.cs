@@ -11,7 +11,7 @@ public partial class MenuTradeState : MenuState
 {
     public override void Enter()
     {
-        //shows trade range
+        stateMachine.gameBoard.ShowTradeCells(stateMachine.gameBoard.selectedUnit.cell);
     }
 
     public override void OnCursorAccept(Vector2 cell)

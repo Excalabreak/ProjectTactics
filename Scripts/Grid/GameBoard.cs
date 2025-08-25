@@ -13,7 +13,7 @@ using System.Linq;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [08/22/2025]
+ * Last Updated: [08/25/2025]
  * [game board manages everything on the map]
  */
 
@@ -877,6 +877,18 @@ public partial class GameBoard : Node2D
     {
         _unitWalkHighlights.Clear();
         _unitWalkHighlights.DrawAttackHighlights(RangeFloodFill(unit.cell, unit.unitInventory.equiptWeapon.minRange, unit.unitInventory.equiptWeapon.maxRange));
+    }
+
+    /// <summary>
+    /// shows cells units can trade with
+    /// </summary>
+    /// <param name="cell">unit</param>
+    public void ShowTradeCells(Vector2 cell)
+    {
+        _unitWalkHighlights.Clear();
+
+        int tradeRange = 1;
+        _unitWalkHighlights.DrawAttackHighlights(FloodFill(cell, tradeRange));
     }
 
     /// <summary>
