@@ -90,6 +90,11 @@ public partial class UnitInventory : Node
         return output;
     }
 
+    public IInventoryItem[] inventoryItems
+    {
+        get { return _inventoryItems.ToArray(); }
+    }
+
     public WeaponResource equiptWeapon
     {
         get

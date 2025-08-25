@@ -8,5 +8,7 @@
 
 public interface IInventoryItem
 {
+    string itemName { get; }
+
     int size { get; }
 }

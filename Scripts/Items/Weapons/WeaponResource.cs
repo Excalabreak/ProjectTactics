@@ -45,7 +45,7 @@ public partial class WeaponResource : Resource, IInventoryItem
         return _damageType != DamageType.MAGIC;
     }
 
-    public string weaponName
+    public string itemName
     {
         get { return _weaponName; }
     }

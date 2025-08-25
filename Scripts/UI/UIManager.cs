@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/01/2025]
+ * Last Updated: [08/25/2025]
  * [Manages UI Elements and 
  * is one class to call them all from]
  */
@@ -13,6 +13,7 @@ public partial class UIManager : CanvasLayer
     [Export] private UIStats _uiStats;
     [Export] private UIBattle _uiBattle;
     [Export] private UITerrain _uiTerrain;
+    [Export] private UIInventory _uiInventroy;
 
     /// <summary>
     /// calls to displays the stats of a unit
@@ -29,6 +30,23 @@ public partial class UIManager : CanvasLayer
     public void HideStatsPanel()
     {
         _uiStats.HideStatsPanel();
+    }
+
+    /// <summary>
+    /// calls to displays the inventory of a unit
+    /// </summary>
+    /// <param name="unit">unit being displayed</param>
+    public void ShowUnitInventory(Unit unit)
+    {
+        _uiInventroy.ShowInventory(unit.unitInventory);
+    }
+
+    /// <summary>
+    /// calls to hides the inventory pannel
+    /// </summary>
+    public void HideUnitInventory()
+    {
+        _uiInventroy.HideInventory();
     }
 
     /// <summary>

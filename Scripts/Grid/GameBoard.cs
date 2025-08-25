@@ -216,6 +216,7 @@ public partial class GameBoard : Node2D
             _selectedUnit.isSelected = false;
         }
         _uiManager.HideStatsPanel();
+        _uiManager.HideUnitInventory();
         _unitWalkHighlights.Clear();
         _unitPath.Stop();
     }
@@ -442,6 +443,7 @@ public partial class GameBoard : Node2D
         else
         {
             _uiManager.HideStatsPanel();
+            _uiManager.HideUnitInventory();
         }
     }
 
@@ -582,6 +584,7 @@ public partial class GameBoard : Node2D
         Unit curUnit = _units[cell];
 
         _uiManager.ShowUnitStats(curUnit);
+        _uiManager.ShowUnitInventory(curUnit);
 
         _walkableCells = GetWalkableCells(curUnit);
         _attackableCells = GetAttackableCells(curUnit);
