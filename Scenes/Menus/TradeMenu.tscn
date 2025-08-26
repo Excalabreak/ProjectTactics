@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3t1a425enr52"]
+
+[ext_resource type="Script" uid="uid://bsjvashhk428s" path="res://Scripts/Menu/ActionMenu.cs" id="1_fmy4s"]
+
+[node name="ActionMenu" type="CanvasLayer" node_paths=PackedStringArray("_actionButtons", "_cursorDefaultStartButton")]
+script = ExtResource("1_fmy4s")
+_actionButtons = [NodePath("VBoxContainer/AttackButton")]
+_cursorDefaultStartButton = NodePath("VBoxContainer/AttackButton")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AttackButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../CancelButton")
+focus_neighbor_bottom = NodePath("../MoveButton")
+text = "Attack
+"
+
+[node name="SkillButton" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Skills
+"
+
+[node name="TalkButton" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Talk
+"
+
+[node name="MoveButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../AttackButton")
+focus_neighbor_bottom = NodePath("../TurnButton")
+text = "Move"
+
+[node name="TurnButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../MoveButton")
+focus_neighbor_bottom = NodePath("../CancelButton")
+text = "Turn"
+
+[node name="ItemButton" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Items"
+
+[node name="TradeButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Trade"
+
+[node name="CancelButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../TurnButton")
+focus_neighbor_bottom = NodePath("../AttackButton")
+text = "Cancel"
+
+[connection signal="pressed" from="VBoxContainer/AttackButton" to="." method="OnAttackButtonPress"]
+[connection signal="pressed" from="VBoxContainer/SkillButton" to="." method="OnSkillButtonPress"]
+[connection signal="pressed" from="VBoxContainer/TalkButton" to="." method="OnTalkButtonPress"]
+[connection signal="pressed" from="VBoxContainer/MoveButton" to="." method="OnMoveButtonPress"]
+[connection signal="pressed" from="VBoxContainer/TurnButton" to="." method="OnTurnButtonPress"]
+[connection signal="pressed" from="VBoxContainer/ItemButton" to="." method="OnItemButtonPress"]
+[connection signal="pressed" from="VBoxContainer/TradeButton" to="." method="OnTradeButtonPress"]
+[connection signal="pressed" from="VBoxContainer/CancelButton" to="." method="OnCancelButtonPress"]
