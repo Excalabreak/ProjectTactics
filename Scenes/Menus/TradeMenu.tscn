@@ -1,6 +1,13 @@
-[gd_scene format=3 uid="uid://d3t1a425enr52"]
+[gd_scene load_steps=3 format=3 uid="uid://d3t1a425enr52"]
 
-[node name="TradeMenu" type="CanvasLayer"]
+[ext_resource type="Script" uid="uid://2qpd7o713o5p" path="res://Scripts/Menu/MapMenus/TradeMenu.cs" id="1_fmy4s"]
+[ext_resource type="Script" uid="uid://blqxdtgknc5qy" path="res://Scripts/Menu/MapMenus/TradeMenuGroup.cs" id="2_64lir"]
+
+[node name="TradeMenu" type="CanvasLayer" node_paths=PackedStringArray("_leftUnitMenu", "_rightUnitMenu", "_cursorDefaultStartButton")]
+script = ExtResource("1_fmy4s")
+_leftUnitMenu = NodePath("HBoxContainer/LeftBox")
+_rightUnitMenu = NodePath("HBoxContainer/RightBox")
+_cursorDefaultStartButton = NodePath("HBoxContainer/LeftBox/EquippedButton")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 8
@@ -15,33 +22,37 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="LeftBox" type="VBoxContainer" parent="HBoxContainer" node_paths=PackedStringArray("_tradeMenu", "_equippedWeaponButton", "_itemSlotButtons")]
 layout_mode = 2
+script = ExtResource("2_64lir")
+_tradeMenu = NodePath("../..")
+_equippedWeaponButton = NodePath("EquippedButton")
+_itemSlotButtons = [NodePath("ItemButton1"), NodePath("ItemButton2"), NodePath("ItemButton3")]
 
-[node name="NameLabel" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="NameLabel" type="Label" parent="HBoxContainer/LeftBox"]
 layout_mode = 2
 text = "Name"
 horizontal_alignment = 1
 
-[node name="EquippedButton" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="EquippedButton" type="Button" parent="HBoxContainer/LeftBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 toggle_mode = true
 text = "E: Axe"
 
-[node name="ItemButton1" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="ItemButton1" type="Button" parent="HBoxContainer/LeftBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 toggle_mode = true
 text = "Axe"
 
-[node name="ItemButton2" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="ItemButton2" type="Button" parent="HBoxContainer/LeftBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 toggle_mode = true
 text = "Axe"
 
-[node name="ItemButton3" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="ItemButton3" type="Button" parent="HBoxContainer/LeftBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 toggle_mode = true
@@ -54,33 +65,37 @@ text = "     <===
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+[node name="RightBox" type="VBoxContainer" parent="HBoxContainer" node_paths=PackedStringArray("_tradeMenu", "_equippedWeaponButton", "_itemSlotButtons")]
 layout_mode = 2
+script = ExtResource("2_64lir")
+_tradeMenu = NodePath("../..")
+_equippedWeaponButton = NodePath("EquippedButton")
+_itemSlotButtons = [NodePath("ItemButton1"), NodePath("ItemButton2"), NodePath("ItemButton3")]
 
-[node name="NameLabel" type="Label" parent="HBoxContainer/VBoxContainer2"]
+[node name="NameLabel" type="Label" parent="HBoxContainer/RightBox"]
 layout_mode = 2
 text = "Name"
 horizontal_alignment = 1
 
-[node name="EquippedButton" type="Button" parent="HBoxContainer/VBoxContainer2"]
+[node name="EquippedButton" type="Button" parent="HBoxContainer/RightBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 toggle_mode = true
-text = "Equipped: Axe"
+text = "E: Axe"
 
-[node name="ItemButton1" type="Button" parent="HBoxContainer/VBoxContainer2"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-toggle_mode = true
-text = "Axe"
-
-[node name="ItemButton2" type="Button" parent="HBoxContainer/VBoxContainer2"]
+[node name="ItemButton1" type="Button" parent="HBoxContainer/RightBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 toggle_mode = true
 text = "Axe"
 
-[node name="ItemButton3" type="Button" parent="HBoxContainer/VBoxContainer2"]
+[node name="ItemButton2" type="Button" parent="HBoxContainer/RightBox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+toggle_mode = true
+text = "Axe"
+
+[node name="ItemButton3" type="Button" parent="HBoxContainer/RightBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 toggle_mode = true

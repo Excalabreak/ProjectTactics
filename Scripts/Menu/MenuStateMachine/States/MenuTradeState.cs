@@ -16,8 +16,7 @@ public partial class MenuTradeState : MenuState
 
     public override void OnCursorAccept(Vector2 cell)
     {
-        //checks if tradeable unit is on cell
-        //brings up trade menu
+        stateMachine.gameBoard.MenuTradeStateAccept(cell);
     }
 
     public override void OnCursorDecline()

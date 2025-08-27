@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cthmnrjp6uu61"]
 
-[ext_resource type="Script" uid="uid://b7seot04yy56w" path="res://Scripts/Menu/PauseScreen.cs" id="1_snaop"]
+[ext_resource type="Script" uid="uid://b7seot04yy56w" path="res://Scripts/Menu/MapMenus/PauseScreen.cs" id="1_snaop"]
 
 [node name="PauseScreen" type="CanvasLayer" node_paths=PackedStringArray("_cursorDefaultStartButton")]
 script = ExtResource("1_snaop")

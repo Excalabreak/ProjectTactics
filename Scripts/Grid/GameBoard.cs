@@ -13,7 +13,7 @@ using System.Linq;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [08/25/2025]
+ * Last Updated: [08/26/2025]
  * [game board manages everything on the map]
  */
 
@@ -38,11 +38,13 @@ public partial class GameBoard : Node2D
     [Export] private PackedScene _actionMenu;
     [Export] private PackedScene _pauseMenu;
     [Export] private PackedScene _turnMenu;
+    [Export] private PackedScene _tradeMenu;
     [Signal] public delegate void SelectedMovedEventHandler();
 
     private ActionMenu _actionMenuInstance;
     private PauseScreen _pauseScreenInstance;
     private TurnMenu _turnMenuInstance;
+    private TradeMenu _tradeMenuInstance;
 
     [ExportGroup("MoveCost")]
     private Unit _selectedUnit;
@@ -392,7 +394,6 @@ public partial class GameBoard : Node2D
 
     /// <summary>
     /// selects unit for attack
-    /// might need to change for ai
     /// </summary>
     /// <param name="cell"></param>
     public void MenuAttackStateAccept(Vector2 cell)
@@ -425,6 +426,40 @@ public partial class GameBoard : Node2D
         DeselectSelectedUnit();
         ClearSelectedUnit();
         OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
+    }
+
+    /// <summary>
+    /// selects unit for trade
+    /// </summary>
+    /// <param name="cell">cell to trade with</param>
+    public void MenuTradeStateAccept(Vector2 cell)
+    {
+        if (_selectedUnit == null)
+        {
+            return;
+        }
+
+        if (!IsOccupied(cell))
+        {
+            return;
+        }
+
+        Unit otherUnit = _units[cell];
+
+        if (_selectedUnit.unitGroup != otherUnit.unitGroup)
+        {
+            return;
+        }
+
+        int tradeRange = 1;
+        if (!FloodFill(_selectedUnit.cell, tradeRange).Contains(cell))
+        {
+            return;
+        }
+        
+        _tradeMenuInstance = _tradeMenu.Instantiate() as TradeMenu;
+        _tradeMenuInstance.SetUpTradeMenu(_selectedUnit, otherUnit);
+        AddChild(_tradeMenuInstance);
     }
 
     //---------- MENU CURSOR MOVE ----------
@@ -544,6 +579,10 @@ public partial class GameBoard : Node2D
         else if (IsInstanceValid(_turnMenuInstance))
         {
             _turnMenuInstance.OnCancelPressed();
+        }
+        else if (IsInstanceValid(_tradeMenuInstance))
+        {
+
         }
         ResetMenu();
     }

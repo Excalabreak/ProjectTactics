@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/22/2025]
+ * Last Updated: [08/26/2025]
  * [handles inventory for units]
  */
 
@@ -90,6 +90,15 @@ public partial class UnitInventory : Node
         return output;
     }
 
+    /// <summary>
+    /// does unit have weapon equipt
+    /// </summary>
+    /// <returns></returns>
+    public bool HasEquippedWeapon()
+    {
+        return _equiptWeapon == null;
+    }
+
     public IInventoryItem[] inventoryItems
     {
         get { return _inventoryItems.ToArray(); }
@@ -99,7 +108,7 @@ public partial class UnitInventory : Node
     {
         get
         {
-            if (_equiptWeapon == null)
+            if (HasEquippedWeapon())
             {
                 return _unarmmedResource;
             }
