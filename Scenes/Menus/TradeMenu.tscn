@@ -100,3 +100,12 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 toggle_mode = true
 text = "---"
+
+[connection signal="toggled" from="HBoxContainer/LeftBox/EquippedButton" to="HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath(".")]]
+[connection signal="toggled" from="HBoxContainer/LeftBox/ItemButton1" to="HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath(".")]]
+[connection signal="toggled" from="HBoxContainer/LeftBox/ItemButton2" to="HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath(".")]]
+[connection signal="toggled" from="HBoxContainer/LeftBox/ItemButton3" to="HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath(".")]]
+[connection signal="toggled" from="HBoxContainer/RightBox/EquippedButton" to="HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath(".")]]
+[connection signal="toggled" from="HBoxContainer/RightBox/ItemButton1" to="HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath(".")]]
+[connection signal="toggled" from="HBoxContainer/RightBox/ItemButton2" to="HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath(".")]]
+[connection signal="toggled" from="HBoxContainer/RightBox/ItemButton3" to="HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath(".")]]

@@ -33,4 +33,9 @@ public partial class TradeMenuGroup : Node
             _tradeMenu.AddToButtonDictionary(_itemSlotButtons[i], inventory.inventoryItems[i]);
         }
     }
+
+    private void ToggleItem(bool toggle, NodePath button)
+    {
+
+    }
 }
