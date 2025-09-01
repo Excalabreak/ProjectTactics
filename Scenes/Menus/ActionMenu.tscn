@@ -21,6 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="AttackButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 focus_neighbor_top = NodePath("../CancelButton")
 focus_neighbor_bottom = NodePath("../MoveButton")
@@ -29,38 +30,45 @@ text = "Attack
 
 [node name="SkillButton" type="Button" parent="VBoxContainer"]
 visible = false
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Skills
 "
 
 [node name="TalkButton" type="Button" parent="VBoxContainer"]
 visible = false
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Talk
 "
 
 [node name="MoveButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 focus_neighbor_top = NodePath("../AttackButton")
 focus_neighbor_bottom = NodePath("../TurnButton")
 text = "Move"
 
 [node name="TurnButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 focus_neighbor_top = NodePath("../MoveButton")
 focus_neighbor_bottom = NodePath("../CancelButton")
 text = "Turn"
 
 [node name="ItemButton" type="Button" parent="VBoxContainer"]
-visible = false
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Items"
 
 [node name="TradeButton" type="Button" parent="VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Trade"
 
 [node name="CancelButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 focus_neighbor_top = NodePath("../TurnButton")
 focus_neighbor_bottom = NodePath("../AttackButton")

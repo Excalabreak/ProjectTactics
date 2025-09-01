@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/25/2025]
+ * Last Updated: [09/01/2025]
  * [state machine for npc AI]
  */
 
@@ -70,6 +70,7 @@ public partial class NPCAiStateMachine : Node
     {
         if (!_states.ContainsKey(key) || _currentState == _states[key])
         {
+            GD.Print("NO NPC STATE FOR " + key);
             return;
         }
 

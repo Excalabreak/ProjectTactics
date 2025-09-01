@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/04/2025]
+ * Last Updated: [09/01/2025]
  * [state machine for camera]
  */
 
@@ -45,6 +45,7 @@ public partial class CameraStateMachine : Node
     {
         if (!_states.ContainsKey(key) || _currentState == _states[key])
         {
+            GD.Print("NO CAMERA STATE FOR " + key);
             return;
         }
 

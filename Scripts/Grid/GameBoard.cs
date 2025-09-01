@@ -65,7 +65,6 @@ public partial class GameBoard : Node2D
 
     private const float MAX_VALUE = 9999999;
 
-
     //---------- SET UP -----------
 
     /// <summary>
