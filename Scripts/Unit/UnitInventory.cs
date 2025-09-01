@@ -32,13 +32,6 @@ public partial class UnitInventory : Node
         {
             AddInventoryItem(item);
         }
-        /*
-        GD.Print(_unit.Name);
-
-        foreach (IInventoryItem item in _inventoryItems)
-        {
-            GD.Print(item);
-        }*/
     }
     
     /// <summary>
@@ -88,6 +81,23 @@ public partial class UnitInventory : Node
             output += item.size;
         }
         return output;
+    }
+
+    /// <summary>
+    /// checks to see if a unit can replace an item in inventory
+    /// with a different item
+    /// </summary>
+    /// <param name="newItem">item replacing</param>
+    /// <param name="oldItem">item being replaced</param>
+    /// <returns>true if it can be replaced</returns>
+    public bool CanReplaceInventoryItem(IInventoryItem newItem, IInventoryItem oldItem)
+    {
+        if (!_inventoryItems.Contains(oldItem))
+        {
+            return false;
+        }
+
+        return GetCurrentOccupiedInventory() - oldItem.size + newItem.size <= _maxInventorySlots;
     }
 
     /// <summary>

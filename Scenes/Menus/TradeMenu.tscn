@@ -28,6 +28,7 @@ script = ExtResource("2_64lir")
 _tradeMenu = NodePath("../..")
 _equippedWeaponButton = NodePath("EquippedButton")
 _itemSlotButtons = [NodePath("ItemButton1"), NodePath("ItemButton2"), NodePath("ItemButton3")]
+_isLeftGroup = true
 
 [node name="NameLabel" type="Label" parent="HBoxContainer/LeftBox"]
 layout_mode = 2
@@ -37,24 +38,40 @@ horizontal_alignment = 1
 [node name="EquippedButton" type="Button" parent="HBoxContainer/LeftBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath("../../RightBox/EquippedButton")
+focus_neighbor_top = NodePath("../ItemButton3")
+focus_neighbor_right = NodePath("../../RightBox/EquippedButton")
+focus_neighbor_bottom = NodePath("../ItemButton1")
 toggle_mode = true
 text = "E: Axe"
 
 [node name="ItemButton1" type="Button" parent="HBoxContainer/LeftBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath("../../RightBox/ItemButton1")
+focus_neighbor_top = NodePath("../EquippedButton")
+focus_neighbor_right = NodePath("../../RightBox/ItemButton1")
+focus_neighbor_bottom = NodePath("../ItemButton2")
 toggle_mode = true
 text = "Axe"
 
 [node name="ItemButton2" type="Button" parent="HBoxContainer/LeftBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath("../../RightBox/ItemButton2")
+focus_neighbor_top = NodePath("../ItemButton1")
+focus_neighbor_right = NodePath("../../RightBox/ItemButton2")
+focus_neighbor_bottom = NodePath("../ItemButton3")
 toggle_mode = true
 text = "Axe"
 
 [node name="ItemButton3" type="Button" parent="HBoxContainer/LeftBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath("../../RightBox/ItemButton3")
+focus_neighbor_top = NodePath("../ItemButton2")
+focus_neighbor_right = NodePath("../../RightBox/ItemButton3")
+focus_neighbor_bottom = NodePath("../EquippedButton")
 toggle_mode = true
 text = "---"
 
@@ -80,24 +97,40 @@ horizontal_alignment = 1
 [node name="EquippedButton" type="Button" parent="HBoxContainer/RightBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath("../../LeftBox/EquippedButton")
+focus_neighbor_top = NodePath("../ItemButton3")
+focus_neighbor_right = NodePath("../../LeftBox/EquippedButton")
+focus_neighbor_bottom = NodePath("../ItemButton1")
 toggle_mode = true
 text = "E: Axe"
 
 [node name="ItemButton1" type="Button" parent="HBoxContainer/RightBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath("../../LeftBox/ItemButton1")
+focus_neighbor_top = NodePath("../EquippedButton")
+focus_neighbor_right = NodePath("../../LeftBox/ItemButton1")
+focus_neighbor_bottom = NodePath("../ItemButton2")
 toggle_mode = true
 text = "Axe"
 
 [node name="ItemButton2" type="Button" parent="HBoxContainer/RightBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath("../../LeftBox/ItemButton2")
+focus_neighbor_top = NodePath("../ItemButton1")
+focus_neighbor_right = NodePath("../../LeftBox/ItemButton2")
+focus_neighbor_bottom = NodePath("../ItemButton3")
 toggle_mode = true
 text = "Axe"
 
 [node name="ItemButton3" type="Button" parent="HBoxContainer/RightBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath("../../LeftBox/ItemButton3")
+focus_neighbor_top = NodePath("../ItemButton2")
+focus_neighbor_right = NodePath("../../LeftBox/ItemButton3")
+focus_neighbor_bottom = NodePath("../EquippedButton")
 toggle_mode = true
 text = "---"
 
