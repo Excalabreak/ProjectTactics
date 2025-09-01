@@ -68,9 +68,13 @@ public partial class NPCAiStateMachine : Node
     /// <param name="key">key of state</param>
     public void TransitionTo(string key)
     {
-        if (!_states.ContainsKey(key) || _currentState == _states[key])
+        if (!_states.ContainsKey(key))
         {
             GD.Print("NO NPC STATE FOR " + key);
+            return;
+        }
+        if (_currentState == _states[key])
+        {
             return;
         }
 
