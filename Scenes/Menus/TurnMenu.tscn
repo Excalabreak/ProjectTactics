@@ -20,22 +20,27 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="UpButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Up"
 
 [node name="DownButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Down"
 
 [node name="LeftButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Left"
 
 [node name="RightButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Right"
 
 [node name="CancelButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Cancel"
 

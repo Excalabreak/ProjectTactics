@@ -7,7 +7,7 @@ using System;
  * [which function to call for the menu attack state]
  */
 
-public partial class MenuAttackScript : MenuState
+public partial class MenuAttackState : MenuState
 {
     public override void Enter()
     {

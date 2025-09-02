@@ -21,19 +21,23 @@ grow_vertical = 2
 
 [node name="UnitsButtons" type="Button" parent="VBoxContainer"]
 visible = false
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Units"
 
 [node name="OptionsButton" type="Button" parent="VBoxContainer"]
 visible = false
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Options"
 
 [node name="CloseButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Close"
 
 [node name="EndTurnButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "End Turn"
 

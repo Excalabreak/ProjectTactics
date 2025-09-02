@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=76 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dxok463ymyabj" path="res://Sprites/Test/TestTileMap2.png" id="5_jsdi5"]
 [ext_resource type="Script" uid="uid://cw1cq5bive7vy" path="res://Scripts/Grid/Map.cs" id="6_ns1vp"]
 [ext_resource type="PackedScene" uid="uid://d3t1a425enr52" path="res://Scenes/Menus/TradeMenu.tscn" id="6_ry365"]
+[ext_resource type="PackedScene" uid="uid://cddhp7ykeu13p" path="res://Scenes/Menus/ItemMenu.tscn" id="7_biv88"]
 [ext_resource type="Texture2D" uid="uid://dvp5cs678jp83" path="res://Sprites/Test/TempFogOfWarTileMap.png" id="7_maqlv"]
 [ext_resource type="Script" uid="uid://cbmsjn0oeh1ln" path="res://Scripts/Grid/GameBoardManagers/CombatManager.cs" id="7_wn5g2"]
 [ext_resource type="Script" uid="uid://b2aqh3nmf5lbc" path="res://Scripts/Grid/FogOfWar.cs" id="8_sb4gi"]
@@ -53,10 +54,11 @@
 [ext_resource type="Script" uid="uid://drcxnoxm0d5xc" path="res://Scripts/Menu/MenuStateMachine/States/MenuUnSelectedState.cs" id="48_a4mff"]
 [ext_resource type="Script" uid="uid://bcl8hy7m3ybux" path="res://Scripts/UI/UIManager.cs" id="48_bleph"]
 [ext_resource type="Script" uid="uid://e8qkg48qtpjf" path="res://Scripts/Menu/MenuStateMachine/States/MenuMoveState.cs" id="49_a4mff"]
-[ext_resource type="Script" uid="uid://cim42nmhn4plw" path="res://Scripts/Menu/MenuStateMachine/States/MenuAttackScript.cs" id="50_a4mff"]
 [ext_resource type="Script" uid="uid://ewwqdcxfpysl" path="res://Scripts/Grid/GameBoardManagers/TurnManager.cs" id="50_fhuv3"]
 [ext_resource type="Script" uid="uid://fj1645g86g1m" path="res://Scripts/Menu/MenuStateMachine/States/MenuBlankState.cs" id="51_a4mff"]
+[ext_resource type="Script" uid="uid://voisvt1i2auv" path="res://Scripts/Menu/MenuStateMachine/States/MenuAttackState.cs" id="51_ry365"]
 [ext_resource type="Script" uid="uid://b61mmurt8fk7d" path="res://Scripts/Menu/MenuStateMachine/States/MenuTradeState.cs" id="52_l8276"]
+[ext_resource type="Script" uid="uid://c7d3kjokroyh8" path="res://Scripts/Menu/MenuStateMachine/States/MenuItemState.cs" id="54_kmj3t"]
 [ext_resource type="Script" uid="uid://d3njo6qu5mnfs" path="res://Scripts/UI/UIInventory.cs" id="55_wmdct"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
@@ -230,6 +232,7 @@ _actionMenu = ExtResource("3_0ccgp")
 _pauseMenu = ExtResource("4_r77ll")
 _turnMenu = ExtResource("5_668gq")
 _tradeMenu = ExtResource("6_ry365")
+_itemMenu = ExtResource("7_biv88")
 
 [node name="MapTiles" type="Node2D" parent="GameBoard"]
 
@@ -482,13 +485,16 @@ script = ExtResource("48_a4mff")
 script = ExtResource("49_a4mff")
 
 [node name="MenuAttackState" type="Node" parent="GameBoard/MenuStateMachine"]
-script = ExtResource("50_a4mff")
+script = ExtResource("51_ry365")
 
 [node name="MenuBlankState" type="Node" parent="GameBoard/MenuStateMachine"]
 script = ExtResource("51_a4mff")
 
 [node name="MenuTradeState" type="Node" parent="GameBoard/MenuStateMachine"]
 script = ExtResource("52_l8276")
+
+[node name="MenuItemState" type="Node" parent="GameBoard/MenuStateMachine"]
+script = ExtResource("54_kmj3t")
 
 [node name="UIManager" type="CanvasLayer" parent="GameBoard" node_paths=PackedStringArray("_uiStats", "_uiBattle", "_uiTerrain", "_uiInventroy")]
 script = ExtResource("48_bleph")

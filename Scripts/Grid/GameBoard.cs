@@ -39,12 +39,14 @@ public partial class GameBoard : Node2D
     [Export] private PackedScene _pauseMenu;
     [Export] private PackedScene _turnMenu;
     [Export] private PackedScene _tradeMenu;
+    [Export] private PackedScene _itemMenu;
     [Signal] public delegate void SelectedMovedEventHandler();
 
     private ActionMenu _actionMenuInstance;
     private PauseScreen _pauseScreenInstance;
     private TurnMenu _turnMenuInstance;
     private TradeMenu _tradeMenuInstance;
+    private ItemMenu _itemMenuInstance;
 
     [ExportGroup("MoveCost")]
     private Unit _selectedUnit;
@@ -668,6 +670,12 @@ public partial class GameBoard : Node2D
     }
 
     //---------- OTHER MENU ----------
+
+    public void SpawnItemMenu()
+    {
+        _itemMenuInstance = _itemMenu.Instantiate() as ItemMenu;
+        AddChild(_itemMenuInstance);
+    }
 
     /// <summary>
     /// resets menu

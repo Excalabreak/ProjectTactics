@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://cddhp7ykeu13p"]
+
+[ext_resource type="Script" uid="uid://cjl2eloamfpi6" path="res://Scripts/Menu/MapMenus/ItemMenu.cs" id="1_hif4w"]
+
+[node name="ItemMenu" type="CanvasLayer" node_paths=PackedStringArray("_cursorDefaultStartButton")]
+script = ExtResource("1_hif4w")
+_cursorDefaultStartButton = NodePath("VBox/EquippedButton")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+offset_left = 841.5
+offset_top = 458.5
+offset_right = 991.5
+offset_bottom = 621.5
+
+[node name="EquippedButton" type="Button" parent="VBox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_neighbor_top = NodePath("../ItemButton3")
+focus_neighbor_bottom = NodePath("../ItemButton1")
+toggle_mode = true
+text = "E: Axe"
+
+[node name="ItemButton1" type="Button" parent="VBox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_neighbor_top = NodePath("../EquippedButton")
+focus_neighbor_bottom = NodePath("../ItemButton2")
+toggle_mode = true
+text = "Axe"
+
+[node name="ItemButton2" type="Button" parent="VBox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_neighbor_top = NodePath("../ItemButton1")
+focus_neighbor_bottom = NodePath("../ItemButton3")
+toggle_mode = true
+text = "Axe"
+
+[node name="ItemButton3" type="Button" parent="VBox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_neighbor_top = NodePath("../ItemButton2")
+focus_neighbor_bottom = NodePath("../EquippedButton")
+toggle_mode = true
+text = "---"

@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: YT:Heal Moon
- * Last Updated: [08/25/2025]
+ * Last Updated: [09/02/2025]
  * [menu for unit action]
  */
 
@@ -47,7 +47,8 @@ public partial class ActionMenu : BaseMenu
 
     private void OnItemButtonPress()
     {
-
+        HideMenu();
+        _gameBoard.menuStateMachine.TransitionTo("MenuItemState");
     }
 
     private void OnTradeButtonPress()
