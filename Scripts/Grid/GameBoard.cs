@@ -674,6 +674,10 @@ public partial class GameBoard : Node2D
     public void SpawnItemMenu()
     {
         _itemMenuInstance = _itemMenu.Instantiate() as ItemMenu;
+        if (_selectedUnit != null)
+        {
+            _itemMenuInstance.UpdateButtonText(_selectedUnit.unitInventory);
+        }
         AddChild(_itemMenuInstance);
     }
 

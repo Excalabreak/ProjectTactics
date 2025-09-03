@@ -62,7 +62,6 @@ layout_mode = 2
 text = "Items"
 
 [node name="TradeButton" type="Button" parent="VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Trade"

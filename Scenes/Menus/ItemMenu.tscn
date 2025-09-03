@@ -2,8 +2,10 @@
 
 [ext_resource type="Script" uid="uid://cjl2eloamfpi6" path="res://Scripts/Menu/MapMenus/ItemMenu.cs" id="1_hif4w"]
 
-[node name="ItemMenu" type="CanvasLayer" node_paths=PackedStringArray("_cursorDefaultStartButton")]
+[node name="ItemMenu" type="CanvasLayer" node_paths=PackedStringArray("_equippedWeaponButton", "_itemSlotButtons", "_cursorDefaultStartButton")]
 script = ExtResource("1_hif4w")
+_equippedWeaponButton = NodePath("VBox/EquippedButton")
+_itemSlotButtons = [NodePath("VBox/ItemButton1"), NodePath("VBox/ItemButton2"), NodePath("VBox/ItemButton3")]
 _cursorDefaultStartButton = NodePath("VBox/EquippedButton")
 
 [node name="VBox" type="VBoxContainer" parent="."]
@@ -15,7 +17,7 @@ offset_bottom = 621.5
 [node name="EquippedButton" type="Button" parent="VBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-focus_neighbor_top = NodePath("../ItemButton3")
+focus_neighbor_top = NodePath("../CancelButton")
 focus_neighbor_bottom = NodePath("../ItemButton1")
 toggle_mode = true
 text = "E: Axe"
@@ -40,6 +42,16 @@ text = "Axe"
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_top = NodePath("../ItemButton2")
-focus_neighbor_bottom = NodePath("../EquippedButton")
+focus_neighbor_bottom = NodePath("../CancelButton")
 toggle_mode = true
 text = "---"
+
+[node name="CancelButton" type="Button" parent="VBox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_neighbor_top = NodePath("../ItemButton3")
+focus_neighbor_bottom = NodePath("../EquippedButton")
+toggle_mode = true
+text = "Cancel"
+
+[connection signal="pressed" from="VBox/CancelButton" to="." method="OnCancelButtonPress"]
