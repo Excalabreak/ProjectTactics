@@ -4,17 +4,45 @@
 
 [node name="ItemMenu" type="CanvasLayer" node_paths=PackedStringArray("_equippedWeaponButton", "_itemSlotButtons", "_cursorDefaultStartButton")]
 script = ExtResource("1_hif4w")
-_equippedWeaponButton = NodePath("VBox/EquippedButton")
-_itemSlotButtons = [NodePath("VBox/ItemButton1"), NodePath("VBox/ItemButton2"), NodePath("VBox/ItemButton3")]
-_cursorDefaultStartButton = NodePath("VBox/EquippedButton")
+_equippedWeaponButton = NodePath("HBoxContainer/VBox/EquippedButton")
+_itemSlotButtons = [NodePath("HBoxContainer/VBox/ItemButton1"), NodePath("HBoxContainer/VBox/ItemButton2"), NodePath("HBoxContainer/VBox/ItemButton3")]
+_cursorDefaultStartButton = NodePath("HBoxContainer/VBox/EquippedButton")
 
-[node name="VBox" type="VBoxContainer" parent="."]
-offset_left = 841.5
-offset_top = 458.5
-offset_right = 991.5
-offset_bottom = 621.5
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
 
-[node name="EquippedButton" type="Button" parent="VBox"]
+[node name="Panel" type="Panel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(172.73, 232.505)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 9.0
+offset_right = -6.73
+offset_bottom = -16.505
+grow_horizontal = 2
+grow_vertical = 2
+text = "Description"
+
+[node name="VBox" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="EquippedButton" type="Button" parent="HBoxContainer/VBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_top = NodePath("../CancelButton")
@@ -22,7 +50,7 @@ focus_neighbor_bottom = NodePath("../ItemButton1")
 toggle_mode = true
 text = "E: Axe"
 
-[node name="ItemButton1" type="Button" parent="VBox"]
+[node name="ItemButton1" type="Button" parent="HBoxContainer/VBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_top = NodePath("../EquippedButton")
@@ -30,15 +58,15 @@ focus_neighbor_bottom = NodePath("../ItemButton2")
 toggle_mode = true
 text = "Axe"
 
-[node name="ItemButton2" type="Button" parent="VBox"]
-custom_minimum_size = Vector2(150, 0)
+[node name="ItemButton2" type="Button" parent="HBoxContainer/VBox"]
+custom_minimum_size = Vector2(2, 0)
 layout_mode = 2
 focus_neighbor_top = NodePath("../ItemButton1")
 focus_neighbor_bottom = NodePath("../ItemButton3")
 toggle_mode = true
 text = "Axe"
 
-[node name="ItemButton3" type="Button" parent="VBox"]
+[node name="ItemButton3" type="Button" parent="HBoxContainer/VBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_top = NodePath("../ItemButton2")
@@ -46,7 +74,7 @@ focus_neighbor_bottom = NodePath("../CancelButton")
 toggle_mode = true
 text = "---"
 
-[node name="CancelButton" type="Button" parent="VBox"]
+[node name="CancelButton" type="Button" parent="HBoxContainer/VBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_top = NodePath("../ItemButton3")
@@ -54,4 +82,12 @@ focus_neighbor_bottom = NodePath("../EquippedButton")
 toggle_mode = true
 text = "Cancel"
 
-[connection signal="pressed" from="VBox/CancelButton" to="." method="OnCancelButtonPress"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Equip"
+
+[connection signal="pressed" from="HBoxContainer/VBox/CancelButton" to="." method="OnCancelButtonPress"]
