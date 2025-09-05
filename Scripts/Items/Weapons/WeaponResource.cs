@@ -9,7 +9,7 @@ using System;
  */
 
 [GlobalClass]
-public partial class WeaponResource : Resource, IInventoryItem
+public partial class WeaponResource : Resource, IInventoryItem, IEquipable
 {
     [Export] private string _weaponName;
     [Export(PropertyHint.MultilineText)] private string _description;
@@ -103,5 +103,10 @@ public partial class WeaponResource : Resource, IInventoryItem
     public override string ToString()
     {
         return _weaponName;
+    }
+
+    public EquipableSlotEnum equipableSlot
+    {
+        get { return EquipableSlotEnum.WEAPON; }
     }
 }

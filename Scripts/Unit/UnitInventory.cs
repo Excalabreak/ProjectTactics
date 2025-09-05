@@ -1,10 +1,11 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/26/2025]
+ * Last Updated: [09/05/2025]
  * [handles inventory for units]
  */
 
@@ -82,6 +83,69 @@ public partial class UnitInventory : Node
         }
         return output;
     }
+    
+    /// <summary>
+    /// equips item to weapon slot
+    /// </summary>
+    /// <param name="weapon"></param>
+    public void EquipWeapon(IInventoryItem weapon)
+    {
+        if (_equiptWeapon == weapon)
+        {
+            return;
+        }
+
+        WeaponResource newWeapon = weapon as WeaponResource;
+        if (newWeapon == null)
+        {
+            return;
+        }
+        if (newWeapon.equipableSlot != EquipableSlotEnum.WEAPON)
+        {
+            return;
+        }
+
+        if (!HasEquippedWeapon())
+        {
+            _equiptWeapon = newWeapon;
+
+            if (HasItemInInventory(newWeapon))
+            {
+                _inventoryItems.Remove(newWeapon);
+            }
+
+            return;
+        }
+        else
+        {
+            WeaponResource oldWeapon = _equiptWeapon;
+            if (HasItemInInventory(newWeapon))
+            {
+                if (!CanReplaceInventoryItem(oldWeapon, newWeapon))
+                {
+                    return;
+                }
+
+                _inventoryItems.Remove(newWeapon);
+                _inventoryItems.Add(oldWeapon);
+
+                _equiptWeapon = newWeapon;
+                return;
+            }
+            else
+            {
+                if (!CanAddItemToInventory(oldWeapon))
+                {
+                    return;
+                }
+
+                _inventoryItems.Add(oldWeapon);
+
+                _equiptWeapon = newWeapon;
+                return;
+            }
+        }
+    }
 
     /// <summary>
     /// checks to see if a unit can replace an item in inventory
@@ -106,8 +170,20 @@ public partial class UnitInventory : Node
     /// <returns></returns>
     public bool HasEquippedWeapon()
     {
-        return _equiptWeapon == null;
+        return _equiptWeapon != null;
     }
+
+    /// <summary>
+    /// checks if item is in inventory
+    /// </summary>
+    /// <param name="item">item in inventory</param>
+    /// <returns>true if in inventory</returns>
+    private bool HasItemInInventory(IInventoryItem item)
+    {
+        return _inventoryItems.Contains(item);
+    }
+
+    //propertieds
 
     public IInventoryItem[] inventoryItems
     {
@@ -118,7 +194,7 @@ public partial class UnitInventory : Node
     {
         get
         {
-            if (HasEquippedWeapon())
+            if (!HasEquippedWeapon())
             {
                 return _unarmmedResource;
             }

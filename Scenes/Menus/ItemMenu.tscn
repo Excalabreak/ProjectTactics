@@ -1,11 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://cddhp7ykeu13p"]
+[gd_scene load_steps=3 format=3 uid="uid://cddhp7ykeu13p"]
 
 [ext_resource type="Script" uid="uid://cjl2eloamfpi6" path="res://Scripts/Menu/MapMenus/ItemMenu.cs" id="1_hif4w"]
+[ext_resource type="ButtonGroup" uid="uid://dv2euotprg3mc" path="res://ButtonGroups/ItemMenuGroup.tres" id="2_bbv8i"]
 
-[node name="ItemMenu" type="CanvasLayer" node_paths=PackedStringArray("_equippedWeaponButton", "_itemSlotButtons", "_cursorDefaultStartButton")]
+[node name="ItemMenu" type="CanvasLayer" node_paths=PackedStringArray("_equippedWeaponButton", "_itemSlotButtons", "_useButton", "_equipButton", "_dequipButton", "_cursorDefaultStartButton")]
 script = ExtResource("1_hif4w")
 _equippedWeaponButton = NodePath("HBoxContainer/VBox/EquippedButton")
 _itemSlotButtons = [NodePath("HBoxContainer/VBox/ItemButton1"), NodePath("HBoxContainer/VBox/ItemButton2"), NodePath("HBoxContainer/VBox/ItemButton3")]
+_useButton = NodePath("HBoxContainer/VBoxContainer/UseButton")
+_equipButton = NodePath("HBoxContainer/VBoxContainer/EquipButton")
+_dequipButton = NodePath("HBoxContainer/VBoxContainer/DequipButton")
 _cursorDefaultStartButton = NodePath("HBoxContainer/VBox/EquippedButton")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -48,6 +52,7 @@ layout_mode = 2
 focus_neighbor_top = NodePath("../CancelButton")
 focus_neighbor_bottom = NodePath("../ItemButton1")
 toggle_mode = true
+button_group = ExtResource("2_bbv8i")
 text = "E: Axe"
 
 [node name="ItemButton1" type="Button" parent="HBoxContainer/VBox"]
@@ -56,6 +61,7 @@ layout_mode = 2
 focus_neighbor_top = NodePath("../EquippedButton")
 focus_neighbor_bottom = NodePath("../ItemButton2")
 toggle_mode = true
+button_group = ExtResource("2_bbv8i")
 text = "Axe"
 
 [node name="ItemButton2" type="Button" parent="HBoxContainer/VBox"]
@@ -64,6 +70,7 @@ layout_mode = 2
 focus_neighbor_top = NodePath("../ItemButton1")
 focus_neighbor_bottom = NodePath("../ItemButton3")
 toggle_mode = true
+button_group = ExtResource("2_bbv8i")
 text = "Axe"
 
 [node name="ItemButton3" type="Button" parent="HBoxContainer/VBox"]
@@ -72,6 +79,7 @@ layout_mode = 2
 focus_neighbor_top = NodePath("../ItemButton2")
 focus_neighbor_bottom = NodePath("../CancelButton")
 toggle_mode = true
+button_group = ExtResource("2_bbv8i")
 text = "---"
 
 [node name="CancelButton" type="Button" parent="HBoxContainer/VBox"]
@@ -79,15 +87,32 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_top = NodePath("../ItemButton3")
 focus_neighbor_bottom = NodePath("../EquippedButton")
-toggle_mode = true
 text = "Cancel"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="UseButton" type="Button" parent="HBoxContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Use"
+
+[node name="EquipButton" type="Button" parent="HBoxContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Equip"
 
+[node name="DequipButton" type="Button" parent="HBoxContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Dequip"
+
+[connection signal="toggled" from="HBoxContainer/VBox/EquippedButton" to="." method="OnItemButtonToggled" binds= [NodePath("HBoxContainer/VBox/EquippedButton")]]
+[connection signal="toggled" from="HBoxContainer/VBox/ItemButton1" to="." method="OnItemButtonToggled" binds= [NodePath("HBoxContainer/VBox/ItemButton1")]]
+[connection signal="toggled" from="HBoxContainer/VBox/ItemButton2" to="." method="OnItemButtonToggled" binds= [NodePath("HBoxContainer/VBox/ItemButton2")]]
+[connection signal="toggled" from="HBoxContainer/VBox/ItemButton3" to="." method="OnItemButtonToggled" binds= [NodePath("HBoxContainer/VBox/ItemButton3")]]
 [connection signal="pressed" from="HBoxContainer/VBox/CancelButton" to="." method="OnCancelButtonPress"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/EquipButton" to="." method="OnEquipPressed"]
