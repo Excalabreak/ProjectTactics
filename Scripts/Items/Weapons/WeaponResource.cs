@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/22/2025]
+ * Last Updated: [09/07/2025]
  * [resource for weapon]
  */
 
@@ -15,6 +15,7 @@ public partial class WeaponResource : Resource, IInventoryItem, IEquipable
     [Export(PropertyHint.MultilineText)] private string _description;
 
     //make enum for damage type
+    [Export] private WeaponTypeEnum _weaponType;
     [Export] private DamageType _damageType;
     [Export] private bool _canUseSpells;
     [Export] private int _damage;
@@ -53,6 +54,11 @@ public partial class WeaponResource : Resource, IInventoryItem, IEquipable
     public string description
     {
         get { return _description; }
+    }
+
+    public WeaponTypeEnum weaponType
+    {
+        get { return _weaponType; }
     }
 
     public DamageType damageType

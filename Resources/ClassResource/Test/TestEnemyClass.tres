@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="UnitClassResource" load_steps=7 format=3 uid="uid://dcl3gix7gs7gs"]
+
+[ext_resource type="Script" uid="uid://c03kdlweawwwu" path="res://Scripts/Unit/UnitClassResource.cs" id="1_fxw3p"]
+[ext_resource type="Texture2D" uid="uid://xdhxhuor3wo2" path="res://Sprites/Test/Units/Enemy/TestEnemy.png" id="1_rd8n4"]
+[ext_resource type="Texture2D" uid="uid://dd2aixpvr2sju" path="res://Sprites/Test/Units/Enemy/testEnemySword.png" id="2_2fqru"]
+[ext_resource type="Texture2D" uid="uid://c5p222eb3u6tf" path="res://Sprites/Test/Units/Enemy/testEnemyLance.png" id="3_23hcs"]
+[ext_resource type="Texture2D" uid="uid://cc7t1ceh770xj" path="res://Sprites/Test/Units/Enemy/testEnemyAxe.png" id="4_hfgsv"]
+[ext_resource type="Texture2D" uid="uid://dbbeb4v2210nd" path="res://Sprites/Test/Units/Enemy/testEnemyHealer.png" id="5_mudbn"]
+
+[resource]
+script = ExtResource("1_fxw3p")
+_weaponSprites = Dictionary[int, Texture]({
+0: ExtResource("1_rd8n4"),
+1: ExtResource("2_2fqru"),
+2: ExtResource("3_23hcs"),
+3: ExtResource("4_hfgsv"),
+4: ExtResource("5_mudbn")
+})
+metadata/_custom_type_script = "uid://c03kdlweawwwu"

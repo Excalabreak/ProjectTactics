@@ -6,6 +6,7 @@
 script = ExtResource("1_w2deb")
 _weaponName = "Lance"
 _description = "a pokey lance"
+_weaponType = 2
 _damageType = 0
 _canUseSpells = false
 _damage = 1

@@ -369,9 +369,6 @@ visible = true
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit/Sprites" index="4"]
 visible = true
 
-[node name="UnitInventory" parent="GameBoard/Units/EnemyUnits/AxeAiUnit" index="2"]
-_unarmmedResource = null
-
 [node name="LanceAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(477, 795)
 _unitResource = ExtResource("36_onxey")
@@ -385,9 +382,6 @@ visible = true
 
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit/Sprites" index="4"]
 visible = true
-
-[node name="UnitInventory" parent="GameBoard/Units/EnemyUnits/LanceAiUnit" index="2"]
-_unarmmedResource = null
 
 [node name="SwordAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(390, 928)
@@ -403,9 +397,6 @@ visible = true
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit/Sprites" index="4"]
 visible = true
 
-[node name="UnitInventory" parent="GameBoard/Units/EnemyUnits/SwordAiUnit" index="2"]
-_unarmmedResource = null
-
 [node name="CommanderAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1316, 347)
 _unitResource = ExtResource("40_a4mff")
@@ -419,9 +410,6 @@ visible = true
 
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit/Sprites" index="4"]
 visible = true
-
-[node name="UnitInventory" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit" index="2"]
-_unarmmedResource = null
 
 [node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer", "_camera")]
 z_index = 100

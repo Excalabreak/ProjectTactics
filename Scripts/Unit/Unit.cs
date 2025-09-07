@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [08/15/2025]
+ * Last Updated: [09/07/2025]
  * [Unit Main Script]
  */
 
@@ -21,6 +21,7 @@ public partial class Unit : Node2D
 
     [Export] private UnitSprite _unitSprite;
 
+    [Export] private UnitClass _unitClass;
     [Export] private UnitStats _unitStats;
     [Export] private UnitInventory _unitInventory;
 
@@ -157,6 +158,11 @@ public partial class Unit : Node2D
         }
     }
 
+    public UnitClass unitClass
+    {
+        get { return _unitClass; }
+    }
+
     public UnitStats unitStats
     {
         get { return _unitStats; }
@@ -196,5 +202,10 @@ public partial class Unit : Node2D
     public bool isCommander
     {
         get { return _isCommander; }
+    }
+
+    public UnitSprite unitSprite
+    {
+        get { return _unitSprite; }
     }
 }

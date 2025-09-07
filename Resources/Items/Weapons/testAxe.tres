@@ -6,6 +6,7 @@
 script = ExtResource("1_1lbfs")
 _weaponName = "Axe"
 _description = "a choppy axe"
+_weaponType = 3
 _damageType = 1
 _canUseSpells = false
 _damage = 5

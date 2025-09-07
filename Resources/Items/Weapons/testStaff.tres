@@ -6,6 +6,7 @@
 script = ExtResource("1_8a6mr")
 _weaponName = ""
 _description = "a magical staff"
+_weaponType = 4
 _damageType = 2
 _canUseSpells = true
 _damage = 4

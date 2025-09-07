@@ -34,8 +34,6 @@ public partial class ItemMenu : BaseMenu
 
         _equippedWeaponButton.Text = "E: " + inventory.equiptWeapon.itemName;
         _inventorySlots.Add(_equippedWeaponButton, inventory.equiptWeapon);
-        //just a note on how to connect a button
-        //_equippedWeaponButton.Connect(Button.SignalName.Pressed, Callable.From(OnCancelButtonPress));
 
         for (int i = 0; i < _itemSlotButtons.Length; i++)
         {

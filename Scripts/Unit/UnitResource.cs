@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/16/2025]
+ * Last Updated: [09/07/2025]
  * [a unit resource that holds unit data
  * for the unit to load onto their scripts
  * 
@@ -20,6 +20,7 @@ public partial class UnitResource : Resource
     [Export] private Vector2 _spriteOffset = Vector2.Zero;
 
     [ExportGroup("Stats")]
+    [Export] private UnitClassResource _unitClass;
     [Export] private Dictionary<UnitStatEnum, int> _baseStats = new Dictionary<UnitStatEnum, int>();
 
     [ExportGroup("Inventory")]
@@ -56,6 +57,11 @@ public partial class UnitResource : Resource
     public Vector2 spriteOffset
     {
         get { return _spriteOffset; }
+    }
+
+    public UnitClassResource unitClass
+    {
+        get { return _unitClass; }
     }
 
     public Dictionary<UnitStatEnum, int> baseStats

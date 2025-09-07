@@ -6,6 +6,7 @@
 script = ExtResource("1_seqcc")
 _weaponName = "Sword"
 _description = "a slashing sword"
+_weaponType = 1
 _damageType = 0
 _canUseSpells = false
 _damage = 3

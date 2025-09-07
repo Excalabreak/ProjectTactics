@@ -5,14 +5,14 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/05/2025]
+ * Last Updated: [09/07/2025]
  * [handles inventory for units]
  */
 
 public partial class UnitInventory : Node
 {
     [Export] private Unit _unit;
-    [Export] private WeaponResource _unarmmedResource;
+    [Export] private WeaponResource _unarmedResource;
 
     //[Export] private int _maxHandSlots = 2;
     [Export] private int _maxInventorySlots = 3;
@@ -108,6 +108,7 @@ public partial class UnitInventory : Node
         if (!HasEquippedWeapon())
         {
             _equiptWeapon = newWeapon;
+            _unit.unitSprite.skin = _unit.unitClass.GetWeaponTexture(_equiptWeapon.weaponType);
 
             if (HasItemInInventory(newWeapon))
             {
@@ -130,6 +131,7 @@ public partial class UnitInventory : Node
                 _inventoryItems.Add(oldWeapon);
 
                 _equiptWeapon = newWeapon;
+                _unit.unitSprite.skin = _unit.unitClass.GetWeaponTexture(_equiptWeapon.weaponType);
                 return;
             }
             else
@@ -142,6 +144,7 @@ public partial class UnitInventory : Node
                 _inventoryItems.Add(oldWeapon);
 
                 _equiptWeapon = newWeapon;
+                _unit.unitSprite.skin = _unit.unitClass.GetWeaponTexture(_equiptWeapon.weaponType);
                 return;
             }
         }
@@ -196,7 +199,7 @@ public partial class UnitInventory : Node
         {
             if (!HasEquippedWeapon())
             {
-                return _unarmmedResource;
+                return _unarmedResource;
             }
             return _equiptWeapon;
         }
