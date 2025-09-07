@@ -4,9 +4,11 @@
 
 [resource]
 script = ExtResource("1_m1gy0")
-_weaponName = "Unarmmed"
+_weaponName = "Unarmed"
 _description = "just the unit's fists"
+_weaponType = 0
 _damageType = 1
+_canUseSpells = false
 _damage = 1
 _minRange = 1
 _maxRange = 1

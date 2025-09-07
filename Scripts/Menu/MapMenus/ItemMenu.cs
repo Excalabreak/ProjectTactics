@@ -102,7 +102,10 @@ public partial class ItemMenu : BaseMenu
         {
             if (toggledButton == _equippedWeaponButton)
             {
-                _dequipButton.Visible = true;
+                if(_unitInventory.HasEquippedWeapon())
+                {
+                    _dequipButton.Visible = true;
+                }
             }
             else
             {
@@ -111,9 +114,6 @@ public partial class ItemMenu : BaseMenu
         }
         //if IUseable
             //show use item
-
-
-        GD.Print(toggledButton.Name + " " + toggle);
     }
 
     /// <summary>
@@ -141,7 +141,34 @@ public partial class ItemMenu : BaseMenu
             default:
                 return;
         }
-        GD.Print(_unitInventory.equiptWeapon);
+        ResetItemSlots();
+    }
+
+    /// <summary>
+    /// calls to dequipt a the currenly equipt item
+    /// </summary>
+    private void OnDequipPressed()
+    {
+        //check for weapon, armor, or accessory
+        IEquipable item = _currentlySelectedItem as IEquipable;
+
+        if (item == null)
+        {
+            return;
+        }
+
+        switch (item.equipableSlot)
+        {
+            case EquipableSlotEnum.WEAPON:
+                _unitInventory.DequipWeaponToInventory();
+                break;
+            case EquipableSlotEnum.ARMOR:
+                break;
+            case EquipableSlotEnum.ACCESSORY:
+                break;
+            default:
+                return;
+        }
         ResetItemSlots();
     }
 

@@ -9,7 +9,7 @@
 
 [resource]
 script = ExtResource("1_fxw3p")
-_weaponSprites = Dictionary[int, Texture]({
+_weaponSprites = Dictionary[int, Texture2D]({
 0: ExtResource("1_rd8n4"),
 1: ExtResource("2_2fqru"),
 2: ExtResource("3_23hcs"),

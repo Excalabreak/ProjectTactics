@@ -151,6 +151,27 @@ public partial class UnitInventory : Node
     }
 
     /// <summary>
+    /// attempts to dequip the currently equipt weapon
+    /// </summary>
+    public void DequipWeaponToInventory()
+    {
+        if (!HasEquippedWeapon())
+        {
+            return;
+        }
+        if (!CanAddItemToInventory(_equiptWeapon))
+        {
+            return;
+        }
+
+        _inventoryItems.Add(_equiptWeapon);
+
+        _equiptWeapon = null;
+        GD.Print(equiptWeapon.weaponType);
+        _unit.unitSprite.skin = _unit.unitClass.GetWeaponTexture(equiptWeapon.weaponType);
+    }
+
+    /// <summary>
     /// checks to see if a unit can replace an item in inventory
     /// with a different item
     /// </summary>

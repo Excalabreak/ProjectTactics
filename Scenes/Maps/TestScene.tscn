@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=77 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -34,6 +34,7 @@
 [ext_resource type="Resource" uid="uid://bt88eerwj5e1w" path="res://Resources/Unit/Prototype1/Player/PrototypePlayerAxeResource.tres" id="26_vgme0"]
 [ext_resource type="Texture2D" uid="uid://pp7o52sefur8" path="res://Sprites/Test/Units/Player/testPlayerLance.png" id="27_he1t7"]
 [ext_resource type="Resource" uid="uid://cg7txlxy6nmm1" path="res://Resources/Unit/Prototype1/Player/PrototypePlayerLanceResource.tres" id="28_b77nk"]
+[ext_resource type="Resource" uid="uid://cifqxwq138cgy" path="res://Resources/Items/Weapons/unarmed.tres" id="28_slbve"]
 [ext_resource type="Texture2D" uid="uid://bpncogxb8oeqi" path="res://Sprites/Test/Units/Player/testPlayerSword.png" id="28_wn863"]
 [ext_resource type="Script" uid="uid://dwo3objlyjeiq" path="res://Scripts/UI/UIStats.cs" id="30_0ccgp"]
 [ext_resource type="Texture2D" uid="uid://cc7t1ceh770xj" path="res://Sprites/Test/Units/Enemy/testEnemyAxe.png" id="30_l2v6i"]
@@ -293,6 +294,9 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/AxeUnit/Sprites" index="0"]
 texture = ExtResource("26_j6x6y")
 
+[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/AxeUnit" index="3"]
+_unarmedResource = ExtResource("28_slbve")
+
 [node name="LanceUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(221, 1106)
 _unitResource = ExtResource("28_b77nk")
@@ -300,6 +304,9 @@ _gameBoard = NodePath("../../..")
 
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/LanceUnit/Sprites" index="0"]
 texture = ExtResource("27_he1t7")
+
+[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/LanceUnit" index="3"]
+_unarmedResource = ExtResource("28_slbve")
 
 [node name="SwordUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(284, 932)
@@ -309,45 +316,8 @@ _gameBoard = NodePath("../../..")
 [node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit/Sprites" index="0"]
 texture = ExtResource("28_wn863")
 
-[node name="AxeUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
-position = Vector2(196, 991)
-_unitResource = ExtResource("26_vgme0")
-_gameBoard = NodePath("../../..")
-
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/AxeUnit2/Sprites" index="0"]
-texture = ExtResource("26_j6x6y")
-
-[node name="LanceUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
-position = Vector2(140, 934)
-_unitResource = ExtResource("28_b77nk")
-_gameBoard = NodePath("../../..")
-
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/LanceUnit2/Sprites" index="0"]
-texture = ExtResource("27_he1t7")
-
-[node name="LanceUnit3" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
-position = Vector2(138, 995)
-_unitResource = ExtResource("28_b77nk")
-_gameBoard = NodePath("../../..")
-
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/LanceUnit3/Sprites" index="0"]
-texture = ExtResource("27_he1t7")
-
-[node name="SwordUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
-position = Vector2(358, 1048)
-_unitResource = ExtResource("30_qm5w0")
-_gameBoard = NodePath("../../..")
-
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit2/Sprites" index="0"]
-texture = ExtResource("28_wn863")
-
-[node name="SwordUnit3" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
-position = Vector2(350, 989)
-_unitResource = ExtResource("30_qm5w0")
-_gameBoard = NodePath("../../..")
-
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit3/Sprites" index="0"]
-texture = ExtResource("28_wn863")
+[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/SwordUnit" index="3"]
+_unarmedResource = ExtResource("28_slbve")
 
 [node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
 script = ExtResource("19_vgme0")
@@ -369,6 +339,9 @@ visible = true
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit/Sprites" index="4"]
 visible = true
 
+[node name="UnitInventory" parent="GameBoard/Units/EnemyUnits/AxeAiUnit" index="4"]
+_unarmedResource = ExtResource("28_slbve")
+
 [node name="LanceAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(477, 795)
 _unitResource = ExtResource("36_onxey")
@@ -382,6 +355,9 @@ visible = true
 
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/LanceAiUnit/Sprites" index="4"]
 visible = true
+
+[node name="UnitInventory" parent="GameBoard/Units/EnemyUnits/LanceAiUnit" index="4"]
+_unarmedResource = ExtResource("28_slbve")
 
 [node name="SwordAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(390, 928)
@@ -397,6 +373,9 @@ visible = true
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/SwordAiUnit/Sprites" index="4"]
 visible = true
 
+[node name="UnitInventory" parent="GameBoard/Units/EnemyUnits/SwordAiUnit" index="4"]
+_unarmedResource = ExtResource("28_slbve")
+
 [node name="CommanderAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
 position = Vector2(1316, 347)
 _unitResource = ExtResource("40_a4mff")
@@ -410,6 +389,9 @@ visible = true
 
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit/Sprites" index="4"]
 visible = true
+
+[node name="UnitInventory" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit" index="4"]
+_unarmedResource = ExtResource("28_slbve")
 
 [node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer", "_camera")]
 z_index = 100
@@ -723,11 +705,6 @@ text = "Vision Cost: "
 [editable path="GameBoard/Units/PlayerUnits/AxeUnit"]
 [editable path="GameBoard/Units/PlayerUnits/LanceUnit"]
 [editable path="GameBoard/Units/PlayerUnits/SwordUnit"]
-[editable path="GameBoard/Units/PlayerUnits/AxeUnit2"]
-[editable path="GameBoard/Units/PlayerUnits/LanceUnit2"]
-[editable path="GameBoard/Units/PlayerUnits/LanceUnit3"]
-[editable path="GameBoard/Units/PlayerUnits/SwordUnit2"]
-[editable path="GameBoard/Units/PlayerUnits/SwordUnit3"]
 [editable path="GameBoard/Units/EnemyUnits/AxeAiUnit"]
 [editable path="GameBoard/Units/EnemyUnits/LanceAiUnit"]
 [editable path="GameBoard/Units/EnemyUnits/SwordAiUnit"]
