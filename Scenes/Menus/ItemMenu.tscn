@@ -115,5 +115,6 @@ text = "Dequip"
 [connection signal="toggled" from="HBoxContainer/VBox/ItemButton2" to="." method="OnItemButtonToggled" binds= [NodePath("HBoxContainer/VBox/ItemButton2")]]
 [connection signal="toggled" from="HBoxContainer/VBox/ItemButton3" to="." method="OnItemButtonToggled" binds= [NodePath("HBoxContainer/VBox/ItemButton3")]]
 [connection signal="pressed" from="HBoxContainer/VBox/CancelButton" to="." method="OnCancelButtonPress"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/UseButton" to="." method="OnUsePressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/EquipButton" to="." method="OnEquipPressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/DequipButton" to="." method="OnDequipPressed"]

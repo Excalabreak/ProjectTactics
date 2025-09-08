@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/22/2025]
+ * Last Updated: [09/08/2025]
  * [class for unit's current stats]
  */
 
@@ -31,7 +31,6 @@ public partial class UnitStats : Node
 
     /// <summary>
     /// damages the unit and checks for death
-    /// NOTE: very simple now
     /// </summary>
     /// <param name="damage"></param>
     public void DamageUnit(int damage)
@@ -41,6 +40,23 @@ public partial class UnitStats : Node
         {
             UnitEventManager.OnUnitDeathEvent(_unit);
             _unit.QueueFree();
+        }
+        UpdateHealthUI();
+    }
+
+    /// <summary>
+    /// heals unit
+    /// </summary>
+    /// <param name="health">amount of health to add</param>
+    public void HealUnit(int health)
+    {
+        if (_currentHP + health > _maxHP)
+        {
+            _currentHP = _maxHP;
+        }
+        else
+        {
+            _currentHP += health;
         }
         UpdateHealthUI();
     }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/05/2025]
+ * Last Updated: [09/08/2025]
  * [script for the menu]
  */
 
@@ -112,8 +112,10 @@ public partial class ItemMenu : BaseMenu
                 _equipButton.Visible = true;
             }
         }
-        //if IUseable
-            //show use item
+        if (_currentlySelectedItem is IUseable)
+        {
+            _useButton.Visible = true;
+        }
     }
 
     /// <summary>
@@ -169,6 +171,23 @@ public partial class ItemMenu : BaseMenu
             default:
                 return;
         }
+        ResetItemSlots();
+    }
+
+    /// <summary>
+    /// calls to use item
+    /// </summary>
+    private void OnUsePressed()
+    {
+        IUseable item = _currentlySelectedItem as IUseable;
+
+        if (item == null)
+        {
+            return;
+        }
+
+        _unitInventory.UseItem(_currentlySelectedItem);
+
         ResetItemSlots();
     }
 

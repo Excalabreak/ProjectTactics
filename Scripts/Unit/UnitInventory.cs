@@ -5,7 +5,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/07/2025]
+ * Last Updated: [09/08/2025]
  * [handles inventory for units]
  */
 
@@ -29,9 +29,29 @@ public partial class UnitInventory : Node
             return;
         }
 
+        int count = _maxInventorySlots;
+
         foreach (IInventoryItem item in _unit.unitResource.inventoryItems)
         {
             AddInventoryItem(item);
+            count--;
+            if (count <= 0)
+            {
+                break;
+            }
+        }
+
+        if (count > 0)
+        {
+            foreach (IInventoryItem item in _unit.unitResource.consumableItems)
+            {
+                AddInventoryItem(item);
+                count--;
+                if (count <= 0)
+                {
+                    break;
+                }
+            }
         }
     }
     
@@ -169,6 +189,22 @@ public partial class UnitInventory : Node
         _equiptWeapon = null;
         GD.Print(equiptWeapon.weaponType);
         _unit.unitSprite.skin = _unit.unitClass.GetWeaponTexture(equiptWeapon.weaponType);
+    }
+
+    /// <summary>
+    /// attempts to use Item
+    /// </summary>
+    /// <param name="consumable"></param>
+    public void UseItem(IInventoryItem consumable)
+    {
+        IUseable item = consumable as IUseable;
+
+        if (item == null)
+        {
+            return;
+        }
+
+        item.OnUse(_unit);
     }
 
     /// <summary>

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ConsumableItemResource" load_steps=3 format=3 uid="uid://bwb8al3bpss0v"]
+
+[ext_resource type="Resource" uid="uid://cvw84fghwnai3" path="res://Resources/Items/ConsumeableEffects/HealthPotionEffect.tres" id="1_mra88"]
+[ext_resource type="Script" uid="uid://ui3x3u4jl381" path="res://Scripts/Items/ConsumableItems/ConsumableItemResource.cs" id="1_viwta"]
+
+[resource]
+script = ExtResource("1_viwta")
+_itemName = "Health Potion"
+_size = 1
+_infiniteUses = false
+_maxUses = 1
+_consumableEffect = ExtResource("1_mra88")
+metadata/_custom_type_script = "uid://ui3x3u4jl381"

@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/07/2025]
+ * Last Updated: [09/08/2025]
  * [a unit resource that holds unit data
  * for the unit to load onto their scripts
  * 
@@ -29,6 +29,7 @@ public partial class UnitResource : Resource
     //using weapon resources for testing
     //(maybe make a db for items and store id)
     [Export] private WeaponResource[] _inventoryItems;
+    [Export] private ConsumableItemResource[] _consumableItems;
 
     [ExportGroup("Direction")]
     [Export] private DirectionEnum _startingDirection = DirectionEnum.UP;
@@ -51,6 +52,13 @@ public partial class UnitResource : Resource
         get 
         {
             return _inventoryItems; 
+        }
+    }
+    public ConsumableItemResource[] consumableItems
+    {
+        get
+        {
+            return _consumableItems;
         }
     }
 
