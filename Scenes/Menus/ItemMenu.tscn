@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cddhp7ykeu13p"]
 
 [ext_resource type="Script" uid="uid://cjl2eloamfpi6" path="res://Scripts/Menu/MapMenus/ItemMenu.cs" id="1_hif4w"]
-[ext_resource type="ButtonGroup" uid="uid://dv2euotprg3mc" path="res://ButtonGroups/ItemMenuGroup.tres" id="2_bbv8i"]
+[ext_resource type="ButtonGroup" uid="uid://dv2euotprg3mc" path="res://Resources/ButtonGroups/ItemMenuGroup.tres" id="2_bbv8i"]
 
 [node name="ItemMenu" type="CanvasLayer" node_paths=PackedStringArray("_equippedWeaponButton", "_itemSlotButtons", "_useButton", "_equipButton", "_dequipButton", "_cursorDefaultStartButton")]
 script = ExtResource("1_hif4w")

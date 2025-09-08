@@ -16,6 +16,8 @@ public partial class TradeMenuGroup : Node
 
     [Export] private bool _isLeftGroup = false;
 
+    private Button _currentlySelectedButton;
+
     /// <summary>
     /// calls to update button lable
     /// also adds all buttons to dictionary
@@ -68,11 +70,40 @@ public partial class TradeMenuGroup : Node
     {
         if (!toggle)
         {
-            _tradeMenu.UnselectItem();
+            _currentlySelectedButton = null;
+            _tradeMenu.ReEnableAllButtons(!_isLeftGroup);
             return;
         }
 
-        Button toggledButton = GetNode(button) as Button;
-        _tradeMenu.CheckForTrade(toggledButton, _isLeftGroup);
+        _currentlySelectedButton = GetNode(button) as Button;
+
+        if (_currentlySelectedButton == null)
+        {
+            GD.Print("trade menu toggle item doesn't have correct node path");
+        }
+
+        if (!_tradeMenu.CanTrade())
+        {
+            _tradeMenu.DisableOppositeButtons(_currentlySelectedButton, _isLeftGroup);
+        }
+        else
+        {
+            _tradeMenu.AttemptTrade();
+        }
+    }
+
+    public Button currentlySelectedButton
+    {
+        get { return _currentlySelectedButton; }
+    }
+
+    public Button equippedWeaponButton
+    {
+        get { return _equippedWeaponButton; }
+    }
+
+    public Button[] itemSlotButtons
+    {
+        get { return _itemSlotButtons; }
     }
 }

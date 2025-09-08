@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3t1a425enr52"]
+[gd_scene load_steps=5 format=3 uid="uid://d3t1a425enr52"]
 
 [ext_resource type="Script" uid="uid://2qpd7o713o5p" path="res://Scripts/Menu/MapMenus/TradeMenu.cs" id="1_fmy4s"]
 [ext_resource type="Script" uid="uid://blqxdtgknc5qy" path="res://Scripts/Menu/MapMenus/TradeMenuGroup.cs" id="2_64lir"]
+[ext_resource type="ButtonGroup" uid="uid://yyqae4ienin0" path="res://Resources/ButtonGroups/LeftTradeMenuGroup.tres" id="3_pq62f"]
+[ext_resource type="ButtonGroup" uid="uid://clpyygthecat5" path="res://Resources/ButtonGroups/RightTradeMenuGroup.tres" id="4_wljy6"]
 
 [node name="TradeMenu" type="CanvasLayer" node_paths=PackedStringArray("_leftUnitMenu", "_rightUnitMenu", "_cursorDefaultStartButton")]
 script = ExtResource("1_fmy4s")
@@ -43,6 +45,7 @@ focus_neighbor_top = NodePath("../ItemButton3")
 focus_neighbor_right = NodePath("../../RightBox/EquippedButton")
 focus_neighbor_bottom = NodePath("../ItemButton1")
 toggle_mode = true
+button_group = ExtResource("3_pq62f")
 text = "E: Axe"
 
 [node name="ItemButton1" type="Button" parent="HBoxContainer/LeftBox"]
@@ -53,6 +56,7 @@ focus_neighbor_top = NodePath("../EquippedButton")
 focus_neighbor_right = NodePath("../../RightBox/ItemButton1")
 focus_neighbor_bottom = NodePath("../ItemButton2")
 toggle_mode = true
+button_group = ExtResource("3_pq62f")
 text = "Axe"
 
 [node name="ItemButton2" type="Button" parent="HBoxContainer/LeftBox"]
@@ -63,6 +67,7 @@ focus_neighbor_top = NodePath("../ItemButton1")
 focus_neighbor_right = NodePath("../../RightBox/ItemButton2")
 focus_neighbor_bottom = NodePath("../ItemButton3")
 toggle_mode = true
+button_group = ExtResource("3_pq62f")
 text = "Axe"
 
 [node name="ItemButton3" type="Button" parent="HBoxContainer/LeftBox"]
@@ -73,6 +78,7 @@ focus_neighbor_top = NodePath("../ItemButton2")
 focus_neighbor_right = NodePath("../../RightBox/ItemButton3")
 focus_neighbor_bottom = NodePath("../EquippedButton")
 toggle_mode = true
+button_group = ExtResource("3_pq62f")
 text = "---"
 
 [node name="ArrowsLabel" type="Label" parent="HBoxContainer"]
@@ -102,6 +108,7 @@ focus_neighbor_top = NodePath("../ItemButton3")
 focus_neighbor_right = NodePath("../../LeftBox/EquippedButton")
 focus_neighbor_bottom = NodePath("../ItemButton1")
 toggle_mode = true
+button_group = ExtResource("4_wljy6")
 text = "E: Axe"
 
 [node name="ItemButton1" type="Button" parent="HBoxContainer/RightBox"]
@@ -112,6 +119,7 @@ focus_neighbor_top = NodePath("../EquippedButton")
 focus_neighbor_right = NodePath("../../LeftBox/ItemButton1")
 focus_neighbor_bottom = NodePath("../ItemButton2")
 toggle_mode = true
+button_group = ExtResource("4_wljy6")
 text = "Axe"
 
 [node name="ItemButton2" type="Button" parent="HBoxContainer/RightBox"]
@@ -122,6 +130,7 @@ focus_neighbor_top = NodePath("../ItemButton1")
 focus_neighbor_right = NodePath("../../LeftBox/ItemButton2")
 focus_neighbor_bottom = NodePath("../ItemButton3")
 toggle_mode = true
+button_group = ExtResource("4_wljy6")
 text = "Axe"
 
 [node name="ItemButton3" type="Button" parent="HBoxContainer/RightBox"]
@@ -132,6 +141,7 @@ focus_neighbor_top = NodePath("../ItemButton2")
 focus_neighbor_right = NodePath("../../LeftBox/ItemButton3")
 focus_neighbor_bottom = NodePath("../EquippedButton")
 toggle_mode = true
+button_group = ExtResource("4_wljy6")
 text = "---"
 
 [connection signal="toggled" from="HBoxContainer/LeftBox/EquippedButton" to="HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath("./EquippedButton")]]
