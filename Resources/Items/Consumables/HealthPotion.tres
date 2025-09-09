@@ -7,6 +7,7 @@
 script = ExtResource("1_viwta")
 _devName = "test_health_potion"
 _itemName = "Health Potion"
+_description = "A single use healing potion that heals 10 HP"
 _size = 1
 _infiniteUses = false
 _maxUses = 1

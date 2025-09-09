@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/08/2025]
+ * Last Updated: [09/09/2025]
  * [Resource for Consumable Items]
  */
 
@@ -12,6 +12,8 @@ public partial class ConsumableItemResource : Resource, IInventoryItem, IUseable
 {
     [Export] private string _devName;
     [Export] private string _itemName;
+    [Export(PropertyHint.MultilineText)] private string _description;
+
     [Export] private int _size = 1;
 
     [Export] private bool _infiniteUses;
@@ -65,6 +67,11 @@ public partial class ConsumableItemResource : Resource, IInventoryItem, IUseable
     public string itemName
     {
         get { return _itemName; }
+    }
+
+    public string description
+    {
+        get { return _description; }
     }
 
     public int size

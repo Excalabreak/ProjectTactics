@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cddhp7ykeu13p"]
+[gd_scene load_steps=4 format=3 uid="uid://cddhp7ykeu13p"]
 
 [ext_resource type="Script" uid="uid://cjl2eloamfpi6" path="res://Scripts/Menu/MapMenus/ItemMenu.cs" id="1_hif4w"]
 [ext_resource type="ButtonGroup" uid="uid://dv2euotprg3mc" path="res://Resources/ButtonGroups/ItemMenuGroup.tres" id="2_bbv8i"]
+[ext_resource type="Theme" uid="uid://6w6laa62420x" path="res://Resources/Theme/testTheme.tres" id="2_hufds"]
 
 [node name="ItemMenu" type="CanvasLayer" node_paths=PackedStringArray("_equippedWeaponButton", "_itemSlotButtons", "_useButton", "_equipButton", "_dequipButton", "_cursorDefaultStartButton")]
 script = ExtResource("1_hif4w")
@@ -11,6 +12,31 @@ _useButton = NodePath("HBoxContainer/VBoxContainer/UseButton")
 _equipButton = NodePath("HBoxContainer/VBoxContainer/EquipButton")
 _dequipButton = NodePath("HBoxContainer/VBoxContainer/DequipButton")
 _cursorDefaultStartButton = NodePath("HBoxContainer/VBox/EquippedButton")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(172.73, 232.505)
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 396.0
+offset_top = -187.0
+offset_right = 670.0
+offset_bottom = 211.0
+grow_vertical = 2
+theme = ExtResource("2_hufds")
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 9.0
+offset_right = -6.73
+offset_bottom = -16.505
+grow_horizontal = 2
+grow_vertical = 2
+text = "Description"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 8
@@ -24,24 +50,8 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_hufds")
 alignment = 1
-
-[node name="Panel" type="Panel" parent="HBoxContainer"]
-custom_minimum_size = Vector2(172.73, 232.505)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HBoxContainer/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 9.0
-offset_top = 9.0
-offset_right = -6.73
-offset_bottom = -16.505
-grow_horizontal = 2
-grow_vertical = 2
-text = "Description"
 
 [node name="VBox" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -93,7 +103,6 @@ text = "Cancel"
 layout_mode = 2
 
 [node name="UseButton" type="Button" parent="HBoxContainer/VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Use"

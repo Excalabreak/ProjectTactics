@@ -23,7 +23,7 @@ _baseStats = Dictionary[int, int]({
 })
 _equiptWeapon = "test_sword"
 _inventoryWeapons = PackedStringArray()
-_consumableItems = null
+_consumableItems = PackedStringArray()
 _startingDirection = 0
 _isCommander = false
 metadata/_custom_type_script = "uid://cb8xehtora3p"

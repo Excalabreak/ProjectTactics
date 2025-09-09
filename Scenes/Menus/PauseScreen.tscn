@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cthmnrjp6uu61"]
+[gd_scene load_steps=3 format=3 uid="uid://cthmnrjp6uu61"]
 
 [ext_resource type="Script" uid="uid://b7seot04yy56w" path="res://Scripts/Menu/MapMenus/PauseScreen.cs" id="1_snaop"]
+[ext_resource type="Theme" uid="uid://6w6laa62420x" path="res://Resources/Theme/testTheme.tres" id="2_ax8j1"]
 
 [node name="PauseScreen" type="CanvasLayer" node_paths=PackedStringArray("_cursorDefaultStartButton")]
 script = ExtResource("1_snaop")
@@ -18,6 +19,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_ax8j1")
 
 [node name="UnitsButtons" type="Button" parent="VBoxContainer"]
 visible = false

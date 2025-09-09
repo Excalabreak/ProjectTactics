@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=78 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -61,6 +61,7 @@
 [ext_resource type="Script" uid="uid://b61mmurt8fk7d" path="res://Scripts/Menu/MenuStateMachine/States/MenuTradeState.cs" id="52_l8276"]
 [ext_resource type="Script" uid="uid://c7d3kjokroyh8" path="res://Scripts/Menu/MenuStateMachine/States/MenuItemState.cs" id="54_kmj3t"]
 [ext_resource type="Script" uid="uid://d3njo6qu5mnfs" path="res://Scripts/UI/UIInventory.cs" id="55_wmdct"]
+[ext_resource type="Theme" uid="uid://6w6laa62420x" path="res://Resources/Theme/testTheme.tres" id="58_3om3u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
 texture = ExtResource("5_jsdi5")
@@ -466,6 +467,7 @@ offset_left = 16.0
 offset_top = 14.0
 offset_right = 117.0
 offset_bottom = 172.0
+theme = ExtResource("58_3om3u")
 script = ExtResource("30_0ccgp")
 _HPLable = NodePath("VBoxContainer/HPLabel")
 _MOVLable = NodePath("VBoxContainer/MOVLable")
@@ -510,6 +512,7 @@ offset_left = 124.265
 offset_top = 14.0
 offset_right = 423.265
 offset_bottom = 172.0
+theme = ExtResource("58_3om3u")
 script = ExtResource("55_wmdct")
 _equippedLable = NodePath("VBoxContainer/EquippedLabel")
 _itemLables = [NodePath("VBoxContainer/Item1Label"), NodePath("VBoxContainer/Item2Label"), NodePath("VBoxContainer/Item3Label")]
@@ -547,6 +550,7 @@ offset_left = 16.0
 offset_top = 178.0
 offset_right = 318.0
 offset_bottom = 331.0
+theme = ExtResource("58_3om3u")
 script = ExtResource("31_r77ll")
 _playerHPLable = NodePath("VBoxContainer/HBoxContainer/PlayerSide/PHPLable")
 _playerDMGLable = NodePath("VBoxContainer/HBoxContainer/PlayerSide/PDMGLable")
@@ -660,6 +664,7 @@ offset_top = 14.0
 offset_right = -16.0
 offset_bottom = 112.0
 grow_horizontal = 0
+theme = ExtResource("58_3om3u")
 script = ExtResource("34_maqlv")
 _nameLabel = NodePath("VBoxContainer/NameLabel")
 _moveLabel = NodePath("VBoxContainer/MoveLabel")

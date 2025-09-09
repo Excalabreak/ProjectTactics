@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3t1a425enr52"]
+[gd_scene load_steps=6 format=3 uid="uid://d3t1a425enr52"]
 
 [ext_resource type="Script" uid="uid://2qpd7o713o5p" path="res://Scripts/Menu/MapMenus/TradeMenu.cs" id="1_fmy4s"]
 [ext_resource type="Script" uid="uid://blqxdtgknc5qy" path="res://Scripts/Menu/MapMenus/TradeMenuGroup.cs" id="2_64lir"]
+[ext_resource type="Theme" uid="uid://6w6laa62420x" path="res://Resources/Theme/testTheme.tres" id="2_wljy6"]
 [ext_resource type="ButtonGroup" uid="uid://yyqae4ienin0" path="res://Resources/ButtonGroups/LeftTradeMenuGroup.tres" id="3_pq62f"]
 [ext_resource type="ButtonGroup" uid="uid://clpyygthecat5" path="res://Resources/ButtonGroups/RightTradeMenuGroup.tres" id="4_wljy6"]
 
@@ -23,6 +24,7 @@ offset_right = 195.5
 offset_bottom = 81.5
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_wljy6")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
