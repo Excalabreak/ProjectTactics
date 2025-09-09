@@ -11,6 +11,7 @@ using System.Linq;
 public partial class CombatManager : Node
 {
     [Export] private GameBoard _gameBoard;
+    [Export] private UIManager _uiManager;
 
     /// <summary>
     /// calls to calculate unit combat
@@ -66,15 +67,16 @@ public partial class CombatManager : Node
             if (CalculateCritRate(attackingUnit, defendingUnit) >= hitChance)
             {
                 critMod = attackingUnit.unitInventory.equiptWeapon.critModifyer;
-                GD.Print(attackingUnit.Name + " CRIT");
+                _uiManager.AddToBattleLog(attackingUnit.Name + " CRIT!!!");
             }
             int damage = Mathf.RoundToInt((float)CalculateDamage(attackingUnit, defendingUnit) * critMod);
 
+            _uiManager.AddToBattleLog(attackingUnit.Name + " hits " + defendingUnit.Name + " for " + damage + " damage.");
             defendingUnit.unitStats.DamageUnit(damage);
         }
         else
         {
-            GD.Print(attackingUnit.Name + " MISS");
+            _uiManager.AddToBattleLog(attackingUnit.Name + " MISSED!");
         }
     }
 

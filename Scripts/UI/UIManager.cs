@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/25/2025]
+ * Last Updated: [09/09/2025]
  * [Manages UI Elements and 
  * is one class to call them all from]
  */
@@ -14,6 +14,7 @@ public partial class UIManager : CanvasLayer
     [Export] private UIBattle _uiBattle;
     [Export] private UITerrain _uiTerrain;
     [Export] private UIInventory _uiInventroy;
+    [Export] private UIBattleLog _uiBattleLog;
 
     /// <summary>
     /// calls to displays the stats of a unit
@@ -92,5 +93,14 @@ public partial class UIManager : CanvasLayer
     public void HideBattlePredictions()
     {
         _uiBattle.HideBattlePredictions();
+    }
+
+    /// <summary>
+    /// calls to add to the battle log
+    /// </summary>
+    /// <param name="message"></param>
+    public void AddToBattleLog(string message)
+    {
+        _uiBattleLog.AddToBattleLog(message);
     }
 }
