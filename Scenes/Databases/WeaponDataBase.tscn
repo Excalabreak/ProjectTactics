@@ -1,0 +1,11 @@
+[gd_scene load_steps=6 format=3 uid="uid://bhftdtys0yh7h"]
+
+[ext_resource type="Script" uid="uid://clo8rl5husl1i" path="res://Scripts/Singletons/Databases/WeaponDataBase.cs" id="1_aswvq"]
+[ext_resource type="Resource" uid="uid://i6dlc2er50ri" path="res://Resources/Items/Weapons/testAxe.tres" id="3_v1aky"]
+[ext_resource type="Resource" uid="uid://c3s84r1rtukc6" path="res://Resources/Items/Weapons/testLance.tres" id="4_naxc0"]
+[ext_resource type="Resource" uid="uid://chjv6cxodbhum" path="res://Resources/Items/Weapons/testStaff.tres" id="5_4k4vs"]
+[ext_resource type="Resource" uid="uid://cqic6sw16xo8i" path="res://Resources/Items/Weapons/testSword.tres" id="6_gawmm"]
+
+[node name="WeaponDataBase" type="Node"]
+script = ExtResource("1_aswvq")
+_weaponResources = Array[Object]([ExtResource("3_v1aky"), ExtResource("4_naxc0"), ExtResource("5_4k4vs"), ExtResource("6_gawmm")])

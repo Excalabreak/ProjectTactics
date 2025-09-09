@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_w2deb")
+_devName = "test_lance"
 _weaponName = "Lance"
 _description = "a pokey lance"
 _weaponType = 2

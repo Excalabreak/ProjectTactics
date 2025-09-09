@@ -1,10 +1,8 @@
-[gd_resource type="Resource" script_class="UnitResource" load_steps=7 format=3 uid="uid://bt88eerwj5e1w"]
+[gd_resource type="Resource" script_class="UnitResource" load_steps=5 format=3 uid="uid://bt88eerwj5e1w"]
 
 [ext_resource type="Texture2D" uid="uid://c4x3rae14n1v3" path="res://Sprites/Test/Units/Player/testPlayerAxe.png" id="1_4rl3p"]
 [ext_resource type="Resource" uid="uid://bwb8al3bpss0v" path="res://Resources/Items/Consumables/HealthPotion.tres" id="1_g53uq"]
-[ext_resource type="Resource" uid="uid://i6dlc2er50ri" path="res://Resources/Items/Weapons/testAxe.tres" id="1_gjh8p"]
 [ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="1_j3i28"]
-[ext_resource type="Resource" uid="uid://c3s84r1rtukc6" path="res://Resources/Items/Weapons/testLance.tres" id="2_ica30"]
 [ext_resource type="Resource" uid="uid://fokm32mfo5md" path="res://Resources/ClassResource/Test/TestPlayerClass.tres" id="4_6jnuf"]
 
 [resource]
@@ -24,8 +22,8 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
-_equiptWeapon = ExtResource("1_gjh8p")
-_inventoryItems = Array[Object]([ExtResource("2_ica30")])
+_equiptWeapon = "test_axe"
+_inventoryWeapons = PackedStringArray("test_sword")
 _consumableItems = Array[Object]([ExtResource("1_g53uq")])
 _startingDirection = 0
 _isCommander = false

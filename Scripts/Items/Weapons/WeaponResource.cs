@@ -11,6 +11,7 @@ using System;
 [GlobalClass]
 public partial class WeaponResource : Resource, IInventoryItem, IEquipable
 {
+    [Export] private string _devName;
     [Export] private string _weaponName;
     [Export(PropertyHint.MultilineText)] private string _description;
 
@@ -44,6 +45,11 @@ public partial class WeaponResource : Resource, IInventoryItem, IEquipable
     public bool IsPhysical()
     {
         return _damageType != DamageType.MAGIC;
+    }
+
+    public string devName
+    {
+        get { return _devName; }
     }
 
     public string itemName

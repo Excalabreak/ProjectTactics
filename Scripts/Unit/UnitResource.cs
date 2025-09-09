@@ -24,11 +24,11 @@ public partial class UnitResource : Resource
     [Export] private Dictionary<UnitStatEnum, int> _baseStats = new Dictionary<UnitStatEnum, int>();
 
     [ExportGroup("Inventory")]
-    [Export] private WeaponResource _equiptWeapon;
+    [Export] private string _equiptWeapon;
     //WARNING: interfaces can't be exported,
     //using weapon resources for testing
     //(maybe make a db for items and store id)
-    [Export] private WeaponResource[] _inventoryItems;
+    [Export] private string[] _inventoryWeapons;
     [Export] private ConsumableItemResource[] _consumableItems;
 
     [ExportGroup("Direction")]
@@ -44,14 +44,21 @@ public partial class UnitResource : Resource
 
     public WeaponResource equiptWeapon
     {
-        get { return _equiptWeapon; }
+        get { return WeaponDataBase.Instance.GetItem(_equiptWeapon); }
     }
 
-    public WeaponResource[] inventoryItems
+    public WeaponResource[] inventoryWeapons
     {
         get 
         {
-            return _inventoryItems; 
+            WeaponResource[] storedWeapons = new WeaponResource[_inventoryWeapons.Length];
+
+            for (int i = 0; i < _inventoryWeapons.Length; i++)
+            {
+                storedWeapons[i] = WeaponDataBase.Instance.GetItem(_inventoryWeapons[i]);
+            }
+             
+            return storedWeapons; 
         }
     }
     public ConsumableItemResource[] consumableItems

@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_1lbfs")
+_devName = "test_axe"
 _weaponName = "Axe"
 _description = "a choppy axe"
 _weaponType = 3

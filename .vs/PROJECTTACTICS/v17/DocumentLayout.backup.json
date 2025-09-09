@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "E:\\Projects\\ProjectTactics\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\mapmenus\\trademenugroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\mapmenus\\trademenugroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\singletons\\staticdata\\weaponstaticdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\singletons\\staticdata\\weaponstaticdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\unit\\unitinventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\unit\\unitinventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\mapmenus\\trademenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\mapmenus\\trademenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\unit\\unitinventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\unit\\unitinventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\mapmenus\\trademenugroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\mapmenus\\trademenugroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\grid\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\mapmenus\\itemmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\unit\\unitstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\unit\\unitstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\grid\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\items\\weapons\\weaponresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,17 +50,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "GameBoard.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GameBoard.cs",
               "RelativeDocumentMoniker": "Scripts\\Grid\\GameBoard.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GameBoard.cs",
               "RelativeToolTip": "Scripts\\Grid\\GameBoard.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAI0BAAAAAAAAAAAMwM4BAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-29T19:37:27.722Z",
               "IsPinned": true,
@@ -64,7 +68,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "WeaponStaticData.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Singletons\\StaticData\\WeaponStaticData.cs",
+              "RelativeDocumentMoniker": "Scripts\\Singletons\\StaticData\\WeaponStaticData.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Singletons\\StaticData\\WeaponStaticData.cs",
+              "RelativeToolTip": "Scripts\\Singletons\\StaticData\\WeaponStaticData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-09T02:19:51.769Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "ItemMenu.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MapMenus\\ItemMenu.cs",
               "RelativeDocumentMoniker": "Scripts\\Menu\\MapMenus\\ItemMenu.cs",
@@ -72,38 +89,37 @@
               "RelativeToolTip": "Scripts\\Menu\\MapMenus\\ItemMenu.cs",
               "ViewState": "AgIAAFwAAAAAAAAAAAAwwIUAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-08T19:37:00.316Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-08T19:37:00.316Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "TradeMenuGroup.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MapMenus\\TradeMenuGroup.cs",
               "RelativeDocumentMoniker": "Scripts\\Menu\\MapMenus\\TradeMenuGroup.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MapMenus\\TradeMenuGroup.cs",
               "RelativeToolTip": "Scripts\\Menu\\MapMenus\\TradeMenuGroup.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAgwEsAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAACUAAAAAAAAAAAAgwDIAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-08T19:29:19.811Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "TradeMenu.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MapMenus\\TradeMenu.cs",
               "RelativeDocumentMoniker": "Scripts\\Menu\\MapMenus\\TradeMenu.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MapMenus\\TradeMenu.cs",
               "RelativeToolTip": "Scripts\\Menu\\MapMenus\\TradeMenu.cs",
-              "ViewState": "AgIAAG4AAAAAAAAAAAAwwIQAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAALkAAAAAAAAAAAAuwOIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-08T19:29:18.89Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "UnitStats.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Unit\\UnitStats.cs",
               "RelativeDocumentMoniker": "Scripts\\Unit\\UnitStats.cs",
@@ -111,12 +127,11 @@
               "RelativeToolTip": "Scripts\\Unit\\UnitStats.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-08T18:32:53.204Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-08T18:32:53.204Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "HealthPotionEffect.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Items\\ConsumableItems\\ConsumableEffects\\HealthPotionEffect.cs",
               "RelativeDocumentMoniker": "Scripts\\Items\\ConsumableItems\\ConsumableEffects\\HealthPotionEffect.cs",
@@ -128,7 +143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "IInventoryItem.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Items\\IInventoryItem.cs",
               "RelativeDocumentMoniker": "Scripts\\Items\\IInventoryItem.cs",
@@ -140,7 +155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "WeaponResource.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Items\\Weapons\\WeaponResource.cs",
               "RelativeDocumentMoniker": "Scripts\\Items\\Weapons\\WeaponResource.cs",
@@ -152,13 +167,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "UnitInventory.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Unit\\UnitInventory.cs",
               "RelativeDocumentMoniker": "Scripts\\Unit\\UnitInventory.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Unit\\UnitInventory.cs",
               "RelativeToolTip": "Scripts\\Unit\\UnitInventory.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAgwAcAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAOwAAAAAAAAAAAAuwB8BAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-18T20:14:24.172Z",
               "EditorCaption": ""

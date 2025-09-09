@@ -24,14 +24,14 @@ public partial class UnitInventory : Node
     {
         equiptWeapon = _unit.unitResource.equiptWeapon;
 
-        if (_unit.unitResource.inventoryItems == null)
+        if (_unit.unitResource.inventoryWeapons == null)
         {
             return;
         }
 
         int count = _maxInventorySlots;
 
-        foreach (IInventoryItem item in _unit.unitResource.inventoryItems)
+        foreach (IInventoryItem item in _unit.unitResource.inventoryWeapons)
         {
             AddInventoryItem(item);
             count--;

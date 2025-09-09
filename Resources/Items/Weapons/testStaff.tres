@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_8a6mr")
+_devName = "test_staff"
 _weaponName = ""
 _description = "a magical staff"
 _weaponType = 4

@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_seqcc")
+_devName = "test_sword"
 _weaponName = "Sword"
 _description = "a slashing sword"
 _weaponType = 1
