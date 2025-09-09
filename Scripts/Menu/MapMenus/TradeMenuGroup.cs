@@ -42,6 +42,29 @@ public partial class TradeMenuGroup : Node
     }
 
     /// <summary>
+    /// resets the buttons
+    /// </summary>
+    /// <param name="inventory">inventory for group</param>
+    public void ResetGroup(UnitInventory inventory)
+    {
+        _currentlySelectedButton.ButtonPressed = false;
+        _currentlySelectedButton = null;
+
+        UpdateButtonText(inventory);
+
+        _tradeMenu.AddToButtonDictionary(_equippedWeaponButton, inventory.equiptWeapon);
+
+        for (int i = 0; i < _itemSlotButtons.Length; i++)
+        {
+            if (i >= inventory.inventoryItems.Length)
+            {
+                break;
+            }
+            _tradeMenu.AddToButtonDictionary(_itemSlotButtons[i], inventory.inventoryItems[i]);
+        }
+    }
+
+    /// <summary>
     /// calls to set the labels for buttons
     /// </summary>
     /// <param name="inventory">inventory for unit</param>
@@ -88,7 +111,7 @@ public partial class TradeMenuGroup : Node
         }
         else
         {
-            _tradeMenu.AttemptTrade();
+            _tradeMenu.TradeSelectedItems();
         }
     }
 

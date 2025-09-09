@@ -7,37 +7,40 @@
 
 [node name="TradeMenu" type="CanvasLayer" node_paths=PackedStringArray("_leftUnitMenu", "_rightUnitMenu", "_cursorDefaultStartButton")]
 script = ExtResource("1_fmy4s")
-_leftUnitMenu = NodePath("HBoxContainer/LeftBox")
-_rightUnitMenu = NodePath("HBoxContainer/RightBox")
-_cursorDefaultStartButton = NodePath("HBoxContainer/LeftBox/EquippedButton")
+_leftUnitMenu = NodePath("VBoxContainer/HBoxContainer/LeftBox")
+_rightUnitMenu = NodePath("VBoxContainer/HBoxContainer/RightBox")
+_cursorDefaultStartButton = NodePath("VBoxContainer/HBoxContainer/LeftBox/EquippedButton")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -26.0
-offset_top = -20.0
-offset_right = 26.0
-offset_bottom = 20.0
+offset_left = -195.5
+offset_top = -81.5
+offset_right = 195.5
+offset_bottom = 81.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LeftBox" type="VBoxContainer" parent="HBoxContainer" node_paths=PackedStringArray("_tradeMenu", "_equippedWeaponButton", "_itemSlotButtons")]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LeftBox" type="VBoxContainer" parent="VBoxContainer/HBoxContainer" node_paths=PackedStringArray("_tradeMenu", "_equippedWeaponButton", "_itemSlotButtons")]
 layout_mode = 2
 script = ExtResource("2_64lir")
-_tradeMenu = NodePath("../..")
+_tradeMenu = NodePath("../../..")
 _equippedWeaponButton = NodePath("EquippedButton")
 _itemSlotButtons = [NodePath("ItemButton1"), NodePath("ItemButton2"), NodePath("ItemButton3")]
 _isLeftGroup = true
 
-[node name="NameLabel" type="Label" parent="HBoxContainer/LeftBox"]
+[node name="NameLabel" type="Label" parent="VBoxContainer/HBoxContainer/LeftBox"]
 layout_mode = 2
 text = "Name"
 horizontal_alignment = 1
 
-[node name="EquippedButton" type="Button" parent="HBoxContainer/LeftBox"]
+[node name="EquippedButton" type="Button" parent="VBoxContainer/HBoxContainer/LeftBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../RightBox/EquippedButton")
@@ -48,7 +51,7 @@ toggle_mode = true
 button_group = ExtResource("3_pq62f")
 text = "E: Axe"
 
-[node name="ItemButton1" type="Button" parent="HBoxContainer/LeftBox"]
+[node name="ItemButton1" type="Button" parent="VBoxContainer/HBoxContainer/LeftBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../RightBox/ItemButton1")
@@ -59,7 +62,7 @@ toggle_mode = true
 button_group = ExtResource("3_pq62f")
 text = "Axe"
 
-[node name="ItemButton2" type="Button" parent="HBoxContainer/LeftBox"]
+[node name="ItemButton2" type="Button" parent="VBoxContainer/HBoxContainer/LeftBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../RightBox/ItemButton2")
@@ -70,7 +73,7 @@ toggle_mode = true
 button_group = ExtResource("3_pq62f")
 text = "Axe"
 
-[node name="ItemButton3" type="Button" parent="HBoxContainer/LeftBox"]
+[node name="ItemButton3" type="Button" parent="VBoxContainer/HBoxContainer/LeftBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../RightBox/ItemButton3")
@@ -81,26 +84,26 @@ toggle_mode = true
 button_group = ExtResource("3_pq62f")
 text = "---"
 
-[node name="ArrowsLabel" type="Label" parent="HBoxContainer"]
+[node name="ArrowsLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "     <===      
       ===>     "
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RightBox" type="VBoxContainer" parent="HBoxContainer" node_paths=PackedStringArray("_tradeMenu", "_equippedWeaponButton", "_itemSlotButtons")]
+[node name="RightBox" type="VBoxContainer" parent="VBoxContainer/HBoxContainer" node_paths=PackedStringArray("_tradeMenu", "_equippedWeaponButton", "_itemSlotButtons")]
 layout_mode = 2
 script = ExtResource("2_64lir")
-_tradeMenu = NodePath("../..")
+_tradeMenu = NodePath("../../..")
 _equippedWeaponButton = NodePath("EquippedButton")
 _itemSlotButtons = [NodePath("ItemButton1"), NodePath("ItemButton2"), NodePath("ItemButton3")]
 
-[node name="NameLabel" type="Label" parent="HBoxContainer/RightBox"]
+[node name="NameLabel" type="Label" parent="VBoxContainer/HBoxContainer/RightBox"]
 layout_mode = 2
 text = "Name"
 horizontal_alignment = 1
 
-[node name="EquippedButton" type="Button" parent="HBoxContainer/RightBox"]
+[node name="EquippedButton" type="Button" parent="VBoxContainer/HBoxContainer/RightBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../LeftBox/EquippedButton")
@@ -111,7 +114,7 @@ toggle_mode = true
 button_group = ExtResource("4_wljy6")
 text = "E: Axe"
 
-[node name="ItemButton1" type="Button" parent="HBoxContainer/RightBox"]
+[node name="ItemButton1" type="Button" parent="VBoxContainer/HBoxContainer/RightBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../LeftBox/ItemButton1")
@@ -122,7 +125,7 @@ toggle_mode = true
 button_group = ExtResource("4_wljy6")
 text = "Axe"
 
-[node name="ItemButton2" type="Button" parent="HBoxContainer/RightBox"]
+[node name="ItemButton2" type="Button" parent="VBoxContainer/HBoxContainer/RightBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../LeftBox/ItemButton2")
@@ -133,7 +136,7 @@ toggle_mode = true
 button_group = ExtResource("4_wljy6")
 text = "Axe"
 
-[node name="ItemButton3" type="Button" parent="HBoxContainer/RightBox"]
+[node name="ItemButton3" type="Button" parent="VBoxContainer/HBoxContainer/RightBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../LeftBox/ItemButton3")
@@ -144,11 +147,18 @@ toggle_mode = true
 button_group = ExtResource("4_wljy6")
 text = "---"
 
-[connection signal="toggled" from="HBoxContainer/LeftBox/EquippedButton" to="HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath("./EquippedButton")]]
-[connection signal="toggled" from="HBoxContainer/LeftBox/ItemButton1" to="HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath("./ItemButton1")]]
-[connection signal="toggled" from="HBoxContainer/LeftBox/ItemButton2" to="HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath("./ItemButton2")]]
-[connection signal="toggled" from="HBoxContainer/LeftBox/ItemButton3" to="HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath("./ItemButton3")]]
-[connection signal="toggled" from="HBoxContainer/RightBox/EquippedButton" to="HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./EquippedButton")]]
-[connection signal="toggled" from="HBoxContainer/RightBox/ItemButton1" to="HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./ItemButton1")]]
-[connection signal="toggled" from="HBoxContainer/RightBox/ItemButton2" to="HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./ItemButton2")]]
-[connection signal="toggled" from="HBoxContainer/RightBox/ItemButton3" to="HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./ItemButton2")]]
+[node name="CancelButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Cancel"
+
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/LeftBox/EquippedButton" to="VBoxContainer/HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath("./EquippedButton")]]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/LeftBox/ItemButton1" to="VBoxContainer/HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath("./ItemButton1")]]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/LeftBox/ItemButton2" to="VBoxContainer/HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath("./ItemButton2")]]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/LeftBox/ItemButton3" to="VBoxContainer/HBoxContainer/LeftBox" method="ToggleItem" binds= [NodePath("./ItemButton3")]]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/RightBox/EquippedButton" to="VBoxContainer/HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./EquippedButton")]]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/RightBox/ItemButton1" to="VBoxContainer/HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./ItemButton1")]]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/RightBox/ItemButton2" to="VBoxContainer/HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./ItemButton2")]]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/RightBox/ItemButton3" to="VBoxContainer/HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./ItemButton2")]]
+[connection signal="pressed" from="VBoxContainer/CancelButton" to="." method="OnCancelButtonPress"]

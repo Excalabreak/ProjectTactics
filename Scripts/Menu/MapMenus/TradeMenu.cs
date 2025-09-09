@@ -27,12 +27,25 @@ public partial class TradeMenu : BaseMenu
     /// <param name="secondUnit">unit two</param>
     public void SetUpTradeMenu(Unit firstUnit, Unit secondUnit)
     {
+        _itemButtons = new Dictionary<Button, IInventoryItem>();
+
         //might need to take this out for updating ui
         _leftUnitMenu.SetUpGroup(firstUnit);
         _rightUnitMenu.SetUpGroup(secondUnit);
 
         _leftInventroy = firstUnit.unitInventory;
         _rightInventroy = secondUnit.unitInventory;
+    }
+
+    /// <summary>
+    /// resets the trade menu
+    /// </summary>
+    private void ResetTradeMenu()
+    {
+        _itemButtons = new Dictionary<Button, IInventoryItem>();
+
+        _leftUnitMenu.ResetGroup(_leftInventroy);
+        _rightUnitMenu.ResetGroup(_rightInventroy);
     }
 
     /// <summary>
@@ -166,8 +179,10 @@ public partial class TradeMenu : BaseMenu
     /// <summary>
     /// checks if an item is selected on both sides
     /// and trades the items if true
+    /// 
+    /// NOTE: ASSUMES THE SELECTED OPTIONS ARE ABLE TO TRADE
     /// </summary>
-    public void AttemptTrade()
+    public void TradeSelectedItems()
     {
         if (_leftUnitMenu.currentlySelectedButton == null || _rightUnitMenu.currentlySelectedButton == null)
         {
@@ -186,63 +201,71 @@ public partial class TradeMenu : BaseMenu
             rightItem = _itemButtons[_rightUnitMenu.currentlySelectedButton];
         }
 
-        //NOTE: only have weapon for now, will likely get more complicated with armor and accessories
-        bool leftGoToInventory = _leftUnitMenu.currentlySelectedButton != _leftUnitMenu.equippedWeaponButton;
-        bool rightGoToInventory = _rightUnitMenu.currentlySelectedButton != _rightUnitMenu.equippedWeaponButton;
+        //remove items from old inventory
+        RemoveItemFromInventory(_leftUnitMenu, _leftInventroy);
+        RemoveItemFromInventory(_rightUnitMenu, _rightInventroy);
 
-        //possible for item to be equipment
-        //possible for item to be null
+        AddItemToInventory(_leftUnitMenu, _rightUnitMenu, _rightInventroy);
+        AddItemToInventory(_rightUnitMenu, _leftUnitMenu, _leftInventroy);
 
-
-
-        //if both are equipped weapon just swap them. might need to change later if i want to include offhand
-        //if one is equipped and one is inventory, then check if equipt can swap with inventory slot
-        //if both are inventory, both has to check before swap
-
-        //check if it's equipt weapon since that doesn't require any inventory slots
-        //check if items can be replaced in inventory
-
-        //_currentSelectedButton.ButtonPressed = false;
-        //update trade ui
+        ResetTradeMenu();
     }
 
-    
-    private bool CheckOneSideForTrade(Button newItemButton, Button oldItemButton, TradeMenuGroup checkGroup, UnitInventory checkInventory)
+    /// <summary>
+    /// removes item from inventory group
+    /// </summary>
+    /// <param name="tradeMenu">menu of inventory</param>
+    /// <param name="inventory">inventory of menu group</param>
+    private void RemoveItemFromInventory(TradeMenuGroup tradeMenu, UnitInventory inventory)
     {
-        IInventoryItem newItem;
-        IInventoryItem oldItem;
-
-        if (_itemButtons.ContainsKey(newItemButton))
+        if (tradeMenu.currentlySelectedButton == null)
         {
-            newItem = _itemButtons[newItemButton];
+            return;
         }
+
+        if (tradeMenu.currentlySelectedButton == tradeMenu.equippedWeaponButton)
+        {
+            inventory.RemoveEquippedWeapon();
+        }
+        //else if for other equip slots
         else
         {
-            //because nothing can go into an inventory
-            return true;
+            inventory.RemoveInventoryItem(_itemButtons[tradeMenu.currentlySelectedButton]);
         }
-        if (_itemButtons.ContainsKey(oldItemButton))
+    }
+
+    /// <summary>
+    /// adds item from trade to approprite place
+    /// </summary>
+    /// <param name="fromMenu">the giver's menu group</param>
+    /// <param name="toMenu">the receiver's menu group</param>
+    /// <param name="inventory">the receiver's inventory</param>
+    private void AddItemToInventory(TradeMenuGroup fromMenu, TradeMenuGroup toMenu, UnitInventory inventory)
+    {
+        if (fromMenu.currentlySelectedButton == null)
         {
-            oldItem = _itemButtons[oldItemButton];
+            return;
         }
 
-        IEquipable equipableCheck = newItem as IEquipable;
-        EquipableSlotEnum equipableSlot;
-
-        if (equipableCheck != null)
+        if (toMenu.currentlySelectedButton == toMenu.equippedWeaponButton)
         {
-            equipableSlot = equipableCheck.equipableSlot;
+            inventory.EquipWeapon(_itemButtons[fromMenu.currentlySelectedButton]);
         }
-
-        if (oldItemButton == checkGroup.equippedWeaponButton)
+        //else if for other equip slots
+        else
         {
-            //if new item is not a weapon
-            //skip to attempt to store it in the inventory
-            //else
-            //return true (tho future will take in account for useable weapons)
+            inventory.AddInventoryItem(_itemButtons[fromMenu.currentlySelectedButton]);
         }
+    }
 
-        //inventory check
-        return true;
+    /// <summary>
+    /// going to put this here for now, but will likely just move it to the
+    /// decline buttion
+    /// </summary>
+    public void OnCancelButtonPress()
+    {
+        _gameBoard.ResetMenu();
+
+        HideMenu();
     }
 }

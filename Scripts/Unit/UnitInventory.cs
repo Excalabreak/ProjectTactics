@@ -22,7 +22,7 @@ public partial class UnitInventory : Node
 
     public override void _Ready()
     {
-        _equiptWeapon = _unit.unitResource.equiptWeapon;
+        equiptWeapon = _unit.unitResource.equiptWeapon;
 
         if (_unit.unitResource.inventoryItems == null)
         {
@@ -67,6 +67,20 @@ public partial class UnitInventory : Node
         }
 
         _inventoryItems.Add(item);
+    }
+
+    /// <summary>
+    /// removes item from inventory
+    /// </summary>
+    /// <param name="item">item to remove</param>
+    public void RemoveInventoryItem(IInventoryItem item)
+    {
+        if (!_inventoryItems.Contains(item))
+        {
+            return;
+        }
+
+        _inventoryItems.Remove(item);
     }
 
     /// <summary>
@@ -127,8 +141,7 @@ public partial class UnitInventory : Node
 
         if (!HasEquippedWeapon())
         {
-            _equiptWeapon = newWeapon;
-            _unit.unitSprite.skin = _unit.unitClass.GetWeaponTexture(_equiptWeapon.weaponType);
+            equiptWeapon = newWeapon;
 
             if (HasItemInInventory(newWeapon))
             {
@@ -150,8 +163,7 @@ public partial class UnitInventory : Node
                 _inventoryItems.Remove(newWeapon);
                 _inventoryItems.Add(oldWeapon);
 
-                _equiptWeapon = newWeapon;
-                _unit.unitSprite.skin = _unit.unitClass.GetWeaponTexture(_equiptWeapon.weaponType);
+                equiptWeapon = newWeapon;
                 return;
             }
             else
@@ -163,15 +175,37 @@ public partial class UnitInventory : Node
 
                 _inventoryItems.Add(oldWeapon);
 
-                _equiptWeapon = newWeapon;
-                _unit.unitSprite.skin = _unit.unitClass.GetWeaponTexture(_equiptWeapon.weaponType);
+                equiptWeapon = newWeapon;
                 return;
             }
         }
     }
 
+    public void EquipWeaponFromInventory(IInventoryItem weapon)
+    {
+        if (_equiptWeapon == weapon)
+        {
+            return;
+        }
+        if (!_inventoryItems.Contains(weapon))
+        {
+            return;
+        }
+
+        WeaponResource newWeapon = weapon as WeaponResource;
+        if (newWeapon == null)
+        {
+            return;
+        }
+        if (newWeapon.equipableSlot != EquipableSlotEnum.WEAPON)
+        {
+            return;
+        }
+    }
+
     /// <summary>
     /// attempts to dequip the currently equipt weapon
+    /// and sends it to inventory
     /// </summary>
     public void DequipWeaponToInventory()
     {
@@ -186,9 +220,20 @@ public partial class UnitInventory : Node
 
         _inventoryItems.Add(_equiptWeapon);
 
-        _equiptWeapon = null;
-        GD.Print(equiptWeapon.weaponType);
-        _unit.unitSprite.skin = _unit.unitClass.GetWeaponTexture(equiptWeapon.weaponType);
+        equiptWeapon = null;
+    }
+
+    /// <summary>
+    /// removes equipped weapon
+    /// </summary>
+    public void RemoveEquippedWeapon()
+    {
+        if (!HasEquippedWeapon())
+        {
+            return;
+        }
+
+        equiptWeapon = null;
     }
 
     /// <summary>
@@ -259,6 +304,12 @@ public partial class UnitInventory : Node
                 return _unarmedResource;
             }
             return _equiptWeapon;
+        }
+
+        private set
+        {
+            _equiptWeapon = value;
+            _unit.unitSprite.skin = _unit.unitClass.GetWeaponTexture(equiptWeapon.weaponType);
         }
     }
 }
