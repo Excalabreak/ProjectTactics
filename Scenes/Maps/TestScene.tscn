@@ -61,7 +61,7 @@
 [ext_resource type="Script" uid="uid://b61mmurt8fk7d" path="res://Scripts/Menu/MenuStateMachine/States/MenuTradeState.cs" id="52_l8276"]
 [ext_resource type="Script" uid="uid://c7d3kjokroyh8" path="res://Scripts/Menu/MenuStateMachine/States/MenuItemState.cs" id="54_kmj3t"]
 [ext_resource type="Script" uid="uid://d3njo6qu5mnfs" path="res://Scripts/UI/UIInventory.cs" id="55_wmdct"]
-[ext_resource type="Theme" uid="uid://6w6laa62420x" path="res://Resources/Theme/testTheme.tres" id="58_3om3u"]
+[ext_resource type="Script" uid="uid://cmgj6sm7nja1d" path="res://Scripts/UI/UIBattleLog.cs" id="62_3om3u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
 texture = ExtResource("5_jsdi5")
@@ -428,9 +428,10 @@ script = ExtResource("45_kmj3t")
 script = ExtResource("50_fhuv3")
 _unitManager = NodePath("../../Units")
 
-[node name="CombatManager" type="Node" parent="GameBoard/GameBoardManagers" node_paths=PackedStringArray("_gameBoard")]
+[node name="CombatManager" type="Node" parent="GameBoard/GameBoardManagers" node_paths=PackedStringArray("_gameBoard", "_uiManager")]
 script = ExtResource("7_wn5g2")
 _gameBoard = NodePath("../..")
+_uiManager = NodePath("../../UIManager")
 
 [node name="MenuStateMachine" type="Node" parent="GameBoard" node_paths=PackedStringArray("_gameBoard")]
 script = ExtResource("24_bleph")
@@ -455,19 +456,19 @@ script = ExtResource("52_l8276")
 [node name="MenuItemState" type="Node" parent="GameBoard/MenuStateMachine"]
 script = ExtResource("54_kmj3t")
 
-[node name="UIManager" type="CanvasLayer" parent="GameBoard" node_paths=PackedStringArray("_uiStats", "_uiBattle", "_uiTerrain", "_uiInventroy")]
+[node name="UIManager" type="CanvasLayer" parent="GameBoard" node_paths=PackedStringArray("_uiStats", "_uiBattle", "_uiTerrain", "_uiInventroy", "_uiBattleLog")]
 script = ExtResource("48_bleph")
 _uiStats = NodePath("StatsPanel")
 _uiBattle = NodePath("BattlePredPanel")
-_uiTerrain = NodePath("Terrain Panel")
+_uiTerrain = NodePath("TerrainPanel")
 _uiInventroy = NodePath("InventoryPanel")
+_uiBattleLog = NodePath("BattleLogPanel")
 
 [node name="StatsPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_HPLable", "_MOVLable", "_ATKLable", "_DEFLable", "_RNGLable")]
 offset_left = 16.0
 offset_top = 14.0
 offset_right = 117.0
 offset_bottom = 172.0
-theme = ExtResource("58_3om3u")
 script = ExtResource("30_0ccgp")
 _HPLable = NodePath("VBoxContainer/HPLabel")
 _MOVLable = NodePath("VBoxContainer/MOVLable")
@@ -512,7 +513,6 @@ offset_left = 124.265
 offset_top = 14.0
 offset_right = 423.265
 offset_bottom = 172.0
-theme = ExtResource("58_3om3u")
 script = ExtResource("55_wmdct")
 _equippedLable = NodePath("VBoxContainer/EquippedLabel")
 _itemLables = [NodePath("VBoxContainer/Item1Label"), NodePath("VBoxContainer/Item2Label"), NodePath("VBoxContainer/Item3Label")]
@@ -550,7 +550,6 @@ offset_left = 16.0
 offset_top = 178.0
 offset_right = 318.0
 offset_bottom = 331.0
-theme = ExtResource("58_3om3u")
 script = ExtResource("31_r77ll")
 _playerHPLable = NodePath("VBoxContainer/HBoxContainer/PlayerSide/PHPLable")
 _playerDMGLable = NodePath("VBoxContainer/HBoxContainer/PlayerSide/PDMGLable")
@@ -655,7 +654,7 @@ layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="Terrain Panel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_nameLabel", "_moveLabel", "_visionLabel")]
+[node name="TerrainPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_nameLabel", "_moveLabel", "_visionLabel")]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -664,13 +663,12 @@ offset_top = 14.0
 offset_right = -16.0
 offset_bottom = 112.0
 grow_horizontal = 0
-theme = ExtResource("58_3om3u")
 script = ExtResource("34_maqlv")
 _nameLabel = NodePath("VBoxContainer/NameLabel")
 _moveLabel = NodePath("VBoxContainer/MoveLabel")
 _visionLabel = NodePath("VBoxContainer/VisionLabel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UIManager/Terrain Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UIManager/TerrainPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -682,18 +680,61 @@ offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NameLabel" type="Label" parent="GameBoard/UIManager/Terrain Panel/VBoxContainer"]
+[node name="NameLabel" type="Label" parent="GameBoard/UIManager/TerrainPanel/VBoxContainer"]
 layout_mode = 2
 text = "Planes"
 horizontal_alignment = 1
 
-[node name="MoveLabel" type="Label" parent="GameBoard/UIManager/Terrain Panel/VBoxContainer"]
+[node name="MoveLabel" type="Label" parent="GameBoard/UIManager/TerrainPanel/VBoxContainer"]
 layout_mode = 2
 text = "Move Cost: "
 
-[node name="VisionLabel" type="Label" parent="GameBoard/UIManager/Terrain Panel/VBoxContainer"]
+[node name="VisionLabel" type="Label" parent="GameBoard/UIManager/TerrainPanel/VBoxContainer"]
 layout_mode = 2
 text = "Vision Cost: "
+
+[node name="BattleLogPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_scrollContainer", "_labelLocation")]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -504.0
+offset_top = -240.0
+offset_right = -34.0
+offset_bottom = -25.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("62_3om3u")
+_scrollContainer = NodePath("ScrollContainer")
+_labelLocation = NodePath("ScrollContainer/VBoxContainer")
+
+[node name="BattleLogLabel" type="Label" parent="GameBoard/UIManager/BattleLogPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -39.0
+offset_top = 6.5
+offset_right = 39.0
+offset_bottom = 29.5
+grow_horizontal = 2
+text = "Battle Log"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="GameBoard/UIManager/BattleLogPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 41.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UIManager/BattleLogPanel/ScrollContainer"]
+layout_mode = 2
 
 [editable path="GameBoard/Units/PlayerUnits/AxeUnit"]
 [editable path="GameBoard/Units/PlayerUnits/LanceUnit"]
