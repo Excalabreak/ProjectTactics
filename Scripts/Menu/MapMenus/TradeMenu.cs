@@ -222,6 +222,10 @@ public partial class TradeMenu : BaseMenu
         {
             return;
         }
+        if (!_itemButtons.ContainsKey(tradeMenu.currentlySelectedButton))
+        {
+            return;
+        }
 
         if (tradeMenu.currentlySelectedButton == tradeMenu.equippedWeaponButton)
         {
@@ -243,6 +247,10 @@ public partial class TradeMenu : BaseMenu
     private void AddItemToInventory(TradeMenuGroup fromMenu, TradeMenuGroup toMenu, UnitInventory inventory)
     {
         if (fromMenu.currentlySelectedButton == null)
+        {
+            return;
+        }
+        if (!_itemButtons.ContainsKey(fromMenu.currentlySelectedButton))
         {
             return;
         }

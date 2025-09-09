@@ -16,12 +16,45 @@ public partial class ConsumableItemResource : Resource, IInventoryItem, IUseable
 
     [Export] private bool _infiniteUses;
     [Export] private int _maxUses;
+    private int _currentUses;
 
     [Export] private BaseConsumableEffect _consumableEffect;
 
+    /// <summary>
+    /// constructor to initialize the uses
+    /// </summary>
+    public ConsumableItemResource()
+    {
+        if (_infiniteUses)
+        {
+            return;
+        }
+
+        _currentUses = _maxUses;
+    }
+
+    /// <summary>
+    /// on use, do effect
+    /// 
+    /// if not infinate uses, 
+    /// drop current uses
+    /// </summary>
+    /// <param name="unit"></param>
     public void OnUse(Unit unit)
     {
         _consumableEffect.OnUse(unit);
+
+        if (_infiniteUses)
+        {
+            return;
+        }
+
+        _currentUses--;
+    }
+
+    public bool HasUses()
+    {
+        return _currentUses > 0;
     }
 
     public string devName

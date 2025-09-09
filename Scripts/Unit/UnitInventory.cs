@@ -242,7 +242,7 @@ public partial class UnitInventory : Node
     /// <param name="consumable"></param>
     public void UseItem(IInventoryItem consumable)
     {
-        IUseable item = consumable as IUseable;
+        ConsumableItemResource item = consumable as ConsumableItemResource;
 
         if (item == null)
         {
@@ -250,6 +250,10 @@ public partial class UnitInventory : Node
         }
 
         item.OnUse(_unit);
+        if (!item.HasUses())
+        {
+            RemoveInventoryItem(consumable);
+        }
     }
 
     /// <summary>

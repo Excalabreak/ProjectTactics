@@ -160,5 +160,5 @@ text = "Cancel"
 [connection signal="toggled" from="VBoxContainer/HBoxContainer/RightBox/EquippedButton" to="VBoxContainer/HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./EquippedButton")]]
 [connection signal="toggled" from="VBoxContainer/HBoxContainer/RightBox/ItemButton1" to="VBoxContainer/HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./ItemButton1")]]
 [connection signal="toggled" from="VBoxContainer/HBoxContainer/RightBox/ItemButton2" to="VBoxContainer/HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./ItemButton2")]]
-[connection signal="toggled" from="VBoxContainer/HBoxContainer/RightBox/ItemButton3" to="VBoxContainer/HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./ItemButton2")]]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/RightBox/ItemButton3" to="VBoxContainer/HBoxContainer/RightBox" method="ToggleItem" binds= [NodePath("./ItemButton3")]]
 [connection signal="pressed" from="VBoxContainer/CancelButton" to="." method="OnCancelButtonPress"]
