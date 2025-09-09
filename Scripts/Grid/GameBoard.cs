@@ -13,7 +13,7 @@ using System.Linq;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [08/22/2025]
+ * Last Updated: [09/08/2025]
  * [game board manages everything on the map]
  */
 
@@ -38,11 +38,15 @@ public partial class GameBoard : Node2D
     [Export] private PackedScene _actionMenu;
     [Export] private PackedScene _pauseMenu;
     [Export] private PackedScene _turnMenu;
+    [Export] private PackedScene _tradeMenu;
+    [Export] private PackedScene _itemMenu;
     [Signal] public delegate void SelectedMovedEventHandler();
 
     private ActionMenu _actionMenuInstance;
     private PauseScreen _pauseScreenInstance;
     private TurnMenu _turnMenuInstance;
+    private TradeMenu _tradeMenuInstance;
+    private ItemMenu _itemMenuInstance;
 
     [ExportGroup("MoveCost")]
     private Unit _selectedUnit;
@@ -62,7 +66,6 @@ public partial class GameBoard : Node2D
     private Dictionary<Vector2, List<Unit>> _cellBlockedBy = new Dictionary<Vector2, List<Unit>>();
 
     private const float MAX_VALUE = 9999999;
-
 
     //---------- SET UP -----------
 
@@ -216,6 +219,7 @@ public partial class GameBoard : Node2D
             _selectedUnit.isSelected = false;
         }
         _uiManager.HideStatsPanel();
+        _uiManager.HideUnitInventory();
         _unitWalkHighlights.Clear();
         _unitPath.Stop();
     }
@@ -247,7 +251,7 @@ public partial class GameBoard : Node2D
         }
 
         DeselectSelectedUnit();
-        OnlyPlayerTurnMenuStateTransition("BlankState");
+        OnlyPlayerTurnMenuStateTransition("MenuBlankState");
         _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
@@ -377,7 +381,7 @@ public partial class GameBoard : Node2D
             DeselectSelectedUnit();
             ClearSelectedUnit();
             _walkableCells = new Vector2[0];
-            OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+            OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
             return;
         }
 
@@ -385,13 +389,12 @@ public partial class GameBoard : Node2D
         _unitWalkHighlights.Clear();
         await ToSignal(this, "SelectedMoved");
 
-        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
         MenuUnSelectedStateAccept(cell);
     }
 
     /// <summary>
     /// selects unit for attack
-    /// might need to change for ai
     /// </summary>
     /// <param name="cell"></param>
     public void MenuAttackStateAccept(Vector2 cell)
@@ -423,7 +426,45 @@ public partial class GameBoard : Node2D
 
         DeselectSelectedUnit();
         ClearSelectedUnit();
-        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
+    }
+
+    /// <summary>
+    /// selects unit for trade
+    /// </summary>
+    /// <param name="cell">cell to trade with</param>
+    public void MenuTradeStateAccept(Vector2 cell)
+    {
+        if (_selectedUnit == null)
+        {
+            return;
+        }
+        if (_selectedUnit.cell == cell)
+        {
+            return;
+        }
+
+        if (!IsOccupied(cell))
+        {
+            return;
+        }
+
+        Unit otherUnit = _units[cell];
+
+        if (_selectedUnit.unitGroup != otherUnit.unitGroup)
+        {
+            return;
+        }
+
+        int tradeRange = 1;
+        if (!FloodFill(_selectedUnit.cell, tradeRange).Contains(cell))
+        {
+            return;
+        }
+        
+        _tradeMenuInstance = _tradeMenu.Instantiate() as TradeMenu;
+        _tradeMenuInstance.SetUpTradeMenu(_selectedUnit, otherUnit);
+        AddChild(_tradeMenuInstance);
     }
 
     //---------- MENU CURSOR MOVE ----------
@@ -442,6 +483,7 @@ public partial class GameBoard : Node2D
         else
         {
             _uiManager.HideStatsPanel();
+            _uiManager.HideUnitInventory();
         }
     }
 
@@ -543,6 +585,10 @@ public partial class GameBoard : Node2D
         {
             _turnMenuInstance.OnCancelPressed();
         }
+        else if (IsInstanceValid(_tradeMenuInstance))
+        {
+
+        }
         ResetMenu();
     }
 
@@ -582,6 +628,7 @@ public partial class GameBoard : Node2D
         Unit curUnit = _units[cell];
 
         _uiManager.ShowUnitStats(curUnit);
+        _uiManager.ShowUnitInventory(curUnit);
 
         _walkableCells = GetWalkableCells(curUnit);
         _attackableCells = GetAttackableCells(curUnit);
@@ -628,6 +675,16 @@ public partial class GameBoard : Node2D
 
     //---------- OTHER MENU ----------
 
+    public void SpawnItemMenu()
+    {
+        _itemMenuInstance = _itemMenu.Instantiate() as ItemMenu;
+        if (_selectedUnit != null)
+        {
+            _itemMenuInstance.SetUpItemSlots(_selectedUnit.unitInventory);
+        }
+        AddChild(_itemMenuInstance);
+    }
+
     /// <summary>
     /// resets menu
     /// </summary>
@@ -635,7 +692,7 @@ public partial class GameBoard : Node2D
     {
         DeselectSelectedUnit();
         ClearSelectedUnit();
-        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
     }
 
     /// <summary>
@@ -699,11 +756,11 @@ public partial class GameBoard : Node2D
 
         if (_turnManager.currentTurn == UnitGroupEnum.PLAYER)
         {
-            _menuStateMachine.TransitionTo("UnSelectedState");
+            _menuStateMachine.TransitionTo("MenuUnSelectedState");
         }
         else
         {
-            _menuStateMachine.TransitionTo("BlankState");
+            _menuStateMachine.TransitionTo("MenuBlankState");
             AiTurn(_turnManager.currentTurn);
         }
     }
@@ -877,6 +934,18 @@ public partial class GameBoard : Node2D
     {
         _unitWalkHighlights.Clear();
         _unitWalkHighlights.DrawAttackHighlights(RangeFloodFill(unit.cell, unit.unitInventory.equiptWeapon.minRange, unit.unitInventory.equiptWeapon.maxRange));
+    }
+
+    /// <summary>
+    /// shows cells units can trade with
+    /// </summary>
+    /// <param name="cell">unit</param>
+    public void ShowTradeCells(Vector2 cell)
+    {
+        _unitWalkHighlights.Clear();
+
+        int tradeRange = 1;
+        _unitWalkHighlights.DrawAttackHighlights(FloodFill(cell, tradeRange));
     }
 
     /// <summary>

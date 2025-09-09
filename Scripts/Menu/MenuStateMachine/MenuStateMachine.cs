@@ -5,7 +5,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [YT: Mina Pêcheux]
- * Last Updated: [05/23/2025]
+ * Last Updated: [GD.Print("NO CAMERA STATE FOR " + key);]
  * [script for the menu state machine]
  */
 
@@ -44,7 +44,12 @@ public partial class MenuStateMachine : Node
     /// <param name="key">key of state</param>
     public void TransitionTo(string key)
     {
-        if (!_states.ContainsKey(key) || _currentState == _states[key])
+        if (!_states.ContainsKey(key))
+        {
+            GD.Print("NO MENU STATE FOR " + key);
+            return;
+        }
+        if (_currentState == _states[key])
         {
             return;
         }

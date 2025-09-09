@@ -4,17 +4,19 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/22/2025]
+ * Last Updated: [09/07/2025]
  * [resource for weapon]
  */
 
 [GlobalClass]
-public partial class WeaponResource : Resource
+public partial class WeaponResource : Resource, IInventoryItem, IEquipable
 {
+    [Export] private string _devName;
     [Export] private string _weaponName;
     [Export(PropertyHint.MultilineText)] private string _description;
 
     //make enum for damage type
+    [Export] private WeaponTypeEnum _weaponType;
     [Export] private DamageType _damageType;
     [Export] private bool _canUseSpells;
     [Export] private int _damage;
@@ -45,14 +47,43 @@ public partial class WeaponResource : Resource
         return _damageType != DamageType.MAGIC;
     }
 
-    public string weaponName
+    public string devName
+    {
+        get { return _devName; }
+    }
+
+    public string itemName
     {
         get { return _weaponName; }
     }
 
     public string description
     {
-        get { return _description; }
+        get 
+        {
+            string desc = _description;
+            desc += "\nDamage: " + _damage;
+            desc += "\nHandling: " + _handling;
+            desc += "\nCrit Chance: " + _critChance;
+            desc += "\nCrit Mod: " + _critModifyer;
+
+            if (_minRange == _maxRange)
+            {
+                desc += "\nRange: " + _minRange;
+            }
+            else
+            {
+                desc += "\nRange: " + _minRange + " - " + _maxRange;
+            }
+
+            desc += "\nInv. Size: " + _size;
+            return desc; 
+        }
+    }
+
+    public WeaponTypeEnum weaponType
+    {
+        get { return _weaponType; }
     }
 
     public DamageType damageType
@@ -98,5 +129,15 @@ public partial class WeaponResource : Resource
     public int size
     {
         get { return _size; }
+    }
+
+    public override string ToString()
+    {
+        return _weaponName;
+    }
+
+    public EquipableSlotEnum equipableSlot
+    {
+        get { return EquipableSlotEnum.WEAPON; }
     }
 }

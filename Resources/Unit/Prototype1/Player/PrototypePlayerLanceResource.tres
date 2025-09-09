@@ -1,13 +1,14 @@
 [gd_resource type="Resource" script_class="UnitResource" load_steps=4 format=3 uid="uid://cg7txlxy6nmm1"]
 
-[ext_resource type="Resource" uid="uid://c3s84r1rtukc6" path="res://Resources/Items/Weapons/testLance.tres" id="1_lf1cx"]
 [ext_resource type="Texture2D" uid="uid://pp7o52sefur8" path="res://Sprites/Test/Units/Player/testPlayerLance.png" id="1_xtyq6"]
 [ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="2_lf1cx"]
+[ext_resource type="Resource" uid="uid://fokm32mfo5md" path="res://Resources/ClassResource/Test/TestPlayerClass.tres" id="4_r8suo"]
 
 [resource]
 script = ExtResource("2_lf1cx")
 _sprite = ExtResource("1_xtyq6")
 _spriteOffset = Vector2(0, 0)
+_unitClass = ExtResource("4_r8suo")
 _baseStats = Dictionary[int, int]({
 0: 10,
 1: 0,
@@ -20,7 +21,9 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
-_equiptWeapon = ExtResource("1_lf1cx")
+_equiptWeapon = "test_lance"
+_inventoryWeapons = PackedStringArray("test_sword")
+_consumableItems = PackedStringArray("test_health_potion")
 _startingDirection = 0
 _isCommander = false
 metadata/_custom_type_script = "uid://cb8xehtora3p"

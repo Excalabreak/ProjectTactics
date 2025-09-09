@@ -109,7 +109,7 @@ public partial class CombatManager : Node
             return 0;
         }
 
-        return Mathf.Clamp(attackingUnit.unitStats.hitRate - defendingUnit.unitStats.avoid, 0, 100);
+        return Mathf.Clamp(attackingUnit.unitStats.accuracy - defendingUnit.unitStats.avoid, 0, 100);
     }
 
     /// <summary>

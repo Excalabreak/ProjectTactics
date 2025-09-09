@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bie3op4adi0g3"]
+
+[ext_resource type="Script" uid="uid://b3bsl8cb70j63" path="res://Scripts/Singletons/Databases/ConsumableDataBase.cs" id="1_t3q43"]
+[ext_resource type="Resource" uid="uid://bwb8al3bpss0v" path="res://Resources/Items/Consumables/HealthPotion.tres" id="2_pwmvh"]
+
+[node name="ConsumableDatabase" type="Node"]
+script = ExtResource("1_t3q43")
+_consumableResources = Array[Object]([ExtResource("2_pwmvh")])

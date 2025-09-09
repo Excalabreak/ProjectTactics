@@ -4,8 +4,10 @@
 
 [resource]
 script = ExtResource("1_8a6mr")
+_devName = "test_staff"
 _weaponName = ""
 _description = "a magical staff"
+_weaponType = 4
 _damageType = 2
 _canUseSpells = true
 _damage = 4
@@ -15,5 +17,5 @@ _handling = 85
 _critChance = 10
 _critModifyer = 1.2
 _weight = 1
-_size = 0
+_size = 1
 metadata/_custom_type_script = "uid://dnlv6li8v2vuq"

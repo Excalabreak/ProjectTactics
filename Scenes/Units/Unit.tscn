@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://cpjwmjmoue2rv" path="res://Scripts/Unit/BaseStats.cs" id="9_dwhpk"]
 [ext_resource type="Texture2D" uid="uid://c55wqxgsg36qy" path="res://Sprites/Test/moveExhausted.png" id="9_rk8i6"]
 [ext_resource type="Script" uid="uid://qocq0poq7kyc" path="res://Scripts/Unit/UnitInventory.cs" id="10_dwhpk"]
-[ext_resource type="Resource" uid="uid://cifqxwq138cgy" path="res://Resources/Items/Weapons/unarmmed.tres" id="11_b8scw"]
+[ext_resource type="Script" uid="uid://dc0nj86fpctd4" path="res://Scripts/Unit/UnitClass.cs" id="10_w7084"]
 
 [sub_resource type="Animation" id="Animation_qsjrb"]
 length = 0.001
@@ -69,11 +69,12 @@ _data = {
 &"UnitTestSelected": SubResource("Animation_c264a")
 }
 
-[node name="Unit" type="Node2D" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitStats", "_unitInventory", "_unitDirection", "_unitActionEconomy", "_animPlayer")]
+[node name="Unit" type="Node2D" node_paths=PackedStringArray("_unitPathMovement", "_unitSprite", "_unitClass", "_unitStats", "_unitInventory", "_unitDirection", "_unitActionEconomy", "_animPlayer")]
 z_index = 14
 script = ExtResource("1_x1v5g")
 _unitPathMovement = NodePath("UnitPathMovement")
 _unitSprite = NodePath("Sprites/UnitSprite")
+_unitClass = NodePath("UnitClass")
 _unitStats = NodePath("UnitStats")
 _unitInventory = NodePath("UnitInventory")
 _unitDirection = NodePath("UnitDirection")
@@ -120,10 +121,13 @@ _healthLable = NodePath("../Sprites/TempHealthLable")
 script = ExtResource("9_dwhpk")
 _unit = NodePath("../..")
 
+[node name="UnitClass" type="Node" parent="." node_paths=PackedStringArray("_unit")]
+script = ExtResource("10_w7084")
+_unit = NodePath("..")
+
 [node name="UnitInventory" type="Node" parent="." node_paths=PackedStringArray("_unit")]
 script = ExtResource("10_dwhpk")
 _unit = NodePath("..")
-_unarmmedResource = ExtResource("11_b8scw")
 
 [node name="UnitActionEconomy" type="Node" parent="." node_paths=PackedStringArray("_unit", "_unitStats", "_actionExaustedSprite", "_moveExaustedSprite")]
 script = ExtResource("7_oy5dr")

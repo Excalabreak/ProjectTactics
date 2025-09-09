@@ -1,13 +1,14 @@
 [gd_resource type="Resource" script_class="UnitResource" load_steps=4 format=3 uid="uid://ndlg3h1jwcnl"]
 
 [ext_resource type="Texture2D" uid="uid://dd2aixpvr2sju" path="res://Sprites/Test/Units/Enemy/testEnemySword.png" id="1_c7gc5"]
-[ext_resource type="Resource" uid="uid://cqic6sw16xo8i" path="res://Resources/Items/Weapons/testSword.tres" id="1_fd0n3"]
 [ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="2_fd0n3"]
+[ext_resource type="Resource" uid="uid://dcl3gix7gs7gs" path="res://Resources/ClassResource/Test/TestEnemyClass.tres" id="3_0rt6r"]
 
 [resource]
 script = ExtResource("2_fd0n3")
 _sprite = ExtResource("1_c7gc5")
 _spriteOffset = Vector2(0, 0)
+_unitClass = ExtResource("3_0rt6r")
 _baseStats = Dictionary[int, int]({
 0: 18,
 1: 0,
@@ -20,7 +21,9 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
-_equiptWeapon = ExtResource("1_fd0n3")
+_equiptWeapon = "test_sword"
+_inventoryWeapons = PackedStringArray()
+_consumableItems = PackedStringArray()
 _startingDirection = 0
 _isCommander = false
 metadata/_custom_type_script = "uid://cb8xehtora3p"
