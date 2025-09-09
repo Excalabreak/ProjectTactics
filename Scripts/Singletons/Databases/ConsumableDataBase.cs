@@ -33,7 +33,6 @@ public partial class ConsumableDataBase : Node
             {
                 continue;
             }
-            GD.Print(item.devName + ": " + item.itemName);
             _consumableDatabase.Add(item.devName, item);
         }
     }

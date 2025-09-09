@@ -4,13 +4,14 @@
 [ext_resource type="ButtonGroup" uid="uid://dv2euotprg3mc" path="res://Resources/ButtonGroups/ItemMenuGroup.tres" id="2_bbv8i"]
 [ext_resource type="Theme" uid="uid://6w6laa62420x" path="res://Resources/Theme/testTheme.tres" id="2_hufds"]
 
-[node name="ItemMenu" type="CanvasLayer" node_paths=PackedStringArray("_equippedWeaponButton", "_itemSlotButtons", "_useButton", "_equipButton", "_dequipButton", "_cursorDefaultStartButton")]
+[node name="ItemMenu" type="CanvasLayer" node_paths=PackedStringArray("_equippedWeaponButton", "_itemSlotButtons", "_useButton", "_equipButton", "_dequipButton", "_descriptionLabel", "_cursorDefaultStartButton")]
 script = ExtResource("1_hif4w")
 _equippedWeaponButton = NodePath("HBoxContainer/VBox/EquippedButton")
 _itemSlotButtons = [NodePath("HBoxContainer/VBox/ItemButton1"), NodePath("HBoxContainer/VBox/ItemButton2"), NodePath("HBoxContainer/VBox/ItemButton3")]
 _useButton = NodePath("HBoxContainer/VBoxContainer/UseButton")
 _equipButton = NodePath("HBoxContainer/VBoxContainer/EquipButton")
 _dequipButton = NodePath("HBoxContainer/VBoxContainer/DequipButton")
+_descriptionLabel = NodePath("Panel/Label")
 _cursorDefaultStartButton = NodePath("HBoxContainer/VBox/EquippedButton")
 
 [node name="Panel" type="Panel" parent="."]
@@ -30,13 +31,14 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 9.0
-offset_top = 9.0
-offset_right = -6.73
-offset_bottom = -16.505
+offset_left = 8.0
+offset_top = 5.0
+offset_right = -8.0
+offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Description"
+text = "Description:"
+autowrap_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 8
@@ -119,9 +121,17 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Dequip"
 
+[connection signal="focus_entered" from="HBoxContainer/VBox/EquippedButton" to="." method="UpdateDescriptionPannel" binds= [NodePath("HBoxContainer/VBox/EquippedButton")]]
+[connection signal="mouse_entered" from="HBoxContainer/VBox/EquippedButton" to="." method="UpdateDescriptionPannel" binds= [NodePath("HBoxContainer/VBox/EquippedButton")]]
 [connection signal="toggled" from="HBoxContainer/VBox/EquippedButton" to="." method="OnItemButtonToggled" binds= [NodePath("HBoxContainer/VBox/EquippedButton")]]
+[connection signal="focus_entered" from="HBoxContainer/VBox/ItemButton1" to="." method="UpdateDescriptionPannel" binds= [NodePath("HBoxContainer/VBox/ItemButton1")]]
+[connection signal="mouse_entered" from="HBoxContainer/VBox/ItemButton1" to="." method="UpdateDescriptionPannel" binds= [NodePath("HBoxContainer/VBox/ItemButton1")]]
 [connection signal="toggled" from="HBoxContainer/VBox/ItemButton1" to="." method="OnItemButtonToggled" binds= [NodePath("HBoxContainer/VBox/ItemButton1")]]
+[connection signal="focus_entered" from="HBoxContainer/VBox/ItemButton2" to="." method="UpdateDescriptionPannel" binds= [NodePath("HBoxContainer/VBox/ItemButton2")]]
+[connection signal="mouse_entered" from="HBoxContainer/VBox/ItemButton2" to="." method="UpdateDescriptionPannel" binds= [NodePath("HBoxContainer/VBox/ItemButton2")]]
 [connection signal="toggled" from="HBoxContainer/VBox/ItemButton2" to="." method="OnItemButtonToggled" binds= [NodePath("HBoxContainer/VBox/ItemButton2")]]
+[connection signal="focus_entered" from="HBoxContainer/VBox/ItemButton3" to="." method="UpdateDescriptionPannel" binds= [NodePath("HBoxContainer/VBox/ItemButton3")]]
+[connection signal="mouse_entered" from="HBoxContainer/VBox/ItemButton3" to="." method="UpdateDescriptionPannel" binds= [NodePath("HBoxContainer/VBox/ItemButton3")]]
 [connection signal="toggled" from="HBoxContainer/VBox/ItemButton3" to="." method="OnItemButtonToggled" binds= [NodePath("HBoxContainer/VBox/ItemButton3")]]
 [connection signal="pressed" from="HBoxContainer/VBox/CancelButton" to="." method="OnCancelButtonPress"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/UseButton" to="." method="OnUsePressed"]

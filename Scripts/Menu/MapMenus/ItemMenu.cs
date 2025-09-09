@@ -1,10 +1,9 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/08/2025]
+ * Last Updated: [09/09/2025]
  * [script for the menu]
  */
 
@@ -18,6 +17,9 @@ public partial class ItemMenu : BaseMenu
     [Export] private Button _useButton;
     [Export] private Button _equipButton;
     [Export] private Button _dequipButton;
+
+    [ExportGroup("Description")]
+    [Export] private Label _descriptionLabel;
 
     private UnitInventory _unitInventory;
     private Dictionary<Button, IInventoryItem> _inventorySlots = new Dictionary<Button, IInventoryItem>();
@@ -189,6 +191,19 @@ public partial class ItemMenu : BaseMenu
         _unitInventory.UseItem(_currentlySelectedItem);
 
         ResetItemSlots();
+    }
+
+    private void UpdateDescriptionPannel(NodePath buttonPath)
+    {
+        Button button = GetNode(buttonPath) as Button;
+
+        if (!_inventorySlots.ContainsKey(button))
+        {
+            _descriptionLabel.Text = "Description:";
+            return;
+        }
+
+        _descriptionLabel.Text = "Description: \n" + _inventorySlots[button].description; 
     }
 
     /// <summary>

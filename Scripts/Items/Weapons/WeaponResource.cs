@@ -59,7 +59,26 @@ public partial class WeaponResource : Resource, IInventoryItem, IEquipable
 
     public string description
     {
-        get { return _description; }
+        get 
+        {
+            string desc = _description;
+            desc += "\nDamage: " + _damage;
+            desc += "\nHandling: " + _handling;
+            desc += "\nCrit Chance: " + _critChance;
+            desc += "\nCrit Mod: " + _critModifyer;
+
+            if (_minRange == _maxRange)
+            {
+                desc += "\nRange: " + _minRange;
+            }
+            else
+            {
+                desc += "\nRange: " + _minRange + " - " + _maxRange;
+            }
+
+            desc += "\nInv. Size: " + _size;
+            return desc; 
+        }
     }
 
     public WeaponTypeEnum weaponType
