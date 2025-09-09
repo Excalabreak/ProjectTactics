@@ -29,7 +29,7 @@ public partial class UnitResource : Resource
     //using weapon resources for testing
     //(maybe make a db for items and store id)
     [Export] private string[] _inventoryWeapons;
-    [Export] private ConsumableItemResource[] _consumableItems;
+    [Export] private string[] _consumableItems;
 
     [ExportGroup("Direction")]
     [Export] private DirectionEnum _startingDirection = DirectionEnum.UP;
@@ -65,7 +65,14 @@ public partial class UnitResource : Resource
     {
         get
         {
-            return _consumableItems;
+            ConsumableItemResource[] storedConsumables = new ConsumableItemResource[_consumableItems.Length];
+
+            for (int i = 0; i < _inventoryWeapons.Length; i++)
+            {
+                storedConsumables[i] = ConsumableDataBase.Instance.GetItem(_consumableItems[i]);
+            }
+
+            return storedConsumables;
         }
     }
 

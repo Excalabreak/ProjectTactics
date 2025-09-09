@@ -8,6 +8,7 @@
 
 public interface IInventoryItem
 {
+    string devName { get; }
     string itemName { get; }
 
     int size { get; }

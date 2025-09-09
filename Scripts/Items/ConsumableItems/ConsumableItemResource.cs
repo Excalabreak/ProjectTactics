@@ -10,6 +10,7 @@ using System;
 [GlobalClass]
 public partial class ConsumableItemResource : Resource, IInventoryItem, IUseable
 {
+    [Export] private string _devName;
     [Export] private string _itemName;
     [Export] private int _size = 1;
 
@@ -21,6 +22,11 @@ public partial class ConsumableItemResource : Resource, IInventoryItem, IUseable
     public void OnUse(Unit unit)
     {
         _consumableEffect.OnUse(unit);
+    }
+
+    public string devName
+    {
+        get { return _devName; }
     }
 
     public string itemName

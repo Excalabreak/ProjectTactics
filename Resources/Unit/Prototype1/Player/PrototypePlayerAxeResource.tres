@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="UnitResource" load_steps=5 format=3 uid="uid://bt88eerwj5e1w"]
+[gd_resource type="Resource" script_class="UnitResource" load_steps=4 format=3 uid="uid://bt88eerwj5e1w"]
 
 [ext_resource type="Texture2D" uid="uid://c4x3rae14n1v3" path="res://Sprites/Test/Units/Player/testPlayerAxe.png" id="1_4rl3p"]
-[ext_resource type="Resource" uid="uid://bwb8al3bpss0v" path="res://Resources/Items/Consumables/HealthPotion.tres" id="1_g53uq"]
 [ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="1_j3i28"]
 [ext_resource type="Resource" uid="uid://fokm32mfo5md" path="res://Resources/ClassResource/Test/TestPlayerClass.tres" id="4_6jnuf"]
 
@@ -24,7 +23,7 @@ _baseStats = Dictionary[int, int]({
 })
 _equiptWeapon = "test_axe"
 _inventoryWeapons = PackedStringArray("test_sword")
-_consumableItems = Array[Object]([ExtResource("1_g53uq")])
+_consumableItems = PackedStringArray("test_health_potion")
 _startingDirection = 0
 _isCommander = false
 metadata/_custom_type_script = "uid://cb8xehtora3p"

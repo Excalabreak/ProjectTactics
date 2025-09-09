@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_viwta")
+_devName = "test_health_potion"
 _itemName = "Health Potion"
 _size = 1
 _infiniteUses = false

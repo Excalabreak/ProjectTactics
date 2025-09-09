@@ -20,6 +20,7 @@ config/icon="uid://1so2e8lmu73j"
 
 DirectionManager="*res://Scripts/Singletons/Direction/DirectionManager.cs"
 WeaponDataBase="*res://Scenes/Databases/WeaponDataBase.tscn"
+ConsumableDatabase="*res://Scenes/Databases/ConsumableDatabase.tscn"
 
 [display]
 
