@@ -464,54 +464,42 @@ _uiTerrain = NodePath("TerrainPanel")
 _uiInventroy = NodePath("InventoryPanel")
 _uiBattleLog = NodePath("BattleLogPanel")
 
-[node name="StatsPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_HPLable", "_MOVLable", "_ATKLable", "_DEFLable", "_RNGLable")]
+[node name="StatsPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_statsLable", "_combatStatsLable")]
 offset_left = 16.0
 offset_top = 14.0
-offset_right = 117.0
-offset_bottom = 172.0
+offset_right = 260.53
+offset_bottom = 305.0
 script = ExtResource("30_0ccgp")
-_HPLable = NodePath("VBoxContainer/HPLabel")
-_MOVLable = NodePath("VBoxContainer/MOVLable")
-_ATKLable = NodePath("VBoxContainer/ATKLable")
-_DEFLable = NodePath("VBoxContainer/DEFLable")
-_RNGLable = NodePath("VBoxContainer/RNGLable")
+_statsLable = NodePath("HBoxContainer/StatsLabel")
+_combatStatsLable = NodePath("HBoxContainer/CombatStatsLabel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UIManager/StatsPanel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GameBoard/UIManager/StatsPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -9.0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = -5.89999
+offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
+alignment = 1
 
-[node name="HPLabel" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
+[node name="StatsLabel" type="Label" parent="GameBoard/UIManager/StatsPanel/HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 text = "HP: 10/10"
 
-[node name="MOVLable" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
+[node name="CombatStatsLabel" type="Label" parent="GameBoard/UIManager/StatsPanel/HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
-text = "MOV: 6/6"
-
-[node name="ATKLable" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
-layout_mode = 2
-text = "ATK: 5"
-
-[node name="DEFLable" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
-layout_mode = 2
-text = "DEF: 5"
-
-[node name="RNGLable" type="Label" parent="GameBoard/UIManager/StatsPanel/VBoxContainer"]
-layout_mode = 2
-text = "RANGE: 1"
+text = "HIT: 70"
 
 [node name="InventoryPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_equippedLable", "_itemLables")]
-offset_left = 124.265
+offset_left = 269.935
 offset_top = 14.0
-offset_right = 423.265
+offset_right = 500.36
 offset_bottom = 172.0
 script = ExtResource("55_wmdct")
 _equippedLable = NodePath("VBoxContainer/EquippedLabel")
@@ -546,10 +534,17 @@ layout_mode = 2
 text = "Potion"
 
 [node name="BattlePredPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_playerHPLable", "_playerDMGLable", "_playerACCLable", "_playerCRTLable", "_enemyHPLable", "_enemyDMGLable", "_enemyACCLable", "_enemyCRTLable")]
-offset_left = 16.0
-offset_top = 178.0
-offset_right = 318.0
-offset_bottom = 331.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -334.66
+offset_top = -400.64
+offset_right = -32.66
+offset_bottom = -247.64
+grow_horizontal = 0
+grow_vertical = 0
 script = ExtResource("31_r77ll")
 _playerHPLable = NodePath("VBoxContainer/HBoxContainer/PlayerSide/PHPLable")
 _playerDMGLable = NodePath("VBoxContainer/HBoxContainer/PlayerSide/PDMGLable")
