@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=82 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://c2x5ktvecqb17" path="res://Sprites/Test/testWarningSprite.png" id="14_slbve"]
 [ext_resource type="Texture2D" uid="uid://b2e6fnaytryuk" path="res://Sprites/Test/TileHighlights/attackRange.png" id="14_wn863"]
 [ext_resource type="Script" uid="uid://ccvhstia04m7b" path="res://Scripts/Grid/UnitWalkHighlight.cs" id="15_8bl2x"]
+[ext_resource type="Script" uid="uid://c4s7fr8cwndml" path="res://Scripts/Grid/WarningOverlay.cs" id="15_gpxho"]
 [ext_resource type="Texture2D" uid="uid://b7bouj3wqmjsd" path="res://Sprites/Test/arrows.svg" id="16_l2v6i"]
 [ext_resource type="Script" uid="uid://c8guc1dvccpxf" path="res://Scripts/Grid/UnitPath.cs" id="17_kjk7w"]
 [ext_resource type="Script" uid="uid://dm3c41p3wxfqg" path="res://Scripts/Unit/UnitManager.cs" id="18_7r5ow"]
@@ -269,6 +270,7 @@ script = ExtResource("10_gt7qa")
 [node name="WarningOverlay" type="TileMapLayer" parent="GameBoard/MapTiles"]
 z_index = 16
 tile_set = SubResource("TileSet_gpxho")
+script = ExtResource("15_gpxho")
 
 [node name="KnownUnitLocations" type="TileMapLayer" parent="GameBoard/MapTiles"]
 z_index = 17
