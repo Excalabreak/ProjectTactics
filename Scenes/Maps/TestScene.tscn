@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=81 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://eeoqhp4yc142" path="res://Sprites/Test/knownLocIndicator.png" id="12_jsdi5"]
 [ext_resource type="Texture2D" uid="uid://c77lwl1g215vn" path="res://Sprites/Test/TileHighlights/TileHighlight.png" id="13_he1t7"]
 [ext_resource type="Script" uid="uid://c6vpnu1qxwc0r" path="res://Scripts/Grid/KnownUnitLocations.cs" id="13_ns1vp"]
+[ext_resource type="Texture2D" uid="uid://c2x5ktvecqb17" path="res://Sprites/Test/testWarningSprite.png" id="14_slbve"]
 [ext_resource type="Texture2D" uid="uid://b2e6fnaytryuk" path="res://Sprites/Test/TileHighlights/attackRange.png" id="14_wn863"]
 [ext_resource type="Script" uid="uid://ccvhstia04m7b" path="res://Scripts/Grid/UnitWalkHighlight.cs" id="15_8bl2x"]
 [ext_resource type="Texture2D" uid="uid://b7bouj3wqmjsd" path="res://Sprites/Test/arrows.svg" id="16_l2v6i"]
@@ -118,6 +119,15 @@ texture_region_size = Vector2i(64, 64)
 [sub_resource type="TileSet" id="TileSet_1vcy8"]
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_dwn5r")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_psjm3"]
+texture = ExtResource("14_slbve")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_gpxho"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_psjm3")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ns1vp"]
 texture = ExtResource("12_jsdi5")
@@ -255,6 +265,10 @@ modulate = Color(1, 1, 1, 0.431373)
 z_index = 16
 tile_set = SubResource("TileSet_1vcy8")
 script = ExtResource("10_gt7qa")
+
+[node name="WarningOverlay" type="TileMapLayer" parent="GameBoard/MapTiles"]
+z_index = 16
+tile_set = SubResource("TileSet_gpxho")
 
 [node name="KnownUnitLocations" type="TileMapLayer" parent="GameBoard/MapTiles"]
 z_index = 17
@@ -467,8 +481,8 @@ _uiBattleLog = NodePath("BattleLogPanel")
 [node name="StatsPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_statsLable", "_combatStatsLable")]
 offset_left = 16.0
 offset_top = 14.0
-offset_right = 260.53
-offset_bottom = 305.0
+offset_right = 261.0
+offset_bottom = 327.0
 script = ExtResource("30_0ccgp")
 _statsLable = NodePath("HBoxContainer/StatsLabel")
 _combatStatsLable = NodePath("HBoxContainer/CombatStatsLabel")
@@ -487,12 +501,12 @@ grow_vertical = 2
 alignment = 1
 
 [node name="StatsLabel" type="Label" parent="GameBoard/UIManager/StatsPanel/HBoxContainer"]
-custom_minimum_size = Vector2(90, 0)
+custom_minimum_size = Vector2(90, 300)
 layout_mode = 2
 text = "HP: 10/10"
 
 [node name="CombatStatsLabel" type="Label" parent="GameBoard/UIManager/StatsPanel/HBoxContainer"]
-custom_minimum_size = Vector2(90, 0)
+custom_minimum_size = Vector2(90, 300)
 layout_mode = 2
 text = "HIT: 70"
 
@@ -539,10 +553,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -334.66
-offset_top = -400.64
-offset_right = -32.66
-offset_bottom = -247.64
+offset_left = -319.45
+offset_top = -390.415
+offset_right = -17.45
+offset_bottom = -237.415
 grow_horizontal = 0
 grow_vertical = 0
 script = ExtResource("31_r77ll")
@@ -694,10 +708,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -504.0
-offset_top = -240.0
-offset_right = -34.0
-offset_bottom = -25.0
+offset_left = -487.375
+offset_top = -227.94
+offset_right = -17.375
+offset_bottom = -12.9399
 grow_horizontal = 0
 grow_vertical = 0
 script = ExtResource("62_3om3u")
