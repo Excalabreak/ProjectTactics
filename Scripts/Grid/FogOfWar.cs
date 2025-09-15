@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [05/13/2025]
+ * Last Updated: [09/15/2025]
  * [Fog of war that obscures enemies when player can't see them
  * NOTE, FOG OF WAR SPRITE SHEET AND REGULAR MAP SPRITE SHEET HAS TO MATCH]
  */
@@ -34,8 +34,11 @@ public partial class FogOfWar : TileMapLayer
     public void HideMapCell(Vector2 coords)
     {
         Vector2I mapCoords = new Vector2I(Mathf.RoundToInt(coords.X), Mathf.RoundToInt(coords.Y));
-        
-        SetCell(mapCoords, 0, _map.GetCellAtlasCoords(mapCoords), 0);
+        int sourceID = 0;
+        Vector2I atlasCoords = _map.GetCellAtlasCoords(mapCoords);
+        int altTiles = 0;
+
+        SetCell(mapCoords, sourceID, atlasCoords, altTiles);
     }
 
     /// <summary>
@@ -44,6 +47,7 @@ public partial class FogOfWar : TileMapLayer
     /// <param name="coords">coordinates of tile to show</param>
     public void RevealMapCell(Vector2 coords)
     {
-        EraseCell(new Vector2I(Mathf.RoundToInt(coords.X), Mathf.RoundToInt(coords.Y)));
+        Vector2I mapCoords = new Vector2I(Mathf.RoundToInt(coords.X), Mathf.RoundToInt(coords.Y));
+        EraseCell(mapCoords);
     }
 }

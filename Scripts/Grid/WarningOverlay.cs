@@ -79,12 +79,12 @@ public partial class WarningOverlay : Node2D
         Vector2I coords;
 
         coords = new Vector2I(Mathf.RoundToInt(areaSprite.X), Mathf.RoundToInt(areaSprite.Y));
-        _spriteLayer.SetCell(coords);
+        _spriteLayer.EraseCell(coords);
 
         foreach (Vector2 cell in _currentAreas[areaSprite])
         {
             coords = new Vector2I(Mathf.RoundToInt(cell.X), Mathf.RoundToInt(cell.Y));
-            _spriteLayer.SetCell(coords);
+            _spriteLayer.EraseCell(coords);
         }
     }
 }
