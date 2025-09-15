@@ -1,31 +1,90 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/11/2025]
+ * Last Updated: [09/15/2025]
  * [handles showing and removing warnings]
  */
 
-public partial class WarningOverlay : TileMapLayer
+public partial class WarningOverlay : Node2D
 {
-    /// <summary>
-    /// shows a warning cell at cell
-    /// </summary>
-    /// <param name="coords">coordinates of tile to hide</param>
-    public void AddWarningCell(Vector2 coords)
-    {
-        Vector2I mapCoords = new Vector2I(Mathf.RoundToInt(coords.X), Mathf.RoundToInt(coords.Y));
+    [Export] private TileMapLayer _spriteLayer;
+    [Export] private TileMapLayer _areaLayer;
 
-        SetCell(mapCoords, 0, Vector2I.Zero, 0);
+    private Dictionary<Vector2, Vector2[]> _currentAreas = new Dictionary<Vector2, Vector2[]>();
+
+    /// <summary>
+    /// adds the warning area and sprite to the map
+    /// adds them to dictionary
+    /// </summary>
+    /// <param name="warningArea">area of cells to highlight</param>
+    /// <param name="spriteLocation">where the ! sprite goes</param>
+    public void AddWarningArea(Vector2[] warningArea, Vector2 spriteLocation)
+    {
+        Vector2I coords;
+        int sourceID = 0;
+        Vector2I atlasCoords = Vector2I.Zero;
+        int altTiles = 0;
+
+        if (!_currentAreas.ContainsKey(spriteLocation))
+        {
+            coords = new Vector2I(Mathf.RoundToInt(spriteLocation.X), Mathf.RoundToInt(spriteLocation.Y));
+            _spriteLayer.SetCell(coords, sourceID, atlasCoords, altTiles);
+        }
+        else
+        {
+            bool hasNewSpriteLocation = false;
+            foreach (Vector2 cell in warningArea)
+            {
+                if (_currentAreas.ContainsKey(cell))
+                {
+                    continue;
+                }
+
+                coords = new Vector2I(Mathf.RoundToInt(cell.X), Mathf.RoundToInt(cell.Y));
+                _spriteLayer.SetCell(coords, sourceID, atlasCoords, altTiles);
+                hasNewSpriteLocation = true;
+                break;
+            }
+            if (!hasNewSpriteLocation)
+            {
+                GD.Print("no viable location for warning sprites");
+                return;
+            }
+        }
+
+        foreach (Vector2 cell in warningArea)
+        {
+            coords = new Vector2I(Mathf.RoundToInt(cell.X), Mathf.RoundToInt(cell.Y));
+            _areaLayer.SetCell(coords, sourceID, atlasCoords, altTiles);
+        }
+
+        _currentAreas.Add(spriteLocation, warningArea);
     }
 
     /// <summary>
-    /// removes warning cell
+    /// removes area from game board
     /// </summary>
-    /// <param name="coords">coordinates of tile to show</param>
-    public void RemoveWarningCell(Vector2 coords)
+    /// <param name="areaSprite">where the ! sprite is</param>
+    public void RemoveWarningArea(Vector2 areaSprite)
     {
-        EraseCell(new Vector2I(Mathf.RoundToInt(coords.X), Mathf.RoundToInt(coords.Y)));
+        if (!_currentAreas.ContainsKey(areaSprite))
+        {
+            GD.Print("not valid warning area sprite location");
+            return;
+        }
+
+        Vector2I coords;
+
+        coords = new Vector2I(Mathf.RoundToInt(areaSprite.X), Mathf.RoundToInt(areaSprite.Y));
+        _spriteLayer.SetCell(coords);
+
+        foreach (Vector2 cell in _currentAreas[areaSprite])
+        {
+            coords = new Vector2I(Mathf.RoundToInt(cell.X), Mathf.RoundToInt(cell.Y));
+            _spriteLayer.SetCell(coords);
+        }
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=85 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://eeoqhp4yc142" path="res://Sprites/Test/knownLocIndicator.png" id="12_jsdi5"]
 [ext_resource type="Texture2D" uid="uid://c77lwl1g215vn" path="res://Sprites/Test/TileHighlights/TileHighlight.png" id="13_he1t7"]
 [ext_resource type="Script" uid="uid://c6vpnu1qxwc0r" path="res://Scripts/Grid/KnownUnitLocations.cs" id="13_ns1vp"]
+[ext_resource type="Texture2D" uid="uid://cwvc7ok54uemr" path="res://Sprites/Test/testWarningArea.png" id="14_psjm3"]
 [ext_resource type="Texture2D" uid="uid://c2x5ktvecqb17" path="res://Sprites/Test/testWarningSprite.png" id="14_slbve"]
 [ext_resource type="Texture2D" uid="uid://b2e6fnaytryuk" path="res://Sprites/Test/TileHighlights/attackRange.png" id="14_wn863"]
 [ext_resource type="Script" uid="uid://ccvhstia04m7b" path="res://Scripts/Grid/UnitWalkHighlight.cs" id="15_8bl2x"]
@@ -112,6 +113,24 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_8c81w")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_34fge"]
+texture = ExtResource("14_slbve")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_q6o7e"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_34fge")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gpxho"]
+texture = ExtResource("14_psjm3")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_gpxho"]
+tile_size = Vector2i(64, 64)
+sources/1 = SubResource("TileSetAtlasSource_gpxho")
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dwn5r"]
 texture = ExtResource("9_ixcl0")
 texture_region_size = Vector2i(64, 64)
@@ -120,15 +139,6 @@ texture_region_size = Vector2i(64, 64)
 [sub_resource type="TileSet" id="TileSet_1vcy8"]
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_dwn5r")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_psjm3"]
-texture = ExtResource("14_slbve")
-texture_region_size = Vector2i(64, 64)
-0:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_gpxho"]
-tile_size = Vector2i(64, 64)
-sources/0 = SubResource("TileSetAtlasSource_psjm3")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ns1vp"]
 texture = ExtResource("12_jsdi5")
@@ -261,16 +271,26 @@ script = ExtResource("8_sb4gi")
 _gameboard = NodePath("../..")
 _map = NodePath("../Map")
 
+[node name="WarningOverlay" type="Node2D" parent="GameBoard/MapTiles" node_paths=PackedStringArray("_spriteLayer", "_areaLayer")]
+z_index = 16
+script = ExtResource("15_gpxho")
+_spriteLayer = NodePath("WarningSprite")
+_areaLayer = NodePath("WarningArea")
+
+[node name="WarningSprite" type="TileMapLayer" parent="GameBoard/MapTiles/WarningOverlay"]
+z_index = 17
+tile_set = SubResource("TileSet_q6o7e")
+
+[node name="WarningArea" type="TileMapLayer" parent="GameBoard/MapTiles/WarningOverlay"]
+modulate = Color(1, 1, 1, 0.462745)
+z_index = 16
+tile_set = SubResource("TileSet_gpxho")
+
 [node name="BlockedOverlay" type="TileMapLayer" parent="GameBoard/MapTiles"]
 modulate = Color(1, 1, 1, 0.431373)
 z_index = 16
 tile_set = SubResource("TileSet_1vcy8")
 script = ExtResource("10_gt7qa")
-
-[node name="WarningOverlay" type="TileMapLayer" parent="GameBoard/MapTiles"]
-z_index = 16
-tile_set = SubResource("TileSet_gpxho")
-script = ExtResource("15_gpxho")
 
 [node name="KnownUnitLocations" type="TileMapLayer" parent="GameBoard/MapTiles"]
 z_index = 17
