@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_ercdb")
-_gridSize = Vector2(37, 23)
+_gridSize = Vector2(34, 20)
 _cellSize = Vector2(64, 64)
 metadata/_custom_type_script = "uid://cvwo8lr0wr3qx"

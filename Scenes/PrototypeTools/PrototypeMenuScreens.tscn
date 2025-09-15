@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cit5p50bewtv4"]
+[gd_scene load_steps=8 format=3 uid="uid://cit5p50bewtv4"]
 
 [ext_resource type="Script" uid="uid://vxqdmei6f2d4" path="res://Scripts/Playtest/PrototypeStartMenu.cs" id="1_rsjwj"]
 [ext_resource type="Script" uid="uid://b85c740frt4hn" path="res://Scripts/Playtest/PrototypeEndMenu.cs" id="2_p7ij8"]
@@ -12,12 +12,16 @@ font_size = 71
 [sub_resource type="LabelSettings" id="LabelSettings_ixcl0"]
 font_size = 41
 
+[sub_resource type="LabelSettings" id="LabelSettings_rsjwj"]
+font_size = 26
+
+[sub_resource type="Theme" id="Theme_p7ij8"]
+OptionButton/font_sizes/font_size = 26
+
 [node name="PrototypeNodes" type="Node2D"]
 
-[node name="PrototypeStartMenu" type="CanvasLayer" parent="." node_paths=PackedStringArray("_gridCursor", "_cursorDefaultStartButton")]
-visible = false
+[node name="PrototypeStartMenu" type="CanvasLayer" parent="." node_paths=PackedStringArray("_cursorDefaultStartButton")]
 script = ExtResource("1_rsjwj")
-_gridCursor = NodePath("")
 _cursorDefaultStartButton = NodePath("Panel/VBoxContainer/StartButton")
 
 [node name="Panel" type="Panel" parent="PrototypeStartMenu"]
@@ -38,7 +42,7 @@ alignment = 1
 
 [node name="Title" type="Label" parent="PrototypeStartMenu/Panel/VBoxContainer"]
 layout_mode = 2
-text = "Project Tactics Playtest 1"
+text = "Project Tactics Playtest 2"
 label_settings = SubResource("LabelSettings_maqlv")
 horizontal_alignment = 1
 
@@ -55,6 +59,30 @@ text = "Note: Alt + F4 to close game mid game"
 label_settings = SubResource("LabelSettings_ixcl0")
 horizontal_alignment = 1
 
+[node name="HBoxContainer" type="HBoxContainer" parent="PrototypeStartMenu/Panel/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="PrototypeStartMenu/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Who do you want to scout: "
+label_settings = SubResource("LabelSettings_rsjwj")
+
+[node name="OptionButton" type="OptionButton" parent="PrototypeStartMenu/Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(1161.91, 0)
+layout_mode = 2
+theme = SubResource("Theme_p7ij8")
+autowrap_mode = 2
+selected = 1
+allow_reselect = true
+item_count = 3
+popup/item_0/text = "Bill: good at mapping out infantry in forests"
+popup/item_0/id = 0
+popup/item_1/text = "Bob: traitor to the commander and knows common ambush locations"
+popup/item_1/id = 1
+popup/item_2/text = "Jeff: Can usually find a very general location of commander"
+popup/item_2/id = 2
+
 [node name="StartButton" type="Button" parent="PrototypeStartMenu/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(145.95, 43.4)
 layout_mode = 2
@@ -63,11 +91,10 @@ theme_override_font_sizes/font_size = 36
 text = "Start"
 icon_alignment = 1
 
-[node name="PrototypeEndMenu" type="CanvasLayer" parent="." node_paths=PackedStringArray("_titleLable", "_gridCursor", "_cursorDefaultStartButton")]
+[node name="PrototypeEndMenu" type="CanvasLayer" parent="." node_paths=PackedStringArray("_titleLable", "_cursorDefaultStartButton")]
 visible = false
 script = ExtResource("2_p7ij8")
 _titleLable = NodePath("Panel/VBoxContainer/Title")
-_gridCursor = NodePath("")
 _cursorDefaultStartButton = NodePath("Panel/VBoxContainer/QuitButton")
 
 [node name="Panel" type="Panel" parent="PrototypeEndMenu"]
