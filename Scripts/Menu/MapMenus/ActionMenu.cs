@@ -4,13 +4,16 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: YT:Heal Moon
- * Last Updated: [09/02/2025]
+ * Last Updated: [09/17/2025]
  * [menu for unit action]
  */
 
 public partial class ActionMenu : BaseMenu
 {
     [Export] private Button[] _actionButtons;
+    [Export] private Button _removeWarningButton;
+
+    private Vector2 _menuOpenAt;
 
     public override void _Ready()
     {
@@ -55,6 +58,21 @@ public partial class ActionMenu : BaseMenu
     {
         HideMenu();
         _gameBoard.menuStateMachine.TransitionTo("MenuTradeState");
+    }
+
+    private void OnRemoveWarningPress()
+    {
+        OnCancelButtonPress();
+        _gameBoard.warningOverlay.RemoveWarningArea(_menuOpenAt);
+    }
+
+    public void ShowRemoveWarning(bool show, Vector2 cell)
+    {
+        _removeWarningButton.Visible = show;
+        if (show)
+        {
+            _menuOpenAt = cell;
+        }
     }
 
     /// <summary>

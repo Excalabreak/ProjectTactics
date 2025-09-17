@@ -354,10 +354,12 @@ public partial class GameBoard : Node2D
     public void MenuUnSelectedStateAccept(Vector2 cell)
     {
         //need to add a condition for enemy units
+
         if (_selectedUnit == null && _units.ContainsKey(cell) && _units[cell].unitGroup == UnitGroupEnum.PLAYER)
         {
             SelectUnit(cell);
             _actionMenuInstance = _actionMenu.Instantiate() as ActionMenu;
+            _actionMenuInstance.ShowRemoveWarning(_warningOverlay.HasWarningAt(cell), cell);
             AddChild(_actionMenuInstance);
         }
         else if (_selectedUnit != null)
@@ -367,6 +369,7 @@ public partial class GameBoard : Node2D
         else if (_selectedUnit == null)
         {
             _pauseScreenInstance = _pauseMenu.Instantiate() as PauseScreen;
+            _pauseScreenInstance.ShowRemoveWarning(_warningOverlay.HasWarningAt(cell), cell);
             AddChild(_pauseScreenInstance);
         }
     }
@@ -1919,6 +1922,11 @@ public partial class GameBoard : Node2D
     public MenuStateMachine menuStateMachine
     {
         get { return _menuStateMachine; }
+    }
+
+    public WarningOverlay warningOverlay
+    {
+        get { return _warningOverlay; }
     }
 
     public Unit selectedUnit

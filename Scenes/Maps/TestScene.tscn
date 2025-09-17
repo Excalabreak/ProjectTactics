@@ -778,6 +778,9 @@ layout_mode = 2
 _warningOverlay = NodePath("../../GameBoard/MapTiles/WarningOverlay")
 _gridCursor = NodePath("../../GameBoard/GridCursor")
 
+[node name="OptionButton" parent="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer/HBoxContainer" index="1"]
+selected = 0
+
 [editable path="GameBoard/Units/PlayerUnits/AxeUnit"]
 [editable path="GameBoard/Units/PlayerUnits/LanceUnit"]
 [editable path="GameBoard/Units/PlayerUnits/SwordUnit"]

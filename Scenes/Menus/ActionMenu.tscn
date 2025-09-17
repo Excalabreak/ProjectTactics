@@ -3,9 +3,10 @@
 [ext_resource type="Script" uid="uid://bsjvashhk428s" path="res://Scripts/Menu/MapMenus/ActionMenu.cs" id="1_yp5m8"]
 [ext_resource type="Theme" uid="uid://6w6laa62420x" path="res://Resources/Theme/testTheme.tres" id="2_yb7rq"]
 
-[node name="ActionMenu" type="CanvasLayer" node_paths=PackedStringArray("_actionButtons", "_cursorDefaultStartButton")]
+[node name="ActionMenu" type="CanvasLayer" node_paths=PackedStringArray("_actionButtons", "_removeWarningButton", "_cursorDefaultStartButton")]
 script = ExtResource("1_yp5m8")
 _actionButtons = [NodePath("VBoxContainer/AttackButton")]
+_removeWarningButton = NodePath("VBoxContainer/RemoveWarningButton")
 _cursorDefaultStartButton = NodePath("VBoxContainer/AttackButton")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -68,6 +69,12 @@ custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Trade"
 
+[node name="RemoveWarningButton" type="Button" parent="VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(164.505, 0)
+layout_mode = 2
+text = "Remove Warning"
+
 [node name="CancelButton" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
@@ -82,4 +89,5 @@ text = "Cancel"
 [connection signal="pressed" from="VBoxContainer/TurnButton" to="." method="OnTurnButtonPress"]
 [connection signal="pressed" from="VBoxContainer/ItemButton" to="." method="OnItemButtonPress"]
 [connection signal="pressed" from="VBoxContainer/TradeButton" to="." method="OnTradeButtonPress"]
+[connection signal="pressed" from="VBoxContainer/RemoveWarningButton" to="." method="OnRemoveWarningPress"]
 [connection signal="pressed" from="VBoxContainer/CancelButton" to="." method="OnCancelButtonPress"]
