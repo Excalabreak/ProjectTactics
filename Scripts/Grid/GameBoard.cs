@@ -28,6 +28,7 @@ public partial class GameBoard : Node2D
     [Export] private Map _map;
     [Export] private FogOfWar _fogOfWar;
     [Export] private BlockedOverlay _blockedOverlay;
+    [Export] private WarningOverlay _warningOverlay;
     [Export] private KnownUnitLocations _knownUnitLocationsTileMap;
     [Export] private TurnManager _turnManager;
     [Export] private UIManager _uiManager;

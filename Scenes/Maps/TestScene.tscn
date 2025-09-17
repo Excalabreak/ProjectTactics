@@ -122,14 +122,14 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_34fge")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gpxho"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q6o7e"]
 texture = ExtResource("14_psjm3")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_gpxho"]
 tile_size = Vector2i(64, 64)
-sources/0 = SubResource("TileSetAtlasSource_gpxho")
+sources/0 = SubResource("TileSetAtlasSource_q6o7e")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dwn5r"]
 texture = ExtResource("9_ixcl0")
@@ -236,7 +236,7 @@ sources/0 = SubResource("TileSetAtlasSource_t2vuu")
 
 [node name="TestScene" type="Node2D"]
 
-[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_knownUnitLocationsTileMap", "_turnManager", "_uiManager", "_combatManager", "_menuStateMachine")]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("_unitWalkHighlights", "_unitPath", "_unitManager", "_gridCursor", "_map", "_fogOfWar", "_blockedOverlay", "_warningOverlay", "_knownUnitLocationsTileMap", "_turnManager", "_uiManager", "_combatManager", "_menuStateMachine")]
 script = ExtResource("1_lo7rv")
 _grid = ExtResource("2_668gq")
 _unitWalkHighlights = NodePath("MapTiles/UnitWalkHighlights")
@@ -246,6 +246,7 @@ _gridCursor = NodePath("Cursor")
 _map = NodePath("MapTiles/Map")
 _fogOfWar = NodePath("MapTiles/FogOfWar")
 _blockedOverlay = NodePath("MapTiles/BlockedOverlay")
+_warningOverlay = NodePath("MapTiles/WarningOverlay")
 _knownUnitLocationsTileMap = NodePath("MapTiles/KnownUnitLocations")
 _turnManager = NodePath("GameBoardManagers/TurnManager")
 _uiManager = NodePath("UIManager")
@@ -282,7 +283,6 @@ z_index = 17
 tile_set = SubResource("TileSet_q6o7e")
 
 [node name="WarningArea" type="TileMapLayer" parent="GameBoard/MapTiles/WarningOverlay"]
-modulate = Color(1, 1, 1, 0.462745)
 z_index = 16
 tile_set = SubResource("TileSet_gpxho")
 
