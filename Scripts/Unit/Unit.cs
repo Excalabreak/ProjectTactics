@@ -4,7 +4,7 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [08/04/2025]
+ * Last Updated: [09/07/2025]
  * [Unit Main Script]
  */
 
@@ -21,7 +21,9 @@ public partial class Unit : Node2D
 
     [Export] private UnitSprite _unitSprite;
 
+    [Export] private UnitClass _unitClass;
     [Export] private UnitStats _unitStats;
+    [Export] private UnitInventory _unitInventory;
 
     [Export] private UnitDirection _unitDirection;
 
@@ -35,9 +37,6 @@ public partial class Unit : Node2D
 
     [Export] private GameBoard _gameBoard;
     public Action<GameBoard> CurrentGameBoard;
-
-    //temp, move to equiptment
-    private int _attackRange = 1;
 
     private bool _isCommander = false;
 
@@ -59,7 +58,6 @@ public partial class Unit : Node2D
         }
         if (_unitResource != null)
         {
-            _attackRange = _unitResource.attackRange;
             _isCommander = _unitResource.isCommander;
         }
         else
@@ -160,9 +158,19 @@ public partial class Unit : Node2D
         }
     }
 
+    public UnitClass unitClass
+    {
+        get { return _unitClass; }
+    }
+
     public UnitStats unitStats
     {
         get { return _unitStats; }
+    }
+
+    public UnitInventory unitInventory
+    {
+        get { return _unitInventory; }
     }
 
     public UnitPathMovement unitPathMovement
@@ -191,13 +199,13 @@ public partial class Unit : Node2D
         get { return _aiStateMachine; }
     }
 
-    public int attackRange
-    {
-        get { return _attackRange; }
-    }
-
     public bool isCommander
     {
         get { return _isCommander; }
+    }
+
+    public UnitSprite unitSprite
+    {
+        get { return _unitSprite; }
     }
 }

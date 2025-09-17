@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=2 format=3 uid="uid://c3s84r1rtukc6"]
+
+[ext_resource type="Script" uid="uid://dnlv6li8v2vuq" path="res://Scripts/Items/Weapons/WeaponResource.cs" id="1_w2deb"]
+
+[resource]
+script = ExtResource("1_w2deb")
+_devName = "test_lance"
+_weaponName = "Lance"
+_description = "a pokey lance"
+_weaponType = 2
+_damageType = 0
+_canUseSpells = false
+_damage = 1
+_minRange = 2
+_maxRange = 2
+_handling = 90
+_critChance = 10
+_critModifyer = 2.0
+_weight = 3
+_size = 2
+metadata/_custom_type_script = "uid://dnlv6li8v2vuq"

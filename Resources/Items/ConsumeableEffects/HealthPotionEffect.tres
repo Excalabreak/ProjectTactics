@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="HealthPotionEffect" load_steps=2 format=3 uid="uid://cvw84fghwnai3"]
+
+[ext_resource type="Script" uid="uid://dxx8m6q5l1myg" path="res://Scripts/Items/ConsumableItems/ConsumableEffects/HealthPotionEffect.cs" id="1_nsjfx"]
+
+[resource]
+script = ExtResource("1_nsjfx")
+_healAmount = 10
+metadata/_custom_type_script = "uid://dxx8m6q5l1myg"

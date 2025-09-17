@@ -27,7 +27,7 @@ public partial class UnitActionEconomy : Node
     public override void _Ready()
     {
         _unit.CurrentGameBoard += SetGameBoard;
-        _maxMove = (float)_unitStats.GetBaseStat(UnitStatEnum.MOVE);
+        _maxMove = (float)_unitStats.GetStat(UnitStatEnum.MOVE);
 
         ResetActions();
     }
@@ -111,7 +111,7 @@ public partial class UnitActionEconomy : Node
     public bool CanAttackAction()
     {
         return _gameBoard.CheckAreaForAttackableGroup(
-            _unit.unitGroup, _gameBoard.FloodFill(_unit.cell, _unit.attackRange));
+            _unit.unitGroup, _gameBoard.RangeFloodFill(_unit.cell, _unit.unitInventory.equiptWeapon.minRange, _unit.unitInventory.equiptWeapon.maxRange));
     }
 
     /// <summary>

@@ -1,10 +1,7 @@
 using Godot;
-using Godot.Collections;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Threading.Tasks;
 
 /*
  * Author: [Lam, Justin]
@@ -16,7 +13,7 @@ using System.Threading.Tasks;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [08/01/2025]
+ * Last Updated: [09/08/2025]
  * [game board manages everything on the map]
  */
 
@@ -31,6 +28,7 @@ public partial class GameBoard : Node2D
     [Export] private Map _map;
     [Export] private FogOfWar _fogOfWar;
     [Export] private BlockedOverlay _blockedOverlay;
+    [Export] private WarningOverlay _warningOverlay;
     [Export] private KnownUnitLocations _knownUnitLocationsTileMap;
     [Export] private TurnManager _turnManager;
     [Export] private UIManager _uiManager;
@@ -41,11 +39,15 @@ public partial class GameBoard : Node2D
     [Export] private PackedScene _actionMenu;
     [Export] private PackedScene _pauseMenu;
     [Export] private PackedScene _turnMenu;
+    [Export] private PackedScene _tradeMenu;
+    [Export] private PackedScene _itemMenu;
     [Signal] public delegate void SelectedMovedEventHandler();
 
     private ActionMenu _actionMenuInstance;
     private PauseScreen _pauseScreenInstance;
     private TurnMenu _turnMenuInstance;
+    private TradeMenu _tradeMenuInstance;
+    private ItemMenu _itemMenuInstance;
 
     [ExportGroup("MoveCost")]
     private Unit _selectedUnit;
@@ -59,14 +61,12 @@ public partial class GameBoard : Node2D
     private List<Vector2> _knownUnitLocations = new List<Vector2>();
 
     //Dictionary for the fog of war
-    private System.Collections.Generic.Dictionary<Unit, Vector2[]> _unitVision = new System.Collections.Generic.Dictionary<Unit, Vector2[]>();
-    private System.Collections.Generic.Dictionary<Vector2, List<Unit>> _cellRevealedBy = new System.Collections.Generic.Dictionary<Vector2, List<Unit>>();
-    private System.Collections.Generic.Dictionary<Unit, Vector2[]> _unitVisionBlocked = new System.Collections.Generic.Dictionary<Unit, Vector2[]>();
-    private System.Collections.Generic.Dictionary<Vector2, List<Unit>> _cellBlockedBy = new System.Collections.Generic.Dictionary<Vector2, List<Unit>>();
+    private Dictionary<Unit, Vector2[]> _unitVision = new Dictionary<Unit, Vector2[]>();
+    private Dictionary<Vector2, List<Unit>> _cellRevealedBy = new Dictionary<Vector2, List<Unit>>();
+    private Dictionary<Unit, Vector2[]> _unitVisionBlocked = new Dictionary<Unit, Vector2[]>();
+    private Dictionary<Vector2, List<Unit>> _cellBlockedBy = new Dictionary<Vector2, List<Unit>>();
 
     private const float MAX_VALUE = 9999999;
-
-    private bool _visionWarning = true;
 
     //---------- SET UP -----------
 
@@ -220,6 +220,7 @@ public partial class GameBoard : Node2D
             _selectedUnit.isSelected = false;
         }
         _uiManager.HideStatsPanel();
+        _uiManager.HideUnitInventory();
         _unitWalkHighlights.Clear();
         _unitPath.Stop();
     }
@@ -251,7 +252,7 @@ public partial class GameBoard : Node2D
         }
 
         DeselectSelectedUnit();
-        OnlyPlayerTurnMenuStateTransition("BlankState");
+        OnlyPlayerTurnMenuStateTransition("MenuBlankState");
         _selectedUnit.unitPathMovement.SetWalkPath(_unitPath.currentPath);
 
         await ToSignal(_selectedUnit.unitPathMovement, "WalkFinished");
@@ -381,7 +382,7 @@ public partial class GameBoard : Node2D
             DeselectSelectedUnit();
             ClearSelectedUnit();
             _walkableCells = new Vector2[0];
-            OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+            OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
             return;
         }
 
@@ -389,12 +390,12 @@ public partial class GameBoard : Node2D
         _unitWalkHighlights.Clear();
         await ToSignal(this, "SelectedMoved");
 
-        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
+        MenuUnSelectedStateAccept(cell);
     }
 
     /// <summary>
     /// selects unit for attack
-    /// might need to change for ai
     /// </summary>
     /// <param name="cell"></param>
     public void MenuAttackStateAccept(Vector2 cell)
@@ -412,7 +413,7 @@ public partial class GameBoard : Node2D
             return;
         }
 
-        Vector2[] attackableCells = FloodFill(_selectedUnit.cell, _selectedUnit.attackRange);
+        Vector2[] attackableCells = RangeFloodFill(_selectedUnit.cell, _selectedUnit.unitInventory.equiptWeapon.minRange, _selectedUnit.unitInventory.equiptWeapon.maxRange);
         if (!attackableCells.Contains(cell))
         {
             return;
@@ -426,7 +427,45 @@ public partial class GameBoard : Node2D
 
         DeselectSelectedUnit();
         ClearSelectedUnit();
-        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
+    }
+
+    /// <summary>
+    /// selects unit for trade
+    /// </summary>
+    /// <param name="cell">cell to trade with</param>
+    public void MenuTradeStateAccept(Vector2 cell)
+    {
+        if (_selectedUnit == null)
+        {
+            return;
+        }
+        if (_selectedUnit.cell == cell)
+        {
+            return;
+        }
+
+        if (!IsOccupied(cell))
+        {
+            return;
+        }
+
+        Unit otherUnit = _units[cell];
+
+        if (_selectedUnit.unitGroup != otherUnit.unitGroup)
+        {
+            return;
+        }
+
+        int tradeRange = 1;
+        if (!FloodFill(_selectedUnit.cell, tradeRange).Contains(cell))
+        {
+            return;
+        }
+        
+        _tradeMenuInstance = _tradeMenu.Instantiate() as TradeMenu;
+        _tradeMenuInstance.SetUpTradeMenu(_selectedUnit, otherUnit);
+        AddChild(_tradeMenuInstance);
     }
 
     //---------- MENU CURSOR MOVE ----------
@@ -445,6 +484,7 @@ public partial class GameBoard : Node2D
         else
         {
             _uiManager.HideStatsPanel();
+            _uiManager.HideUnitInventory();
         }
     }
 
@@ -474,7 +514,7 @@ public partial class GameBoard : Node2D
             _uiManager.HideBattlePredictions();
             return;
         }
-        if (FloodFill(_selectedUnit.cell, _selectedUnit.attackRange).Contains(newCell))
+        if (RangeFloodFill(_selectedUnit.cell, _selectedUnit.unitInventory.equiptWeapon.minRange, _selectedUnit.unitInventory.equiptWeapon.maxRange).Contains(newCell))
         {
             HoverDisplay(newCell);
         }
@@ -546,6 +586,10 @@ public partial class GameBoard : Node2D
         {
             _turnMenuInstance.OnCancelPressed();
         }
+        else if (IsInstanceValid(_tradeMenuInstance))
+        {
+
+        }
         ResetMenu();
     }
 
@@ -585,6 +629,7 @@ public partial class GameBoard : Node2D
         Unit curUnit = _units[cell];
 
         _uiManager.ShowUnitStats(curUnit);
+        _uiManager.ShowUnitInventory(curUnit);
 
         _walkableCells = GetWalkableCells(curUnit);
         _attackableCells = GetAttackableCells(curUnit);
@@ -602,25 +647,44 @@ public partial class GameBoard : Node2D
     /// <param name="cell">cell</param>
     public void CombatHoverDisplay(Vector2 cell)
     {
-        UnitStats playerStats = _selectedUnit.unitStats;
-        UnitStats enemyStats = _units[cell].unitStats;
+        Unit initUnit = _selectedUnit;
+        Unit targetUnit = _units[cell];
 
-        int playerDamage = playerStats.GetBaseStat(UnitStatEnum.STRENGTH) - enemyStats.GetBaseStat(UnitStatEnum.DEFENSE);
+        UnitStats playerStats = initUnit.unitStats;
+        UnitStats enemyStats = targetUnit.unitStats;
+
+        int playerDamage = combatManager.CalculateDamage(initUnit, targetUnit);
         int enemyDamage = 0;
 
-        if (FloodFill(cell, _units[cell].attackRange).Contains(_selectedUnit.cell))
+        if (_combatManager.CanReach(targetUnit, initUnit))
         {
-            enemyDamage = enemyStats.GetBaseStat(UnitStatEnum.STRENGTH) - playerStats.GetBaseStat(UnitStatEnum.DEFENSE);
+            enemyDamage = combatManager.CalculateDamage(targetUnit, initUnit);
         }
+
+        int playerAcc = _combatManager.CalculateHitRate(initUnit, targetUnit);
+        int enemyAcc = _combatManager.CalculateHitRate(targetUnit, initUnit);
+
+        int playerCrit = _combatManager.CalculateCritRate(initUnit, targetUnit);
+        int enemyCrit = _combatManager.CalculateCritRate(targetUnit, initUnit);
 
         //basic combat
         //logic for magic numbers don't exist yet
-        //100 for acc, 0 for crit
+        //100 for acc, 0 for crits
         _uiManager.ShowBattlePredictions(playerStats.currentHP, enemyStats.currentHP,
-            playerDamage, enemyDamage, 100, 100, 0, 0);
+            playerDamage, enemyDamage, playerAcc, enemyAcc, playerCrit, enemyCrit);
     }
 
     //---------- OTHER MENU ----------
+
+    public void SpawnItemMenu()
+    {
+        _itemMenuInstance = _itemMenu.Instantiate() as ItemMenu;
+        if (_selectedUnit != null)
+        {
+            _itemMenuInstance.SetUpItemSlots(_selectedUnit.unitInventory);
+        }
+        AddChild(_itemMenuInstance);
+    }
 
     /// <summary>
     /// resets menu
@@ -629,7 +693,7 @@ public partial class GameBoard : Node2D
     {
         DeselectSelectedUnit();
         ClearSelectedUnit();
-        OnlyPlayerTurnMenuStateTransition("UnSelectedState");
+        OnlyPlayerTurnMenuStateTransition("MenuUnSelectedState");
     }
 
     /// <summary>
@@ -693,11 +757,11 @@ public partial class GameBoard : Node2D
 
         if (_turnManager.currentTurn == UnitGroupEnum.PLAYER)
         {
-            _menuStateMachine.TransitionTo("UnSelectedState");
+            _menuStateMachine.TransitionTo("MenuUnSelectedState");
         }
         else
         {
-            _menuStateMachine.TransitionTo("BlankState");
+            _menuStateMachine.TransitionTo("MenuBlankState");
             AiTurn(_turnManager.currentTurn);
         }
     }
@@ -870,7 +934,19 @@ public partial class GameBoard : Node2D
     public void ShowCurrentAttackRange(Unit unit)
     {
         _unitWalkHighlights.Clear();
-        _unitWalkHighlights.DrawAttackHighlights(FloodFill(unit.cell, unit.attackRange));
+        _unitWalkHighlights.DrawAttackHighlights(RangeFloodFill(unit.cell, unit.unitInventory.equiptWeapon.minRange, unit.unitInventory.equiptWeapon.maxRange));
+    }
+
+    /// <summary>
+    /// shows cells units can trade with
+    /// </summary>
+    /// <param name="cell">unit</param>
+    public void ShowTradeCells(Vector2 cell)
+    {
+        _unitWalkHighlights.Clear();
+
+        int tradeRange = 1;
+        _unitWalkHighlights.DrawAttackHighlights(FloodFill(cell, tradeRange));
     }
 
     /// <summary>
@@ -911,10 +987,7 @@ public partial class GameBoard : Node2D
 
         foreach (Vector2 curCell in realWalkableCells)
         {
-            for (int i = 1; i <= unit.attackRange + 1; i++)
-            {
-                attackableCells.AddRange(FloodFill(curCell, unit.attackRange));
-            }
+            attackableCells.AddRange(RangeFloodFill(curCell, unit.unitInventory.equiptWeapon.minRange, unit.unitInventory.equiptWeapon.maxRange));
         }
 
         return attackableCells.Except(realWalkableCells).ToArray();
@@ -987,6 +1060,24 @@ public partial class GameBoard : Node2D
 
 
         return output.Except(walls).ToArray();
+    }
+
+    /// <summary>
+    /// flood fills based on cell coordinates and max distance
+    /// then does a second flood fill to remove cells based on min cells
+    /// </summary>
+    /// <param name="cell">starting point</param>
+    /// <param name="minDistance">inclusive min distance</param>
+    /// <param name="maxDistance">inclusive max distance</param>
+    /// <returns>array of coords</returns>
+    public Vector2[] RangeFloodFill(Vector2 cell, int minDistance, int maxDistance)
+    {
+        if (minDistance <= 1)
+        {
+            return FloodFill(cell, maxDistance);
+        }
+
+        return FloodFill(cell, maxDistance).Except(FloodFill(cell, (minDistance-1))).ToArray();
     }
 
     /// <summary>
@@ -1331,8 +1422,7 @@ public partial class GameBoard : Node2D
 
         visibleTiles.Add(startingCell);
 
-        //GD.Print("uses base stat for vision");
-        int r = unit.unitStats.GetBaseStat(UnitStatEnum.VISION);
+        int r = unit.unitStats.GetStat(UnitStatEnum.VISION);
         
         //gets the furthest the unit can see
         int count = r/2;
@@ -1537,12 +1627,7 @@ public partial class GameBoard : Node2D
                     }
                 }
 
-                if (_visionWarning)
-                {
-                    _visionWarning = false;
-                    GD.Print("uses base stat for vision");
-                }
-                if ((float)unit.unitStats.GetBaseStat(UnitStatEnum.VISION) >= totalVisionCost)
+                if ((float)unit.unitStats.GetStat(UnitStatEnum.VISION) >= totalVisionCost)
                 {
                     visibleTiles.Add(tile);
                 }

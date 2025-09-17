@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/04/2025]
+ * Last Updated: [09/01/2025]
  * [state machine for camera]
  */
 
@@ -43,7 +43,12 @@ public partial class CameraStateMachine : Node
     /// <param name="key">key of state</param>
     public void TransitionTo(string key)
     {
-        if (!_states.ContainsKey(key) || _currentState == _states[key])
+        if (!_states.ContainsKey(key))
+        {
+            GD.Print("NO CAMERA STATE FOR " + key);
+            return;
+        }
+        if (_currentState == _states[key])
         {
             return;
         }

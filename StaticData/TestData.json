@@ -1,0 +1,22 @@
+{
+  "sword": {
+	"description": "a slashing sword",
+	"attack": 2,
+	"range": 1
+  },
+  "axe": {
+	"description": "a choppy axe",
+	"attack": 3,
+	"range": 1
+  },
+  "lance": {
+	"description": "a pokey lance",
+	"attack": 1,
+	"range": 2
+  },
+  "": {
+	"description": null,
+	"attack": null,
+	"range": null
+  }
+}

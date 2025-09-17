@@ -49,7 +49,7 @@ public partial class PrototypeEndMenu : CanvasLayer
 
     public void OnQuit()
     {
-        OS.ShellOpen("https://docs.google.com/forms/d/e/1FAIpQLSe5u3DWhBJQbsupk4QQpsxfhtFOVgcuVx0ZrK49ntYTb9w5Zg/viewform?usp=dialog");
+        //OS.ShellOpen("https://docs.google.com/forms/d/e/1FAIpQLSe5u3DWhBJQbsupk4QQpsxfhtFOVgcuVx0ZrK49ntYTb9w5Zg/viewform?usp=dialog");
         GetTree().Quit();
     }
 }
