@@ -13,7 +13,7 @@ using System.Linq;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [09/08/2025]
+ * Last Updated: [09/17/2025]
  * [game board manages everything on the map]
  */
 
@@ -81,7 +81,7 @@ public partial class GameBoard : Node2D
 
         UnitEventManager.UnitDeathEvent += RemoveUnit;
 
-        Reinitialize();
+        Reinitialize(); 
     }
 
     /// <summary>
@@ -758,10 +758,12 @@ public partial class GameBoard : Node2D
         if (_turnManager.currentTurn == UnitGroupEnum.PLAYER)
         {
             _menuStateMachine.TransitionTo("MenuUnSelectedState");
+            _uiManager.AddToBattleLog("----- PLAYER TURN -----");
         }
         else
         {
             _menuStateMachine.TransitionTo("MenuBlankState");
+            _uiManager.AddToBattleLog("----- ENEMY TURN -----");
             AiTurn(_turnManager.currentTurn);
         }
     }

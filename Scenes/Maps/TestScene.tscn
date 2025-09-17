@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=86 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -65,6 +65,7 @@
 [ext_resource type="Script" uid="uid://c7d3kjokroyh8" path="res://Scripts/Menu/MenuStateMachine/States/MenuItemState.cs" id="54_kmj3t"]
 [ext_resource type="Script" uid="uid://d3njo6qu5mnfs" path="res://Scripts/UI/UIInventory.cs" id="55_wmdct"]
 [ext_resource type="Script" uid="uid://cmgj6sm7nja1d" path="res://Scripts/UI/UIBattleLog.cs" id="62_3om3u"]
+[ext_resource type="PackedScene" uid="uid://cit5p50bewtv4" path="res://Scenes/PrototypeTools/PrototypeMenuScreens.tscn" id="66_q6o7e"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
 texture = ExtResource("5_jsdi5")
@@ -242,7 +243,7 @@ _grid = ExtResource("2_668gq")
 _unitWalkHighlights = NodePath("MapTiles/UnitWalkHighlights")
 _unitPath = NodePath("MapTiles/UnitPath")
 _unitManager = NodePath("Units")
-_gridCursor = NodePath("Cursor")
+_gridCursor = NodePath("GridCursor")
 _map = NodePath("MapTiles/Map")
 _fogOfWar = NodePath("MapTiles/FogOfWar")
 _blockedOverlay = NodePath("MapTiles/BlockedOverlay")
@@ -418,7 +419,7 @@ visible = true
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/CommanderAiUnit/Sprites" index="4"]
 visible = true
 
-[node name="Cursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer", "_camera")]
+[node name="GridCursor" type="Node2D" parent="GameBoard" node_paths=PackedStringArray("_gameBoard", "_timer", "_camera")]
 z_index = 100
 position = Vector2(266, 1001)
 script = ExtResource("22_iwnah")
@@ -426,10 +427,10 @@ _gameBoard = NodePath("..")
 _timer = NodePath("Timer")
 _camera = NodePath("../GameBoardCamera")
 
-[node name="Sprite2D" type="Sprite2D" parent="GameBoard/Cursor"]
+[node name="Sprite2D" type="Sprite2D" parent="GameBoard/GridCursor"]
 texture = ExtResource("23_fhuv3")
 
-[node name="Timer" type="Timer" parent="GameBoard/Cursor"]
+[node name="Timer" type="Timer" parent="GameBoard/GridCursor"]
 wait_time = 0.1
 one_shot = true
 
@@ -445,7 +446,7 @@ editor_draw_drag_margin = true
 script = ExtResource("42_l8276")
 _gameBoard = NodePath("..")
 _cameraStateMachine = NodePath("CameraStateMachine")
-_gridCursor = NodePath("../Cursor")
+_gridCursor = NodePath("../GridCursor")
 
 [node name="CameraStateMachine" type="Node" parent="GameBoard/GameBoardCamera" node_paths=PackedStringArray("_camera")]
 script = ExtResource("43_wmdct")
@@ -501,6 +502,7 @@ _uiInventroy = NodePath("InventoryPanel")
 _uiBattleLog = NodePath("BattleLogPanel")
 
 [node name="StatsPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_statsLable", "_combatStatsLable")]
+visible = false
 offset_left = 16.0
 offset_top = 14.0
 offset_right = 261.0
@@ -533,6 +535,7 @@ layout_mode = 2
 text = "HIT: 70"
 
 [node name="InventoryPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_equippedLable", "_itemLables")]
+visible = false
 offset_left = 269.935
 offset_top = 14.0
 offset_right = 500.36
@@ -570,6 +573,7 @@ layout_mode = 2
 text = "Potion"
 
 [node name="BattlePredPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_playerHPLable", "_playerDMGLable", "_playerACCLable", "_playerCRTLable", "_enemyHPLable", "_enemyDMGLable", "_enemyACCLable", "_enemyCRTLable")]
+visible = false
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -686,6 +690,7 @@ text = "0"
 horizontal_alignment = 1
 
 [node name="TerrainPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_nameLabel", "_moveLabel", "_visionLabel")]
+visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -767,6 +772,12 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/UIManager/BattleLogPanel/ScrollContainer"]
 layout_mode = 2
 
+[node name="PrototypeNodes" parent="." instance=ExtResource("66_q6o7e")]
+
+[node name="PrototypeStartMenu" parent="PrototypeNodes" index="0" node_paths=PackedStringArray("_warningOverlay", "_gridCursor")]
+_warningOverlay = NodePath("../../GameBoard/MapTiles/WarningOverlay")
+_gridCursor = NodePath("../../GameBoard/GridCursor")
+
 [editable path="GameBoard/Units/PlayerUnits/AxeUnit"]
 [editable path="GameBoard/Units/PlayerUnits/LanceUnit"]
 [editable path="GameBoard/Units/PlayerUnits/SwordUnit"]
@@ -774,3 +785,4 @@ layout_mode = 2
 [editable path="GameBoard/Units/EnemyUnits/LanceAiUnit"]
 [editable path="GameBoard/Units/EnemyUnits/SwordAiUnit"]
 [editable path="GameBoard/Units/EnemyUnits/CommanderAiUnit"]
+[editable path="PrototypeNodes"]

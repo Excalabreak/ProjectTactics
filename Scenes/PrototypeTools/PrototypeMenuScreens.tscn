@@ -20,9 +20,10 @@ OptionButton/font_sizes/font_size = 26
 
 [node name="PrototypeNodes" type="Node2D"]
 
-[node name="PrototypeStartMenu" type="CanvasLayer" parent="." node_paths=PackedStringArray("_cursorDefaultStartButton")]
+[node name="PrototypeStartMenu" type="CanvasLayer" parent="." node_paths=PackedStringArray("_cursorDefaultStartButton", "_scoutingOptions")]
 script = ExtResource("1_rsjwj")
 _cursorDefaultStartButton = NodePath("Panel/VBoxContainer/StartButton")
+_scoutingOptions = NodePath("Panel/VBoxContainer/HBoxContainer/OptionButton")
 
 [node name="Panel" type="Panel" parent="PrototypeStartMenu"]
 anchors_preset = 15
