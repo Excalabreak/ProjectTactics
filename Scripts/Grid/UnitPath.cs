@@ -6,7 +6,7 @@ using System.Linq;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [07/08/2025]
+ * Last Updated: [09/15/2025]
  * [pathfinding for units]
  */
 
@@ -64,7 +64,10 @@ public partial class UnitPath : TileMapLayer
         {
             path[i] = new Vector2I(Mathf.RoundToInt(pathCoord[i].X), Mathf.RoundToInt(pathCoord[i].Y));
         }
-        SetCellsTerrainConnect(new Godot.Collections.Array<Vector2I>(path), 0, 0);
+
+        int terrainSet = 0;
+        int terrain = 0;
+        SetCellsTerrainConnect(new Godot.Collections.Array<Vector2I>(path), terrainSet, terrain);
     }
 
     /// <summary>

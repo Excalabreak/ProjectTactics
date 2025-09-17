@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/14/2025]
+ * Last Updated: [09/15/2025]
  * [puts a tile when called for unit locations]
  */
 
@@ -16,9 +16,13 @@ public partial class KnownUnitLocations : TileMapLayer
     /// <param name="coords">coordinates of units</param>
     public void MarkKnownUnit(Vector2 coords)
     {
+        int sourceID = 0;
+        Vector2I atlasCoords = Vector2I.Zero;
+        int altTiles = 0;
+
         Vector2I mapCoords = new Vector2I(Mathf.RoundToInt(coords.X), Mathf.RoundToInt(coords.Y));
 
-        SetCell(mapCoords, 0, Vector2I.Zero, 0);
+        SetCell(mapCoords, sourceID, atlasCoords, altTiles);
     }
 
     /// <summary>
@@ -27,6 +31,7 @@ public partial class KnownUnitLocations : TileMapLayer
     /// <param name="coords">coordinates of tile to show</param>
     public void RemoveMarkedUnit(Vector2 coords)
     {
-        EraseCell(new Vector2I(Mathf.RoundToInt(coords.X), Mathf.RoundToInt(coords.Y)));
+        Vector2I mapCoords = new Vector2I(Mathf.RoundToInt(coords.X), Mathf.RoundToInt(coords.Y));
+        EraseCell(mapCoords);
     }
 }
