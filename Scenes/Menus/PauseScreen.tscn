@@ -3,8 +3,9 @@
 [ext_resource type="Script" uid="uid://b7seot04yy56w" path="res://Scripts/Menu/MapMenus/PauseScreen.cs" id="1_snaop"]
 [ext_resource type="Theme" uid="uid://6w6laa62420x" path="res://Resources/Theme/testTheme.tres" id="2_ax8j1"]
 
-[node name="PauseScreen" type="CanvasLayer" node_paths=PackedStringArray("_cursorDefaultStartButton")]
+[node name="PauseScreen" type="CanvasLayer" node_paths=PackedStringArray("_removeWarningButton", "_cursorDefaultStartButton")]
 script = ExtResource("1_snaop")
+_removeWarningButton = NodePath("VBoxContainer/RemoveWarningButton")
 _cursorDefaultStartButton = NodePath("VBoxContainer/EndTurnButton")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -33,6 +34,12 @@ custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
 text = "Options"
 
+[node name="RemoveWarningButton" type="Button" parent="VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(164.505, 0)
+layout_mode = 2
+text = "Remove Warning"
+
 [node name="CloseButton" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(164.505, 0)
 layout_mode = 2
@@ -45,5 +52,6 @@ text = "End Turn"
 
 [connection signal="pressed" from="VBoxContainer/UnitsButtons" to="." method="OnUnitsPressed"]
 [connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="OnOptionsPressed"]
+[connection signal="pressed" from="VBoxContainer/RemoveWarningButton" to="." method="OnRemoveWarningPress"]
 [connection signal="pressed" from="VBoxContainer/CloseButton" to="." method="OnClosePressed"]
 [connection signal="pressed" from="VBoxContainer/EndTurnButton" to="." method="OnEndTurnPressed"]
