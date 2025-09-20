@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WarningAreaResource" load_steps=2 format=3 uid="uid://cg1iikpl5lct8"]
+
+[ext_resource type="Script" uid="uid://fgoni7o2u1tl" path="res://Scripts/Grid/Warning/WarningAreaResource.cs" id="1_nijdc"]
+
+[resource]
+script = ExtResource("1_nijdc")
+_spriteCoords = Vector2(4, 11)
+_areaTopLeft = Vector2(2, 10)
+_areaBottomRight = Vector2(8, 13)
+metadata/_custom_type_script = "uid://fgoni7o2u1tl"

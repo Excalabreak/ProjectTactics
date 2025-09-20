@@ -3,12 +3,13 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/25/2025]
+ * Last Updated: [09/20/2025]
  * [displays a unit inventory]
  */
 
 public partial class UIInventory : Control
 {
+    [Export] private Label _nameLabel;
     [Export] private Label _equippedLable;
     [Export] private Label[] _itemLables;
 
@@ -17,9 +18,10 @@ public partial class UIInventory : Control
     /// </summary>
     /// <param name="equippedWeapon">weapon that is equipped</param>
     /// <param name="items">items in inventory</param>
-    public void ShowInventory(UnitInventory inventory)
+    public void ShowInventory(UnitInventory inventory, string name)
     {
         _equippedLable.Text = "Equipped: " + inventory.equiptWeapon.itemName;
+        _nameLabel.Text = "Name: " + name;
 
         IInventoryItem[] items = inventory.inventoryItems;
 

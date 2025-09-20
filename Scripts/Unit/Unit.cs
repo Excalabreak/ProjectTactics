@@ -4,12 +4,13 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: [Lovato, Nathan]
- * Last Updated: [09/07/2025]
+ * Last Updated: [09/20/2025]
  * [Unit Main Script]
  */
 
 public partial class Unit : Node2D
 {
+    [Export] private string _unitName;
     [Export] private UnitResource _unitResource;
 
     private Vector2 _cell = Vector2.Zero;
@@ -148,6 +149,11 @@ public partial class Unit : Node2D
             }
         }
         get { return _isSelected; }
+    }
+
+    public string unitName
+    {
+        get { return _unitName; }
     }
 
     public bool unitCanWalk

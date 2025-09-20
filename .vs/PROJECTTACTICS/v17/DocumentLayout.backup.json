@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "E:\\Projects\\ProjectTactics\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\playtest\\prototypestartmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\playtest\\prototypestartmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\mapmenus\\actionmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\mapmenus\\actionmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\ui\\uibattlelog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\ui\\uibattlelog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\menu\\mapmenus\\pausescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\menu\\mapmenus\\pausescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\grid\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,6 +17,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\grid\\warningoverlay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\warningoverlay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\ui\\uibattlelog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\ui\\uibattlelog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\playtest\\prototypestartmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\playtest\\prototypestartmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\ui\\uistats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
@@ -40,7 +48,7 @@
               "RelativeDocumentMoniker": "Scripts\\Grid\\GameBoard.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GameBoard.cs",
               "RelativeToolTip": "Scripts\\Grid\\GameBoard.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAI4CAAAAAAAAAAD4v7YCAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-29T19:37:27.722Z",
               "IsPinned": true,
@@ -48,7 +56,33 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ActionMenu.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MapMenus\\ActionMenu.cs",
+              "RelativeDocumentMoniker": "Scripts\\Menu\\MapMenus\\ActionMenu.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MapMenus\\ActionMenu.cs",
+              "RelativeToolTip": "Scripts\\Menu\\MapMenus\\ActionMenu.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAgwEAAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T22:07:55.868Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "PauseScreen.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MapMenus\\PauseScreen.cs",
+              "RelativeDocumentMoniker": "Scripts\\Menu\\MapMenus\\PauseScreen.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Menu\\MapMenus\\PauseScreen.cs",
+              "RelativeToolTip": "Scripts\\Menu\\MapMenus\\PauseScreen.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T22:07:53.711Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "UIBattleLog.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\UI\\UIBattleLog.cs",
               "RelativeDocumentMoniker": "Scripts\\UI\\UIBattleLog.cs",
@@ -61,7 +95,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "PrototypeStartMenu.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Playtest\\PrototypeStartMenu.cs",
               "RelativeDocumentMoniker": "Scripts\\Playtest\\PrototypeStartMenu.cs",
@@ -80,13 +114,14 @@
               "RelativeDocumentMoniker": "Scripts\\Grid\\WarningOverlay.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\WarningOverlay.cs",
               "RelativeToolTip": "Scripts\\Grid\\WarningOverlay.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABcAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAACUAAAAAAAAAAAAgwFYAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T22:36:13.121Z"
+              "WhenOpened": "2025-09-11T22:36:13.121Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "UIStats.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\UI\\UIStats.cs",
               "RelativeDocumentMoniker": "Scripts\\UI\\UIStats.cs",

@@ -39,7 +39,7 @@ public partial class UIManager : CanvasLayer
     /// <param name="unit">unit being displayed</param>
     public void ShowUnitInventory(Unit unit)
     {
-        _uiInventroy.ShowInventory(unit.unitInventory);
+        _uiInventroy.ShowInventory(unit.unitInventory, unit.unitName);
     }
 
     /// <summary>
