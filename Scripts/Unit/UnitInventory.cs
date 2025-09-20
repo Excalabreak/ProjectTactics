@@ -5,7 +5,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/08/2025]
+ * Last Updated: [09/20/2025]
  * [handles inventory for units]
  */
 
@@ -40,7 +40,6 @@ public partial class UnitInventory : Node
                 break;
             }
         }
-
         if (count > 0)
         {
             foreach (IInventoryItem item in _unit.unitResource.consumableItems)
@@ -66,6 +65,7 @@ public partial class UnitInventory : Node
             return;
         }
 
+        GD.Print(_unit.unitName + " adds " + item.itemName);
         _inventoryItems.Add(item);
     }
 
@@ -92,8 +92,11 @@ public partial class UnitInventory : Node
     {
         if (item == null)
         {
+            GD.Print("buh");
             return false;
         }
+
+        GD.Print(GetCurrentOccupiedInventory() + item.size <= _maxInventorySlots);
 
         return GetCurrentOccupiedInventory() + item.size <= _maxInventorySlots;
     }

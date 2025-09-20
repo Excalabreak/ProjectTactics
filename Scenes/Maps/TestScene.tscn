@@ -601,6 +601,7 @@ layout_mode = 2
 text = "HIT: 70"
 
 [node name="InventoryPanel" type="Panel" parent="GameBoard/UIManager" node_paths=PackedStringArray("_nameLabel", "_equippedLable", "_itemLables")]
+visible = false
 offset_left = 269.935
 offset_top = 14.0
 offset_right = 500.36

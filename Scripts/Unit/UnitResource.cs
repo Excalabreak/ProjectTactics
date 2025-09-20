@@ -4,7 +4,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/08/2025]
+ * Last Updated: [09/20/2025]
  * [a unit resource that holds unit data
  * for the unit to load onto their scripts
  * 
@@ -67,7 +67,7 @@ public partial class UnitResource : Resource
         {
             ConsumableItemResource[] storedConsumables = new ConsumableItemResource[_consumableItems.Length];
 
-            for (int i = 0; i < _inventoryWeapons.Length; i++)
+            for (int i = 0; i < _consumableItems.Length; i++)
             {
                 storedConsumables[i] = ConsumableDataBase.Instance.GetItem(_consumableItems[i]);
             }

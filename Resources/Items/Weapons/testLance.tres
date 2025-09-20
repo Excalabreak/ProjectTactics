@@ -15,5 +15,5 @@ _handling = 90
 _critChance = 10
 _critModifyer = 2.0
 _weight = 3
-_size = 2
+_size = 1
 metadata/_custom_type_script = "uid://dnlv6li8v2vuq"

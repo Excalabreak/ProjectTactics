@@ -272,6 +272,7 @@ public partial class TradeMenu : BaseMenu
     /// </summary>
     public void OnCancelButtonPress()
     {
+        //if traded, use action
         _gameBoard.ResetMenu();
 
         HideMenu();

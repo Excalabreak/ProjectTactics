@@ -22,6 +22,7 @@ public partial class ItemMenu : BaseMenu
     [Export] private Label _descriptionLabel;
 
     private UnitInventory _unitInventory;
+    private UnitActionEconomy _unitActionEconomy;
     private Dictionary<Button, IInventoryItem> _inventorySlots = new Dictionary<Button, IInventoryItem>();
 
     private IInventoryItem _currentlySelectedItem;
@@ -30,9 +31,10 @@ public partial class ItemMenu : BaseMenu
     /// calls to set the labels for buttons
     /// </summary>
     /// <param name="inventory">inventory for unit</param>
-    public void SetUpItemSlots(UnitInventory inventory)
+    public void SetUpItemSlots(UnitInventory inventory, UnitActionEconomy actionEconomy)
     {
         _unitInventory = inventory;
+        _unitActionEconomy = actionEconomy;
 
         _equippedWeaponButton.Text = "E: " + inventory.equiptWeapon.itemName;
         _inventorySlots.Add(_equippedWeaponButton, inventory.equiptWeapon);
@@ -114,7 +116,7 @@ public partial class ItemMenu : BaseMenu
                 _equipButton.Visible = true;
             }
         }
-        if (_currentlySelectedItem is IUseable)
+        if (_currentlySelectedItem is IUseable && _unitActionEconomy.HasActions())
         {
             _useButton.Visible = true;
         }
@@ -188,6 +190,7 @@ public partial class ItemMenu : BaseMenu
             return;
         }
 
+        _unitActionEconomy.UseAction();
         _unitInventory.UseItem(_currentlySelectedItem);
 
         ResetItemSlots();
