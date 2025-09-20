@@ -64,8 +64,6 @@ public partial class UnitInventory : Node
         {
             return;
         }
-
-        GD.Print(_unit.unitName + " adds " + item.itemName);
         _inventoryItems.Add(item);
     }
 
@@ -92,11 +90,8 @@ public partial class UnitInventory : Node
     {
         if (item == null)
         {
-            GD.Print("buh");
             return false;
         }
-
-        GD.Print(GetCurrentOccupiedInventory() + item.size <= _maxInventorySlots);
 
         return GetCurrentOccupiedInventory() + item.size <= _maxInventorySlots;
     }
