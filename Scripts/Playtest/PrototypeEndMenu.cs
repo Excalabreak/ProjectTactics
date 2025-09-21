@@ -8,6 +8,8 @@ public partial class PrototypeEndMenu : CanvasLayer
     [Export] private GridCursor _gridCursor;
     [Export] private Button _cursorDefaultStartButton;
 
+    [Export] private string _formLink;
+
     public override void _Ready()
     {
         UnitEventManager.UnitDeathEvent += IsCommanderDead;
@@ -49,7 +51,7 @@ public partial class PrototypeEndMenu : CanvasLayer
 
     public void OnQuit()
     {
-        //OS.ShellOpen("https://docs.google.com/forms/d/e/1FAIpQLSe5u3DWhBJQbsupk4QQpsxfhtFOVgcuVx0ZrK49ntYTb9w5Zg/viewform?usp=dialog");
+        OS.ShellOpen(_formLink);
         GetTree().Quit();
     }
 }

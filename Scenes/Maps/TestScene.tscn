@@ -1396,6 +1396,10 @@ scoutThree = Array[Object]([SubResource("Resource_pku7m")])
 selected = 0
 popup/item_1/text = "Bob: expert mountian scout"
 
+[node name="PrototypeEndMenu" parent="PrototypeNodes" index="1" node_paths=PackedStringArray("_gridCursor")]
+_gridCursor = NodePath("../../GameBoard/GridCursor")
+_formLink = "https://docs.google.com/forms/d/e/1FAIpQLSeSeFkCt0RYfCjg17pcFAZB5heZtuk8ULB3dTWaoSXWftMhgA/viewform?usp=dialog"
+
 [editable path="GameBoard/Units/PlayerUnits/PlayerCQCUnit1"]
 [editable path="GameBoard/Units/PlayerUnits/PlayerRNGUnit1"]
 [editable path="GameBoard/Units/PlayerUnits/PlayerTNKUnit1"]
