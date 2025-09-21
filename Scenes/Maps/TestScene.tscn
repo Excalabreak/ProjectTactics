@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=96 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -257,6 +257,13 @@ _areaTopLeft = Vector2(14, 4)
 _areaBottomRight = Vector2(16, 5)
 metadata/_custom_type_script = "uid://fgoni7o2u1tl"
 
+[sub_resource type="Resource" id="Resource_n2m15"]
+script = ExtResource("69_bi8el")
+_spriteCoords = Vector2(13, 10)
+_areaTopLeft = Vector2(12, 9)
+_areaBottomRight = Vector2(14, 12)
+metadata/_custom_type_script = "uid://fgoni7o2u1tl"
+
 [sub_resource type="Resource" id="Resource_s5pm6"]
 script = ExtResource("69_bi8el")
 _spriteCoords = Vector2(22, 16)
@@ -495,6 +502,34 @@ texture = ExtResource("30_l2v6i")
 visible = true
 
 [node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit/Sprites" index="4"]
+visible = true
+
+[node name="AxeAiUnit13" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
+position = Vector2(1056, 735)
+_unitResource = ExtResource("34_wn5g2")
+_gameBoard = NodePath("../../..")
+
+[node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit13/Sprites" index="0"]
+texture = ExtResource("30_l2v6i")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit13/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit13/Sprites" index="4"]
+visible = true
+
+[node name="AxeAiUnit14" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
+position = Vector2(926, 353)
+_unitResource = ExtResource("34_wn5g2")
+_gameBoard = NodePath("../../..")
+
+[node name="UnitSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit14/Sprites" index="0"]
+texture = ExtResource("30_l2v6i")
+
+[node name="ActionExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit14/Sprites" index="3"]
+visible = true
+
+[node name="MoveExhaustedSprite" parent="GameBoard/Units/EnemyUnits/AxeAiUnit14/Sprites" index="4"]
 visible = true
 
 [node name="AxeAiUnit12" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
@@ -1353,7 +1388,7 @@ layout_mode = 2
 visible = false
 _warningOverlay = NodePath("../../GameBoard/MapTiles/WarningOverlay")
 _gridCursor = NodePath("../../GameBoard/GridCursor")
-scoutOne = Array[Object]([SubResource("Resource_6nnmv"), SubResource("Resource_802tn"), SubResource("Resource_bi8el")])
+scoutOne = Array[Object]([SubResource("Resource_6nnmv"), SubResource("Resource_802tn"), SubResource("Resource_bi8el"), SubResource("Resource_n2m15")])
 scoutTwo = Array[Object]([SubResource("Resource_s5pm6"), SubResource("Resource_22sxl"), SubResource("Resource_6hg1s"), SubResource("Resource_fexuk")])
 scoutThree = Array[Object]([SubResource("Resource_pku7m")])
 
@@ -1370,6 +1405,8 @@ popup/item_1/text = "Bob: expert mountian scout"
 [editable path="GameBoard/Units/PlayerUnits/PlayerRNGUnit3"]
 [editable path="GameBoard/Units/PlayerUnits/PlayerTNKUnit3"]
 [editable path="GameBoard/Units/EnemyUnits/AxeAiUnit"]
+[editable path="GameBoard/Units/EnemyUnits/AxeAiUnit13"]
+[editable path="GameBoard/Units/EnemyUnits/AxeAiUnit14"]
 [editable path="GameBoard/Units/EnemyUnits/AxeAiUnit12"]
 [editable path="GameBoard/Units/EnemyUnits/AxeAiUnit10"]
 [editable path="GameBoard/Units/EnemyUnits/AxeAiUnit11"]
