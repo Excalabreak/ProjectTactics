@@ -9,19 +9,18 @@ script = ExtResource("1_j3i28")
 _sprite = ExtResource("1_4rl3p")
 _unitClass = ExtResource("4_6jnuf")
 _baseStats = Dictionary[int, int]({
-0: 15,
+0: 22,
 1: 0,
-2: 10,
+2: 11,
 3: 0,
-4: 6,
+4: 7,
 5: 7,
-6: 2,
+6: 4,
 7: 0,
 8: 5,
 9: 7
 })
 _equiptWeapon = "test_axe"
-_inventoryWeapons = PackedStringArray("test_sword")
 _consumableItems = PackedStringArray("test_health_potion")
 _startingDirection = 3
 metadata/_custom_type_script = "uid://cb8xehtora3p"

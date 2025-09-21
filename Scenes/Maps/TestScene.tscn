@@ -326,100 +326,100 @@ script = ExtResource("19_vgme0")
 _passingGroup = Array[int]([0, 1])
 _attackingGroup = Array[int]([2])
 
-[node name="AxeUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+[node name="PlayerCQCUnit1" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(214, 993)
-_unitName = "Velvet"
+_unitName = "PlayerCQCUnit1"
 _unitResource = ExtResource("26_vgme0")
 _gameBoard = NodePath("../../..")
 
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/AxeUnit/Sprites" index="0"]
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/PlayerCQCUnit1/Sprites" index="0"]
 texture = ExtResource("26_j6x6y")
 
-[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/AxeUnit" index="3"]
+[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/PlayerCQCUnit1" index="3"]
 _unarmedResource = ExtResource("28_slbve")
 
-[node name="LanceUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+[node name="PlayerRNGUnit1" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(291, 1049)
-_unitName = "Rizu"
+_unitName = "PlayerRNGUnit1"
 _unitResource = ExtResource("28_b77nk")
 _gameBoard = NodePath("../../..")
 
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/LanceUnit/Sprites" index="0"]
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/PlayerRNGUnit1/Sprites" index="0"]
 texture = ExtResource("27_he1t7")
 
-[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/LanceUnit" index="3"]
+[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/PlayerRNGUnit1" index="3"]
 _unarmedResource = ExtResource("28_slbve")
 
-[node name="SwordUnit" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+[node name="PlayerTNKUnit1" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(351, 986)
-_unitName = "Gaia"
+_unitName = "PlayerTNKUnit1"
 _unitResource = ExtResource("30_qm5w0")
 _gameBoard = NodePath("../../..")
 
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit/Sprites" index="0"]
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/PlayerTNKUnit1/Sprites" index="0"]
 texture = ExtResource("28_wn863")
 
-[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/SwordUnit" index="3"]
+[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/PlayerTNKUnit1" index="3"]
 _unarmedResource = ExtResource("28_slbve")
 
-[node name="AxeUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+[node name="PlayerCQCUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(425, 1176)
-_unitName = "Serge"
+_unitName = "PlayerCQCUnit2"
 _unitResource = ExtResource("26_vgme0")
 _gameBoard = NodePath("../../..")
 
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/AxeUnit2/Sprites" index="0"]
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/PlayerCQCUnit2/Sprites" index="0"]
 texture = ExtResource("26_j6x6y")
 
-[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/AxeUnit2" index="3"]
+[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/PlayerCQCUnit2" index="3"]
 _unarmedResource = ExtResource("28_slbve")
 
-[node name="LanceUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+[node name="PlayerRNGUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(236, 1114)
-_unitName = "Marc"
+_unitName = "PlayerRNGUnit2"
 _unitResource = ExtResource("28_b77nk")
 _gameBoard = NodePath("../../..")
 
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/LanceUnit2/Sprites" index="0"]
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/PlayerRNGUnit2/Sprites" index="0"]
 texture = ExtResource("27_he1t7")
 
-[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/LanceUnit2" index="3"]
+[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/PlayerRNGUnit2" index="3"]
 _unarmedResource = ExtResource("28_slbve")
 
-[node name="SwordUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+[node name="PlayerTNKUnit2" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(353, 1119)
-_unitName = "Sallya"
+_unitName = "PlayerTNKUnit2"
 _unitResource = ExtResource("30_qm5w0")
 _gameBoard = NodePath("../../..")
 
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit2/Sprites" index="0"]
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/PlayerTNKUnit2/Sprites" index="0"]
 texture = ExtResource("28_wn863")
 
-[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/SwordUnit2" index="3"]
+[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/PlayerTNKUnit2" index="3"]
 _unarmedResource = ExtResource("28_slbve")
 
-[node name="LanceUnit3" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+[node name="PlayerRNGUnit3" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(415, 1054)
-_unitName = "Tiamo"
+_unitName = "PlayerRNGUnit3"
 _unitResource = ExtResource("28_b77nk")
 _gameBoard = NodePath("../../..")
 
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/LanceUnit3/Sprites" index="0"]
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/PlayerRNGUnit3/Sprites" index="0"]
 texture = ExtResource("27_he1t7")
 
-[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/LanceUnit3" index="3"]
+[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/PlayerRNGUnit3" index="3"]
 _unarmedResource = ExtResource("28_slbve")
 
-[node name="SwordUnit3" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
+[node name="PlayerTNKUnit3" parent="GameBoard/Units/PlayerUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("20_b77nk")]
 position = Vector2(415, 984)
-_unitName = "Udo"
+_unitName = "PlayerTNKUnit3"
 _unitResource = ExtResource("30_qm5w0")
 _gameBoard = NodePath("../../..")
 
-[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/SwordUnit3/Sprites" index="0"]
+[node name="UnitSprite" parent="GameBoard/Units/PlayerUnits/PlayerTNKUnit3/Sprites" index="0"]
 texture = ExtResource("28_wn863")
 
-[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/SwordUnit3" index="3"]
+[node name="UnitInventory" parent="GameBoard/Units/PlayerUnits/PlayerTNKUnit3" index="3"]
 _unarmedResource = ExtResource("28_slbve")
 
 [node name="EnemyUnits" type="Node2D" parent="GameBoard/Units"]
@@ -856,14 +856,14 @@ scoutThree = Array[Object]([ExtResource("68_bi8el")])
 [node name="OptionButton" parent="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer/HBoxContainer" index="1"]
 selected = 0
 
-[editable path="GameBoard/Units/PlayerUnits/AxeUnit"]
-[editable path="GameBoard/Units/PlayerUnits/LanceUnit"]
-[editable path="GameBoard/Units/PlayerUnits/SwordUnit"]
-[editable path="GameBoard/Units/PlayerUnits/AxeUnit2"]
-[editable path="GameBoard/Units/PlayerUnits/LanceUnit2"]
-[editable path="GameBoard/Units/PlayerUnits/SwordUnit2"]
-[editable path="GameBoard/Units/PlayerUnits/LanceUnit3"]
-[editable path="GameBoard/Units/PlayerUnits/SwordUnit3"]
+[editable path="GameBoard/Units/PlayerUnits/PlayerCQCUnit1"]
+[editable path="GameBoard/Units/PlayerUnits/PlayerRNGUnit1"]
+[editable path="GameBoard/Units/PlayerUnits/PlayerTNKUnit1"]
+[editable path="GameBoard/Units/PlayerUnits/PlayerCQCUnit2"]
+[editable path="GameBoard/Units/PlayerUnits/PlayerRNGUnit2"]
+[editable path="GameBoard/Units/PlayerUnits/PlayerTNKUnit2"]
+[editable path="GameBoard/Units/PlayerUnits/PlayerRNGUnit3"]
+[editable path="GameBoard/Units/PlayerUnits/PlayerTNKUnit3"]
 [editable path="GameBoard/Units/EnemyUnits/AxeAiUnit"]
 [editable path="GameBoard/Units/EnemyUnits/LanceAiUnit"]
 [editable path="GameBoard/Units/EnemyUnits/SwordAiUnit"]
