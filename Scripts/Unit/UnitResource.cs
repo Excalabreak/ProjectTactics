@@ -51,13 +51,19 @@ public partial class UnitResource : Resource
     {
         get 
         {
+            if (_inventoryWeapons == null || _inventoryWeapons.Length <= 0)
+            {
+                WeaponResource[] noWeapon = new WeaponResource[0];
+                return noWeapon;
+            }
+
             WeaponResource[] storedWeapons = new WeaponResource[_inventoryWeapons.Length];
 
             for (int i = 0; i < _inventoryWeapons.Length; i++)
             {
                 storedWeapons[i] = WeaponDataBase.Instance.GetItem(_inventoryWeapons[i]);
             }
-             
+
             return storedWeapons; 
         }
     }
@@ -65,11 +71,20 @@ public partial class UnitResource : Resource
     {
         get
         {
+            if (_consumableItems == null || _consumableItems.Length <= 0)
+            {
+                ConsumableItemResource[] noConsumables = new ConsumableItemResource[0];
+                return noConsumables;
+            }
+
             ConsumableItemResource[] storedConsumables = new ConsumableItemResource[_consumableItems.Length];
 
-            for (int i = 0; i < _consumableItems.Length; i++)
+            if (_consumableItems.Length > 0)
             {
-                storedConsumables[i] = ConsumableDataBase.Instance.GetItem(_consumableItems[i]);
+                for (int i = 0; i < _consumableItems.Length; i++)
+                {
+                    storedConsumables[i] = ConsumableDataBase.Instance.GetItem(_consumableItems[i]);
+                }
             }
 
             return storedConsumables;
