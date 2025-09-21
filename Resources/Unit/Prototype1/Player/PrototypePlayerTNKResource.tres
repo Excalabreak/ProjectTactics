@@ -22,5 +22,4 @@ _baseStats = Dictionary[int, int]({
 })
 _equiptWeapon = "test_sword"
 _consumableItems = PackedStringArray("test_health_potion")
-_startingDirection = 3
 metadata/_custom_type_script = "uid://cb8xehtora3p"
