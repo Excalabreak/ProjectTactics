@@ -21,4 +21,5 @@ _baseStats = Dictionary[int, int]({
 9: 7
 })
 _equiptWeapon = "test_lance"
+_isCommander = true
 metadata/_custom_type_script = "uid://cb8xehtora3p"

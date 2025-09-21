@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/09/2025]
+ * Last Updated: [09/21/2025]
  * [ui pannel for what happend in the battle]
  */
 
@@ -38,6 +38,7 @@ public partial class UIBattleLog : Control
     /// <param name="message">what gets displayed</param>
     public void AddToBattleLog(string message)
     {
+        this.Visible = true;
         if (_messageHistory.Count >= _historyLength)
         {
             _messageHistory[0].QueueFree();
