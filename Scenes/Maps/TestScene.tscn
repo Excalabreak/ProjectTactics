@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=91 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -66,8 +66,6 @@
 [ext_resource type="Script" uid="uid://d3njo6qu5mnfs" path="res://Scripts/UI/UIInventory.cs" id="55_wmdct"]
 [ext_resource type="Script" uid="uid://cmgj6sm7nja1d" path="res://Scripts/UI/UIBattleLog.cs" id="62_3om3u"]
 [ext_resource type="PackedScene" uid="uid://cit5p50bewtv4" path="res://Scenes/PrototypeTools/PrototypeMenuScreens.tscn" id="66_q6o7e"]
-[ext_resource type="Resource" uid="uid://bodkoieu47bne" path="res://Resources/WarningAreas/Prototype/area0.tres" id="67_802tn"]
-[ext_resource type="Resource" uid="uid://cg1iikpl5lct8" path="res://Resources/WarningAreas/Prototype/area.tres" id="68_bi8el"]
 [ext_resource type="Script" uid="uid://fgoni7o2u1tl" path="res://Scripts/Grid/Warning/WarningAreaResource.cs" id="69_bi8el"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
@@ -237,6 +235,27 @@ terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Path"
 terrain_set_0/terrain_0/color = Color(1, 0, 0, 1)
 sources/0 = SubResource("TileSetAtlasSource_t2vuu")
+
+[sub_resource type="Resource" id="Resource_6nnmv"]
+script = ExtResource("69_bi8el")
+_spriteCoords = Vector2(2, 6)
+_areaTopLeft = Vector2(1, 5)
+_areaBottomRight = Vector2(3, 7)
+metadata/_custom_type_script = "uid://fgoni7o2u1tl"
+
+[sub_resource type="Resource" id="Resource_802tn"]
+script = ExtResource("69_bi8el")
+_spriteCoords = Vector2(10, 3)
+_areaTopLeft = Vector2(9, 2)
+_areaBottomRight = Vector2(11, 4)
+metadata/_custom_type_script = "uid://fgoni7o2u1tl"
+
+[sub_resource type="Resource" id="Resource_bi8el"]
+script = ExtResource("69_bi8el")
+_spriteCoords = Vector2(15, 4)
+_areaTopLeft = Vector2(14, 4)
+_areaBottomRight = Vector2(16, 5)
+metadata/_custom_type_script = "uid://fgoni7o2u1tl"
 
 [sub_resource type="Resource" id="Resource_pku7m"]
 script = ExtResource("69_bi8el")
@@ -437,7 +456,7 @@ _passingGroup = Array[int]([2])
 _attackingGroup = Array[int]([0, 1])
 
 [node name="AxeAiUnit" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
-position = Vector2(482, 478)
+position = Vector2(476, 543)
 _unitResource = ExtResource("34_wn5g2")
 _gameBoard = NodePath("../../..")
 
@@ -507,7 +526,7 @@ visible = true
 visible = true
 
 [node name="AxeAiUnit8" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
-position = Vector2(546, 540)
+position = Vector2(540, 599)
 _unitResource = ExtResource("34_wn5g2")
 _gameBoard = NodePath("../../..")
 
@@ -801,7 +820,7 @@ visible = true
 visible = true
 
 [node name="SwordAiUnit11" parent="GameBoard/Units/EnemyUnits" node_paths=PackedStringArray("_gameBoard") instance=ExtResource("21_qm5w0")]
-position = Vector2(480, 610)
+position = Vector2(481, 669)
 _unitResource = ExtResource("38_tl10l")
 _gameBoard = NodePath("../../..")
 
@@ -1306,8 +1325,8 @@ layout_mode = 2
 visible = false
 _warningOverlay = NodePath("../../GameBoard/MapTiles/WarningOverlay")
 _gridCursor = NodePath("../../GameBoard/GridCursor")
-scoutOne = Array[Object]([ExtResource("67_802tn"), ExtResource("68_bi8el")])
-scoutTwo = Array[Object]([ExtResource("67_802tn")])
+scoutOne = Array[Object]([SubResource("Resource_6nnmv"), SubResource("Resource_802tn"), SubResource("Resource_bi8el")])
+scoutTwo = Array[Object]([])
 scoutThree = Array[Object]([SubResource("Resource_pku7m")])
 
 [node name="OptionButton" parent="PrototypeNodes/PrototypeStartMenu/Panel/VBoxContainer/HBoxContainer" index="1"]
