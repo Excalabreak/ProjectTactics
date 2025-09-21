@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/09/2025]
+ * Last Updated: [09/21/2025]
  * [Manages UI Elements and 
  * is one class to call them all from]
  */
@@ -15,6 +15,16 @@ public partial class UIManager : CanvasLayer
     [Export] private UITerrain _uiTerrain;
     [Export] private UIInventory _uiInventroy;
     [Export] private UIBattleLog _uiBattleLog;
+    [Export] private Panel _controlsPanel;
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event.IsActionPressed("ToggleControls"))
+        {
+            _controlsPanel.Visible = !_controlsPanel.Visible;
+            GetViewport().SetInputAsHandled();
+        }
+    }
 
     /// <summary>
     /// calls to displays the stats of a unit

@@ -51,7 +51,10 @@ public partial class PrototypeEndMenu : CanvasLayer
 
     public void OnQuit()
     {
-        OS.ShellOpen(_formLink);
+        if (_formLink != null)
+        {
+            OS.ShellOpen(_formLink);
+        }
         GetTree().Quit();
     }
 }
