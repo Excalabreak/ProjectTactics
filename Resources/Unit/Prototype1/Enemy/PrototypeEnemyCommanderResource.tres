@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="UnitResource" load_steps=4 format=3 uid="uid://det1ut0vo1wpe"]
 
 [ext_resource type="Texture2D" uid="uid://bvx0070epyviq" path="res://Sprites/Test/Units/Enemy/testEnemyCommander.png" id="1_t7c5h"]
+[ext_resource type="Resource" uid="uid://c8to17ggy4lda" path="res://Resources/ClassResource/Test/TestEnemyCommanderClass.tres" id="2_0oht4"]
 [ext_resource type="Script" uid="uid://cb8xehtora3p" path="res://Scripts/Unit/UnitResource.cs" id="2_ockoi"]
-[ext_resource type="Resource" uid="uid://dcl3gix7gs7gs" path="res://Resources/ClassResource/Test/TestEnemyClass.tres" id="3_0oht4"]
 
 [resource]
 script = ExtResource("2_ockoi")
 _sprite = ExtResource("1_t7c5h")
-_unitClass = ExtResource("3_0oht4")
+_unitClass = ExtResource("2_0oht4")
 _baseStats = Dictionary[int, int]({
 0: 30,
 1: 0,
