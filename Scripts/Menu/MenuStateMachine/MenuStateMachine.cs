@@ -57,6 +57,7 @@ public partial class MenuStateMachine : Node
         _currentState.Exit();
         _currentState = _states[key];
         _currentState.Enter();
+        GD.Print("Transition to: " + key);
     }
 
     public MenuState currentState

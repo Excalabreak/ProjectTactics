@@ -11,8 +11,6 @@ public partial class MenuMoveState : MenuState
 {
     public override void Enter()
     {
-        //probably a terrable way of doing this...
-        //oh well
         stateMachine.gameBoard.HoverDisplay(stateMachine.gameBoard.selectedUnit.cell);
         stateMachine.gameBoard.ResetMovePath();
     }
