@@ -14,6 +14,7 @@ public partial class PrototypeStartMenu : CanvasLayer
     [Export] private GridCursor _gridCursor;
     [Export] private Button _cursorDefaultStartButton;
     [Export] private OptionButton _scoutingOptions;
+    [Export] private Panel _controlPanel;
 
     //TEMP. i hate this, but need prototype
     [Export] private WarningAreaResource[] scoutOne;
@@ -63,6 +64,8 @@ public partial class PrototypeStartMenu : CanvasLayer
                 break;
         }
 
+
+        _controlPanel.Visible = true;
         _gridCursor.ProcessMode = ProcessModeEnum.Inherit;
         _gridCursor.ResetCursor();
         _gridCursor.Show();
