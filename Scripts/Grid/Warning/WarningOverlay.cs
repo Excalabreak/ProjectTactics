@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/15/2025]
+ * Last Updated: [09/21/2025]
  * [handles showing and removing warnings]
  */
 
@@ -28,7 +28,7 @@ public partial class WarningOverlay : Node2D
         Vector2I atlasCoords = Vector2I.Zero;
         int altTiles = 0;
 
-        if (!_currentAreas.ContainsKey(spriteLocation))
+        if (!HasWarningAt(spriteLocation))
         {
             coords = new Vector2I(Mathf.RoundToInt(spriteLocation.X), Mathf.RoundToInt(spriteLocation.Y));
             _spriteLayer.SetCell(coords, sourceID, atlasCoords, altTiles);
@@ -38,7 +38,7 @@ public partial class WarningOverlay : Node2D
             bool hasNewSpriteLocation = false;
             foreach (Vector2 cell in warningArea)
             {
-                if (_currentAreas.ContainsKey(cell))
+                if (HasWarningAt(cell))
                 {
                     continue;
                 }
@@ -70,7 +70,7 @@ public partial class WarningOverlay : Node2D
     /// <param name="areaSprite">where the ! sprite is</param>
     public void RemoveWarningArea(Vector2 areaSprite)
     {
-        if (!_currentAreas.ContainsKey(areaSprite))
+        if (!HasWarningAt(areaSprite))
         {
             GD.Print("not valid warning area sprite location");
             return;
@@ -84,7 +84,19 @@ public partial class WarningOverlay : Node2D
         foreach (Vector2 cell in _currentAreas[areaSprite])
         {
             coords = new Vector2I(Mathf.RoundToInt(cell.X), Mathf.RoundToInt(cell.Y));
-            _spriteLayer.EraseCell(coords);
+            _areaLayer.EraseCell(coords);
         }
+
+        _currentAreas.Remove(areaSprite);
+    }
+
+    /// <summary>
+    /// returns if there is a warning sprite at coords
+    /// </summary>
+    /// <param name="coord">where is the warning sprite</param>
+    /// <returns>true if yes</returns>
+    public bool HasWarningAt(Vector2 coord)
+    {
+        return _currentAreas.ContainsKey(coord);
     }
 }

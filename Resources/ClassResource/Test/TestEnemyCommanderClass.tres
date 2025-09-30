@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UnitClassResource" load_steps=3 format=3 uid="uid://c8to17ggy4lda"]
+
+[ext_resource type="Script" uid="uid://c03kdlweawwwu" path="res://Scripts/Unit/UnitClassResource.cs" id="1_7vese"]
+[ext_resource type="Texture2D" uid="uid://bvx0070epyviq" path="res://Sprites/Test/Units/Enemy/testEnemyCommander.png" id="1_tswhg"]
+
+[resource]
+script = ExtResource("1_7vese")
+_weaponSprites = Dictionary[int, Texture2D]({
+0: ExtResource("1_tswhg"),
+1: ExtResource("1_tswhg"),
+2: ExtResource("1_tswhg"),
+3: ExtResource("1_tswhg"),
+4: ExtResource("1_tswhg")
+})
+metadata/_custom_type_script = "uid://c03kdlweawwwu"

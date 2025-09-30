@@ -13,7 +13,7 @@ using System.Linq;
  * DAY 345: Line of sight
  * NoBS Code: Circle and Xiaolin Wu Line Algorithm
  * 
- * Last Updated: [09/08/2025]
+ * Last Updated: [09/22/2025]
  * [game board manages everything on the map]
  */
 
@@ -81,7 +81,7 @@ public partial class GameBoard : Node2D
 
         UnitEventManager.UnitDeathEvent += RemoveUnit;
 
-        Reinitialize();
+        Reinitialize(); 
     }
 
     /// <summary>
@@ -354,10 +354,12 @@ public partial class GameBoard : Node2D
     public void MenuUnSelectedStateAccept(Vector2 cell)
     {
         //need to add a condition for enemy units
+
         if (_selectedUnit == null && _units.ContainsKey(cell) && _units[cell].unitGroup == UnitGroupEnum.PLAYER)
         {
             SelectUnit(cell);
             _actionMenuInstance = _actionMenu.Instantiate() as ActionMenu;
+            _actionMenuInstance.ShowRemoveWarning(_warningOverlay.HasWarningAt(cell), cell);
             AddChild(_actionMenuInstance);
         }
         else if (_selectedUnit != null)
@@ -367,6 +369,7 @@ public partial class GameBoard : Node2D
         else if (_selectedUnit == null)
         {
             _pauseScreenInstance = _pauseMenu.Instantiate() as PauseScreen;
+            _pauseScreenInstance.ShowRemoveWarning(_warningOverlay.HasWarningAt(cell), cell);
             AddChild(_pauseScreenInstance);
         }
     }
@@ -588,7 +591,7 @@ public partial class GameBoard : Node2D
         }
         else if (IsInstanceValid(_tradeMenuInstance))
         {
-
+            _tradeMenuInstance.OnCancelButtonPress();
         }
         ResetMenu();
     }
@@ -681,7 +684,7 @@ public partial class GameBoard : Node2D
         _itemMenuInstance = _itemMenu.Instantiate() as ItemMenu;
         if (_selectedUnit != null)
         {
-            _itemMenuInstance.SetUpItemSlots(_selectedUnit.unitInventory);
+            _itemMenuInstance.SetUpItemSlots(_selectedUnit.unitInventory, _selectedUnit.unitActionEconomy);
         }
         AddChild(_itemMenuInstance);
     }
@@ -739,6 +742,11 @@ public partial class GameBoard : Node2D
         }
     }
 
+    public void ClearHighlights()
+    {
+        _unitWalkHighlights.Clear();
+    }
+
     //---------- END TURN ----------
 
     /// <summary>
@@ -758,10 +766,12 @@ public partial class GameBoard : Node2D
         if (_turnManager.currentTurn == UnitGroupEnum.PLAYER)
         {
             _menuStateMachine.TransitionTo("MenuUnSelectedState");
+            _uiManager.AddToBattleLog("----- PLAYER TURN -----");
         }
         else
         {
             _menuStateMachine.TransitionTo("MenuBlankState");
+            _uiManager.AddToBattleLog("----- ENEMY TURN -----");
             AiTurn(_turnManager.currentTurn);
         }
     }
@@ -1917,6 +1927,11 @@ public partial class GameBoard : Node2D
     public MenuStateMachine menuStateMachine
     {
         get { return _menuStateMachine; }
+    }
+
+    public WarningOverlay warningOverlay
+    {
+        get { return _warningOverlay; }
     }
 
     public Unit selectedUnit

@@ -88,11 +88,10 @@ public partial class UnitPathMovement : Path2D
             _gameBoard.MovingUnitVisionUpdate(_unit, newLoc);
             _gameBoard.UpdateUnitVision(_unit);
 
-            //checks next tile
             Vector2 nextTile = newLoc + DirectionManager.Instance.GetVectorDirection(_pathDirections[_currentDirectionIndex]);
             if (!_gameBoard.CheckCanPass(_unit, nextTile))
             {
-                //check future tiles here
+
                 StopWalk(_unit.cell);
             }
 

@@ -7,7 +7,6 @@
 [resource]
 script = ExtResource("2_7u2d4")
 _sprite = ExtResource("1_0heps")
-_spriteOffset = Vector2(0, 0)
 _unitClass = ExtResource("2_vfsbj")
 _baseStats = Dictionary[int, int]({
 0: 11,
@@ -21,7 +20,4 @@ _baseStats = Dictionary[int, int]({
 8: 5,
 9: 7
 })
-_inventoryItems = null
-_startingDirection = 0
-_isCommander = false
 metadata/_custom_type_script = "uid://cb8xehtora3p"

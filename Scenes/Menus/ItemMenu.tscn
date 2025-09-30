@@ -105,6 +105,7 @@ text = "Cancel"
 layout_mode = 2
 
 [node name="UseButton" type="Button" parent="HBoxContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Use"

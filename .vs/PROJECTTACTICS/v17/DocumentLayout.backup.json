@@ -3,24 +3,20 @@
   "WorkspaceRootPath": "E:\\Projects\\ProjectTactics\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\npcai\\npcaistates\\enemy\\basicprototype\\enemyidlestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\npcai\\npcaistates\\enemy\\basicprototype\\enemyidlestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\npcai\\npcaistates\\enemy\\basicprototype\\enemyattackstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\npcai\\npcaistates\\enemy\\basicprototype\\enemyattackstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\grid\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\playtest\\prototypeendmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\playtest\\prototypeendmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\playtest\\prototypestartmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\playtest\\prototypestartmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\grid\\warningoverlay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\grid\\warningoverlay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\ui\\uistats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\ui\\uistats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|e:\\projects\\projecttactics\\scripts\\npcai\\npcaistatemachine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B67FD2B-5B4B-4122-AF70-1A938FE83272}|ProjectTactics.csproj|solutionrelative:scripts\\npcai\\npcaistatemachine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,17 +26,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "GameBoard.cs",
               "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GameBoard.cs",
               "RelativeDocumentMoniker": "Scripts\\Grid\\GameBoard.cs",
               "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\GameBoard.cs",
               "RelativeToolTip": "Scripts\\Grid\\GameBoard.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAQwFMAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-29T19:37:27.722Z",
               "IsPinned": true,
@@ -49,51 +45,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "PrototypeEndMenu.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Playtest\\PrototypeEndMenu.cs",
-              "RelativeDocumentMoniker": "Scripts\\Playtest\\PrototypeEndMenu.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Playtest\\PrototypeEndMenu.cs",
-              "RelativeToolTip": "Scripts\\Playtest\\PrototypeEndMenu.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "EnemyAttackState.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyAttackState.cs",
+              "RelativeDocumentMoniker": "Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyAttackState.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyAttackState.cs",
+              "RelativeToolTip": "Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyAttackState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-15T21:08:14.826Z",
+              "WhenOpened": "2025-09-22T21:45:00.129Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PrototypeStartMenu.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Playtest\\PrototypeStartMenu.cs",
-              "RelativeDocumentMoniker": "Scripts\\Playtest\\PrototypeStartMenu.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Playtest\\PrototypeStartMenu.cs",
-              "RelativeToolTip": "Scripts\\Playtest\\PrototypeStartMenu.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "EnemyIdleState.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyIdleState.cs",
+              "RelativeDocumentMoniker": "Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyIdleState.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyIdleState.cs",
+              "RelativeToolTip": "Scripts\\NPCAi\\NPCAiStates\\Enemy\\BasicPrototype\\EnemyIdleState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-15T21:03:54.749Z"
+              "WhenOpened": "2025-09-22T21:44:58.638Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "WarningOverlay.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\WarningOverlay.cs",
-              "RelativeDocumentMoniker": "Scripts\\Grid\\WarningOverlay.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\Grid\\WarningOverlay.cs",
-              "RelativeToolTip": "Scripts\\Grid\\WarningOverlay.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABcAAAA9AAAAAAAAAA==",
+              "Title": "NPCAiStateMachine.cs",
+              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiStateMachine.cs",
+              "RelativeDocumentMoniker": "Scripts\\NPCAi\\NPCAiStateMachine.cs",
+              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\NPCAi\\NPCAiStateMachine.cs",
+              "RelativeToolTip": "Scripts\\NPCAi\\NPCAiStateMachine.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T22:36:13.121Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UIStats.cs",
-              "DocumentMoniker": "E:\\Projects\\ProjectTactics\\Scripts\\UI\\UIStats.cs",
-              "RelativeDocumentMoniker": "Scripts\\UI\\UIStats.cs",
-              "ToolTip": "E:\\Projects\\ProjectTactics\\Scripts\\UI\\UIStats.cs",
-              "RelativeToolTip": "Scripts\\UI\\UIStats.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-10T19:32:55.773Z"
+              "WhenOpened": "2025-09-22T21:44:56.267Z"
             }
           ]
         }

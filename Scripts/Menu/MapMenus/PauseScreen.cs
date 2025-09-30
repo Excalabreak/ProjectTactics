@@ -4,12 +4,16 @@ using System;
 /*
  * Author: [Lam, Justin]
  * Original Tutorial Author: YT:Heal Moon
- * Last Updated: [07/09/2025]
+ * Last Updated: [09/17/2025]
  * [menu for unit action]
  */
 
 public partial class PauseScreen : BaseMenu
 {
+    [Export] private Button _removeWarningButton;
+
+    private Vector2 _menuOpenAt;
+
     private void OnUnitsPressed()
     {
 
@@ -18,6 +22,21 @@ public partial class PauseScreen : BaseMenu
     private void OnOptionsPressed()
     {
 
+    }
+
+    private void OnRemoveWarningPress()
+    {
+        HideMenu();
+        _gameBoard.warningOverlay.RemoveWarningArea(_menuOpenAt);
+    }
+
+    public void ShowRemoveWarning(bool show, Vector2 cell)
+    {
+        _removeWarningButton.Visible = show;
+        if (show)
+        {
+            _menuOpenAt = cell;
+        }
     }
 
     /// <summary>

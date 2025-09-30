@@ -5,7 +5,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [08/17/2025]
+ * Last Updated: [09/22/2025]
  * [attack state for enemy ai
  * NOTE: very basic for now]
  */
@@ -47,7 +47,11 @@ public partial class EnemyAttackState : NPCAiState
                         continue;
                     }
 
-                    currentPath = stateMachine.gameBoard.DijkstraPathFinding(stateMachine.unit.cell, loc);
+                    currentPath = stateMachine.gameBoard.DijkstraPathFinding(stateMachine.unit.cell, loc, stateMachine.unit.unitActionEconomy.currentMove);
+                    if (currentPath.Length == 0)
+                    {
+                        continue;
+                    }
                     if (path.Count == 0 || currentPath.Length < path.Count)
                     {
                         path.Clear();
@@ -55,10 +59,10 @@ public partial class EnemyAttackState : NPCAiState
                     }
                 }
             }
-            path.RemoveAt(0);
+
             if (path.Count > 0)
             {
-
+                path.RemoveAt(0);
                 MoveLogic(path.ToArray(), stateMachine.unit.unitActionEconomy.currentMove);
             }
             if (isWalking)
