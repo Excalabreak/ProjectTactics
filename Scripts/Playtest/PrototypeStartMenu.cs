@@ -14,7 +14,13 @@ public partial class PrototypeStartMenu : CanvasLayer
     [Export] private GridCursor _gridCursor;
     [Export] private Button _cursorDefaultStartButton;
     [Export] private OptionButton _scoutingOptions;
+    [Export] private Panel _controlPanel;
 
+    //TEMP. i hate this, but need prototype
+    [Export] private WarningAreaResource[] scoutOne;
+    [Export] private WarningAreaResource[] scoutTwo;
+    [Export] private WarningAreaResource[] scoutThree;
+    
     /// <summary>
     /// sets up needed components
     /// </summary>
@@ -33,58 +39,36 @@ public partial class PrototypeStartMenu : CanvasLayer
     /// </summary>
     public void HideMenu()
     {
-        Vector2 startArea;
-        Vector2 endArea;
-        Vector2 warningSprite;
         //depending on which option is selected, show the scouting warnings
         switch (_scoutingOptions.Selected)
         {
             case 0:
-                startArea = new Vector2(1,10);
-                endArea = new Vector2(5,14);
-                warningSprite = new Vector2(3, 12);
-                _warningOverlay.AddWarningArea(GetSquareArea(startArea, endArea), warningSprite);
+                foreach (WarningAreaResource areaResource in scoutOne)
+                {
+                    _warningOverlay.AddWarningArea(areaResource.area, areaResource.spriteCoords);
+                }
                 break;
             case 1:
-                startArea = new Vector2(6, 10);
-                endArea = new Vector2(12, 14);
-                warningSprite = new Vector2(8, 12);
-                _warningOverlay.AddWarningArea(GetSquareArea(startArea, endArea), warningSprite);
+                foreach (WarningAreaResource areaResource in scoutTwo)
+                {
+                    _warningOverlay.AddWarningArea(areaResource.area, areaResource.spriteCoords);
+                }
                 break;
             case 2:
-                startArea = new Vector2(7,15);
-                endArea = new Vector2(12,18);
-                warningSprite = new Vector2(9, 17);
-                _warningOverlay.AddWarningArea(GetSquareArea(startArea, endArea), warningSprite);
+                foreach (WarningAreaResource areaResource in scoutThree)
+                {
+                    _warningOverlay.AddWarningArea(areaResource.area, areaResource.spriteCoords);
+                }
                 break;
             default:
                 break;
         }
 
+
+        _controlPanel.Visible = true;
         _gridCursor.ProcessMode = ProcessModeEnum.Inherit;
         _gridCursor.ResetCursor();
         _gridCursor.Show();
         QueueFree();
-    }
-
-    /// <summary>
-    /// a temp method to get an area for the scouting area
-    /// </summary>
-    /// <param name="start">top left of area</param>
-    /// <param name="end">bottom right of area</param>
-    /// <returns>array of vector2</returns>
-    private Vector2[] GetSquareArea(Vector2 start, Vector2 end)
-    {
-        List<Vector2> output = new List<Vector2>();
-
-        for (int i = Mathf.RoundToInt(start.X); i <= Mathf.RoundToInt(end.X); i++)
-        {
-            for (int j = Mathf.RoundToInt(start.Y); j <= Mathf.RoundToInt(end.Y); j++)
-            {
-                output.Add(new Vector2(i, j));
-            }
-        }
-
-        return output.ToArray();
     }
 }

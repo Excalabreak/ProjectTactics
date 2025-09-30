@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [07/14/2025]
+ * Last Updated: [09/22/2025]
  * [State when no unit is selected]
  */
 
@@ -31,6 +31,7 @@ public partial class MenuUnSelectedState : MenuState
 
     public override void Exit()
     {
+        stateMachine.gameBoard.ClearHighlights();
         stateMachine.gameBoard.HideStatsUI();
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/08/2025]
+ * Last Updated: [09/20/2025]
  * [handles inventory for units]
  */
 
@@ -40,7 +40,6 @@ public partial class UnitInventory : Node
                 break;
             }
         }
-
         if (count > 0)
         {
             foreach (IInventoryItem item in _unit.unitResource.consumableItems)
@@ -65,7 +64,6 @@ public partial class UnitInventory : Node
         {
             return;
         }
-
         _inventoryItems.Add(item);
     }
 

@@ -15,6 +15,7 @@ public partial class UnitActionEconomy : Node
     [Export] private UnitStats _unitStats;
     private int _maxActions = 1;
     private int _actionsLeft = 1;
+    //add free actions
 
     private float _maxMove = 6;
     private float _currentMove = 6;

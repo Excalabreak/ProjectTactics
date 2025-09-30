@@ -67,16 +67,16 @@ public partial class CombatManager : Node
             if (CalculateCritRate(attackingUnit, defendingUnit) >= hitChance)
             {
                 critMod = attackingUnit.unitInventory.equiptWeapon.critModifyer;
-                _uiManager.AddToBattleLog(attackingUnit.Name + " CRIT!!!");
+                _uiManager.AddToBattleLog(attackingUnit.unitName + " CRIT!!!");
             }
             int damage = Mathf.RoundToInt((float)CalculateDamage(attackingUnit, defendingUnit) * critMod);
 
-            _uiManager.AddToBattleLog(attackingUnit.Name + " hits " + defendingUnit.Name + " for " + damage + " damage.");
+            _uiManager.AddToBattleLog(attackingUnit.unitName + " hits " + defendingUnit.unitName + " for " + damage + " damage.");
             defendingUnit.unitStats.DamageUnit(damage);
         }
         else
         {
-            _uiManager.AddToBattleLog(attackingUnit.Name + " MISSED!");
+            _uiManager.AddToBattleLog(attackingUnit.unitName + " MISSED!");
         }
     }
 

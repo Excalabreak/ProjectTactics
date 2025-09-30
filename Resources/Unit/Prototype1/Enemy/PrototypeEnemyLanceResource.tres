@@ -7,23 +7,18 @@
 [resource]
 script = ExtResource("2_o1eke")
 _sprite = ExtResource("1_yknlm")
-_spriteOffset = Vector2(0, 0)
 _unitClass = ExtResource("3_djefk")
 _baseStats = Dictionary[int, int]({
-0: 17,
+0: 22,
 1: 0,
-2: 8,
+2: 6,
 3: 0,
-4: 4,
-5: 5,
-6: 1,
+4: 7,
+5: 7,
+6: 3,
 7: 0,
 8: 5,
 9: 7
 })
 _equiptWeapon = "test_lance"
-_inventoryWeapons = PackedStringArray()
-_consumableItems = PackedStringArray()
-_startingDirection = 0
-_isCommander = false
 metadata/_custom_type_script = "uid://cb8xehtora3p"

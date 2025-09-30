@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [09/17/2025]
+ * Last Updated: [09/21/2025]
  * [handles showing and removing warnings]
  */
 
@@ -86,6 +86,8 @@ public partial class WarningOverlay : Node2D
             coords = new Vector2I(Mathf.RoundToInt(cell.X), Mathf.RoundToInt(cell.Y));
             _areaLayer.EraseCell(coords);
         }
+
+        _currentAreas.Remove(areaSprite);
     }
 
     /// <summary>
