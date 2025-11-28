@@ -1439,6 +1439,23 @@ popup/item_1/text = "Bob: expert mountian scout"
 _gridCursor = NodePath("../../GameBoard/GridCursor")
 _formLink = "https://docs.google.com/forms/d/e/1FAIpQLSeSeFkCt0RYfCjg17pcFAZB5heZtuk8ULB3dTWaoSXWftMhgA/viewform?usp=dialog"
 
+[node name="Info" type="CanvasLayer" parent="PrototypeNodes"]
+
+[node name="Panel" type="Panel" parent="PrototypeNodes/Info"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -307.0
+offset_right = 306.0
+offset_bottom = 101.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="PrototypeNodes/Info/Panel"]
+layout_mode = 0
+offset_right = 611.0
+offset_bottom = 40.0
+text = "Current Selected: "
+
 [editable path="GameBoard/Units/PlayerUnits/PlayerCQCUnit1"]
 [editable path="GameBoard/Units/PlayerUnits/PlayerRNGUnit1"]
 [editable path="GameBoard/Units/PlayerUnits/PlayerTNKUnit1"]
