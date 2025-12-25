@@ -11,6 +11,7 @@ public partial class MenuMoveState : MenuState
 {
     public override void Enter()
     {
+        GD.Print(stateMachine.gameBoard.IsKnownOccupied(stateMachine.gameBoard.selectedUnit.cell));
         stateMachine.gameBoard.HoverDisplay(stateMachine.gameBoard.selectedUnit.cell);
         stateMachine.gameBoard.ResetMovePath();
     }

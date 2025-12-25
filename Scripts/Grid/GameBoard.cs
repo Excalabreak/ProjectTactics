@@ -81,7 +81,7 @@ public partial class GameBoard : Node2D
 
         UnitEventManager.UnitDeathEvent += RemoveUnit;
 
-        Reinitialize(); 
+        Reinitialize();
     }
 
     /// <summary>
@@ -280,6 +280,10 @@ public partial class GameBoard : Node2D
         _units.Remove(unit.cell);
     }
 
+    /// <summary>
+    /// adds unit to cell
+    /// </summary>
+    /// <param name="unit"></param>
     public void AddUnitLocation(Unit unit)
     {
         if (_units.ContainsKey(unit.cell))
@@ -288,6 +292,17 @@ public partial class GameBoard : Node2D
         }
 
         _units.Add(unit.cell, unit);
+    }
+
+    /// <summary>
+    /// returns if another unit is in cell
+    /// </summary>
+    /// <param name="unit">unit comparing</param>
+    /// <param name="cell">cell to look at</param>
+    /// <returns>true if another unit is in cell</returns>
+    public bool HasOtherUnitInCell(Unit unit, Vector2 cell)
+    {
+        return _units.ContainsKey(cell) && _units[cell] != unit;
     }
 
     /// <summary>
@@ -300,6 +315,8 @@ public partial class GameBoard : Node2D
         {
             return;
         }
+
+        GD.Print("removed from known: " + unit.cell);
         _knownUnitLocations.Remove(unit.cell);
     }
 
@@ -465,7 +482,7 @@ public partial class GameBoard : Node2D
         {
             return;
         }
-        
+
         _tradeMenuInstance = _tradeMenu.Instantiate() as TradeMenu;
         _tradeMenuInstance.SetUpTradeMenu(_selectedUnit, otherUnit);
         AddChild(_tradeMenuInstance);
