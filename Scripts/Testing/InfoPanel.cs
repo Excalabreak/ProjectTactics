@@ -3,7 +3,7 @@ using System;
 
 /*
  * Author: [Lam, Justin]
- * Last Updated: [11/27/2025]
+ * Last Updated: [12/25/2025]
  * [pannel to display info for development]
  */
 
@@ -14,6 +14,13 @@ public partial class InfoPanel : CanvasLayer
 
     public override void _Process(double delta)
     {
-        _currentSelected.Text = "Current Selected: " + _gameBoard.selectedUnit.Name;
+        if (_gameBoard.selectedUnit != null)
+        {
+            _currentSelected.Text = "Current Selected: " + _gameBoard.selectedUnit.Name;
+        }
+        else
+        {
+            _currentSelected.Text = "Current Selected: ";
+        }
     }
 }
