@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=4 uid="uid://cbymeb2u0whko"]
+[gd_scene load_steps=97 format=4 uid="uid://cbymeb2u0whko"]
 
 [ext_resource type="Script" uid="uid://chpy2q51ht2o7" path="res://Scripts/Grid/GameBoard.cs" id="1_lo7rv"]
 [ext_resource type="Resource" uid="uid://yn7bam6xk8x6" path="res://Resources/Grid/TestGrid.tres" id="2_668gq"]
@@ -66,6 +66,7 @@
 [ext_resource type="Script" uid="uid://d3njo6qu5mnfs" path="res://Scripts/UI/UIInventory.cs" id="55_wmdct"]
 [ext_resource type="Script" uid="uid://cmgj6sm7nja1d" path="res://Scripts/UI/UIBattleLog.cs" id="62_3om3u"]
 [ext_resource type="PackedScene" uid="uid://cit5p50bewtv4" path="res://Scenes/PrototypeTools/PrototypeMenuScreens.tscn" id="66_q6o7e"]
+[ext_resource type="Script" uid="uid://cxadkcaeni3fw" path="res://Scripts/Testing/InfoPanel.cs" id="68_802tn"]
 [ext_resource type="Script" uid="uid://fgoni7o2u1tl" path="res://Scripts/Grid/Warning/WarningAreaResource.cs" id="69_bi8el"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p30di"]
@@ -1439,7 +1440,10 @@ popup/item_1/text = "Bob: expert mountian scout"
 _gridCursor = NodePath("../../GameBoard/GridCursor")
 _formLink = "https://docs.google.com/forms/d/e/1FAIpQLSeSeFkCt0RYfCjg17pcFAZB5heZtuk8ULB3dTWaoSXWftMhgA/viewform?usp=dialog"
 
-[node name="Info" type="CanvasLayer" parent="PrototypeNodes"]
+[node name="Info" type="CanvasLayer" parent="PrototypeNodes" node_paths=PackedStringArray("_gameBoard", "_currentSelected")]
+script = ExtResource("68_802tn")
+_gameBoard = NodePath("../../GameBoard")
+_currentSelected = NodePath("Panel/CurrentSelectedLabel")
 
 [node name="Panel" type="Panel" parent="PrototypeNodes/Info"]
 anchors_preset = 5
@@ -1450,7 +1454,7 @@ offset_right = 306.0
 offset_bottom = 101.0
 grow_horizontal = 2
 
-[node name="Label" type="Label" parent="PrototypeNodes/Info/Panel"]
+[node name="CurrentSelectedLabel" type="Label" parent="PrototypeNodes/Info/Panel"]
 layout_mode = 0
 offset_right = 611.0
 offset_bottom = 40.0

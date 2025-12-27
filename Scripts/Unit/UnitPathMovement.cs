@@ -76,14 +76,12 @@ public partial class UnitPathMovement : Path2D
         {
             _unitDirection.currentFacing = _pathDirections[_currentDirectionIndex];
 
-            _gameBoard.RemoveUnitLocation(_unit);
-            _gameBoard.RemoveKnownUnitLocation(_unit);
+            RemoveUnitLoc();
 
             Vector2 newLoc = _gameBoard.grid.CalculateGridCoordinates(_walkingLocation.GlobalPosition);
             _unit.cell = newLoc;
 
-            _gameBoard.AddUnitLocation(_unit);
-            _gameBoard.AddKnownUnitLocation(_unit);
+            AddUnitToLocation();
 
             _gameBoard.MovingUnitVisionUpdate(_unit, newLoc);
             _gameBoard.UpdateUnitVision(_unit);
@@ -120,14 +118,12 @@ public partial class UnitPathMovement : Path2D
         this.isWalking = false;
         _pathFollow.Progress = 0f;
 
-        _gameBoard.RemoveUnitLocation(_unit);
-        _gameBoard.RemoveKnownUnitLocation(_unit);
+        RemoveUnitLoc();
 
         _unit.cell = cell;
         _unit.Position = _gameBoard.grid.CalculateMapPosition(cell);
 
-        _gameBoard.AddUnitLocation(_unit);
-        _gameBoard.AddKnownUnitLocation(_unit);
+        AddUnitToLocation();
 
         _gameBoard.UpdateUnitVision(_unit);
 
@@ -138,6 +134,32 @@ public partial class UnitPathMovement : Path2D
         _unit.unitActionEconomy.CheckMoveAction();
 
         EmitSignal("WalkFinished");
+    }
+
+    /// <summary>
+    /// removes unit from location
+    /// makes sure doesn't remove other unit in same location if moving
+    /// </summary>
+    private void RemoveUnitLoc()
+    {
+        //may cause issues later
+        //right now it just checks if another unit was on cell first
+        //removes location and known if not
+        if (!_gameBoard.HasOtherUnitInCell(_unit, _unit.cell))
+        {
+            _gameBoard.RemoveUnitLocation(_unit);
+            _gameBoard.RemoveKnownUnitLocation(_unit);
+        }
+    }
+
+    /// <summary>
+    /// tries to add unit
+    /// DANGER: IF ANOTHER UNIT IS ON SPACE, WILL NOT BE ADDED
+    /// </summary>
+    private void AddUnitToLocation()
+    {
+        _gameBoard.AddUnitLocation(_unit);
+        _gameBoard.AddKnownUnitLocation(_unit);
     }
 
     /// <summary>
